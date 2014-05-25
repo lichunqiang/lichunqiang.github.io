@@ -2,6 +2,7 @@
 layout: post
 title: Hello Github
 keywords: Hello Github
+id: 1
 ---
 
 #### {{ page.title }}
