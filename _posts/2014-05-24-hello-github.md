@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Hello Github
-keywords: 测试关键词
+keywords: Hello Github
 ---
 
 #### {{ page.title }}
