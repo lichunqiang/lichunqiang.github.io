@@ -20,4 +20,4 @@ id: 2
 ###代码
 <div class="github-widget" data-repo="lichunqiang/jquery-countable"></div>
 <!--github代码展示-->
-<script type="text/javascript" src='js/hubinfo.js'></script>
+<script type="text/javascript" src='/js/hubinfo.js'></script>
