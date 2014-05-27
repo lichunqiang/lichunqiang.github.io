@@ -11,17 +11,17 @@ id: 3
 
 __在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
 
-```javascript
-/*a.js*/
-define(function(require, exports, module){
-	var b = require('./b');
-	var c = require('./c');
-	//other code
-});
 
-/*main.js*/
-seajs.use(./a);
-```
+	/*a.js*/
+	define(function(require, exports, module){
+		var b = require('./b');
+		var c = require('./c');
+		//other code
+	});
+
+	/*main.js*/
+	seajs.use(./a);
+
 
 * Step1:  	解析 './a'
 * Step2.1:  下载a
@@ -32,11 +32,16 @@ seajs.use(./a);
 
 __Step1: 路径解析__
 
-在进行路径解析的时候```require('jquery)```, 首先判断在```seajs.config```是否定义了该```alias```,	
-如果存在替换.(*parseAlias*)			
-这之后在根据```base```,将id值解析为uri.(*id2uri*)			
-在接下来进行(*parseMap*), 即对```seajs.config```中的map进行解析。		
+在进行路径解析的时候```require('jquery)```, 首先判断在```seajs.config```是否定义了该```alias```,
+
+如果存在替换.(*parseAlias*)		
+
+这之后在根据```base```,将id值解析为uri.(*id2uri*)	
+
+在接下来进行(*parseMap*), 即对```seajs.config```中的map进行解析。	
+
 最终得到完整的路径！		
+
 
 __Step2: 模块加载___
 
