@@ -11,6 +11,7 @@ id: 3
 
 __在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
 
+```
 
 	/*a.js*/
 	define(function(require, exports, module){
@@ -22,6 +23,7 @@ __在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
 	/*main.js*/
 	seajs.use(./a);
 
+```
 
 * Step1:  	解析 './a'
 * Step2.1:  下载a
