@@ -11,17 +11,16 @@ id: 3
 
 __在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
 
-```
-	/*a.js*/
-	define(function(require, exports, module){
-		var b = require('./b');
-		var c = require('./c');
-		//..
-	});
+```javascript
+/*a.js*/
+define(function(require, exports, module){
+	var b = require('./b');
+	var c = require('./c');
+	//other code
+});
 
-	/*main.js*/
-	seajs.use(./a);
-	
+/*main.js*/
+seajs.use(./a);
 ```
 
 * Step1:  	解析 './a'
