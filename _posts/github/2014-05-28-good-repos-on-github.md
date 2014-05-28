@@ -12,6 +12,7 @@ id: 5
 
 __PHP__
 ***
+
 * [PHP-Best-Practices-zh_CN](https://github.com/justjavac/PHP-Best-Practices-zh_CN)
 * [DesignPatternsPHP](https://github.com/domnikl/DesignPatternsPHP)
 * [ laravel-4.1 的完整包，常用的源码已经补充中文注释](https://github.com/5-say/laravel-4.1-quick-start-cn)
@@ -21,6 +22,7 @@ __PHP__
 
 __javascript__
 ***
+
 * [javascriptPattern](https://github.com/nanjixiong218/javascriptPattern)
 * [前端技能总汇](https://github.com/JacksonTian/fks)
 * [腾讯移动Web前端知识库](https://github.com/AlloyTeam/Mars)
@@ -32,10 +34,12 @@ __javascript__
 
 __Seajs__
 ***
+
 * [专注Sea.js，深入浅出分析Sea.js模块机制](https://github.com/island205/HelloSea.js)
 
 __Git__
 ***
+
 * [Git-Tutorial](https://github.com/numbbbbb/Git-Tutorial-By-liaoxuefeng)
 * [一本关于GitHub的书](https://github.com/gotgit/gotgithub) 
 * [A guide to using Git](https://github.com/blynn/gitmagic)
@@ -43,17 +47,20 @@ __Git__
 
 __Markdown__
 ***
+
 * [Online Markdown editor](http://dillinger.io/) 可在线查看Markdown的效果
 
 
 __NodeJS__
 ***
+
 * [七天学会NodeJS](http://nqdeng.github.io/7-days-nodejs)
 * [Node.js Style Guide](https://github.com/dead-horse/node-style-guide)
 * [NodeJS-Handbook](https://github.com/FredKSchott/NodeJS-Handbook)
 
 __不错的博客__
 ***
+
 * [markyun](https://github.com/markyun/My-blog)  设计前端知识
 * [fool2fish](https://github.com/fool2fish/blog/issues?state=open)
 * [fouber](https://github.com/fouber/blog) 主要涉及前端知识
@@ -62,6 +69,7 @@ __不错的博客__
 
 __other__
 ***
+
 * [http-api-design](https://github.com/interagent/http-api-design)
 * [免费的计算机编程类中文书籍](https://github.com/justjavac/free-programming-books-zh_CN)
 * [翻译 stackoverflow.com 上的热门问题](https://github.com/justjavac/stackoverflow-cn)
