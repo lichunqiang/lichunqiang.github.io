@@ -10,8 +10,7 @@ id: 5
 
 > 将在这里收集一些在Github上发现的比较不错并且值得学习的项目
 
-__PHP__
-
+#### PHP ####
 ***
 
 * [PHP-Best-Practices-zh_CN](https://github.com/justjavac/PHP-Best-Practices-zh_CN)
@@ -21,8 +20,7 @@ __PHP__
 * [收集PHP最佳实践、编码规范和权威学习指南](https://github.com/wulijun/php-the-right-way)
 * [PHP之道](http://wulijun.github.io/php-the-right-way/)
 
-__javascript__
-
+#### javascript ####
 ***
 
 * [javascriptPattern](https://github.com/nanjixiong218/javascriptPattern)
@@ -34,14 +32,12 @@ __javascript__
 * [javascript 的 12 个怪癖](https://github.com/justjavac/12-javascript-quirks)
 * [JavaScript Style Guide](https://github.com/airbnb/javascript)
 
-__Seajs__
-
+#### Seajs ####
 ***
 
 * [专注Sea.js，深入浅出分析Sea.js模块机制](https://github.com/island205/HelloSea.js)
 
-__Git__
-
+#### Git ####
 ***
 
 * [Git-Tutorial](https://github.com/numbbbbb/Git-Tutorial-By-liaoxuefeng)
@@ -49,23 +45,20 @@ __Git__
 * [A guide to using Git](https://github.com/blynn/gitmagic)
 
 
-__Markdown__
-
+#### Markdown ####
 ***
 
 * [Online Markdown editor](http://dillinger.io/) 可在线查看Markdown的效果
 
 
-__NodeJS__
-
+#### NodeJS ####
 ***
 
 * [七天学会NodeJS](http://nqdeng.github.io/7-days-nodejs)
 * [Node.js Style Guide](https://github.com/dead-horse/node-style-guide)
 * [NodeJS-Handbook](https://github.com/FredKSchott/NodeJS-Handbook)
 
-__不错的博客__
-
+#### 不错的博客 ####
 ***
 
 * [markyun](https://github.com/markyun/My-blog)  设计前端知识
@@ -74,8 +67,7 @@ __不错的博客__
 * [玉伯在Github上写博](https://github.com/lifesinger/lifesinger.github.com/issues?labels=blog)
 * [CSS魔法 - 博客](https://github.com/cssmagic/blog)
 
-__other__
-
+#### other ####
 ***
 
 * [http-api-design](https://github.com/interagent/http-api-design)
