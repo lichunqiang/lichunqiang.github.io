@@ -11,6 +11,7 @@ id: 5
 > 将在这里收集一些在Github上发现的比较不错并且值得学习的项目
 
 __PHP__
+
 ***
 
 * [PHP-Best-Practices-zh_CN](https://github.com/justjavac/PHP-Best-Practices-zh_CN)
@@ -21,6 +22,7 @@ __PHP__
 * [PHP之道](http://wulijun.github.io/php-the-right-way/)
 
 __javascript__
+
 ***
 
 * [javascriptPattern](https://github.com/nanjixiong218/javascriptPattern)
@@ -33,11 +35,13 @@ __javascript__
 * [JavaScript Style Guide](https://github.com/airbnb/javascript)
 
 __Seajs__
+
 ***
 
 * [专注Sea.js，深入浅出分析Sea.js模块机制](https://github.com/island205/HelloSea.js)
 
 __Git__
+
 ***
 
 * [Git-Tutorial](https://github.com/numbbbbb/Git-Tutorial-By-liaoxuefeng)
@@ -46,12 +50,14 @@ __Git__
 
 
 __Markdown__
+
 ***
 
 * [Online Markdown editor](http://dillinger.io/) 可在线查看Markdown的效果
 
 
 __NodeJS__
+
 ***
 
 * [七天学会NodeJS](http://nqdeng.github.io/7-days-nodejs)
@@ -59,6 +65,7 @@ __NodeJS__
 * [NodeJS-Handbook](https://github.com/FredKSchott/NodeJS-Handbook)
 
 __不错的博客__
+
 ***
 
 * [markyun](https://github.com/markyun/My-blog)  设计前端知识
@@ -68,6 +75,7 @@ __不错的博客__
 * [CSS魔法 - 博客](https://github.com/cssmagic/blog)
 
 __other__
+
 ***
 
 * [http-api-design](https://github.com/interagent/http-api-design)
