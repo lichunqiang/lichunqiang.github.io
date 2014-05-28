@@ -7,7 +7,7 @@ category: svn
 id: 1401264307339
 ---
 
-####centos 配置svn####
+#### centos 配置svn ####
 ***
 
 * 检查是否安装svn	
@@ -44,14 +44,14 @@ id: 1401264307339
 
 以上的配置参考[CentOS-6.3安装配置SVN](http://my.oschina.net/junn/blog/164041)
 
-###配置apache###
+### 配置apache ###
 ***
 由于我的服务器80端口被nginx占用，所以采用nginx反向代理的办法,apache监听8080端口，
 配置nginx 
 
 	proxy_pass http://127.0.0.1:8080
 
-####配置svn用户密码####
+#### 配置svn用户密码 ####
 
 > 设置密码
 
@@ -64,7 +64,7 @@ id: 1401264307339
 	$ svn import /data/www/code file:///opt/svn/repos1 -m 'first init'
 	$ chown -R apache.apache repos
 
-####创建svn版本库####
+#### 创建svn版本库 ####
 
 	$ svnadmin create /opt/svn/testrepos
 
