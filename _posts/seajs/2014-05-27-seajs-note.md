@@ -10,9 +10,7 @@ id: 3
 
 [ppt]: https://speakerdeck.com/lifesinger/seajs
 
-__在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
-
-```
+__在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__		
 
 	/*a.js*/
 	define(function(require, exports, module){
@@ -22,9 +20,7 @@ __在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
 	});
 
 	/*main.js*/
-	seajs.use(./a);
-
-```
+	seajs.use(./a);		
 
 * Step1:  	解析 './a'
 * Step2.1:  下载a
@@ -35,7 +31,7 @@ __在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
 
 __Step1: 路径解析__
 
-在进行路径解析的时候```require('jquery)```, 首先判断在```seajs.config```是否定义了该```alias```,
+在进行路径解析的时候```require('jquery')```,首先判断在```seajs.config```是否定义了该```alias```,	
 
 如果存在替换.(*parseAlias*)		
 
