@@ -69,8 +69,10 @@ __other__
 * [免费的计算机编程类中文书籍](https://github.com/justjavac/free-programming-books-zh_CN)
 * [翻译 stackoverflow.com 上的热门问题](https://github.com/justjavac/stackoverflow-cn)
 
-> 有推荐欢迎留言
-> 以上有涉及到个人隐私请及时联系我！
+> 有推荐欢迎留言	
+
+> 以上有涉及到个人隐私请及时联系我！	
+
 
 _(未完待续...)_
 
