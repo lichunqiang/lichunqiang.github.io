@@ -12,23 +12,23 @@ id: 1403321082581
 
 3. 初始化
 
-	git init
+		git init
 
 4. 为初次提交添加文件
 
-	git add .
+		git add .
 
 5. 提交
 
-	git commit -m  'First Commit'
+		git commit -m  'First Commit'
 
 6. 将远程地址添加到本地repos
 
-	git remote add origin <remote repos URL>
-	# Sets the new remote
-	git remote -v
-	# Verifies the new remote URL
+		git remote add origin <remote repos URL>
+		# Sets the new remote
+		git remote -v
+		# Verifies the new remote URL
 
 7. 推送
 
-	git push origin master
+		git push origin master
