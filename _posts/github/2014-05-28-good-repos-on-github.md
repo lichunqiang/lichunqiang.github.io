@@ -32,6 +32,9 @@ __javascript__
 * [JavaScript 异常档案，沉淀、交流与分享](https://github.com/totorojs/javascript-exception-archives)
 * [javascript 的 12 个怪癖](https://github.com/justjavac/12-javascript-quirks)
 * [JavaScript Style Guide](https://github.com/airbnb/javascript)
+* [Programing-In-Javascript](https://github.com/RobinQu/Programing-In-Javascript)
+* [ruanyifeng Javascript Tutorial](http://javascript.ruanyifeng.com/)
+* [JavaScript-Garden](http://bonsaiden.github.io/JavaScript-Garden/zh/)
 
 __Seajs__
 
@@ -69,6 +72,9 @@ __other__
 * [http-api-design](https://github.com/interagent/http-api-design)
 * [免费的计算机编程类中文书籍](https://github.com/justjavac/free-programming-books-zh_CN)
 * [翻译 stackoverflow.com 上的热门问题](https://github.com/justjavac/stackoverflow-cn)
+* [IcoMoon App](http://icomoon.io/app/#/select)
+* [The-Art-Of-Programming-By-July](https://github.com/julycoding/The-Art-Of-Programming-By-July)
+* [front-end-collect](https://github.com/foru17/front-end-collect)
 
 > 有推荐欢迎留言	
 
