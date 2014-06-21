@@ -1,0 +1,20 @@
+<html>
+<head>
+	<title>test</title>
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+
+	<script type="text/javascript">
+	function test() {
+		console.log(arguments)
+		console.log(this)
+	}
+
+	var _re = $.proxy(test, {name: 'light'}, {'test': 'dasd'})();
+	//console.log(_re);
+	//test();
+	</script>
+
+</body>
+</html>

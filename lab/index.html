@@ -1,1 +1,80 @@
-My lab
+<html>
+<head>
+	<title>test</title>
+	<style type="text/css">
+		
+	.list-member li {
+		margin: 10px 0 0 0;
+		font-size: 14px;
+		color: #666;
+	}	
+	.list-member li {
+		font-size: 12px;
+	}
+
+	</style>
+	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+	<div class="list list-member">
+	<ul>
+	  <li>Member ID1
+	  <li>Member ID2
+	  <li>Member ID3
+	</ul>
+	</div>
+	<script type="text/javascript">
+	var a = '1'; // switch and case use '==='
+	switch(a) {
+
+		case 1:
+			console.log('this is 1');
+			break;
+		case 2:
+			console.log('this is 2');
+			break;
+		default:
+			console.log('this is default');
+	}
+
+	// function Foo() {
+	// 	this.value = 42;
+	// }
+	// Foo.prototype = {
+	// 	method: function() {}
+	// };
+
+
+	// function Bar() {
+	// 	this.bar = 'bar';
+	// }
+
+	// Bar.prototype = new Foo();
+	// Bar.prototype.foo = 'hello world';
+
+	// Bar.prototype.constructor = Bar;
+
+	// var test = new Bar();
+
+	// console.log(test)
+
+	function Foo() {
+		this.bla = 1;
+	}
+	Foo.prototype.test = function() {
+		console.log(this.bla);
+	}
+
+	var test = new Foo();
+
+	function Bar() {
+		this.value = 2;
+		return {
+			foo: 1
+		};
+	}
+
+	</script>
+<!-- <script src="https://gist.github.com/lichunqiang/3ef8ec96475175983940.js"></script> -->
+</body>
+</html>
