@@ -20,6 +20,7 @@ __PHP__
 * [收集PHP最佳实践、编码规范和权威学习指南](https://github.com/wulijun/php-the-right-way)
 * [PHP之道](http://wulijun.github.io/php-the-right-way/)
 * [Thinking In PHP Internals](https://github.com/reeze/tipi)
+* [Composer chinese](http://weizhifeng.net/manage-php-dependency-with-composer.html)
 
 __javascript__
 
