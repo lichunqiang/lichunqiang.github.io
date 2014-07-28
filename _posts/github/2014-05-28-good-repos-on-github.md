@@ -59,6 +59,7 @@ __NodeJS__
 * [七天学会NodeJS](http://nqdeng.github.io/7-days-nodejs)
 * [Node.js Style Guide](https://github.com/dead-horse/node-style-guide)
 * [NodeJS-Handbook](https://github.com/FredKSchott/NodeJS-Handbook)
+* [Node入门](http://www.nodebeginner.org/index-zh-cn.html)
 
 __不错的博客__
 

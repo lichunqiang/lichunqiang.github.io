@@ -87,16 +87,16 @@ __(执行:)__
 
 1. 首先我们需要做的是改变目录结构
 
-	test
-	    src
-	      -- bin
-	        -- uppercaseme 
-	      -- lib
-	        -- uppercaseme.js
-	      -- package.json
-	      -- README.md
+	test   	
+	    src    
+	      -- bin   
+	        -- uppercaseme    
+	      -- lib   
+	        -- uppercaseme.js   
+	      -- package.json   
+	      -- README.md   
 
-	    myfile.txt	
+	    myfile.txt	   
 
 将我们刚刚写好的uppercaseme.js移动到lib目录。其他文件先留空在接下来进行完善。
 
@@ -121,9 +121,8 @@ _(命令行仍然在test文件夹)_
 
 3. 改造文件为Node模块
 
-	"use strict"
+	"use strict"  
 	var fs = require('fs');
-
 	function convertThis() {
 	    if(process.argv.length > 2) {
 	        var myfile = process.argv[2];
@@ -139,7 +138,6 @@ _(命令行仍然在test文件夹)_
 	        console.log("Pass on a file name/path");
 	    }
 	}
-
 	exports.convert = convertThis;
 
 > 暴露出convert接口
@@ -240,4 +238,6 @@ package.json:
 [参考文章](http://www.tuicool.com/articles/F7f22i)
 
 
+### [note]
 
+在package.json所在目录下使用npm install . -g可先在本地安装当前命令行程序，可用于发布前的本地测试。
