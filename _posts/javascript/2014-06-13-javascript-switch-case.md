@@ -2,8 +2,8 @@
 layout: post
 title: javscript中的switch
 keywords: javascript switch case
-category: javascript
-tag: javascript
+categories: [javascript]
+tags: [javascript]
 id: 1402624246808
 ---
 

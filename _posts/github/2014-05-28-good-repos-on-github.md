@@ -2,8 +2,8 @@
 layout: post
 title: 收集一些Github上不错的项目以及博客
 keywords: Github 上不错的项目以及博客
-category: github
-tag: technology
+categories: [github]
+tags: [technology]
 id: 5
 ---
 

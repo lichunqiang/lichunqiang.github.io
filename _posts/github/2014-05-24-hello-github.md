@@ -2,9 +2,10 @@
 layout: post
 title: Hello Github
 keywords: Hello Github
-category: github
-tag: technology
+categories: [github]
+tags: [technology]
 id: 1
+description: Markdown的语法
 ---
 
 #### {{ page.title }}

@@ -2,8 +2,8 @@
 layout: post
 title: Seajs 笔记(一)
 keywords: Seajs, Seajs笔记
-category: seajs
-tag: javascript
+categories: [seajs]
+tags: [javascript]
 id: 3
 ---
 

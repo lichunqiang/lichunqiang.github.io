@@ -2,8 +2,8 @@
 layout: post
 title: jQuery plugin
 keywords: jquery jquery plugin countable
-category: javascript
-tag: javascript
+categories: [javascript]
+tags: [javascript]
 id: 2
 ---
 

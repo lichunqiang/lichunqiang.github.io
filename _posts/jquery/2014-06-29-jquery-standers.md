@@ -2,8 +2,8 @@
 layout: post
 title: jQuery Standards
 keywords: jQuery, Standars
-category: jquery
-tag: javascript
+categories: [jquery]
+tags: [javascript]
 id: 1404033691691
 ---
 

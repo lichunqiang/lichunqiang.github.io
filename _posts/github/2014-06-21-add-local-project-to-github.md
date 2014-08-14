@@ -2,8 +2,8 @@
 layout: post
 title: 使用命令行添加一个存在的项目
 keywords: 使用命令行添加一个存在的项目 Adding an existing project to GitHub using the command line
-category: github
-tag: technology
+categories: [github]
+tags: [technology]
 id: 1403321082581
 ---
 

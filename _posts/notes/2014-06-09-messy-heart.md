@@ -2,8 +2,8 @@
 layout: post
 title: Messy Heart
 keywords: messy heart
-category: notes
-tag: 杂七杂八
+categories: [notes]
+tags: [杂七杂八]
 id: 1402297068748
 ---
 

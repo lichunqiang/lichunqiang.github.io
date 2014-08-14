@@ -3,8 +3,8 @@ layout: post
 title: Centos安装配置SVN
 keywords:  Centos安装配置SVN
 description: Centos安装配置SVN遇到问题
-category: svn
-tag: technology
+categories: [svn]
+tags: [technology]
 id: 1401264307339
 ---
 
