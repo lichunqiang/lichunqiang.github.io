@@ -5,7 +5,6 @@ description: 大学回忆
 categories: [notes]
 tags: [杂七杂八]
 id: 1401878699816
-fullview: true
 ---
 
 > 偶然看到这段视频，勾起了不少回忆
