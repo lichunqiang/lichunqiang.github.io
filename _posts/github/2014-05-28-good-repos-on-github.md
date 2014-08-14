@@ -45,7 +45,7 @@ __Seajs__
 __Git__
 
 * [Git-Tutorial](https://github.com/numbbbbb/Git-Tutorial-By-liaoxuefeng)
-* [一本关于GitHub的书](https://github.com/gotgit/gotgithub) 
+* [一本关于GitHub的书](https://github.com/gotgit/gotgithub)
 * [A guide to using Git](https://github.com/blynn/gitmagic)
 
 
@@ -78,11 +78,11 @@ __other__
 * [The-Art-Of-Programming-By-July](https://github.com/julycoding/The-Art-Of-Programming-By-July)
 * [front-end-collect](https://github.com/foru17/front-end-collect)
 
-> 有推荐欢迎留言	
+> 有推荐欢迎留言
 
-> 以上有涉及到个人隐私请及时联系我！	
+> 以上有涉及到个人隐私请及时联系我！
 
 
 _(未完待续...)_
 
-<img src="/images/20131121105940895.jpg">
+<img src="/assets/media/20131121105940895.jpg">
