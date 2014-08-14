@@ -1,7 +1,7 @@
 ---
 layout: post
 title: javscript中的switch
-keywords: javascript switch case
+description: javascript中的switch
 categories: [javascript]
 tags: [javascript]
 id: 1402624246808

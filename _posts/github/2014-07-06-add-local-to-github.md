@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 将本地目录添加到github的repos
-keywords: Github, local repos, 本地项目
+description: Github, local repos, 本地项目
 categories: [github]
 tags: [technology]
 id: 1404654536857

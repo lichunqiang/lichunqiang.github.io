@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 全局运行本地 NPM 包
-keywords: 全局运行本地 NPM 包
+description: 全局运行本地 NPM 包
 categories: [node]
 tags: [javascript]
 id: 1403321082583

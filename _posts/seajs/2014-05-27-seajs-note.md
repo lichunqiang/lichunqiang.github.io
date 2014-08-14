@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Seajs 笔记(一)
-keywords: Seajs, Seajs笔记
+description: Seajs, Seajs笔记
 categories: [seajs]
 tags: [javascript]
 id: 3

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: jQuery plugin
-keywords: jquery jquery plugin countable
+description: jQUery插件-Countable
 categories: [javascript]
 tags: [javascript]
 id: 2

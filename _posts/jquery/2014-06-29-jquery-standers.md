@@ -1,7 +1,7 @@
 ---
 layout: post
 title: jQuery Standards
-keywords: jQuery, Standars
+description: jQuery标注
 categories: [jquery]
 tags: [javascript]
 id: 1404033691691

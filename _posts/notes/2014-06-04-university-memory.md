@@ -1,7 +1,7 @@
 ---
 layout: post
 title: University Memory
-keywords: 大学回忆
+description: 大学回忆
 categories: [notes]
 tags: [杂七杂八]
 id: 1401878699816

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 如何在Github上贡献开源项目代码
-keywords: 在Github上贡献代码, 如何在Github上贡献开源项目代码
+description: 在Github上贡献代码, 如何在Github上贡献开源项目代码
 categories: [github]
 tags: [technology]
 id: 1

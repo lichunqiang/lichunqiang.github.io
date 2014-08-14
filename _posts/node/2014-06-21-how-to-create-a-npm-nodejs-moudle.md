@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 创建一个NodeJS NPM 包
-keywords: 如何创建一个NodeJS NPM 包
+description: 如何创建一个NodeJS NPM 包
 categories: [node]
 tags: [javascript]
 id: 1403321082582
