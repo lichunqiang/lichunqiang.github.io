@@ -3,6 +3,7 @@ layout: post
 title: 怎样撤销一次错误的提交
 keywords: Github
 category: github
+tag: technology
 id: 1405138557850
 ---
 

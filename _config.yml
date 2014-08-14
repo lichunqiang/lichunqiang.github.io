@@ -12,7 +12,7 @@ defaults:
     scope:
       path: "" # empty string for all files
     values:
-      title: Light
+      title: 李某某
 
 description: Stylish Jekyll Theme
 author:
@@ -22,7 +22,7 @@ author:
   twitter: chunqiang.lee
   pinterest: light
   linkedin: light
-  bio: Your stylish, minimalist theme!
+  bio: I can do better!
   email_md5: 44d97c8966000a5ea9a1140cdb688e4a
 
 rss_path: feed.xml

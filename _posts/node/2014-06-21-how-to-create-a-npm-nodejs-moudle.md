@@ -3,6 +3,7 @@ layout: post
 title: 创建一个NodeJS NPM 包
 keywords: 如何创建一个NodeJS NPM 包
 category: node
+tag: javascript
 id: 1403321082582
 ---
 
@@ -37,10 +38,10 @@ __(执行:)__
 
 上一个列子将读取的文件hardcoding了，我们稍作改进,通过命令行读取要执行操作的文件。
 
-	//使用process.argv	
+	//使用process.argv
 	0: node
 	1: <name-of-your-js-file>
-	2+....<additional arguments passed>	
+	2+....<additional arguments passed>
 
 更新代码：
 
@@ -48,7 +49,7 @@ __(执行:)__
 	var fs = require('fs');
 	if(process.argv.length > 2) {
 	    // Read the first additional argument passed to the program
-	    var myfile = process.argv[2]; 
+	    var myfile = process.argv[2];
 
 	    if(fs.existsSync(myfile)) {
 	        var content = fs.readFileSync(myfile, 'utf8');
@@ -72,11 +73,11 @@ __(执行:)__
 将我们写好的模块发布出来，让更多人使用，发布之后其他人就可以像下面一样使用：
 
 * 通过NPM安装
-	
+
 	npm install uppercase
 
 * 在命令行中使用
-	
+
 	uppercaseme <filename>
 
 * 被当作模块在其他模块中使用
@@ -87,16 +88,16 @@ __(执行:)__
 
 1. 首先我们需要做的是改变目录结构
 
-	test   	
-	    src    
-	      -- bin   
-	        -- uppercaseme    
-	      -- lib   
-	        -- uppercaseme.js   
-	      -- package.json   
-	      -- README.md   
+	test
+	    src
+	      -- bin
+	        -- uppercaseme
+	      -- lib
+	        -- uppercaseme.js
+	      -- package.json
+	      -- README.md
 
-	    myfile.txt	   
+	    myfile.txt
 
 将我们刚刚写好的uppercaseme.js移动到lib目录。其他文件先留空在接下来进行完善。
 
@@ -117,11 +118,11 @@ _(命令行仍然在test文件夹)_
 	var fs = require('fs');
 	var lib = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
 
-	require(lib + '/uppercaseme.js').convert();	
+	require(lib + '/uppercaseme.js').convert();
 
 3. 改造文件为Node模块
 
-	"use strict"  
+	"use strict"
 	var fs = require('fs');
 	function convertThis() {
 	    if(process.argv.length > 2) {
@@ -173,7 +174,7 @@ package.json:
 	  "engines": {
 	    "node": "*"
 	  }
-	}	
+	}
 
 
 > main是一个模块的ID，也是程序的主要入口。在例子中我们的package被命名为 uppercaseme 。当用户安装之后，并 require('uppercaseme')之后我们的主模块的export object会被返回。
@@ -183,7 +184,7 @@ package.json:
 > dependencies 我们package的所需的依赖列表
 
 2. 发布
- 
+
 在发布之前，必须有一个user。如果没有:
 
 	npm adduser
@@ -191,7 +192,7 @@ package.json:
 提供你的用户名和邮件地址，会为你新建一个用户。
 
 假设你仍然在 test 目录，请执行：
-	
+
 	cd src
 	npm publish
 
@@ -200,14 +201,14 @@ package.json:
 ## 安装我们的NPM包
 
 切换到其他目录，并输入命令：
-	
+
 	npm install uppercaseme
 
 这将会获取 uppercaseme 包，并创建一个本地安装。这只是一个本地安装，我们并不能在任何地方使用。
 这个命令会在目录创建一个 node_modules 目录，我们的 uppercaseme 模块就安装在此。并且在 .bin 中创建了一个链接。
 
 接下来进行测试：
-	
+
 	echo 'my lowercase file' > myfile.txt
 
 使用我们的模块进行转化：
@@ -216,7 +217,7 @@ package.json:
 
 	OR
 
-	"./node_modules/.bin/uppercaseme" myfile.txt	
+	"./node_modules/.bin/uppercaseme" myfile.txt
 
 检查执行之后的文件，是否被成功转化。
 

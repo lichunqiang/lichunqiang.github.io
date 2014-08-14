@@ -3,6 +3,7 @@ layout: post
 title: Seajs 笔记(一)
 keywords: Seajs, Seajs笔记
 category: seajs
+tag: javascript
 id: 3
 ---
 
@@ -10,7 +11,7 @@ id: 3
 
 [ppt]: https://speakerdeck.com/lifesinger/seajs
 
-__在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__		
+__在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
 
 	/*a.js*/
 	define(function(require, exports, module){
@@ -20,7 +21,7 @@ __在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
 	});
 
 	/*main.js*/
-	seajs.use(./a);		
+	seajs.use(./a);
 
 * Step1:  	解析 './a'
 * Step2.1:  下载a
@@ -31,15 +32,15 @@ __在这份Seajs的PPT中，玉伯介绍到了Seajs的实现__
 
 __Step1: 路径解析__
 
-在进行路径解析的时候```require('jquery')```,首先判断在```seajs.config```是否定义了该```alias```,	
+在进行路径解析的时候```require('jquery')```,首先判断在```seajs.config```是否定义了该```alias```,
 
-如果存在替换.(*parseAlias*)		
+如果存在替换.(*parseAlias*)
 
-这之后在根据```base```,将id值解析为uri.(*id2uri*)	
+这之后在根据```base```,将id值解析为uri.(*id2uri*)
 
-在接下来进行(*parseMap*), 即对```seajs.config```中的map进行解析。	
+在接下来进行(*parseMap*), 即对```seajs.config```中的map进行解析。
 
-最终得到完整的路径！		
+最终得到完整的路径！
 
 
 __Step2: 模块加载___

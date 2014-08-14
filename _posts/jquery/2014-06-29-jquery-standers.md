@@ -3,6 +3,7 @@ layout: post
 title: jQuery Standards
 keywords: jQuery, Standars
 category: jquery
+tag: javascript
 id: 1404033691691
 ---
 

@@ -3,6 +3,7 @@ layout: post
 title: 全局运行本地 NPM 包
 keywords: 全局运行本地 NPM 包
 category: node
+tag: javascript
 id: 1403321082583
 ---
 

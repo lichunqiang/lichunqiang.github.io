@@ -3,10 +3,11 @@ layout: post
 title: 将本地目录添加到github的repos
 keywords: Github, local repos, 本地项目
 category: github
+tag: technology
 id: 1404654536857
 ---
 
-1. 命令行切换到工作目录，并执行init 
+1. 命令行切换到工作目录，并执行init
 
 		git init
 
