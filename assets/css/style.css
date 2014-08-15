@@ -181,3 +181,7 @@ ul.dropdown-menu>li>a>i.fa {
     width: 1.3em;
 }
 
+article.home{
+  border-bottom: 3px dashed #4D4398;
+  padding-bottom: 15px;
+}
