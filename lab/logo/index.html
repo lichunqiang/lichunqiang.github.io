@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Logo</title>
+  <style type="text/css">
+    /**
+     * Logo.
+     *
+     * *.logo[data-logo][data-color]
+     *   *
+     */
+
+    .logo {
+      margin: 0; /* reset */
+      position: relative;
+      display: inline-block;
+      vertical-align: middle; /* not baseline, so we align up _and_ down */
+      height: 1em; /* keep height constant regardless of innards */
+    }
+
+    .logo > * {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      text-indent: -9999px; /* image replacement */
+      direction: ltr; /* make text-indent play nice */
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+    }
+  </style>
+</head>
+<body>
+  <!--example one-->
+  <div class="logo" data-logo="New York Times">
+    <span>New York Times</span>
+    <img src="../../assets/media/dbyll-ss.png">
+  </div>
+  <!--example two-->
+  <a class="logo" data-logo="Your Company">
+    <h1>Your Company</h1>
+  </a>
+  <!--inline logo-->
+  <p>Powered by <a class="logo" data-logo="Firebase"><span>Firebase</span></a>.</p>
+  <script type="text/javascript">
+  console.log('repos: ', 'https://github.com/logo/logo');
+  </script>
+</body>
+</html>

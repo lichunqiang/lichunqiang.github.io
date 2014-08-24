@@ -1,6 +1,6 @@
 ---
 layout: post
-title: PHP 接口
+title: PHP Every Day
 description: PHP接口介绍
 categories: [php]
 tags: [technology]
