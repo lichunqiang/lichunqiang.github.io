@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Pjax</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="x-pjax-version" content="v1.0.0">
+		<!-- <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css"> -->
+		<link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+		<link href="http://cdn.bootcss.com/nprogress/0.1.3/nprogress.css" rel="stylesheet">
+		<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.js"></script>
+		<script src="http://cdn.bootcss.com/nprogress/0.1.3/nprogress.js"></script>
+		<script type="text/javascript" src="assets/scripts/jquery.pjax.defunkt.js"></script>
+		<!-- <script type="text/javascript" src="assets/scripts/jquery.pjax.js"></script> -->
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="page-header">
+					<h1>Pjax</h1>
+				</div>
+			</div>
+			<div class="row" id='partial'>
+				<div class="list-group">
+					<a title='案例一' href="demo1.html" class="list-group-item">案例1</a>
+					<a title='案例二' href="demo2.html" class="list-group-item">案例2</a>
+					<a title='案例三' href="demo3.html" class="list-group-item">案例3</a>
+					<a title='案例四' href="demo4.html" class="list-group-item">案例4</a>
+					<a title='案例五' href="demo5.html" class="list-group-item">案例5</a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).pjax('a', '#partial')
+					   .on('pjax:start', function(){
+					   		NProgress.start();
+					   })
+					   .on('pjax:complete', function(){
+					   		NProgress.done();
+					   });
+			// $('#partial').on('pjax.start', function(){
+			// 	console.log('start...');
+			// 	NProgress.start();
+			// });
+			// $("#partial").on('pjax.end', function(){
+			// 	console.info('ending..');
+			// 	NProgress.done();
+			// });
+			// $.pjax({
+			//     selector: 'a',
+			//     container: '#partial', //内容替换的容器
+			//     // show: 'fade',  //展现的动画，支持默认和fade, 可以自定义动画方式，这里为自定义的function即可。
+			//     cache: false,  //是否使用缓存
+			//     // storage: false,  //是否使用本地存储
+			//     //titleSuffix: '', //标题后缀
+			//     filter: function(href){
+			//     	console.log('filter');
+			//     	console.log(href);
+			//     },
+			//     callback: function(status){
+			//     	console.log('callback');
+			//     	console.log(status);
+			//     }
+			// });
+		</script>
+	</body>
+</html>
