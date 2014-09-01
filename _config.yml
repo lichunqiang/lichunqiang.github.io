@@ -28,5 +28,6 @@ author:
 rss_path: feed.xml
 categories_path: categories.html
 tags_path: tags.html
+lab_path: lab.html
 
 BASE_PATH:
