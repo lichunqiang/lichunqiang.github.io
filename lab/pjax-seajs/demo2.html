@@ -1,0 +1,15 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">
+		demo2
+	</div>
+	<div class="panel-body">
+		<p>this is demo2;</p>
+		<p><a href="index.html">Homepage</a></p>
+		<p><a href="demo1.html">Demo1</a></p>
+	</div>
+</div>
+<script type="text/javascript">
+	seajs.use(['common/math', '$'], function(math, $){
+		$('.panel-body').append($('<p>').text('1 + 2 = ' + math.add(1, 2)));
+	})
+</script>
