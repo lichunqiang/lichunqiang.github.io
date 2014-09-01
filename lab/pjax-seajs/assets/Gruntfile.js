@@ -31,11 +31,11 @@ module.exports = function (grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: 'scripts/common',
+                        cwd: 'scripts/src/common',
                         src: ['**.js', '!**-debug.js'],
                         filter: 'isFile',
                         // dest: '.build/common'
-                        dest: 'dist/common'
+                        dest: 'scripts/common'
                     }
                 ]
             },
@@ -46,11 +46,11 @@ module.exports = function (grunt) {
               files: [
                 {
                   expand: true,
-                  cwd: 'scripts/app',
+                  cwd: 'scripts/src/app',
                   src: '**.js',
                   filter: 'isFile',
                   // dest: '.build/app'
-                  dest: 'dist/app'
+                  dest: 'scripts/app'
                 }
               ]
             }
@@ -64,11 +64,11 @@ module.exports = function (grunt) {
                 files: [
                     {
                       expand: true,
-                      cwd: 'dist/app',
+                      cwd: 'scripts/app',
                       src: '**.js',
                       filter: 'isFile',
                       // dest: '.build/app'
-                      dest: 'dist/app'
+                      dest: 'scripts/app'
                     }
                 ]
             }
@@ -86,17 +86,17 @@ module.exports = function (grunt) {
                     // }
                     {
                         expand: true,
-                        cwd: 'dist/app',
+                        cwd: 'scripts/app',
                         src: ['*.js', '!*-debug.js'],
                         filter: 'isFile',
-                        dest:'dist/app'
+                        dest:'scripts/app'
                     },
                     {
                         expand: true,
-                        cwd: 'dist/common',
+                        cwd: 'scripts/common',
                         src: ['*.js', '!*-debug.js'],
                         filter: 'isFile',
-                        dest:'dist/common'
+                        dest:'scripts/common'
                     }
                 ]
             }

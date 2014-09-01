@@ -1,0 +1,1 @@
+define("app/util",[],function(a,b,c){c.exports={say:function(){console.log("say")}}});

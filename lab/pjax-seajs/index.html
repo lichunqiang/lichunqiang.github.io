@@ -15,6 +15,7 @@
 		<!-- <script type="text/javascript" src="assets/scripts/jquery.pjax.js"></script> -->
 		<script type="text/javascript" src="assets/scripts/seajs/2.3.0/sea-debug.js"></script>
 		<script type="text/javascript">
+		seajs.production = true;
 		seajs.config({
 			base: './assets/scripts',
 			alias: {
@@ -23,8 +24,8 @@
 				'date': 'gallery/date/0.0.0/index-debug'
 			},
 			paths: {
-				app: 'src/app',
-				common: 'src/common'
+				app: seajs.production ? 'app'  : 'src/app',
+				common: seajs.production ? 'common' : 'src/common'
 			}
 		});
 		</script>
