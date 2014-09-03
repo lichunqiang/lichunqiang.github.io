@@ -4,7 +4,7 @@
 		<title>Pjax-Seajs</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
 		<meta http-equiv="x-pjax-version" content="v1.0.0">
 		<!-- <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css"> -->
 		<link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
@@ -37,10 +37,18 @@
 					<h1>Pjax-seajs</h1>
 				</div>
 			</div>
+			<div class="row">
+				<p class="lead">ajax + history.pushState = pjax </p>
+				<blockquote>
+					<p>更多介绍：http://www.welefen.com/use-ajax-and-pushstate.html</p>
+					<footer>本案例使用的时候github上的jquery-pjax</footer>
+				</blockquote>
+				<p class="lead">Seajs - 是一款基于CMD的模块加载器</p>
+			</div>
 			<div class="row" id='partial'>
 				<div class="list-group">
-					<a title='案例一' href="demo1.html" class="list-group-item">案例1</a>
-					<a title='案例二' href="demo2.html" class="list-group-item">案例2</a>
+					<a title='案例一' href="demo1.html" class="list-group-item">案例1<b class="glyphicon glyphicon-chevron-right pull-right"></b></a>
+					<a title='案例二' href="demo2.html" class="list-group-item">案例2<b class="glyphicon glyphicon-chevron-right pull-right"></b></a>
 					<!-- <a title='案例三' href="demo3.html" class="list-group-item">案例3</a>
 					<a title='案例四' href="demo4.html" class="list-group-item">案例4</a>
 					<a title='案例五' href="demo5.html" class="list-group-item">案例5</a> -->
@@ -51,6 +59,13 @@
 			$(document).pjax('a', '#partial')
 					   .on('pjax:start', function(){
 					   		NProgress.start();
+					   })
+					   .on('pjax:timeout', function(xhr, opts){
+					   		alert('pjax timeout');
+					   })
+					   .on('pjax:error', function(xhr, textStatus, error, opts){
+					   		alert('pjax error accured!!');
+					   		alert(textStatus);
 					   })
 					   .on('pjax:complete', function(){
 					   		NProgress.done();
