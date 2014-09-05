@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Echarts</title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="x-pjax-version" content="v1.0.0">
+		<!-- <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css"> -->
+		<link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+		<link href="http://cdn.bootcss.com/nprogress/0.1.3/nprogress.css" rel="stylesheet">
+		<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="page-header">
+					<h1>Echarts</h1>
+				</div>
+				<p class="lead">echarts实例</p>
+			</div>
+			<div id='result' class="row"></div>
+			<div id='map' class="row" style="height:400px;"></div>
+			<button id='showLoadig' class="btn btn-primary">显示加载</button>
+			<button id='hideLoadig' class="btn btn-primary">隐藏加载</button>
+			<button id="getOption" class="btn btn-primary">获取当前option</button>
+		</div>
+		<script type="text/javascript" src="assets/scripts/echarts/echarts-plain-original.js"></script>
+		<script type="text/javascript">
+			var $result = $('#result');
+			var myChart = echarts.init(document.getElementById('map'), 'macarons');
+
+			var option = {
+				//backgroundColor: '#ff7f50',
+			    tooltip: {
+			        show: true,
+			        trigger: 'axis'
+			    },
+			    toolbox: {
+			    	show: true,
+			    	feature: {
+			    		saveAsImage: {
+			    			show: true,
+			    			title: '保存为图片',
+			    			type: 'png'
+			    		}
+			    	}
+			    },
+			    legend: {
+			        data:['销量', '退货量']
+			    },
+			    xAxis : [
+			        {
+			            type : 'category',
+			            data : ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value'
+			        }
+			    ],
+			    series : [
+			        {
+			            "name":"销量",
+			            "type":"bar",
+			            "data":[5, 20, 40, 10, 10, 20]
+			        },
+			        {
+			            "name":"退货量",
+			            "type":"line",
+			            "data":[1, 0, 4, 9, 10, 20]
+			        }
+			    ]
+			};
+
+			// 为echarts对象加载数据
+			myChart.setOption(option);
+			//获取当前option
+			$("#getOption").on('click', function() {
+				console.info(myChart.getOption());
+			});
+
+			$('#showLoadig').on('click', function(){
+				myChart.showLoading({
+					text: '加载中...'
+				});
+			});
+
+			$('#hideLoadig').on('click', function(){
+				myChart.hideLoading();
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,1 @@
+define("common/math",[],function(a,b){function c(a,b){return a+b}function d(a,b){return a/b}b.add=c,b.devision=d});

@@ -1,0 +1,1 @@
+define("app/faker",[],function(a,b,c){function d(){this.name="faker"}d.prototype.getName=function(){return this.name},c.exports=new d});
