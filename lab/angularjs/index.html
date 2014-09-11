@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Test angular scope</title>
+	<link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-app="GreetModule">
+	<div class="container">
+		<div class="row" ng-controller="greet.ctrl.hello">
+			<div class="col-xs-3 col-sm-7 col-md-7 col-lg-7">
+				{{greeting.hello}}
+			</div>
+			<div class="col-xs-7 col-sm-3 col-md-3 col-lg-3" ng-controller="greet.ctrl.test">
+				<ul class="list-group">
+					<li class="list-group-item">{{text}}</li>
+					<li class="list-group-item">{{local}}</li>
+					<li class="list-group-item">Item 3</li>
+				</ul>
+			</div>
+			<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+				<span class="badge">this is badge.</span>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="components/angular/angular.js"></script>
+	<script type="text/javascript" src='static/js/greeting.js'></script>
+</body>
+</html>
