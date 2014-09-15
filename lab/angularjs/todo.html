@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>todo</title>
+	<link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css">
+	<style type="text/css">
+		.done-true {
+			text-decoration: line-through;
+			color: grey;
+		}
+		span.archive{position: relative;top:33px;}
+	</style>
+</head>
+<body ng-app="todoApp" ng-cloak>
+	<div class="container">
+		<div class="row">
+			<div class="page-header">
+			  <h1>Todo<small>build todo app use AngularJS</small></h1>
+			</div>
+		</div>
+		<div class="row" ng-controller="TodoController">
+			<!-- todo列表 begin -->
+			<span class='archive pull-right'>[ <a href="" ng-click="archive()">archive</a> ]</span>
+			<h2>{{remaining()}} of {{todos.length}} remaining</h2>
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="todo in todos">
+					<input type="checkbox" ng-model='todo.done' ng-checked="todo.done" ng-click="change(todo)">
+					<span class='label pull-right' ng-class="{'label-success':todo.done, 'label-default':!todo.done }">{{todo.doneText}}</span>
+					<!-- <span ng-if="todo.done" class="label label-success pull-right">已完成</span>
+					<span ng-if="!todo.done" class="label label-default pull-right">未完成</span> -->
+					{{todo.text}}
+				</li>
+			</ul>
+			<!-- todo列表 end -->
+			<!-- 提交 begin -->
+				<form action="" ng-submit="addTodo()" class='form-inline'>
+					<div class="form-group">
+						<label for="content" class="sr-only">dsadas</label>
+						<input id='content' type="text" ng-model='todoText' size='30' placeholder='add new todo here'  class="form-control">
+					</div>
+					<input type="submit" class="btn btn-primary" value="add">
+				</form>
+			<!-- 提交 end -->
+		</div>
+	</div>
+	<script type="text/javascript" src="components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="components/angular/angular.js"></script>
+	<script type="text/javascript" src='static/js/todo.js'></script>
+</body>
+</html>
