@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Hello Github
-keywords: Hello Github
+title: AngualrJS之provider
+keywords: AngularJS
 categories: [javascript]
 tags: [anguarJS]
 description: angularJS中各种的provider不同之处
@@ -99,7 +99,7 @@ factory是一个可注入的方法。从某种的意义而言factory非常像ser
 	app.config(function($provide){
 		$provide.factory('movie', function() {
 			return {
-				movie: 'The Matrix'
+				title: 'The Matrix'
 			};
 		});
 	});
@@ -110,11 +110,13 @@ factory是一个可注入的方法。从某种的意义而言factory非常像ser
 
 AngularJS还提供一种更加简便的方法：
 
+
  	app.factory('movie', function() {
  		return {
- 			movie: 'The Matrix'
+ 			title: 'The Matrix'
  		};
  	});
+
 
 ### Decorator
 
@@ -161,7 +163,7 @@ provide 实际上是一个配置的factory.它可以是一个对象或者构造�
 	});
 
 	app.controller('ctrl', function(movie) {
-		expect(movieTitle).toEqual('The Matrix Reloaded');
+		expect(movie.title).toEqual('The Matrix Reloaded');
 	});
 
 ## 总结
