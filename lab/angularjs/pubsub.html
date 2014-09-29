@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Test angular scope</title>
+	<link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-app="application">
+	<div class="container">
+		<div class="row">
+			<div class="page-header">
+			  <h1>pub sub</h1>
+			</div>
+		</div>
+	<div class='row' ng-include="'view1-partial.html'"></div>
+	<hr/>
+	<div class='row' ng-include="'view2-partial.html'"></div>
+	</div>
+	<script id='view1-partial.html' type="text/ng-template">
+	<div class="row-fluid" ng-controller="view1-controller">
+	    <h2>Hop Listing</h2>
+	    <table class="table table-bordered">
+	        <thead>
+	            <th></th>
+	            <th>Name</th>
+	            <th>Origin</th>
+	            <th>Use</th>
+	            <th>Notes</th>
+	            <th>Alpha</th>
+	        </thead>
+	        <tr ng-repeat="hop in hops | limitTo:5">
+	            <td><button class="btn btn-block" ng-click="onEdit(hop)">Edit</button><button class="btn btn-block" ng-click="onDelete(hop)">Delete</button></td>
+	            <td>{{hop.Name}}</td>
+	            <td>{{hop.Origin}}</td>
+	            <td>{{hop.Use}}</td>
+	            <td>{{hop.Notes}}</td>
+	            <td>{{hop.Alpha}}</td>
+	        </tr>
+	    </table>
+	</div>
+	</script>
+	<script id='view2-partial.html' type="text/ng-template">
+	<div class="row-fluid" ng-controller="view2-controller" ng-show="hop">
+	    <h2>Edit Hop Detail</h2>
+	    <form class="form-horizontal" name="hopForm">
+	        <div class="control-group">
+	            <label class="control-label" for="Name">
+	                <div class="controls">
+	                    <input type="text" id="Name" name="Name" class="input-large" ng-model="hop.Name">
+	                </div>
+	            </label>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label" for="Origin">
+	                <div class="controls">
+	                    <input type="text" id="Origin" name="Origin" class="input-large" ng-model="hop.Origin">
+	                </div>
+	            </label>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label" for="Use">
+	                <div class="controls">
+	                    <input type="text" id="Use" name="Use" class="input-large" ng-model="hop.Use">
+	                </div>
+	            </label>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label" for="Notes">
+	                <div class="controls">
+	                    <textarea id="Notes" name="Notes" class="input-large" rows="6" ng-model="hop.Notes"></textarea>
+	                </div>
+	            </label>
+	        </div>
+	        <div class="control-group">
+	            <label class="control-label" for="Alhpa">
+	                <div class="controls">
+	                    <input type="text" id="Alpha" name="Alpha" class="input-large" ng-model="hop.Alpha">
+	                </div>
+	            </label>
+	        </div>
+	        <div class="control-group">
+	            <button class="btn btn-primary" ng-click="onSave()">Save</button> <button class="btn btn-warning" ng-click="onCancel()">Cancel</button>
+	        </div>
+	    </form>
+	</div>
+	</script>
+	<script type="text/javascript" src="components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="components/angular/angular.js"></script>
+	<script type="text/javascript">
+	// define the services module for the application
+	angular.module('application.services', []);
+	// define the controllers module for the application
+	angular.module('application.controllers', ['application.services']);
+	// define the module for the application
+	angular.module('application', ['application.controllers', 'application.services']);
+	</script>
+	<script type="text/javascript">
+	angular.module('application.controllers')
+    //define the controller for view1
+    .controller('view1-controller', ['$scope', 'dataService', 'requestNotificationChannel', function($scope, dataService, requestNotificationChannel) {
+        $scope.hops = dataService.getHops();
+
+        $scope.onEdit = function(hop) {
+            requestNotificationChannel.editData(hop);
+        }
+
+        $scope.onDelete = function(hop) {
+            dataService.deleteHop(hop);
+        }
+    }]);
+	</script>
+	<script type="text/javascript">
+	angular.module('application.controllers')
+    //define the controller for view1
+    .controller('view2-controller', ['$scope', 'dataService', 'requestNotificationChannel', function($scope, dataService, requestNotificationChannel) {
+        $scope.hop = null;
+
+        var onEditDataHandler = function(item) {
+            $scope.hop = item;
+        };
+
+        requestNotificationChannel.onEditData($scope, onEditDataHandler);
+
+        $scope.onSave = function() {
+            dataService.saveHop($scope.hop);
+            $scope.hop = null;
+        }
+
+        $scope.onCancel = function() {
+            $scope.hop = null;
+        }
+    }]);
+	</script>
+	<script type="text/javascript" src='static/js/services.js'></script>
+</body>
+</html>
