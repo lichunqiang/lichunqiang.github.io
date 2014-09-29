@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>Test angular scope</title>
+	<link rel="stylesheet" type="text/css" href="../components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-app="app">
+	<div class="container">
+		<div class="row">
+			<div class="page-header">
+			  <h1>Provider-contant</h1>
+			</div>
+		</div>
+		<div class="row" ng-controller="testCtrl">
+			<h3>movie is {{movieTitle}}</h3>
+			<h4>{{valueMovie}}</h4>
+			<h4>book: {{book}}</h4>
+		</div>
+	</div>
+	<script type="text/javascript" src="../components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="../components/angular/angular.js"></script>
+	<script type="text/javascript">
+		var app = angular.module('app', []);
+
+		app.provider('book', function(){
+			var version = 'default';
+			return {
+				setVersion: function(value) {
+					version = value;
+				},
+				$get: function() {
+					return {
+						title: 'Hello Angualr' + '-' + version
+					};
+				}
+			};
+		});
+
+		app.config(['$provide', 'bookProvider', function($provide, bookProvider) {
+
+			$provide.constant('movieTitle', 'light');
+
+			$provide.value('valueMovie', 'from value');
+			//装饰器
+			$provide.decorator('valueMovie', function($delegate){
+				return $delegate + ' -- by light';
+			});
+
+			//set book version
+			bookProvider.setVersion('Light');
+		}]);
+
+		app.constant('xxx', 'yyy');
+
+		//value
+		//app.value('valueMovie', 'from value');
+
+		app.factory('water', [
+			'xxx',
+			function(xxx){
+				this.$get = {
+					name: 1
+				}
+				return 'hello'
+				// return {
+				// 	$get: function() {
+				// 		return xxx;
+				// 	}
+				// }
+			}
+		]);
+		//----service
+		function test(xxx) {
+			this.name = 'test';
+			this.yyy = xxx;
+		}
+
+		test.prototype.say = function() {
+			return this.name;
+		}
+		app.service('light', ['xxx', test]);
+
+		app.controller('testCtrl', [
+			'$scope',
+			'movieTitle',
+			'valueMovie',
+			'xxx',
+			'book',
+			'water',
+			'light',
+			function($scope, movieTitle, valueMovie, xxx, book, water, light){
+				$scope.movieTitle = movieTitle;
+				$scope.valueMovie = valueMovie;
+				// console.log(xxx);
+				// console.log(book);
+				// console.log(light);
+				console.log(water)
+				$scope.book = book.title;
+			}
+		]);
+	</script>
+</body>
+</html>

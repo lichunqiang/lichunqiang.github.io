@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>$location</title>
+	<link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-app="app">
+	<div class="container">
+		<div class="row">
+			<div class="page-header">
+			  <h1>Angular <small>$scope</small></h1>
+			</div>
+		</div>
+		<!-- 模块名 begin -->
+		<div class="row" ng-controller="parentCtrl">
+			<h2>{{name}}</h2>
+			<h4>{{obj.name}}</h4>
+			<ul class="list-group">
+				<li class="list-group-item" ng-repeat="value in list">{{value}}</li>
+			</ul>
+			<div class="row" ng-controller="childCtrl">
+				<strong>{{name}}</strong>
+				<h4>{{obj.name}}</h4>
+				<h4>{{newattr}}</h4>
+				<ul class="list-group">
+					<li class="list-group-item" ng-repeat="value in list">{{value}}</li>
+				</ul>
+			</div>
+		</div>
+		<!-- 模块名 end -->
+
+		<!-- 事件传播 begin -->
+		<div class="row" ng-controller="parentController">
+			<button type="button" class="btn btn-default" ng-click="notify()">通知所有儿子</button>
+
+			<div class="row" ng-controller="selfController">
+				<button type="button" class="btn btn-default" ng-click="tellParent()">告诉父亲发生什么</button>
+
+				<div class="row" ng-controller="childController">
+					<button type="button" class="btn btn-default" ng-click="tellParent()">告诉父亲发生什么</button>
+				</div>
+			</div>
+
+			<div class="row" ng-controller="brotherController">
+				<button type="button" class="btn btn-default" ng-click="tellParent()">告诉父亲发生什么</button>
+			</div>
+		</div>
+		<!-- 事件传播 end -->
+	</div>
+	<script type="text/javascript" src="components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="components/angular/angular.js"></script>
+	<script type="text/javascript">
+		var app = angular.module('app', []);
+
+		app.controller('parentController', ['$scope', function($scope){
+			$scope.notify = function() {
+				$scope.$broadcast('to-all', '吃饭了');
+			}
+
+			$scope.$on('notify-parent', function(e, msg) {
+				console.log(msg);
+			});
+
+		}]);
+
+		app.controller('selfController', ['$scope', function($scope){
+			$scope.$on('to-all', function(ev, msg){
+				console.log('selfController', msg);
+			});
+			$scope.$on('notify-parent', function(e, msg){
+				console.log('我也收到了selfController的通知', msg);
+			});
+
+			$scope.tellParent = function() {
+				$scope.$emit('notify-parent', 'bselfController通知');
+			}
+		}]);
+
+		app.controller('childController', ['$scope', function($scope){
+			$scope.$on('to-all', function(ev, msg){
+				console.log('childController', msg);
+			});
+			$scope.tellParent = function() {
+				$scope.$emit('notify-parent', 'childController通知');
+			}
+		}])
+
+		app.controller('brotherController', ['$scope', function($scope){
+			$scope.$on('to-all', function(ev, msg){
+
+				console.log('brotherController', msg);
+			});
+
+			$scope.tellParent = function() {
+				$scope.$emit('notify-parent', 'brotherController通知');
+			}
+		}])
+	</script>
+	<script type="text/javascript">
+
+
+		app.run(function(){
+			console.log('in run...');
+		});
+
+		app.config(['$filterProvider', '$httpProvider', function($filterProvider, $httpProvider) {
+
+			console.log('in config....')
+			// console.log($httpProvider.defaults)
+			$httpProvider.defaults.headers.common.Accept = 'application/json';
+
+			$filterProvider.register('lower', function() {
+
+				return function(name) {
+					return name.toLowerCase();
+				};
+			});
+		}]);
+
+		app.service('test', function(){
+			console.log('in service');
+		})
+
+		//one, 还可以通过upperFilter注入
+		app.filter('upper', function() {
+			console.log('define filter');
+			return function(list, order) {
+				console.log(list, order);
+
+			};
+		});
+
+		app.controller('parentCtrl', ['$scope', '$filter', function($scope, $filter){
+			$scope.name = 'I am parent';
+			$scope.list = [1, 2, 3];
+			$scope.obj = {name: 'light'};
+			$filter('upper')([1,2,3], 1);
+
+			console.log($filter('currency')(12.21, '￥'));
+			console.log($filter('lower')('Name'));
+		}]);
+
+		app.controller('childCtrl', ['$scope','$http', '$timeout', function($scope, $http, $timeout){
+			$scope.name = 'i am child';
+			// console.log($scope.list[1])
+			$scope.list = [4, 5,6];
+			//console.log($scope.list);
+			// $scope.obj = {name: 'xx'};
+			$scope.obj.name = 'lightwg';
+
+			$scope.$watch('obj.name', function(){
+				console.log('obj changed');
+				console.log(arguments);
+			})
+			// setTimeout(function(){
+			// 	$scope.obj.name = 'light---------';
+			// 	$scope.newattr = 'newattr';
+			// 	$scope.$apply();
+			// }, 3e3);
+			$timeout(function(){
+				$scope.obj.name = 'light-------------';
+			}, 3e3);
+		}]);
+	</script>
+</body>
+</html>

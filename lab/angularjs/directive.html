@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>AngularJs-directive</title>
+	<link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-app="app">
+	<div class="container">
+		<div class="row">
+			<div class="page-header">
+			  <h1>directive</h1>
+			</div>
+		</div>
+		<div class="row" ng-controller="colorCtrl">
+			<input type="text" ng-model='color'>
+
+			<hello-world color='{{color}}' sayIsolated='say()'></hello-world>
+		</div>
+
+		<div class="row" ng-controller="transcludeCtrl" output-text>
+			<h2>Transclude</h2>
+			<p>Hello {{text}}</p>
+		</div>
+	</div>
+	<script type="text/javascript" src="components/jquery/dist/jquery.js"></script>
+	<script type="text/javascript" src="components/angular/angular.js"></script>
+	<script type="text/javascript">
+	 var app = angular.module('app', []);
+
+	 app.controller('colorCtrl', ['$scope', function($scope){
+	 	$scope.color = 'red';
+
+	 	$scope.say = function() {
+	 		console.log(arguments)
+	 		alert($scope.color)
+	 	}
+	 }]);
+
+	 app.controller('transcludeCtrl', ['$scope', function($scope){
+	 	$scope.text = 'transclude_text';
+	 }]);
+
+
+	 app.directive('outputText', ['$q', function($q){
+	 	// Runs during compile
+	 	return {
+	 		// name: '',
+	 		// priority: 1,
+	 		// terminal: true,
+	 		scope: {
+
+	 		}, // {} = isolate, true = child, false/undefined = no change
+	 		// controller: function($scope, $element, $attrs, $transclude) {},
+	 		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+	 		restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+	 		template: '<div ng-transclude></div>',
+	 		// templateUrl: '',
+	 		// replace: true,
+	 		transclude: true,
+	 		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+	 		link: function($scope, iElm, iAttrs, controller) {
+
+	 		}
+	 	};
+	 }]);
+
+	 app.directive('helloWorld', ['$q', function($q){
+	 	// Runs during compile
+	 	return {
+	 		// name: '',
+	 		// priority: 1,
+	 		// terminal: true,
+	 		scope: {
+	 			color: '@',
+	 			sayIsolated: '&say'
+	 		}, // {} = isolate, true = child, false/undefined = no change
+	 		// controller: function($scope, $element, $attrs, $transclude) {},
+	 		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+	 		restrict: 'AE', // E = Element, A = Attribute, C = Class, M = Comment
+	 		template: '<h1 style="background-color:{{color}}">Hello world</h1>',
+	 		// templateUrl: '',
+	 		replace: true,
+	 		// transclude: true,
+	 		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){
+	 		// 	return function linking(scope, elm, attrs){}
+	 		// })),
+	 		link: function($scope, iElm, iAttrs, controller) {
+
+
+	 			iElm.bind('click', function(){
+	 				console.log($scope)
+	 				$scope.sayIsolated();
+	 				// iElm.css('color', iAttrs.color);
+	 				iElm.css('background-color', 'white');
+	 				$scope.$apply(function(){
+	 					$scope.color = 'white';
+	 				})
+	 			});
+	 		}
+	 	};
+
+	 }]);
+	</script>
+</body>
+</html>
