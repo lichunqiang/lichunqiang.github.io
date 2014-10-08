@@ -23,3 +23,9 @@ $ find -type d -name .svn
 ```sh
 $ find -type d -name .svn | xargs rm -rf
 ```
+
+#### 查看linux版本
+
+```sh
+$ cat /etc/redhat-release
+```
