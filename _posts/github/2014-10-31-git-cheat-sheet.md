@@ -1,3 +1,12 @@
+---
+layout: post
+title: Git Cheat Sheet Chinese
+keywords: Git Cheat Sheet Chinese
+categories: [github]
+tags: [technology]
+description: git常用操作
+---
+
 Git Cheat Sheet Chinese
 ========================
 
