@@ -29,6 +29,45 @@
 			}
 		});
 		</script>
+
+	<!-- 	<script type="text/javascript">
+		seajs.on('define', function(_module){
+			// var res = {} ;
+			// _module.factory(seajs.require, res, res);
+
+			console.log('define', _module);
+
+		});
+
+		seajs.on('fetch', function(data){
+			console.log('fetch', data);
+		});
+
+		seajs.on('request', function(data){
+			console.log('request', data);
+		});
+		seajs.on('exec', function(_mod){
+			console.log('exec', _mod);
+		});
+
+		seajs.on('resolve', function(data){
+			console.log('resolve', data);
+		});
+
+		seajs.on('save', function(data){
+			console.log('save', data);
+		})
+
+		seajs.on('config', function(_configdata){
+			console.log('config', _configdata);
+		});
+
+		seajs.on('load', function(uris){
+			console.log('load', uris);
+		});
+
+		</script>
+		<script type="text/javascript" src='assets/scripts/app/index-debug.js'></script> -->
 	</head>
 	<body>
 		<div class="container">
@@ -70,6 +109,8 @@
 					   .on('pjax:complete', function(){
 					   		NProgress.done();
 					   });
+
+				//seajs.use('common/math')
 		</script>
 	</body>
 </html>

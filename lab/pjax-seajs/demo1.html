@@ -7,12 +7,13 @@
 </div>
 <script type="text/javascript">
 	seajs.use(['app/index', '$'], function(index, $){
-		//require
-		console.log(index);
 		//call function
 		index.init();
 
-		//console.log($('#test').val());
-		console.log($);
+		$('#test').on('click', function(event) {
+			event.preventDefault();
+			/* Act on the event */
+			alert(index.getName());
+		});
 	})
 </script>

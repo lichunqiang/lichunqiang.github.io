@@ -30,13 +30,20 @@
       background-position: center center;
       background-size: contain;
     }
+.logo[data-logo="imagemin"] {
+  width: 1em;
+}
+
+.logo[data-logo="imagemin"] > * {
+  margin: 0;
+  background-image: url('images/logo.svg');
+}
   </style>
 </head>
 <body>
   <!--example one-->
-  <div class="logo" data-logo="New York Times">
+  <div class="logo" data-logo="imagemin">
     <span>New York Times</span>
-    <img src="../../assets/media/dbyll-ss.png">
   </div>
   <!--example two-->
   <a class="logo" data-logo="Your Company">

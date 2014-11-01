@@ -13,7 +13,7 @@ define("app/index-debug", [ "./util-debug", "./faker-debug" ], function(require,
     page.getName = faker.getName;
     page.selfCall = selfCall;
     // selfCall();
-    module.exports = page;
+    window.fuck = module.exports = page;
 });
 
 define("app/util-debug", [], function(require, exports, module) {
