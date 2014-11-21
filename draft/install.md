@@ -1,3 +1,4 @@
+```
 ./configure  
 
 --prefix=/usr/local/webserver/php  
@@ -15,6 +16,7 @@
 --with-mcrypt --with-openssl
 
 --disable-debug
+```
 
 > eg: ./configure --prefix=/usr/local/webserver/php5.5 --enable-cli --enable-fpm --with-gd --with-curl  --with-gettext --enable-mbstring --with-mcrypt --with-openssl --disable-debug --with-mysql --with-pdo-mysql
 
@@ -23,12 +25,13 @@
 
 ## MySQL
 
+```
 ./configure --prefix=/usr/local/mysql
 
 --with-unix-socket-path=/usr/local/mysql/var/mysql.sock
 
 --with-charset=utf8  --with-collation=utf8_general_ci --with-extra-charsets=all
-
+```
 
 ## install c++ compiler (ubuntu)
 
@@ -36,7 +39,7 @@
 $ apt-get install g++
 ```
 
-
+```
 # Preconfiguration setup
 shell> groupadd mysql
 shell> useradd -r -g mysql mysql
@@ -59,6 +62,7 @@ shell> cp support-files/my-medium.cnf /etc/my.cnf
 shell> bin/mysqld_safe --user=mysql &
 # Next command is optional
 shell> cp support-files/mysql.server /etc/init.d/mysql.server
+```
 
 > http://dev.mysql.com/doc/refman/5.6/en/<installing-source-distribution class="html"></installing-source-distribution>
 
@@ -67,8 +71,8 @@ shell> cp support-files/mysql.server /etc/init.d/mysql.server
 ## nginx
 
 info: require OpenSSL Library, go like following:
-
+```
 --with-openssl=/usr/bin # this is where is openssl locate(if installed openssl)
-
+```
 
 
