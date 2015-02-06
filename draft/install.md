@@ -1,3 +1,12 @@
+### prepare
+```
+$ yum install -y libxml2 libxml2-devel
+
+$ yum install -y curl curl-devel [open the curl extension]
+
+$ yum install -y libicu libicu-devel [with the intl extension]
+```
+
 ```
 ./configure  
 
