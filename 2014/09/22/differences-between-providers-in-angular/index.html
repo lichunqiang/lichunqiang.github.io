@@ -1,0 +1,849 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,translation," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="原文http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/
+
+什么是ProviderAngularJS官方文档定义：
+
+A provider is an object with a $get() method.The injector calls the $get method to create a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular之provider异同">
+<meta property="og:url" content="http://lichunqiang.github.io/2014/09/22/differences-between-providers-in-angular/index.html">
+<meta property="og:site_name" content="Light's Blog">
+<meta property="og:description" content="原文http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/
+
+什么是ProviderAngularJS官方文档定义：
+
+A provider is an object with a $get() method.The injector calls the $get method to create a">
+<meta property="og:updated_time" content="2016-01-07T15:31:14.861Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular之provider异同">
+<meta name="twitter:description" content="原文http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/
+
+什么是ProviderAngularJS官方文档定义：
+
+A provider is an object with a $get() method.The injector calls the $get method to create a">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide',
+    motion: true
+  };
+</script>
+
+  <title> Angular之provider异同 | Light's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Light's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Angular之provider异同
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-09-22T00:08:27+08:00" content="2014-09-22">
+              2014-09-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/Angular/" itemprop="url" rel="index">
+                    <span itemprop="name">Angular</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/09/22/differences-between-providers-in-angular/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/22/differences-between-providers-in-angular/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><blockquote>
+<p>原文<a href="http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/" target="_blank" rel="external">http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/</a></p>
+</blockquote>
+<h2 id="u4EC0_u4E48_u662FProvider"><a href="#u4EC0_u4E48_u662FProvider" class="headerlink" title="什么是Provider"></a>什么是Provider</h2><p>AngularJS官方文档定义：</p>
+<blockquote>
+<p>A provider is an object with a $get() method.<br>The injector calls the $get method to create a new instance of a service.<br>The Provider can have additional methods which would allow for configuration of the provider.</p>
+</blockquote>
+<p>AngularJS使用$provide 来注册新的provider. 每个Provider只进行一次实例的创建。</p>
+<p>$provide 有六个方法来创建定制化的Provider：</p>
+<ul>
+<li>constant</li>
+<li>value</li>
+<li>service</li>
+<li>factory</li>
+<li>decorator</li>
+<li>provider</li>
+</ul>
+<h3 id="constant"><a href="#constant" class="headerlink" title="constant"></a>constant</h3><p>constant能够被注入到任何地方。constant不能被装饰器拦截，这意味着contant的值将永远无法改变。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.config(function($provide){
+    $provide.constant(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+});
+
+app.controller(&apos;ctrl&apos;, function(movieTitle){
+    expect(movieTitle).toEqual(&apos;The Matrix&apos;);
+});
+</code></pre><p>AngularJs提供一种更加简便的方式创建constant:</p>
+<pre><code>app.constant(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+</code></pre><h3 id="value"><a href="#value" class="headerlink" title="value"></a>value</h3><p>value只是一个简单的可注入的值，这个值可以是字符串、数字和方法。和constant不同的是它不能够被注入到配置，但是能够被装饰器拦截。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.config(function($provide){
+     $provide.value(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+});
+
+app.controller(&apos;ctrl&apos;, function(movieTitle){
+    expect(movieTitle).toEqual(&apos;The Matrix&apos;);
+});
+</code></pre><p>AngularJs提供一种更加简便的方式创建value:</p>
+<pre><code>app.value(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+</code></pre><h3 id="service"><a href="#service" class="headerlink" title="service"></a>service</h3><p>service 是一个可注入的构造函数。你可以在函数中指定依赖。service是单例的，只被anguarJs创建一次。service是一个非常棒的方法来进行controller之间的通信，例如共享数据.</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.config(function($provide){
+    $provide.service(&apos;movie&apos;, function(){
+        this.title = &apos;The Matrix&apos;;
+    });
+});
+
+app.controller(&apos;ctrl&apos;, function(movie){
+    expect(movive.title).toEequal(&apos;The Matrix&apos;);
+});
+</code></pre><p>AngularJs提供一种更加简便的方式创建service:</p>
+<pre><code>app.service(&apos;movieTitle&apos;, function(){
+    this.title = &apos;The Matrix&apos;;
+});
+</code></pre><h3 id="Factory"><a href="#Factory" class="headerlink" title="Factory"></a>Factory</h3><p>factory是一个可注入的方法。从某种的意义而言factory非常像service，它也是单例的同样能够在函数中定义依赖。两者不同的是，factory注入是一个plain function，所以angularjs能够执行该方法，而service注入的是一个构造函数。当去new一个serivce的时候，构造函数创建一个新的对象。但是使用factory你可以让函数返回任何东西。</p>
+<p>稍后你会看见，factory仅仅是一个拥有 $get 方法的provider。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.config(function($provide){
+    $provide.factory(&apos;movie&apos;, function() {
+        return {
+            title: &apos;The Matrix&apos;
+        };
+    });
+});
+
+app.controlller(&apos;ctrl&apos;, function(movie){
+    expect(movive.title).toEequal(&apos;The Matrix&apos;);
+});
+</code></pre><p>AngularJS还提供一种更加简便的方法：</p>
+<pre><code>app.factory(&apos;movie&apos;, function() {
+    return {
+        title: &apos;The Matrix&apos;
+    };
+});
+</code></pre><h3 id="Decorator"><a href="#Decorator" class="headerlink" title="Decorator"></a>Decorator</h3><p>decorator能够修改和压缩其他provider，正如上面提到的constant是一个列外。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.value(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+
+app.config(function($provide){
+    $provide.decorator(&apos;movieTitle&apos;, function($delegate){
+        return $delegate + &apos; - starring Keanu Reeves&apos;
+    });
+});
+
+app.controller(&apos;myCtrl&apos;, function(movieTile){
+    expect(movieTitle).toEqual(&apos;The Matrix - starring Keanu Reeves&apos;);
+});
+</code></pre><h3 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h3><p>provide在所有的provider中是最复杂的方法，它允许你创建一个复杂的功能和配置选项.</p>
+<p>provide 实际上是一个配置的factory.它可以是一个对象或者构造函数。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.provider(&apos;movie&apos;, function(){
+    var version;
+    return {
+        setVersion: function(value) {
+            version = value;
+        },
+        $get: function() {
+            return {
+                title: &apos;The Matrix&apos; + &apos; &apos; + version
+            }
+        }
+    };
+});
+
+app.config(function(movieProvider){
+    movieProvider.setVersion(&apos;Reloaded&apos;);
+});
+
+app.controller(&apos;ctrl&apos;, function(movie) {
+    expect(movie.title).toEqual(&apos;The Matrix Reloaded&apos;);
+});
+</code></pre><h2 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>所有的provider只被实例化一次，它们全是单例的。</li>
+<li>除了constant的所有provider都能够被装饰</li>
+<li>constant是一个能被注入到任何地方的值，而且不能被修改</li>
+<li>value只是一个简单能被注入的值</li>
+<li>service是一个能被注入的构造方法</li>
+<li>factory是一个能被注入的函数</li>
+<li>decoratory能够修改压缩除了constant的其他provider</li>
+<li>provider是一个可配置的facotry</li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+            <a href="/tags/translation/" rel="tag">#translation</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/07/22/how-to-create-a-npm-package/" rel="next" title="创建一个简单的NodeJS程序">
+                <i class="fa fa-chevron-left"></i> 创建一个简单的NodeJS程序
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/21/php-check-sytanx-error/" rel="prev" title="使用php cli 检查语法错误">
+                使用php cli 检查语法错误 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/09/22/differences-between-providers-in-angular/"
+           data-title="Angular之provider异同" data-url="http://lichunqiang.github.io/2014/09/22/differences-between-providers-in-angular/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars3.githubusercontent.com/u/2433916?v=3&s=460" alt="light" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">light</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/lichunqiang" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chunqiang" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/chunqiang" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> ZhiHu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u4EC0_u4E48_u662FProvider"><span class="nav-number">1.</span> <span class="nav-text">什么是Provider</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#constant"><span class="nav-number">1.1.</span> <span class="nav-text">constant</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#value"><span class="nav-number">1.2.</span> <span class="nav-text">value</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#service"><span class="nav-number">1.3.</span> <span class="nav-text">service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Factory"><span class="nav-number">1.4.</span> <span class="nav-text">Factory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decorator"><span class="nav-number">1.5.</span> <span class="nav-text">Decorator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Provider"><span class="nav-number">1.6.</span> <span class="nav-text">Provider</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u603B_u7ED3"><span class="nav-number">2.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">light</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lichunqiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+
+</body>
+</html>
