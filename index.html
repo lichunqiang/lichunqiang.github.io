@@ -219,6 +219,287 @@
             
               
                 
+                <a class="post-title-link" href="/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/" itemprop="url">
+                  如果将多个commit精简成一个commit
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-11T22:22:25+08:00" content="2016-01-11">
+              2016-01-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>在 <a href="https://www.github.com" target="_blank" rel="external">Github</a> 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 <code>pull request</code>。</p>
+<p>在项目的作者对发起的 <code>pull request</code> 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是，</p>
+<p>这一切在 <a href="https://www.github.com" target="_blank" rel="external">Github</a> 上被方便的给自动完成了，也就说，当我们在对 <code>patch</code> 分支 <code>push</code> 修改代码时，</p>
+<p><a href="https://www.github.com" target="_blank" rel="external">Github</a> 自动会将修改关联到上次已经发起的 <code>pull request</code>。</p>
+<p>当这一切都<strong>ready</strong>之后，我们需要精简提交信息变成一条，例如： <code>Issue #100: bugfix for fatal error</code>.</p>
+<pre><code>commit 6e9cd88424b5f313f7245c7a43e11063648f2dcd
+Author: lichunqiang &lt;light-li@hotmail.com&gt;
+Date:   Mon Jan 11 16:40:41 2016 +0800
+
+    tweak the description
+
+commit 06ce7e35206b0f8a2e5d41aab4ae21d842a7c8ab
+Author: lichunqiang &lt;light-li@hotmail.com&gt;
+Date:   Sun Jan 10 23:04:25 2016 +0800
+
+    bugfix of mailer
+
+commit e6e0ee8ec14624d11035a0a922617ab5dc69220f
+Author: lichunqiang &lt;light-li@hotmail.com&gt;
+Date:   Sun Jan 10 22:57:25 2016 +0800
+
+    commit message
+</code></pre><p>在 git log 信息中，我们想要压缩最新的两条commit为一条</p>
+<p>我们可以按照以下的步骤来进行：</p>
+<pre><code>$ git rebase -i HEAD~2
+</code></pre><blockquote>
+<p>2 代表我们想要压缩的commit数量。注意，在这之前，我们要保证我们的分支要和主线进行了同步。</p>
+</blockquote>
+<p>执行命令后，在 text editor 中我们将 <code>pick</code> 替换成 <code>squash</code>, 只保留我们想保存的那条 <code>commit</code> 即可。</p>
+<p>也可以只保留第一条的 <code>pick</code>, 将其余的替换成 <code>squash</code>。保存并退出编辑器。</p>
+<p><strong>注意</strong>，如果你已经提交到远程仓库，你需要执行:</p>
+<pre><code>$ git push origin branchname --force
+</code></pre><p>贴士：</p>
+<p>你可以执行 <code>git commit --amend</code> 来修改最后一条commit的提交信息。 </p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/01/11/multiple-platform-git/" itemprop="url">
+                  多平台Git配置
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-11T21:57:21+08:00" content="2016-01-11">
+              2016-01-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/11/multiple-platform-git/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/11/multiple-platform-git/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.</p>
+<h2 id="u8BBE_u7F6E_u7528_u6237_u540D_u548C_u90AE_u7BB1"><a href="#u8BBE_u7F6E_u7528_u6237_u540D_u548C_u90AE_u7BB1" class="headerlink" title="设置用户名和邮箱"></a>设置用户名和邮箱</h2><pre><code>$git config --global user.name &quot;yourname&quot;
+$git config --global user.email &quot;your@example.com&quot;
+</code></pre><h2 id="u751F_u6210ssh-key"><a href="#u751F_u6210ssh-key" class="headerlink" title="生成ssh-key"></a>生成ssh-key</h2><blockquote>
+<p>ssh-key保存在 <code>~/.ssh</code> 目录中</p>
+</blockquote>
+<pre><code>$cd ~/.ssh
+$ssh-keygen -t rsa -C &quot;your@example.com&quot;
+</code></pre><p>注意在生成key file的时候可以针对不同的平台来命名, 例如：<code>id_github</code>, 这将会在接下的来的配置中用到.</p>
+<p>生成<strong>Key</strong>之后就是将 <code>xx.pub</code> 的内容配置到平台的SSH配置中.</p>
+<h2 id="u914D_u7F6E_u6587_u4EF6"><a href="#u914D_u7F6E_u6587_u4EF6" class="headerlink" title="配置文件"></a>配置文件</h2><p>在 <code>~/.ssh</code> 目录下新建 <code>config</code> 文件并编辑：</p>
+<pre><code>Host git.coding.net
+    User your@example.com
+    IdentityFile ~/.ssh/coding_rsa
+Host github.com
+    User your@example.com
+    IdentityFile ~/.ssh/github_rsa
+</code></pre><h2 id="u6D4B_u8BD5_u662F_u5426_u8FDE_u63A5_u6210_u529F"><a href="#u6D4B_u8BD5_u662F_u5426_u8FDE_u63A5_u6210_u529F" class="headerlink" title="测试是否连接成功"></a>测试是否连接成功</h2><pre><code>$ssh -T git@git.coding.net
+$ssh -T git@github.com
+</code></pre>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/12/29/talk-about-composer-minimum-stability/" itemprop="url">
                   讲讲Composer配置项minimumn-stability
                 </a>
@@ -1133,243 +1414,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/24/hi-basketball/" itemprop="url">
-                  开始篮球
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-05-24T21:58:51+08:00" content="2015-05-24">
-              2015-05-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/life/" itemprop="url" rel="index">
-                    <span itemprop="name">life</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/24/hi-basketball/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/24/hi-basketball/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>今天打了一下午的篮球，快要中暑了。。。。</p>
-<p><strong>我为什么这么喜欢篮球</strong></p>
-<p>记得在上高中前，基本都没有什么体育运动，那时候的体育除了跑跑步就是跳跳绳。简直弱爆了。真正开始接触篮球还的进入高中后。</p>
-<p>进入高中感觉最爽的就是体育课的区别了，可以选择自己喜欢的运动，比如足球、篮球。那时候我的性格还十分的内向，毕竟穷苦出身，不爱交际。上体育课来说，我就是场边的选手，不敢加入其中。</p>
-<p>到了后来和同学熟悉了之后，开始慢慢的融入了大家。我也敢上场了。积极的争抢篮板、跑动，简直打了鸡血似得，几乎跑满整个篮球课。可能是年轻吧，真是活力充沛。</p>
-<p>再后来，就高三了。升学的压力很大，学校也是个重点，所有体育课就形同虚设了。即有体育课，大部分同学们都还是选择留在教室里面学习，体育老师也是不管的「可能这也是特色了吧」。就这样，暂告别「篮坛」。</p>
-<p><strong>新的开始</strong></p>
-<p>进过努力，考进了还不错的大学。那是大西北的一所学校。第一次出远门「这是我到现在为止去过的最远的地方」。</p>
-<ul>
-<li>不同的伙食「辣」，这里的菜系基本被川菜所占领，在家里哪吃过辣，第一餐吃的我感觉菊花都疼疼的</li>
-<li>不同的气候「干热」，在这里运动，你的汗刚出来基本上就被蒸发干了。</li>
-</ul>
-<p>还有这样那样的 那样。。。。</p>
-<p>宿舍离篮球场挺近，还是一如既往的「场边观战」。大学了嘛，所以决定改变自己内向的性格，参加社团、主动加入打篮球。。。</p>
-<p>变化好快啊，我争强好胜的性格逐渐展现出来，在球场上，不知道多少次和同学吵闹「好愧疚」，本来自己的实力就不咋地，还那么的好胜。哎，在这里向我之前得罪过的同学们道个歉吧，哈哈，虽然我知道他们不会记恨着。</p>
-<p>怎么办，这段还有好多要写啊！！可是跑题了啊。</p>
-<p>算了，结束吧，挺累的。以后每个星期都可以打球了，锻炼锻炼，媳妇儿老说我的肚子跟怀孕好几个月的似的。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/19/one-using-of-yii2-container/" itemprop="url">
-                  Yii2 container的一个应用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-05-19T22:26:28+08:00" content="2015-05-19">
-              2015-05-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/19/one-using-of-yii2-container/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/19/one-using-of-yii2-container/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h2><p>我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 <code>[[yii\data\Pagination]]</code> 的默认每页个数是 20 个.</p>
-<p>对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? </p>
-<p>这时候,我们可以使用 [[Yii::$contianer]] 的来实现：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里我们设置默认个数为10, 将此置于 bootstrap.php 中</span></span><br><span class="line">\Yii::<span class="variable">$container</span>-&gt;set(<span class="string">'yii\data\Pagination'</span>, [</span><br><span class="line">    <span class="string">'pageSize'</span> =&gt; <span class="number">10</span>,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-<p>这样, 我们在使用诸如 <code>ActiveDataProvider</code> 等方法时，默认每页个数就为 10 了。</p>
-<h2 id="u601D_u8003"><a href="#u601D_u8003" class="headerlink" title="思考"></a>思考</h2><blockquote>
-<p>理论上，通过 <code>Yii::createObject</code> 来实例化的对用都会起作用。</p>
-</blockquote>
-<p>所以，说用通过 <code>Yii::createObject</code> 创建的实例都会使用我们通过以上方法设定的默认值。因为 <code>ActiveDataProvider</code> 等中的 <code>pagination</code> 在内部是通过 <code>Yii::createObject</code> 创建的，所以设置是生效的。</p>
-<p>因此，考虑一下两种实现方式：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. pageSize 还是默认的20</span></span><br><span class="line"><span class="variable">$paging</span> = <span class="keyword">new</span> \yii\data\Pagination;</span><br><span class="line"><span class="comment">//2. pageSize 就是设置的 10 了</span></span><br><span class="line"><span class="variable">$paging</span> = Yii::createObject(<span class="string">'yii\data\Pagination'</span>);</span><br></pre></td></tr></table></figure>
-<p>所以Yii提倡使用 <code>Yii::createObject</code> 来实例化对象，因为它能够自动解决依赖和默认值配置等好处。</p>
-<h2 id="Yii_3A_3A_24container__u662F_u4EC0_u4E48"><a href="#Yii_3A_3A_24container__u662F_u4EC0_u4E48" class="headerlink" title="Yii::$container 是什么"></a>Yii::$container 是什么</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Yii::<span class="variable">$container</span> = <span class="keyword">new</span> yii\di\Container();</span><br></pre></td></tr></table></figure>
-<p>所以 <code>Yii::$container</code> 就是整个生命周期的一个依赖容器。</p>
-<p>考虑开始的时候的代码，我们可以理解: 通过 <code>Yii::$container-&gt;set()</code> 其实就是向这个容器注入了一个类和其配置. 当调用 <code>Yii::createObject</code> 的时候会去这个容器里面找，如果存在则根据 set 的配置进行实例化。</p>
-<h2 id="u63A8_u8350"><a href="#u63A8_u8350" class="headerlink" title="推荐"></a>推荐</h2><p>关于依赖注入和依赖注入容器可以查看博文：<a href="http://www.digpage.com/di.html" target="_blank" rel="external">http://www.digpage.com/di.html</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1416,21 +1460,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">39</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
