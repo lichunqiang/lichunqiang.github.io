@@ -187,15 +187,243 @@
 
     
     
+
+    
       
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/01/16/git-delete-submoudle/" itemprop="url">
+                  删除submodule
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-16T00:16:21+00:00" content="2016-01-16">
+              2016-01-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/16/git-delete-submoudle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/16/git-delete-submoudle/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
       
-        
-        
-        
       
 
       
+        
+          <span itemprop="articleBody">
+            
+              <ol>
+<li><p>Delete the relevant section from the .gitmodules file.</p>
+</li>
+<li><p>Stage the .gitmodules changes git add .gitmodules</p>
+</li>
+<li><p>Delete the relevant section from .git/config.</p>
+</li>
+<li><p>Run git rm –cached path_to_submodule (no trailing slash).</p>
+</li>
+<li><p>Run rm -rf .git/modules/path_to_submodule</p>
+</li>
+<li><p>Commit git commit -m “Removed submodule <name>“</name></p>
+</li>
+<li><p>Delete the now untracked submodule files <code>rm -rf path_to_submodule</code></p>
+</li>
+</ol>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/01/13/redirct-main-url-of-site/" itemprop="url">
+                  nginx重定向小例
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-13T16:17:39+00:00" content="2016-01-13">
+              2016-01-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nginx/seo/" itemprop="url" rel="index">
+                    <span itemprop="name">seo</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/13/redirct-main-url-of-site/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/13/redirct-main-url-of-site/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p><code>www.site.com</code> <code>site.com</code> 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，</p>
+<p>因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。</p>
+<p>配置nginx如下：</p>
+<p>  server_name site.com www.site.com</p>
+<p>  if ($host = ‘site.com’) {<br>    rewrite ^/(.*)$ <a href="http://www.site.com/$1" target="_blank" rel="external">http://www.site.com/$1</a> permanent;<br>  }</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -230,7 +458,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-11T22:22:25+08:00" content="2016-01-11">
+            <time itemprop="dateCreated" datetime="2016-01-11T22:22:25+00:00" content="2016-01-11">
               2016-01-11
             </time>
           </span>
@@ -378,7 +606,7 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-11T21:57:21+08:00" content="2016-01-11">
+            <time itemprop="dateCreated" datetime="2016-01-11T21:57:21+00:00" content="2016-01-11">
               2016-01-11
             </time>
           </span>
@@ -511,7 +739,7 @@ $ssh -T git@github.com
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-12-29T23:57:23+08:00" content="2015-12-29">
+            <time itemprop="dateCreated" datetime="2015-12-29T23:57:23+00:00" content="2015-12-29">
               2015-12-29
             </time>
           </span>
@@ -636,7 +864,7 @@ $ssh -T git@github.com
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-12-20T20:17:39+08:00" content="2015-12-20">
+            <time itemprop="dateCreated" datetime="2015-12-20T20:17:39+00:00" content="2015-12-20">
               2015-12-20
             </time>
           </span>
@@ -744,7 +972,7 @@ $ssh -T git@github.com
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-09-18T00:17:39+08:00" content="2015-09-18">
+            <time itemprop="dateCreated" datetime="2015-09-18T00:17:39+00:00" content="2015-09-18">
               2015-09-18
             </time>
           </span>
@@ -877,7 +1105,7 @@ $ssh -T git@github.com
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-08-22T00:17:39+08:00" content="2015-08-22">
+            <time itemprop="dateCreated" datetime="2015-08-22T00:17:39+00:00" content="2015-08-22">
               2015-08-22
             </time>
           </span>
@@ -983,7 +1211,7 @@ $ssh -T git@github.com
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-07-08T17:50:15+08:00" content="2015-07-08">
+            <time itemprop="dateCreated" datetime="2015-07-08T17:50:15+00:00" content="2015-07-08">
               2015-07-08
             </time>
           </span>
@@ -1092,7 +1320,7 @@ $ssh -T git@github.com
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-06-26T22:44:42+08:00" content="2015-06-26">
+            <time itemprop="dateCreated" datetime="2015-06-26T22:44:42+00:00" content="2015-06-26">
               2015-06-26
             </time>
           </span>
@@ -1176,250 +1404,12 @@ $ssh -T git@github.com
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/06/15/the-difference-between-on-and-where/" itemprop="url">
-                  在关联表查询的时候是在ON添加条件和在where添加添加条件异同
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-06-15T22:07:27+08:00" content="2015-06-15">
-              2015-06-15
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">Mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/15/the-difference-between-on-and-where/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/15/the-difference-between-on-and-where/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。</p>
-<p>在使用left jion时，on和where条件的区别如下：</p>
-<ol>
-<li><p>on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。 </p>
-</li>
-<li><p>where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部过滤掉。</p>
-</li>
-</ol>
-<p><strong>假设有两张表：</strong></p>
-<p>表1 tab1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id size &#10;1 10 &#10;2 20 &#10;3 30</span><br></pre></td></tr></table></figure>
-<p>表2 tab2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">size name &#10;10 AAA &#10;20 BBB &#10;20 CCC</span><br></pre></td></tr></table></figure>
-<p>两条SQL:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1. select * form tab1 left join tab2 on (tab1.size = tab2.size) where tab2.name=&#8217;AAA&#8217;&#10;&#10;2. select * form tab1 left join tab2 on (tab1.size = tab2.size and tab2.name=&#8217;AAA&#8217;)</span><br></pre></td></tr></table></figure>
-<p>第一条SQL的过程：</p>
-<p>1、中间表 on条件:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tab1.size = tab2.size  &#10;tab1.id    tab1.size    tab2.size     tab2.name &#10;1             10          10              AAA &#10;2             20          20              BBB  &#10;2             20          20              CCC &#10;3             30         (null)          (null) &#10;2&#10;&#10;&#20877;&#23545;&#20013;&#38388;&#34920;&#36807;&#28388;where &#26465;&#20214;&#65306;&#10;&#10;tab2.name=&#8217;AAA&#8217;&#10;tab1.id       tab1.size        tab2.size     tab2.name &#10;1                10                10             AAA</span><br></pre></td></tr></table></figure>
-<p>第二条SQL的过程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1&#12289;&#20013;&#38388;&#34920; on&#26465;&#20214;:   &#10;tab1.size = tab2.size and tab2.name=&#8217;AAA&#8217;&#10; (&#26465;&#20214;&#19981;&#20026;&#30495;&#20063;&#20250;&#36820;&#22238;&#24038;&#34920;&#20013;&#30340;&#35760;&#24405;)  &#10;tab1.id      tab1.size       tab2.size      tab2.name &#10;1             10                10             AAA &#10;2             20                (null)        (null) &#10;3             30                (null)        (null)</span><br></pre></td></tr></table></figure>
-<p>其实以上结果的关键原因就是left join,right join,full join的特殊性，不管on上的条件是否为真都会返回left或right表中的记录，full则具有left和right的特性的并集。而inner jion没这个特殊性，则条件放在on中和where中，返回的结果集是相同的。</p>
-<p><strong>参考</strong></p>
-<ul>
-<li><p><a href="http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause" target="_blank" rel="external">http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause</a></p>
-</li>
-<li><p><a href="http://dba-china.com/topic/default/view/71" target="_blank" rel="external">http://dba-china.com/topic/default/view/71</a></p>
-</li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/" itemprop="url">
-                  怎么控制用户一定时间未操作自动登出
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-06-04T22:35:11+08:00" content="2015-06-04">
-              2015-06-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>现在需求是：<strong>如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录</strong></p>
-<p>我们可以通过配置  <code>yii\web\User::$authTimeout</code>来达到效果，上代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;user&#39; =&#62; [&#10;    &#39;identityClass&#39; =&#62; &#39;app\models\User&#39;,&#10;    &#39;authTimeout&#39; =&#62; 5 //&#20026;&#20102;&#27979;&#35797;&#65292;&#35774;&#32622;5&#31186;&#10;],</span><br></pre></td></tr></table></figure>
-<p>还有一个更设定是可以让用户登入多长时间后，不管有没有操作，超过这个设定的时间后都会登出，上代码:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;user&#39; =&#62; [&#10;    &#39;identityClass&#39; =&#62; &#39;app\models\User&#39;,&#10;    &#39;absoluteAuthTimeout&#39; =&#62; 20 //&#36825;&#37324;&#20026;&#20102;&#27979;&#35797;&#65292;&#35774;&#32622;&#20026;20&#31186;&#65292;&#30331;&#20837;&#21518;&#19981;&#20572;&#21047;&#26032;&#27169;&#25311;&#29992;&#25143;&#25805;&#20316;&#65292;&#32467;&#26524;&#21487;&#30475;&#21040;&#65292;&#34429;&#28982;&#22312;&#19981;&#26029;&#25805;&#20316;&#65292;&#20294;&#26159;&#36807;&#20102;&#35774;&#32622;&#30340;&#26102;&#38388;&#36824;&#26159;&#20250;&#33258;&#21160;&#30331;&#20986;&#10;],</span><br></pre></td></tr></table></figure>
-<p><em>需要注意的是如果设置 <code>enableAutoLogin = true</code> 的话，以上两个设置是不会生效的。</em></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1460,7 +1450,7 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

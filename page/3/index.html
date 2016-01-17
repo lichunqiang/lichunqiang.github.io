@@ -187,11 +187,251 @@
 
     
     
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/22/node-export-vs-exports/" itemprop="url">
+                  export vs exports
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:27:01+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NodeJS/" itemprop="url" rel="index">
+                    <span itemprop="name">NodeJS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NodeJS/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/node-export-vs-exports/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/node-export-vs-exports/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
       
       
 
       
+        
+          <span itemprop="articleBody">
+            
+              <p>参考文章：<a href="https://cnodejs.org/topic/5231a630101e574521e45ef8" target="_blank" rel="external">https://cnodejs.org/topic/5231a630101e574521e45ef8</a></p>
+<h3 id="u603B_u7ED3"><a href="#u603B_u7ED3" class="headerlink" title="总结"></a>总结</h3><p>我们只需知道三点即可知道 exports 和 module.exports 的区别了：</p>
+<ul>
+<li>exports 是指向的 module.exports 的引用</li>
+<li>module.exports 初始值为一个空对象 {}，所以 exports 初始值也是 {}</li>
+<li>require() 返回的是 module.exports 而不是 exports</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/22/how-to-test-local-package/" itemprop="url">
+                  怎样将本地包安装到全局
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:25:15+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NodeJS/" itemprop="url" rel="index">
+                    <span itemprop="name">NodeJS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NodeJS/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/how-to-test-local-package/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/how-to-test-local-package/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <ol>
+<li>In package directory</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm link</span><br></pre></td></tr></table></figure>
+<p>This createsa symlink to the current folder in npm’s global installation directory.</p>
+<ol>
+<li>Somewhere else, where you want to use the modules:</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$npm  link &lt;pkgname&gt;</span><br></pre></td></tr></table></figure>
+<p>This will  create a symlink in your project’s <code>node_modules/</code> folder to the global installation.</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -226,7 +466,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:19:36+08:00" content="2015-04-22">
+            <time itemprop="dateCreated" datetime="2015-04-22T00:19:36+00:00" content="2015-04-22">
               2015-04-22
             </time>
           </span>
@@ -343,7 +583,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:17:39+08:00" content="2015-04-22">
+            <time itemprop="dateCreated" datetime="2015-04-22T00:17:39+00:00" content="2015-04-22">
               2015-04-22
             </time>
           </span>
@@ -450,7 +690,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:16:21+08:00" content="2015-04-22">
+            <time itemprop="dateCreated" datetime="2015-04-22T00:16:21+00:00" content="2015-04-22">
               2015-04-22
             </time>
           </span>
@@ -639,7 +879,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:15:21+08:00" content="2015-04-22">
+            <time itemprop="dateCreated" datetime="2015-04-22T00:15:21+00:00" content="2015-04-22">
               2015-04-22
             </time>
           </span>
@@ -768,7 +1008,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:13:54+08:00" content="2015-04-22">
+            <time itemprop="dateCreated" datetime="2015-04-22T00:13:54+00:00" content="2015-04-22">
               2015-04-22
             </time>
           </span>
@@ -882,7 +1122,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:12:36+08:00" content="2015-04-22">
+            <time itemprop="dateCreated" datetime="2015-04-22T00:12:36+00:00" content="2015-04-22">
               2015-04-22
             </time>
           </span>
@@ -1055,7 +1295,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:11:11+08:00" content="2015-04-22">
+            <time itemprop="dateCreated" datetime="2015-04-22T00:11:11+00:00" content="2015-04-22">
               2015-04-22
             </time>
           </span>
@@ -1670,7 +1910,7 @@ _   底线
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:06:52+08:00" content="2015-04-22">
+            <time itemprop="dateCreated" datetime="2015-04-22T00:06:52+00:00" content="2015-04-22">
               2015-04-22
             </time>
           </span>
@@ -1764,348 +2004,12 @@ _   底线
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/database-normal-form/" itemprop="url">
-                  数据常用的三个范式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:02:41+08:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">Mysql</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Mysql/数据库/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/database-normal-form/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/database-normal-form/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h3 id="u6570_u636E_u5E93_u8BBE_u8BA1_u6240_u5E38_u7528_u7684_u8303_u5F0F_uFF1A"><a href="#u6570_u636E_u5E93_u8BBE_u8BA1_u6240_u5E38_u7528_u7684_u8303_u5F0F_uFF1A" class="headerlink" title="数据库设计所常用的范式："></a>数据库设计所常用的范式：</h3><ul>
-<li>第一范式</li>
-</ul>
-<p>定义：数据库表中的所有字段都是单一属性，不可再分的。(第一范式要求数据库中的表都是二维表)</p>
-<p>正确的：</p>
-<table>
-<thead>
-<tr>
-<th>用户ID</th>
-<th>用户名</th>
-<th>密码</th>
-<th>姓名</th>
-<th>电话</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>zhang3</td>
-<td><em>**</em></td>
-<td>张三</td>
-<td>1289998888</td>
-</tr>
-</tbody>
-</table>
-<p>错误的：</p>
-<p>将姓名和电话字段合并成用户信息，下面在分出两列来分别制定姓名和电话.</p>
-<ul>
-<li>第二范式</li>
-</ul>
-<p>定义：首先是 1NF，另外包含两部分内容，一是表必须有一个主键；二是没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。</p>
-<p>考虑一个订单明细表：【OrderDetail】（OrderID，ProductID，UnitPrice，Discount，Quantity，ProductName）。</p>
-<p>因为我们知道在一个订单中可以订购多种产品，所以单单一个 OrderID 是不足以成为主键的，主键应该是（OrderID，ProductID）。显而易见 Discount（折扣），Quantity（数量）完全依赖（取决）于主键（OderID，ProductID），而 UnitPrice，ProductName 只依赖于 ProductID。所以 OrderDetail 表不符合 2NF。不符合 2NF 的设计容易产生冗余数据。</p>
-<p>可以把【OrderDetail】表拆分为【OrderDetail】（OrderID，ProductID，Discount，Quantity）和【Product】（ProductID，UnitPrice，ProductName）来消除原订单表中UnitPrice，ProductName多次重复的情况。</p>
-<ul>
-<li>第三范式</li>
-</ul>
-<p>定义：首先是 2NF，另外非主键列必须直接依赖于主键，不能存在传递依赖。即不能存在：非主键列 A 依赖于非主键列 B，非主键列 B 依赖于主键的情况。</p>
-<p>考虑一个订单表【Order】（OrderID，OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity）主键是（OrderID）。</p>
-<p>其中 OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity 等非主键列都完全依赖于主键（OrderID），所以符合 2NF。</p>
-<p>不过问题是 CustomerName，CustomerAddr，CustomerCity 直接依赖的是 CustomerID（非主键列），而不是直接依赖于主键，它是通过传递才依赖于主键，所以不符合 3NF。</p>
-<p>通过拆分【Order】为【Order】（OrderID，OrderDate，CustomerID）和【Customer】（CustomerID，CustomerName，CustomerAddr，CustomerCity）从而达到 3NF。</p>
-<blockquote>
-<p>第二范式（2NF）和第三范式（3NF）的概念很容易混淆，区分它们的关键点在于，2NF：非主键列是否完全依赖于主键，还是依赖于主键的一部分；3NF：非主键列是直接依赖于主键，还是直接依赖于非主键列。</p>
-</blockquote>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/21/about_php_namespace/" itemprop="url">
-                  关于php的命名空间
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-21T23:59:20+08:00" content="2015-04-21">
-              2015-04-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/21/about_php_namespace/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/21/about_php_namespace/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <blockquote>
-<p>PHP命名空间提供了一种将相关的类、函数和常量组合到一起的途径。PHP 在 5.3.0 以后的版本开始支持命名空间。</p>
-</blockquote>
-<h2 id="u5B9A_u4E49_u547D_u540D_u7A7A_u95F4"><a href="#u5B9A_u4E49_u547D_u540D_u7A7A_u95F4" class="headerlink" title="定义命名空间"></a>定义命名空间</h2><p>命名空间通过关键字namespace来声明。如果一个文件中包含命名空间，它必须在其它所有代码之前声明命名空间。</p>
-<p>将全局的非命名空间中的代码和命名空间的代码组合在一起，只能使用大括号的形式。全局代码必须用一个不带名称的namespace语句加上大括号括起来：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyPorject</span> &#123;</span><br><span class="line">  <span class="title">const</span> <span class="title">CONNECT_OK</span> = 1;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Connection</span> </span>&#123;&#125;;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">connect</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line">  <span class="title">session_start</span>();</span><br><span class="line">  <span class="variable">$a</span> = <span class="keyword">new</span> MyProject\Connection();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="u4F7F_u7528_u547D_u540D_u7A7A_u95F4"><a href="#u4F7F_u7528_u547D_u540D_u7A7A_u95F4" class="headerlink" title="使用命名空间"></a>使用命名空间</h2><ol>
-<li>非限定名称，或不包含前缀的类型名称。</li>
-</ol>
-<blockquote>
-<p>名称中不包含命名空间分隔符的标识符，例如 Foo</p>
-</blockquote>
-<ol>
-<li>限定名称，或包含前缀的名称。</li>
-</ol>
-<blockquote>
-<p>名称中含有命名空间分隔符的标识符，例如 Foo\Bar</p>
-</blockquote>
-<ol>
-<li>完全限定名称，或包含了全局前缀操作符的名称。</li>
-</ol>
-<blockquote>
-<p>名称中包含命名空间分隔符，并以命名空间分隔符开始的标识符，例如 \Foo\Bar。 namespace\Foo 也是一个完全限定名称.</p>
-<p>注意访问任意全局类、函数或常量，都可以使用完全限定名称，例如 \strlen() 或 \Exception 或 \INI_ALL。</p>
-</blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Foo</span> \ <span class="title">Bar</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">strlen</span><span class="params">(<span class="variable">$str</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable">$str</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> strlen(<span class="string">'test'</span>); <span class="comment">//print test</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> \strlen(<span class="string">'test'</span>); <span class="comment">//print 4</span></span><br></pre></td></tr></table></figure>
-<h3 id="u547D_u540D_u7A7A_u95F4_u548C_u52A8_u6001_u8BED_u8A00_u7279_u5F81"><a href="#u547D_u540D_u7A7A_u95F4_u548C_u52A8_u6001_u8BED_u8A00_u7279_u5F81" class="headerlink" title="命名空间和动态语言特征"></a>命名空间和动态语言特征</h3><p>必须使用完全限定名称（包括命名空间前缀的类名称）。注意因为在动态的类名称、函数名称或常量名称中，限定名称和完全限定名称没有区别，因此其前导的反斜杠是不必要的。</p>
-<p>PHP支持两种抽象的访问当前命名空间内部元素的方法， <strong>NAMESPACE</strong> 魔术常量和namespace关键字。</p>
-<p>常量<strong>NAMESPACE</strong>的值是包含当前命名空间名称的字符串。在全局的，不包括在任何命名空间中的代码，它包含一个空的字符串。</p>
-<p>关键字 namespace 可用来显式访问当前命名空间或子命名空间中的元素。它等价于类中的 self 操作符。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> \ <span class="title">foo</span>(); <span class="comment">// calls function MyProject \ foo()</span></span><br></pre></td></tr></table></figure>
-<h3 id="u4F7F_u7528_u547D_u540D_u7A7A_u95F4_uFF1A_u522B_u540D/_u5BFC_u5165"><a href="#u4F7F_u7528_u547D_u540D_u7A7A_u95F4_uFF1A_u522B_u540D/_u5BFC_u5165" class="headerlink" title="使用命名空间：别名/导入"></a>使用命名空间：别名/导入</h3><blockquote>
-<p>注意PHP不支持导入函数或常量。</p>
-</blockquote>
-<p>导入的命名空间必须是完全限定的，不会根据当前的命名空间做相对解析，所以前道的反斜杠是不必要的也不允许有反斜杠。</p>
-<h5 id="u5BFC_u5165_u64CD_u4F5C_u662F_u5728_u7F16_u8BD1_u7684_u65F6_u5019_u6267_u884C_u7684_uFF0C_u4F46_u52A8_u6001_u7684_u7C7B_u540D_u79F0_u3001_u51FD_u6570_u540D_u79F0_u6216_u5E38_u91CF_u540D_u5219_u4E0D_u662F_u3002"><a href="#u5BFC_u5165_u64CD_u4F5C_u662F_u5728_u7F16_u8BD1_u7684_u65F6_u5019_u6267_u884C_u7684_uFF0C_u4F46_u52A8_u6001_u7684_u7C7B_u540D_u79F0_u3001_u51FD_u6570_u540D_u79F0_u6216_u5E38_u91CF_u540D_u5219_u4E0D_u662F_u3002" class="headerlink" title="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"></a>导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$obj</span> = <span class="keyword">new</span> Another; <span class="comment">//实例化 My \ Full \ classname 对象</span></span><br><span class="line"><span class="variable">$a</span> = <span class="string">'Another'</span>;</span><br><span class="line"><span class="variable">$obj2</span> = <span class="keyword">new</span> <span class="variable">$a</span>; <span class="comment">//实例化一个Another对象</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>另外，导入操作只影响非限定名称和限定名称。完全限定名称由于是确定的，故不受导入的影响</p>
-</blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$obj</span> = <span class="keyword">new</span> Another; <span class="comment">// My\Full\classname</span></span><br><span class="line"><span class="variable">$obj</span> = <span class="keyword">new</span> \Another; <span class="comment">// instance of class Another</span></span><br><span class="line"><span class="variable">$obj</span> = <span class="keyword">new</span> Another \ thing; <span class="comment">// My\Full\classname\thing;</span></span><br><span class="line"><span class="variable">$obj</span> = <span class="keyword">new</span> \Another\thing; <span class="comment">// Another\thing</span></span><br></pre></td></tr></table></figure>
-<h5 id="u540E_u5907_u5168_u5C40_u51FD_u6570/_u5E38_u91CF"><a href="#u540E_u5907_u5168_u5C40_u51FD_u6570/_u5E38_u91CF" class="headerlink" title="后备全局函数/常量"></a>后备全局函数/常量</h5><p>在命名空间中遇到一个非限定的类、函数和常量名称时，使用不同的优先策略来解析该名称。</p>
-<p>类名称总是解析到当前命名空间中的名称。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">'hi'</span>); <span class="comment">//会报错：Class 'MyProject\Exception' not found.</span></span><br></pre></td></tr></table></figure>
-<p>因此在访问系统内部或不包含在命名空间中的类名称时，必须使用完全限定名称。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">namspace MyProject;</span><br><span class="line"></span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> \<span class="keyword">Exception</span>(<span class="string">'hi'</span>);<span class="comment">// success</span></span><br></pre></td></tr></table></figure>
-<p>对于函数和常量来说，如果当前命名空间中不存在该函数或常量，PHP 会退而使用全局空间中的函数或常量。</p>
-<h2 id="u540D_u79F0_u89E3_u6790_u89C4_u5219"><a href="#u540D_u79F0_u89E3_u6790_u89C4_u5219" class="headerlink" title="名称解析规则"></a>名称解析规则</h2><ol>
-<li><p>对完全限定名称的函数、类和常量的调用在编译时解析.例如 new \A\B 解析为类 A\B.</p>
-</li>
-<li><p>所有的非限定名称和限定名称根据当前的导入规则在编译时进行转换。例如,如果命名空间A\B\C被导入C，那么对 C\D\e() 的调用会被转换为 A\B\C\D\e().</p>
-</li>
-<li><p>在命名空间内部，所有的没有根据导入规则转换的限定名称均会在其前面加上当前的命名空间名称。例如，如果命名空间 A\B 内容中调用 C\D\e(),则会转换为 A\B\C\D\e().</p>
-</li>
-<li><p>非限定名称根据当前的导入规则在编译时转换(用全名代替短的导入名)。例如，如果命名空间 A\B\C 导入为 C，则 new C() 被转化为 new A\B\C().</p>
-</li>
-<li><p>在命名空间(例如A\B)内部对非限定名称或限定名称类的调用是在运行时解析的。下面是调用 new C() 及 new D\E()的解析过程：</p>
-<ul>
-<li><p>new C()的解析:</p>
-<ol>
-<li>在当前命名空间中查找 A\B\C 类</li>
-<li>尝试自动加载类 A\B\C</li>
-</ol>
-</li>
-<li><p>new D\E()的解析：</p>
-<ol>
-<li>在类名称前加上当前命名空间名称变成：A\B\D\E,然后查找该类。</li>
-<li>尝试自动加载类 A\B\D\E</li>
-</ol>
-</li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p>为了引用全局命名空间中的全局类，必须使用完全限定名称 new \C();</p>
-</blockquote>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2146,7 +2050,7 @@ _   底线
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
