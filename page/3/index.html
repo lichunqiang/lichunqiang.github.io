@@ -210,6 +210,145 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/22/support-jsonp-in-yii2/" itemprop="url">
+                  如何让Yii2支持jsonp
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T23:47:24+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/support-jsonp-in-yii2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/support-jsonp-in-yii2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="u4EC0_u4E48_u662FJSONP"><a href="#u4EC0_u4E48_u662FJSONP" class="headerlink" title="什么是JSONP"></a>什么是JSONP</h2><p>JSONP是一个非官方的协议，它允许在服务器端集成Script tags返回至客户端，通过javascript callback的形式实现跨域访问（这仅仅是JSONP简单的实现形式）</p>
+<blockquote>
+<p>具体可以参看下玉伯大神的一篇文章<a href="https://github.com/lifesinger/lifesinger.github.com/issues/118" target="_blank" rel="external">聊聊 JSONP 的 P</a></p>
+</blockquote>
+<h2 id="u600E_u4E48_u53D1_u9001JSONP_u8BF7_u6C42"><a href="#u600E_u4E48_u53D1_u9001JSONP_u8BF7_u6C42" class="headerlink" title="怎么发送JSONP请求"></a>怎么发送JSONP请求</h2><p>这里我使用jQuery的 <code>getJSON</code> 方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.getJSON(<span class="string">'http://www.b.com/api/users?callback=?'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这里jQuery一切都为我们做好了,只需要加上参数 <code>callback=?</code>！</p>
+<h2 id="Yii_u63A5_u53D7_u5904_u7406_u5E76_u8FD4_u56DE"><a href="#Yii_u63A5_u53D7_u5904_u7406_u5E76_u8FD4_u56DE" class="headerlink" title="Yii接受处理并返回"></a>Yii接受处理并返回</h2><p>先上代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Yii::<span class="variable">$app</span>-&gt;getResponse()-&gt;format = Response::FORMAT_JSONP;</span><br><span class="line"><span class="variable">$user_count</span> = (<span class="keyword">new</span> Query)-&gt;from(<span class="string">'users'</span>)-&gt;count();</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="string">'data'</span> =&gt; [</span><br><span class="line">        <span class="string">'errcode'</span> =&gt; <span class="number">0</span>,</span><br><span class="line">        <span class="string">'data'</span> =&gt; [<span class="string">'count'</span> =&gt; <span class="variable">$user_count</span>],</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">'callback'</span> =&gt; Yii::<span class="variable">$app</span>-&gt;getRequest()-&gt;get(<span class="string">'callback'</span>),</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>首先，我们需要在 action 中指定 Response 的格式为 FORMAT_JSONP.</p>
+<p>当设置 Response 的格式为 JSONP 后，同 FORMAT 设置为JSON 我们需要返回 <em>数组数据</em></p>
+<p>不同点是这个数组需要有两个关键的Key，一个是data，另外一个是 callback。</p>
+<ul>
+<li>data 的内容就是回调中接收到的实际数据</li>
+<li>callback 是前端发送的参数中的方法名</li>
+</ul>
+<p>我们来看下Yii的源代码：</p>
+<p>位于 [[yii\web\JsonResponseFormatter]]</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Formats response data in JSONP format.</span><br><span class="line"> * <span class="doctag">@param</span> Response $response</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">formatJsonp</span><span class="params">(<span class="variable">$response</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="variable">$response</span>-&gt;getHeaders()-&gt;set(<span class="string">'Content-Type'</span>, <span class="string">'application/javascript; charset=UTF-8'</span>);</span><br><span class="line">    <span class="keyword">if</span> (is_array(<span class="variable">$response</span>-&gt;data) &amp;&amp; <span class="keyword">isset</span>(<span class="variable">$response</span>-&gt;data[<span class="string">'data'</span>], <span class="variable">$response</span>-&gt;data[<span class="string">'callback'</span>])) &#123;</span><br><span class="line">        <span class="variable">$response</span>-&gt;content = sprintf(<span class="string">'%s(%s);'</span>, <span class="variable">$response</span>-&gt;data[<span class="string">'callback'</span>], Json::encode(<span class="variable">$response</span>-&gt;data[<span class="string">'data'</span>]));</span><br><span class="line">    &#125; <span class="keyword">elseif</span> (<span class="variable">$response</span>-&gt;data !== <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="variable">$response</span>-&gt;content = <span class="string">''</span>;</span><br><span class="line">        Yii::warning(<span class="string">"The 'jsonp' response requires that the data be an array consisting of both 'data' and 'callback' elements."</span>, <span class="keyword">__METHOD__</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，Yii做的处理有：</p>
+<ul>
+<li>设置HEADER的Content-Type为 application/javascript</li>
+<li>判断Response::data 是否为数组且设置了 data 和 callback 两个参数</li>
+<li>组装JSONP返回</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/22/node-export-vs-exports/" itemprop="url">
                   export vs exports
                 </a>
@@ -1878,132 +2017,6 @@ _   底线
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/setup-android-env/" itemprop="url">
-                  配置安卓开发环境
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:06:52+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Java/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/setup-android-env/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/setup-android-env/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <blockquote>
-<p>TBD</p>
-</blockquote>
-<h2 id="u5B89_u88C5JDK"><a href="#u5B89_u88C5JDK" class="headerlink" title="安装JDK"></a>安装JDK</h2><p>下载最新的Java JDK进行安装，病加入系统环境变量</p>
-<ul>
-<li><p>我的电脑-&gt;属性-&gt;高级-&gt;环境变量-&gt;系统变量中添加以下环境变量</p>
-</li>
-<li><p>JAVA_HOME值为：安装JDK的目录， 我的为C:\Program Files\Java\jdk1.8.0_05(安装时候有路径选择，复制下来即可)</p>
-</li>
-<li><p>Path: 在开始追加 .;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;(注意前面的”.;”要加上，如果没有则新建)</p>
-</li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -2050,21 +2063,21 @@ _   底线
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">41</span>
+              <span class="site-state-item-count">42</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">19</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
