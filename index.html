@@ -210,6 +210,150 @@
             
               
                 
+                <a class="post-title-link" href="/2016/01/26/xdebug-phpstorm/" itemprop="url">
+                  在phpstorm中使用xdebug
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-26T11:17:39+00:00" content="2016-01-26">
+              2016-01-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/xdebug/" itemprop="url" rel="index">
+                    <span itemprop="name">xdebug</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/xdebug/phpstorm/" itemprop="url" rel="index">
+                    <span itemprop="name">phpstorm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/26/xdebug-phpstorm/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/xdebug-phpstorm/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="u5F00_u542Fxdebug"><a href="#u5F00_u542Fxdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p>
+<p>  [xdebug]<br>  xdebug.remote_enable = On<br>  xdebug.remote_handler = dbgp<br>  xdebug.remote_host= localhost<br>  xdebug.remote_port = 9000<br>  xdebug.idekey = PHPSTORM<br>  xdebug.profiler_enable = 1</p>
+<p>重启服务之后在<code>phpinfo</code>中查看是否已经开启<code>xdebug</code>.</p>
+<h2 id="u914D_u7F6Ephpstorm"><a href="#u914D_u7F6Ephpstorm" class="headerlink" title="配置phpstorm"></a>配置phpstorm</h2><ol>
+<li><p>配置xdebug端口号</p>
+<p>在 File &gt; Settings &gt; Langauges&amp;Frameworks 中找到 <code>PHP</code> 选择<code>Debug</code>选项卡,找到<code>xdebug</code>配置项，确认端口号是上面设置的<code>9000</code></p>
+</li>
+<li><p>配置DBGp Proxy</p>
+<p> 点击<code>DBGp Proxy</code>选项卡，在里面设置:</p>
+<p>   IDE Key: PHPSTORM<br>   Host:   localhost<br>   Port:   9000</p>
+</li>
+<li><p>添加 servers</p>
+<p>找到 <code>Servers</code>选项卡,点击添加按钮添加一个配置信息。例如想调试部署好的虚拟地址：<code>www.app.local</code>,那么你需要在<code>Host</code>中填上该地址。<br>注意<code>Port</code>需要和你实际配置的端口要一直。另外保证<code>Debugger</code>为<code>Xdebug</code></p>
+</li>
+</ol>
+<p>  这里主要记录下如何配合浏览器插件<code>Xdebug helper</code>来进行调试</p>
+<h2 id="u5B89_u88C5_u6D4F_u89C8_u5668_u63D2_u4EF6Xdebug_helper"><a href="#u5B89_u88C5_u6D4F_u89C8_u5668_u63D2_u4EF6Xdebug_helper" class="headerlink" title="安装浏览器插件Xdebug helper"></a>安装浏览器插件<code>Xdebug helper</code></h2><p>  安装成功之后，在选线卡将你配置的domain进行添加。</p>
+<h2 id="u5728postman_u4E2D_u4F7F_u7528xdebug"><a href="#u5728postman_u4E2D_u4F7F_u7528xdebug" class="headerlink" title="在postman中使用xdebug"></a>在postman中使用xdebug</h2><ol>
+<li><p>Configure your xdebug (by editing php.ini) to attempt to debug every php script (xdebug.remote_autostart = 1)</p>
+</li>
+<li><p>Add xdebug session start parameter to the actual URL (XDEBUG_SESSION_START= – <a href="http://xdebug.org/docs/remote" target="_blank" rel="external">http://xdebug.org/docs/remote</a> ), for example: ?XDEBUG_SESSION_START=PHPSTORM</p>
+</li>
+<li><p>Pass xdebug cookie as one of the headers (the one which is set by bookmarklet or browser extension, for example)</p>
+<p>参考文章:</p>
+<ul>
+<li><a href="http://my.oschina.net/u/248080/blog/351455" target="_blank" rel="external">http://my.oschina.net/u/248080/blog/351455</a></li>
+<li><a href="http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman" target="_blank" rel="external">http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman</a></li>
+</ul>
+</li>
+</ol>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/01/18/auto-deploy-hexo-blog-using-travis/" itemprop="url">
                   配置travis来自动发布hexo博客
                 </a>
@@ -1326,115 +1470,6 @@ $ssh -T git@github.com
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/08/reg-the-at-user/" itemprop="url">
-                  微博@匹配用户正则实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-07-08T17:50:15+00:00" content="2015-07-08">
-              2015-07-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/08/reg-the-at-user/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/08/reg-the-at-user/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[^\s]&#123;<span class="number">1</span>,<span class="number">20</span>&#125;/</span><br></pre></td></tr></table></figure>
-<p>如果不限长度</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[^\s]+/</span><br></pre></td></tr></table></figure>
-<p>如果用户名只可能是英文下划线和数字</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[a-z0-<span class="number">9</span>_]+/i</span><br></pre></td></tr></table></figure>
-<p>如果还有可能是中文</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[a-z0-<span class="number">9</span>_\u4E00-\u9FA5]+/i/</span><br></pre></td></tr></table></figure>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1481,21 +1516,21 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-count">36</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

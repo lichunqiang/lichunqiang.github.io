@@ -210,6 +210,115 @@
             
               
                 
+                <a class="post-title-link" href="/2015/07/08/reg-the-at-user/" itemprop="url">
+                  微博@匹配用户正则实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-07-08T17:50:15+00:00" content="2015-07-08">
+              2015-07-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/07/08/reg-the-at-user/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/08/reg-the-at-user/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[^\s]&#123;<span class="number">1</span>,<span class="number">20</span>&#125;/</span><br></pre></td></tr></table></figure>
+<p>如果不限长度</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[^\s]+/</span><br></pre></td></tr></table></figure>
+<p>如果用户名只可能是英文下划线和数字</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[a-z0-<span class="number">9</span>_]+/i</span><br></pre></td></tr></table></figure>
+<p>如果还有可能是中文</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[a-z0-<span class="number">9</span>_\u4E00-\u9FA5]+/i/</span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/06/26/upgrade-php-version/" itemprop="url">
                   更新升级PHP版本
                 </a>
@@ -1270,116 +1379,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/25/yii2-layer-asset-plugin-published/" itemprop="url">
-                  yii2-layer发布
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-25T00:10:27+00:00" content="2015-04-25">
-              2015-04-25
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/25/yii2-layer-asset-plugin-published/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/25/yii2-layer-asset-plugin-published/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>贤心的最懂你的、跨终端的web弹层组件<a href="https://github.com/sentsin/layer" target="_blank" rel="external">layer</a>由于没有发布到bower，所以为了在Yii2的项目中方便使用,特发布了 <a href="https://packagist.org/packages/light/yii2-layer" target="_blank" rel="external">light/yii2-layer</a></p>
-<p>这样我们就可以愉快的依赖 layer 这块强大的插件了。</p>
-<h3 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require light/yii2-layer=*</span><br></pre></td></tr></table></figure>
-<h3 id="u4F7F_u7528"><a href="#u4F7F_u7528" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerAsset</span>;</span><br><span class="line"></span><br><span class="line">LayerAsset::register(<span class="variable">$this</span>);</span><br></pre></td></tr></table></figure>
-<p>或者在移动端使用：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerMobileAsset</span>;</span><br><span class="line"></span><br><span class="line">LayerMobileAsset::register(<span class="variable">$this</span>);</span><br></pre></td></tr></table></figure>
-<p>具体这款插件有多炫酷，还是自行到官方站去体验吧！ <a href="http://sentsin.com/jquery/layer/" target="_blank" rel="external">http://sentsin.com/jquery/layer/</a></p>
-<h3 id="u8BF4_u660E"><a href="#u8BF4_u660E" class="headerlink" title="说明"></a>说明</h3><p>这里没有封装使用插件，因为目前还是在js中主动调用 - - ！</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1426,21 +1425,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">43</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-count">36</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
