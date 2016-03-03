@@ -131,7 +131,7 @@ Markdown 免费编辑器
 
 Markdown 的目标是实现「易读易写」。
 可读性，无论如何，都是最重要的。一份使用 Markdown 格式撰写的文">
-<meta property="og:updated_time" content="2016-01-26T04:16:11.393Z">
+<meta property="og:updated_time" content="2016-03-03T08:23:13.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Markdown的语法集锦">
 <meta name="twitter:description" content="Markdown 语法说明 (简体中文版)
@@ -380,36 +380,36 @@ Markdown 的目标是实现「易读易写」。
       
 
       
-        <span itemprop="articleBody"><h1 id="Markdown__u8BED_u6CD5_u8BF4_u660E__28_u7B80_u4F53_u4E2D_u6587_u7248_29"><a href="#Markdown__u8BED_u6CD5_u8BF4_u660E__28_u7B80_u4F53_u4E2D_u6587_u7248_29" class="headerlink" title="Markdown 语法说明 (简体中文版)"></a>Markdown 语法说明 (简体中文版)</h1><ul>
-<li><a href="/#overview">概述</a><ul>
-<li><a href="/#philosophy">宗旨</a></li>
-<li><a href="/#html">兼容 HTML</a></li>
-<li><a href="/#autoescape">特殊字符自动转换</a></li>
+        <span itemprop="articleBody"><h1 id="Markdown-语法说明-简体中文版"><a href="#Markdown-语法说明-简体中文版" class="headerlink" title="Markdown 语法说明 (简体中文版)"></a>Markdown 语法说明 (简体中文版)</h1><ul>
+<li><a href="#overview">概述</a><ul>
+<li><a href="#philosophy">宗旨</a></li>
+<li><a href="#html">兼容 HTML</a></li>
+<li><a href="#autoescape">特殊字符自动转换</a></li>
 </ul>
 </li>
-<li><a href="/#block">区块元素</a><ul>
-<li><a href="/#p">段落和换行</a></li>
-<li><a href="/#header">标题</a></li>
-<li><a href="/#blockquote">区块引用</a></li>
-<li><a href="/#list">列表</a></li>
-<li><a href="/#precode">代码区块</a></li>
-<li><a href="/#hr">分隔线</a></li>
+<li><a href="#block">区块元素</a><ul>
+<li><a href="#p">段落和换行</a></li>
+<li><a href="#header">标题</a></li>
+<li><a href="#blockquote">区块引用</a></li>
+<li><a href="#list">列表</a></li>
+<li><a href="#precode">代码区块</a></li>
+<li><a href="#hr">分隔线</a></li>
 </ul>
 </li>
-<li><a href="/#span">区段元素</a><ul>
-<li><a href="/#link">链接</a></li>
-<li><a href="/#em">强调</a></li>
-<li><a href="/#code">代码</a></li>
-<li><a href="/#img">图片</a></li>
+<li><a href="#span">区段元素</a><ul>
+<li><a href="#link">链接</a></li>
+<li><a href="#em">强调</a></li>
+<li><a href="#code">代码</a></li>
+<li><a href="#img">图片</a></li>
 </ul>
 </li>
-<li><a href="/#misc">其它</a><ul>
-<li><a href="/#backslash">反斜杠</a></li>
-<li><a href="/#autolink">自动链接</a></li>
+<li><a href="#misc">其它</a><ul>
+<li><a href="#backslash">反斜杠</a></li>
+<li><a href="#autolink">自动链接</a></li>
 </ul>
 </li>
-<li><a href="/#acknowledgement">感谢</a></li>
-<li><a href="/#editor">Markdown 免费编辑器</a></li>
+<li><a href="#acknowledgement">感谢</a></li>
+<li><a href="#editor">Markdown 免费编辑器</a></li>
 </ul>
 <hr>
 <h2 id="overview">概述</h2>
@@ -453,7 +453,7 @@ Markdown 的目标是实现「易读易写」。
 <pre><code>AT&amp;T
 </code></pre><p>Markdown 就会将它转为：</p>
 <pre><code>AT&amp;amp;T
-</code></pre><p>类似的状况也会发生在 <code>&lt;</code> 符号上，因为 Markdown 允许 <a href="/#html">兼容 HTML</a> ，如果你是把 <code>&lt;</code> 符号作为 HTML 标签的定界符使用，那 Markdown 也不会对它做任何转换，但是如果你写：</p>
+</code></pre><p>类似的状况也会发生在 <code>&lt;</code> 符号上，因为 Markdown 允许 <a href="#html">兼容 HTML</a> ，如果你是把 <code>&lt;</code> 符号作为 HTML 标签的定界符使用，那 Markdown 也不会对它做任何转换，但是如果你写：</p>
 <pre><code>4 &lt; 5
 </code></pre><p>Markdown 将会把它转换为：</p>
 <pre><code>4 &amp;lt; 5
@@ -467,7 +467,7 @@ Markdown 的目标是实现「易读易写」。
 <p>一个 Markdown 段落是由一个或多个连续的文本行组成，它的前后要有一个以上的空行（空行的定义是显示上看起来像是空的，便会被视为空行。比方说，若某一行只包含空格和制表符，则该行也会被视为空行）。普通段落不该用空格或制表符来缩进。</p>
 <p>「由一个或多个连续的文本行组成」这句话其实暗示了 Markdown 允许段落内的强迫换行（插入换行符），这个特性和其他大部分的 text-to-HTML 格式不一样（包括 Movable Type 的「Convert Line Breaks」选项），其它的格式会把每个换行符都转成 <code>&lt;br /&gt;</code> 标签。</p>
 <p>如果你<em>确实</em>想要依赖 Markdown 来插入 <code>&lt;br /&gt;</code> 标签的话，在插入处先按入两个以上的空格然后回车。</p>
-<p>的确，需要多费点事（多加空格）来产生 <code>&lt;br /&gt;</code> ，但是简单地「每个换行都转换为 <code>&lt;br /&gt;</code>」的方法在 Markdown 中并不适合， Markdown 中 email 式的 <a href="/#blockquote">区块引用</a> 和多段落的 <a href="/#list">列表</a> 在使用换行来排版的时候，不但更好用，还更方便阅读。</p>
+<p>的确，需要多费点事（多加空格）来产生 <code>&lt;br /&gt;</code> ，但是简单地「每个换行都转换为 <code>&lt;br /&gt;</code>」的方法在 Markdown 中并不适合， Markdown 中 email 式的 <a href="#blockquote">区块引用</a> 和多段落的 <a href="#list">列表</a> 在使用换行来排版的时候，不但更好用，还更方便阅读。</p>
 <h3 id="header">标题</h3>
 
 <p>Markdown 支持两种标题的语法，类 <a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="external">Setext</a> 和类 <a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="external">atx</a> 形式。</p>
@@ -980,7 +980,7 @@ _   底线
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1052,7 +1052,7 @@ _   底线
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Markdown__u8BED_u6CD5_u8BF4_u660E__28_u7B80_u4F53_u4E2D_u6587_u7248_29"><span class="nav-number">1.</span> <span class="nav-text">Markdown 语法说明 (简体中文版)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#philosophy"><span class="nav-number">1.1.1.</span> <span class="nav-text">宗旨</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html"><span class="nav-number">1.1.2.</span> <span class="nav-text">兼容 HTML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#autoescape"><span class="nav-number">1.1.3.</span> <span class="nav-text">特殊字符自动转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#block"><span class="nav-number">1.2.</span> <span class="nav-text">区块元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#p"><span class="nav-number">1.2.1.</span> <span class="nav-text">段落和换行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#header"><span class="nav-number">1.2.2.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#blockquote"><span class="nav-number">1.2.3.</span> <span class="nav-text">区块引用 Blockquotes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">1.2.4.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#precode"><span class="nav-number">1.2.5.</span> <span class="nav-text">代码区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hr"><span class="nav-number">1.2.6.</span> <span class="nav-text">分隔线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#span"><span class="nav-number">1.3.</span> <span class="nav-text">区段元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#link"><span class="nav-number">1.3.1.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#em"><span class="nav-number">1.3.2.</span> <span class="nav-text">强调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code"><span class="nav-number">1.3.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#img"><span class="nav-number">1.3.4.</span> <span class="nav-text">图片</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#misc"><span class="nav-number">1.4.</span> <span class="nav-text">其它</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#autolink"><span class="nav-number">1.4.1.</span> <span class="nav-text">自动链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#backslash"><span class="nav-number">1.4.2.</span> <span class="nav-text">反斜杠</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#editor"><span class="nav-number">1.5.</span> <span class="nav-text">Markdown 免费编辑器</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Markdown-语法说明-简体中文版"><span class="nav-number">1.</span> <span class="nav-text">Markdown 语法说明 (简体中文版)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#philosophy"><span class="nav-number">1.1.1.</span> <span class="nav-text">宗旨</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html"><span class="nav-number">1.1.2.</span> <span class="nav-text">兼容 HTML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#autoescape"><span class="nav-number">1.1.3.</span> <span class="nav-text">特殊字符自动转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#block"><span class="nav-number">1.2.</span> <span class="nav-text">区块元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#p"><span class="nav-number">1.2.1.</span> <span class="nav-text">段落和换行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#header"><span class="nav-number">1.2.2.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#blockquote"><span class="nav-number">1.2.3.</span> <span class="nav-text">区块引用 Blockquotes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">1.2.4.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#precode"><span class="nav-number">1.2.5.</span> <span class="nav-text">代码区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hr"><span class="nav-number">1.2.6.</span> <span class="nav-text">分隔线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#span"><span class="nav-number">1.3.</span> <span class="nav-text">区段元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#link"><span class="nav-number">1.3.1.</span> <span class="nav-text">链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#em"><span class="nav-number">1.3.2.</span> <span class="nav-text">强调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code"><span class="nav-number">1.3.3.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#img"><span class="nav-number">1.3.4.</span> <span class="nav-text">图片</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#misc"><span class="nav-number">1.4.</span> <span class="nav-text">其它</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#autolink"><span class="nav-number">1.4.1.</span> <span class="nav-text">自动链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#backslash"><span class="nav-number">1.4.2.</span> <span class="nav-text">反斜杠</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#editor"><span class="nav-number">1.5.</span> <span class="nav-text">Markdown 免费编辑器</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

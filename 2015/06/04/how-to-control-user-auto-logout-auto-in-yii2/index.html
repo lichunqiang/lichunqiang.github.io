@@ -53,20 +53,20 @@
 
 <meta name="description" content="现在需求是：如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录
 我们可以通过配置  yii\web\User::$authTimeout来达到效果，上代码：
-1&amp;#39;user&amp;#39; =&amp;#62; [&amp;#10;    &amp;#39;identityClass&amp;#39; =&amp;#62; &amp;#39;app\models\User&amp;#39;,&amp;#10;    &amp;#">
+1234&amp;apos;user&amp;apos; =&amp;gt; [    &amp;apos;identityClass&amp;apos; =&amp;gt; &amp;apos;app\models\User&amp;apos;,    &amp;apos">
 <meta property="og:type" content="article">
 <meta property="og:title" content="怎么控制用户一定时间未操作自动登出">
 <meta property="og:url" content="http://blog.lzuer.net/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/index.html">
 <meta property="og:site_name" content="Light's Blog">
 <meta property="og:description" content="现在需求是：如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录
 我们可以通过配置  yii\web\User::$authTimeout来达到效果，上代码：
-1&amp;#39;user&amp;#39; =&amp;#62; [&amp;#10;    &amp;#39;identityClass&amp;#39; =&amp;#62; &amp;#39;app\models\User&amp;#39;,&amp;#10;    &amp;#">
-<meta property="og:updated_time" content="2016-01-26T04:16:11.393Z">
+1234&amp;apos;user&amp;apos; =&amp;gt; [    &amp;apos;identityClass&amp;apos; =&amp;gt; &amp;apos;app\models\User&amp;apos;,    &amp;apos">
+<meta property="og:updated_time" content="2016-03-03T08:23:13.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="怎么控制用户一定时间未操作自动登出">
 <meta name="twitter:description" content="现在需求是：如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录
 我们可以通过配置  yii\web\User::$authTimeout来达到效果，上代码：
-1&amp;#39;user&amp;#39; =&amp;#62; [&amp;#10;    &amp;#39;identityClass&amp;#39; =&amp;#62; &amp;#39;app\models\User&amp;#39;,&amp;#10;    &amp;#">
+1234&amp;apos;user&amp;apos; =&amp;gt; [    &amp;apos;identityClass&amp;apos; =&amp;gt; &amp;apos;app\models\User&amp;apos;,    &amp;apos">
 
 
 
@@ -265,9 +265,9 @@
       
         <span itemprop="articleBody"><p>现在需求是：<strong>如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录</strong></p>
 <p>我们可以通过配置  <code>yii\web\User::$authTimeout</code>来达到效果，上代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;user&#39; =&#62; [&#10;    &#39;identityClass&#39; =&#62; &#39;app\models\User&#39;,&#10;    &#39;authTimeout&#39; =&#62; 5 //&#20026;&#20102;&#27979;&#35797;&#65292;&#35774;&#32622;5&#31186;&#10;],</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&apos;user&apos; =&gt; [</span><br><span class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</span><br><span class="line">    &apos;authTimeout&apos; =&gt; 5 //为了测试，设置5秒</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
 <p>还有一个更设定是可以让用户登入多长时间后，不管有没有操作，超过这个设定的时间后都会登出，上代码:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#39;user&#39; =&#62; [&#10;    &#39;identityClass&#39; =&#62; &#39;app\models\User&#39;,&#10;    &#39;absoluteAuthTimeout&#39; =&#62; 20 //&#36825;&#37324;&#20026;&#20102;&#27979;&#35797;&#65292;&#35774;&#32622;&#20026;20&#31186;&#65292;&#30331;&#20837;&#21518;&#19981;&#20572;&#21047;&#26032;&#27169;&#25311;&#29992;&#25143;&#25805;&#20316;&#65292;&#32467;&#26524;&#21487;&#30475;&#21040;&#65292;&#34429;&#28982;&#22312;&#19981;&#26029;&#25805;&#20316;&#65292;&#20294;&#26159;&#36807;&#20102;&#35774;&#32622;&#30340;&#26102;&#38388;&#36824;&#26159;&#20250;&#33258;&#21160;&#30331;&#20986;&#10;],</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&apos;user&apos; =&gt; [</span><br><span class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</span><br><span class="line">    &apos;absoluteAuthTimeout&apos; =&gt; 20 //这里为了测试，设置为20秒，登入后不停刷新模拟用户操作，结果可看到，虽然在不断操作，但是过了设置的时间还是会自动登出</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
 <p><em>需要注意的是如果设置 <code>enableAutoLogin = true</code> 的话，以上两个设置是不会生效的。</em></p>
 </span>
       
@@ -368,7 +368,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -51,19 +51,19 @@
 
 
 
-<meta name="description" content="问题现在需要支持这种方式：1light.ifenqi.com =&amp;#62; www.ifenqi.com/site/user?name=light
-解决步骤设置vhosts如下：1&amp;#60;VirtualHost *:80&amp;#62;    &amp;#10;    DocumentRoot &amp;#34;D:\project\ifenqi\frontend\web&amp;#34;    &amp;#10;    Serve">
+<meta name="description" content="问题现在需要支持这种方式：1light.ifenqi.com =&amp;gt; www.ifenqi.com/site/user?name=light
+解决步骤设置vhosts如下：12345&amp;lt;VirtualHost *:80&amp;gt;        DocumentRoot &amp;quot;D:\project\ifenqi\frontend\web&amp;quot;        ServerName w">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Apache如何配置支持多域名">
 <meta property="og:url" content="http://blog.lzuer.net/2013/04/22/apache-multiple-server-setting/index.html">
 <meta property="og:site_name" content="Light's Blog">
-<meta property="og:description" content="问题现在需要支持这种方式：1light.ifenqi.com =&amp;#62; www.ifenqi.com/site/user?name=light
-解决步骤设置vhosts如下：1&amp;#60;VirtualHost *:80&amp;#62;    &amp;#10;    DocumentRoot &amp;#34;D:\project\ifenqi\frontend\web&amp;#34;    &amp;#10;    Serve">
-<meta property="og:updated_time" content="2016-01-26T04:16:11.393Z">
+<meta property="og:description" content="问题现在需要支持这种方式：1light.ifenqi.com =&amp;gt; www.ifenqi.com/site/user?name=light
+解决步骤设置vhosts如下：12345&amp;lt;VirtualHost *:80&amp;gt;        DocumentRoot &amp;quot;D:\project\ifenqi\frontend\web&amp;quot;        ServerName w">
+<meta property="og:updated_time" content="2016-03-03T08:23:13.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Apache如何配置支持多域名">
-<meta name="twitter:description" content="问题现在需要支持这种方式：1light.ifenqi.com =&amp;#62; www.ifenqi.com/site/user?name=light
-解决步骤设置vhosts如下：1&amp;#60;VirtualHost *:80&amp;#62;    &amp;#10;    DocumentRoot &amp;#34;D:\project\ifenqi\frontend\web&amp;#34;    &amp;#10;    Serve">
+<meta name="twitter:description" content="问题现在需要支持这种方式：1light.ifenqi.com =&amp;gt; www.ifenqi.com/site/user?name=light
+解决步骤设置vhosts如下：12345&amp;lt;VirtualHost *:80&amp;gt;        DocumentRoot &amp;quot;D:\project\ifenqi\frontend\web&amp;quot;        ServerName w">
 
 
 
@@ -272,8 +272,8 @@
       
 
       
-        <span itemprop="articleBody"><h3 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h3><p>现在需要支持这种方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">light.ifenqi.com =&#62; www.ifenqi.com/site/user?name=light</span><br></pre></td></tr></table></figure></p>
-<h3 id="u89E3_u51B3_u6B65_u9AA4"><a href="#u89E3_u51B3_u6B65_u9AA4" class="headerlink" title="解决步骤"></a>解决步骤</h3><p>设置vhosts如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;VirtualHost *:80&#62;    &#10;    DocumentRoot &#34;D:\project\ifenqi\frontend\web&#34;    &#10;    ServerName www.ifenqi.com    &#10;    ServerAlias *.ifenqi.com    &#10;&#60;/VirtualHost&#62;</span><br></pre></td></tr></table></figure></p>
+        <span itemprop="articleBody"><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>现在需要支持这种方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">light.ifenqi.com =&gt; www.ifenqi.com/site/user?name=light</span><br></pre></td></tr></table></figure></p>
+<h3 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h3><p>设置vhosts如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;    </span><br><span class="line">    DocumentRoot &quot;D:\project\ifenqi\frontend\web&quot;    </span><br><span class="line">    ServerName www.ifenqi.com    </span><br><span class="line">    ServerAlias *.ifenqi.com    </span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>注意：这项要配置在所有的地下，否则访问manager.ifenqi.com的话也会被解析到上面的服务器目录</p>
 </blockquote>
@@ -377,7 +377,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -449,7 +449,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u95EE_u9898"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u89E3_u51B3_u6B65_u9AA4"><span class="nav-number">2.</span> <span class="nav-text">解决步骤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决步骤"><span class="nav-number">2.</span> <span class="nav-text">解决步骤</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

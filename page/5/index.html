@@ -210,6 +210,120 @@
             
               
                 
+                <a class="post-title-link" href="/2014/04/22/how-to-know-nginx-compiled-config/" itemprop="url">
+                  添加nginx模块
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-04-22T00:21:08+00:00" content="2014-04-22">
+              2014-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/04/22/how-to-know-nginx-compiled-config/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/22/how-to-know-nginx-compiled-config/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h4 id="首先查看之前编译安装nginx的配置"><a href="#首先查看之前编译安装nginx的配置" class="headerlink" title="首先查看之前编译安装nginx的配置"></a>首先查看之前编译安装nginx的配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nginx -V</span><br></pre></td></tr></table></figure>
+<p>会列出配置的参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure arguments: --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module</span><br></pre></td></tr></table></figure>
+<h4 id="重新编译增加模块"><a href="#重新编译增加模块" class="headerlink" title="重新编译增加模块"></a>重新编译增加模块</h4><blockquote>
+<p>这个过程不会替换现有的nginx的东西，既可以在不停止服务的前提下进行替换</p>
+</blockquote>
+<p>首先找到原来安装nginx的目录(如果已经删除，则重新现在nginx源程序)</p>
+<p>进入该目录，然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line"></span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
+<p>保险做法：</p>
+<p>不执行make install, 将执行make之后objs目录下的nginx替换现有的。(不要忘记对之前的进行备份)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line"></span><br><span class="line">$ service nginx stop</span><br><span class="line"></span><br><span class="line">$ cp /etc/nginx/sbin/nginx /etc/nginx/sbin/nginx.bak</span><br><span class="line"></span><br><span class="line">$ cp objs/nginx /etc/nginx/sbin/</span><br><span class="line"></span><br><span class="line">$ service nginx start</span><br></pre></td></tr></table></figure>
+<h4 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h4>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/04/22/apache-multiple-server-setting/" itemprop="url">
                   Apache如何配置支持多域名
                 </a>
@@ -282,8 +396,8 @@
         
           <span itemprop="articleBody">
             
-              <h3 id="u95EE_u9898"><a href="#u95EE_u9898" class="headerlink" title="问题"></a>问题</h3><p>现在需要支持这种方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">light.ifenqi.com =&#62; www.ifenqi.com/site/user?name=light</span><br></pre></td></tr></table></figure></p>
-<h3 id="u89E3_u51B3_u6B65_u9AA4"><a href="#u89E3_u51B3_u6B65_u9AA4" class="headerlink" title="解决步骤"></a>解决步骤</h3><p>设置vhosts如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;VirtualHost *:80&#62;    &#10;    DocumentRoot &#34;D:\project\ifenqi\frontend\web&#34;    &#10;    ServerName www.ifenqi.com    &#10;    ServerAlias *.ifenqi.com    &#10;&#60;/VirtualHost&#62;</span><br></pre></td></tr></table></figure></p>
+              <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>现在需要支持这种方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">light.ifenqi.com =&gt; www.ifenqi.com/site/user?name=light</span><br></pre></td></tr></table></figure></p>
+<h3 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h3><p>设置vhosts如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;    </span><br><span class="line">    DocumentRoot &quot;D:\project\ifenqi\frontend\web&quot;    </span><br><span class="line">    ServerName www.ifenqi.com    </span><br><span class="line">    ServerAlias *.ifenqi.com    </span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>注意：这项要配置在所有的地下，否则访问manager.ifenqi.com的话也会被解析到上面的服务器目录</p>
 </blockquote>
@@ -409,9 +523,9 @@
 <li><strong>METHOD</strong> 获取当前方法名</li>
 </ul>
 <p><em>(返回区分大小写)</em></p>
-<h3 id="u5173_u4E8EPHP_u4E2D_u7684_u51FD_u6570"><a href="#u5173_u4E8EPHP_u4E2D_u7684_u51FD_u6570" class="headerlink" title="关于PHP中的函数"></a>关于PHP中的函数</h3><ul>
+<h3 id="关于PHP中的函数"><a href="#关于PHP中的函数" class="headerlink" title="关于PHP中的函数"></a>关于PHP中的函数</h3><ul>
 <li><p>函数名是大小写无关的</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">'test'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();<span class="comment">// print test</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Say</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'say something'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$t</span> = <span class="keyword">new</span> Test;</span><br><span class="line"><span class="variable">$t</span>-&gt;say(); <span class="comment">//print say something</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">'test'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();<span class="comment">// print test</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Say</span><span class="params">()</span></span><br><span class="line">	</span>&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'say something'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">$t = <span class="keyword">new</span> Test;</span><br><span class="line">$t-&gt;say(); <span class="comment">//print say something</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>函数无需在调用之前被定义，但有两个特例</p>
 <ul>
@@ -529,7 +643,7 @@
               <blockquote>
 <p>接口可以指定某些类必须实现哪些方法，但不需要定义这些方法的具体内容， 所以定义的所有方法都是空的</p>
 </blockquote>
-<h3 id="u9700_u8981_u6CE8_u610F_u7684_u70B9"><a href="#u9700_u8981_u6CE8_u610F_u7684_u70B9" class="headerlink" title="需要注意的点"></a>需要注意的点</h3><p>要实现一个接口，使用<code>implements</code>操作符。类中必须实现接口中定义的所有方法，类可以实现多个接口，用逗号来分割多个接口名称。</p>
+<h3 id="需要注意的点"><a href="#需要注意的点" class="headerlink" title="需要注意的点"></a>需要注意的点</h3><p>要实现一个接口，使用<code>implements</code>操作符。类中必须实现接口中定义的所有方法，类可以实现多个接口，用逗号来分割多个接口名称。</p>
 <ul>
 <li><p>接口中所有的方法都必须是公有的，这是接口的特性</p>
 </li>
@@ -540,7 +654,7 @@
 <li><p>类要实现接口，必须使用和接口中所定义的方法完全一致的方式。</p>
 </li>
 <li><p>接口中也可以定义常量，不能被子类或子接口所覆盖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;?php&#10;//&#22768;&#26126;&#19968;&#20010;&#39;iTemplate&#39;&#25509;&#21475;&#10;interface iTemplate&#10;&#123;&#10;  public function setVariable ($name, $var);&#10;  public function getHtml ($template);&#10;&#125;&#10;&#10;//&#23454;&#29616;&#25509;&#21475;&#10;class Template implement iTemplate&#10;&#123;&#10;  private $vars = array();&#10;&#10;  public function setVariable($name, $var)&#10;  &#123;&#10;    $this-&#62;vars[$name] = $var;&#10;  &#125;&#10;&#10;  public function getHtml($template)&#10;  &#123;&#10;    foreach($this-&#62;vars as $name =&#62; $value)&#10;    &#123;&#10;      $template = str_repleace(&#39;&#123;&#39; . $name . &#39;&#125;&#39;, $value, $template);&#10;    &#125;&#10;    return $template;&#10;  &#125;&#10;&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">//声明一个&apos;iTemplate&apos;接口</span><br><span class="line">interface iTemplate</span><br><span class="line">&#123;</span><br><span class="line">  public function setVariable ($name, $var);</span><br><span class="line">  public function getHtml ($template);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//实现接口</span><br><span class="line">class Template implement iTemplate</span><br><span class="line">&#123;</span><br><span class="line">  private $vars = array();</span><br><span class="line"></span><br><span class="line">  public function setVariable($name, $var)</span><br><span class="line">  &#123;</span><br><span class="line">    $this-&gt;vars[$name] = $var;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public function getHtml($template)</span><br><span class="line">  &#123;</span><br><span class="line">    foreach($this-&gt;vars as $name =&gt; $value)</span><br><span class="line">    &#123;</span><br><span class="line">      $template = str_repleace(&apos;&#123;&apos; . $name . &apos;&#125;&apos;, $value, $template);</span><br><span class="line">    &#125;</span><br><span class="line">    return $template;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
             
@@ -609,7 +723,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

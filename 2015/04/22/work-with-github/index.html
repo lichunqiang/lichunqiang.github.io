@@ -69,7 +69,7 @@
 更新原作者代码
 
 12$ git fetch upstrea">
-<meta property="og:updated_time" content="2016-01-26T04:16:11.393Z">
+<meta property="og:updated_time" content="2016-03-03T08:23:13.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在Github上贡献开源项目代码">
 <meta name="twitter:description" content="首先Fork项目123$ git clone xxxx$ git branch fix-error$ git checkout branch
@@ -275,17 +275,17 @@
       
 
       
-        <span itemprop="articleBody"><h5 id="u9996_u5148Fork_u9879_u76EE"><a href="#u9996_u5148Fork_u9879_u76EE" class="headerlink" title="首先Fork项目"></a>首先Fork项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> xxxx</span><br><span class="line">$ git branch fix-error</span><br><span class="line">$ git checkout branch</span><br></pre></td></tr></table></figure>
+        <span itemprop="articleBody"><h5 id="首先Fork项目"><a href="#首先Fork项目" class="headerlink" title="首先Fork项目"></a>首先Fork项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> xxxx</span><br><span class="line">$ git branch fix-error</span><br><span class="line">$ git checkout branch</span><br></pre></td></tr></table></figure>
 <p>将项目代码clone到本地，<strong>(然后创建修改分支，修改分支在本branch进行)</strong></p>
-<h5 id="u6DFB_u52A0_u4E0A_u6E38_u8FDC_u7A0B_u4ED3_u5E93"><a href="#u6DFB_u52A0_u4E0A_u6E38_u8FDC_u7A0B_u4ED3_u5E93" class="headerlink" title="添加上游远程仓库"></a>添加上游远程仓库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add  upstream git@github.com:xx.git</span><br></pre></td></tr></table></figure>
+<h5 id="添加上游远程仓库"><a href="#添加上游远程仓库" class="headerlink" title="添加上游远程仓库"></a>添加上游远程仓库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add  upstream git@github.com:xx.git</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>更新原作者代码</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch upstream</span><br><span class="line">$ git merge upstream/master</span><br></pre></td></tr></table></figure>
-<h5 id="u5C06_u672C_u5730_u4FEE_u6539branch_u63D0_u4EA4"><a href="#u5C06_u672C_u5730_u4FEE_u6539branch_u63D0_u4EA4" class="headerlink" title="将本地修改branch提交"></a>将本地修改branch提交</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add --all</span><br><span class="line">$ git commit -m <span class="string">'some text'</span></span><br><span class="line">$ git push origin fix-error</span><br></pre></td></tr></table></figure>
+<h5 id="将本地修改branch提交"><a href="#将本地修改branch提交" class="headerlink" title="将本地修改branch提交"></a>将本地修改branch提交</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add --all</span><br><span class="line">$ git commit -m <span class="string">'some text'</span></span><br><span class="line">$ git push origin fix-error</span><br></pre></td></tr></table></figure>
 <p>删除分支</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch <span class="operator">-d</span> fix-error</span><br></pre></td></tr></table></figure>
-<h2 id="GIT__u64CD_u4F5C_u96C6_u9526"><a href="#GIT__u64CD_u4F5C_u96C6_u9526" class="headerlink" title="GIT 操作集锦"></a>GIT 操作集锦</h2><h4 id="git_u5220_u9664_u8FDC_u7A0B_u5206_u652F"><a href="#git_u5220_u9664_u8FDC_u7A0B_u5206_u652F" class="headerlink" title="git删除远程分支"></a>git删除远程分支</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin :branch-name</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch <span class="_">-d</span> fix-error</span><br></pre></td></tr></table></figure>
+<h2 id="GIT-操作集锦"><a href="#GIT-操作集锦" class="headerlink" title="GIT 操作集锦"></a>GIT 操作集锦</h2><h4 id="git删除远程分支"><a href="#git删除远程分支" class="headerlink" title="git删除远程分支"></a>git删除远程分支</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin :branch-name</span><br></pre></td></tr></table></figure>
 <p>冒号前面的空格不能少，原理是把一个空分支push到server上，相当于删除该分支。</p>
 </span>
       
@@ -386,7 +386,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -458,7 +458,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#u9996_u5148Fork_u9879_u76EE"><span class="nav-number">1.</span> <span class="nav-text">首先Fork项目</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u6DFB_u52A0_u4E0A_u6E38_u8FDC_u7A0B_u4ED3_u5E93"><span class="nav-number">2.</span> <span class="nav-text">添加上游远程仓库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#u5C06_u672C_u5730_u4FEE_u6539branch_u63D0_u4EA4"><span class="nav-number">3.</span> <span class="nav-text">将本地修改branch提交</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIT__u64CD_u4F5C_u96C6_u9526"><span class="nav-number"></span> <span class="nav-text">GIT 操作集锦</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#git_u5220_u9664_u8FDC_u7A0B_u5206_u652F"><span class="nav-number"></span> <span class="nav-text">git删除远程分支</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#首先Fork项目"><span class="nav-number">1.</span> <span class="nav-text">首先Fork项目</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加上游远程仓库"><span class="nav-number">2.</span> <span class="nav-text">添加上游远程仓库</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#将本地修改branch提交"><span class="nav-number">3.</span> <span class="nav-text">将本地修改branch提交</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIT-操作集锦"><span class="nav-number"></span> <span class="nav-text">GIT 操作集锦</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#git删除远程分支"><span class="nav-number"></span> <span class="nav-text">git删除远程分支</span></a></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

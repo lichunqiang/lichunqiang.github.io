@@ -61,7 +61,7 @@
 <meta property="og:description" content="首先查看之前编译安装nginx的配置1$ nginx -V
 会列出配置的参数：
 1configure arguments: --prefix=/usr/local/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_modul">
-<meta property="og:updated_time" content="2016-01-26T04:16:11.393Z">
+<meta property="og:updated_time" content="2016-03-03T08:23:13.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="添加nginx模块">
 <meta name="twitter:description" content="首先查看之前编译安装nginx的配置1$ nginx -V
@@ -263,10 +263,10 @@
       
 
       
-        <span itemprop="articleBody"><h4 id="u9996_u5148_u67E5_u770B_u4E4B_u524D_u7F16_u8BD1_u5B89_u88C5nginx_u7684_u914D_u7F6E"><a href="#u9996_u5148_u67E5_u770B_u4E4B_u524D_u7F16_u8BD1_u5B89_u88C5nginx_u7684_u914D_u7F6E" class="headerlink" title="首先查看之前编译安装nginx的配置"></a>首先查看之前编译安装nginx的配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nginx -V</span><br></pre></td></tr></table></figure>
+        <span itemprop="articleBody"><h4 id="首先查看之前编译安装nginx的配置"><a href="#首先查看之前编译安装nginx的配置" class="headerlink" title="首先查看之前编译安装nginx的配置"></a>首先查看之前编译安装nginx的配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nginx -V</span><br></pre></td></tr></table></figure>
 <p>会列出配置的参数：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure arguments: --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module</span><br></pre></td></tr></table></figure>
-<h4 id="u91CD_u65B0_u7F16_u8BD1_u589E_u52A0_u6A21_u5757"><a href="#u91CD_u65B0_u7F16_u8BD1_u589E_u52A0_u6A21_u5757" class="headerlink" title="重新编译增加模块"></a>重新编译增加模块</h4><blockquote>
+<h4 id="重新编译增加模块"><a href="#重新编译增加模块" class="headerlink" title="重新编译增加模块"></a>重新编译增加模块</h4><blockquote>
 <p>这个过程不会替换现有的nginx的东西，既可以在不停止服务的前提下进行替换</p>
 </blockquote>
 <p>首先找到原来安装nginx的目录(如果已经删除，则重新现在nginx源程序)</p>
@@ -275,7 +275,7 @@
 <p>保险做法：</p>
 <p>不执行make install, 将执行make之后objs目录下的nginx替换现有的。(不要忘记对之前的进行备份)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line"></span><br><span class="line">$ service nginx stop</span><br><span class="line"></span><br><span class="line">$ cp /etc/nginx/sbin/nginx /etc/nginx/sbin/nginx.bak</span><br><span class="line"></span><br><span class="line">$ cp objs/nginx /etc/nginx/sbin/</span><br><span class="line"></span><br><span class="line">$ service nginx start</span><br></pre></td></tr></table></figure>
-<h4 id="u6D4B_u8BD5_u662F_u5426_u5B89_u88C5_u6210_u529F"><a href="#u6D4B_u8BD5_u662F_u5426_u5B89_u88C5_u6210_u529F" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h4></span>
+<h4 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h4></span>
       
     </div>
 
@@ -374,7 +374,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -446,7 +446,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#u9996_u5148_u67E5_u770B_u4E4B_u524D_u7F16_u8BD1_u5B89_u88C5nginx_u7684_u914D_u7F6E"><span class="nav-number">1.</span> <span class="nav-text">首先查看之前编译安装nginx的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u91CD_u65B0_u7F16_u8BD1_u589E_u52A0_u6A21_u5757"><span class="nav-number">2.</span> <span class="nav-text">重新编译增加模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#u6D4B_u8BD5_u662F_u5426_u5B89_u88C5_u6210_u529F"><span class="nav-number">3.</span> <span class="nav-text">测试是否安装成功</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#首先查看之前编译安装nginx的配置"><span class="nav-number">1.</span> <span class="nav-text">首先查看之前编译安装nginx的配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重新编译增加模块"><span class="nav-number">2.</span> <span class="nav-text">重新编译增加模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#测试是否安装成功"><span class="nav-number">3.</span> <span class="nav-text">测试是否安装成功</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

@@ -210,6 +210,119 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/03/git-tips-one/" itemprop="url">
+                  git tips - 1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-03T16:53:42+00:00" content="2016-03-03">
+              2016-03-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/03/git-tips-one/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/03/git-tips-one/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p>
+<p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p>
+<p>所以在本地某个仓库可以设置用户名和邮箱：</p>
+<p>  git config user.name “light”<br>  git config user.email “light@qq.com”</p>
+<p><strong>为常用命令设置快捷别名</strong></p>
+<p>  git config alias.st status<br>  git config alias.ci commit</p>
+<blockquote>
+<p>同样可以使用<code>-g</code> 来进行全局配置</p>
+</blockquote>
+<p>使用：</p>
+<p>  $ git st<br>  $ git ci</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/01/26/xdebug-phpstorm/" itemprop="url">
                   在phpstorm中使用xdebug
                 </a>
@@ -282,10 +395,10 @@
         
           <span itemprop="articleBody">
             
-              <h2 id="u5F00_u542Fxdebug"><a href="#u5F00_u542Fxdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p>
+              <h2 id="开启xdebug"><a href="#开启xdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p>
 <p>  [xdebug]<br>  xdebug.remote_enable = On<br>  xdebug.remote_handler = dbgp<br>  xdebug.remote_host= localhost<br>  xdebug.remote_port = 9000<br>  xdebug.idekey = PHPSTORM<br>  xdebug.profiler_enable = 1</p>
 <p>重启服务之后在<code>phpinfo</code>中查看是否已经开启<code>xdebug</code>.</p>
-<h2 id="u914D_u7F6Ephpstorm"><a href="#u914D_u7F6Ephpstorm" class="headerlink" title="配置phpstorm"></a>配置phpstorm</h2><ol>
+<h2 id="配置phpstorm"><a href="#配置phpstorm" class="headerlink" title="配置phpstorm"></a>配置phpstorm</h2><ol>
 <li><p>配置xdebug端口号</p>
 <p>在 File &gt; Settings &gt; Langauges&amp;Frameworks 中找到 <code>PHP</code> 选择<code>Debug</code>选项卡,找到<code>xdebug</code>配置项，确认端口号是上面设置的<code>9000</code></p>
 </li>
@@ -298,8 +411,8 @@
 </li>
 </ol>
 <p>  这里主要记录下如何配合浏览器插件<code>Xdebug helper</code>来进行调试</p>
-<h2 id="u5B89_u88C5_u6D4F_u89C8_u5668_u63D2_u4EF6Xdebug_helper"><a href="#u5B89_u88C5_u6D4F_u89C8_u5668_u63D2_u4EF6Xdebug_helper" class="headerlink" title="安装浏览器插件Xdebug helper"></a>安装浏览器插件<code>Xdebug helper</code></h2><p>  安装成功之后，在选线卡将你配置的domain进行添加。</p>
-<h2 id="u5728postman_u4E2D_u4F7F_u7528xdebug"><a href="#u5728postman_u4E2D_u4F7F_u7528xdebug" class="headerlink" title="在postman中使用xdebug"></a>在postman中使用xdebug</h2><ol>
+<h2 id="安装浏览器插件Xdebug-helper"><a href="#安装浏览器插件Xdebug-helper" class="headerlink" title="安装浏览器插件Xdebug helper"></a>安装浏览器插件<code>Xdebug helper</code></h2><p>  安装成功之后，在选线卡将你配置的domain进行添加。</p>
+<h2 id="在postman中使用xdebug"><a href="#在postman中使用xdebug" class="headerlink" title="在postman中使用xdebug"></a>在postman中使用xdebug</h2><ol>
 <li><p>Configure your xdebug (by editing php.ini) to attempt to debug every php script (xdebug.remote_autostart = 1)</p>
 </li>
 <li><p>Add xdebug session start parameter to the actual URL (XDEBUG_SESSION_START= – <a href="http://xdebug.org/docs/remote" target="_blank" rel="external">http://xdebug.org/docs/remote</a> ), for example: ?XDEBUG_SESSION_START=PHPSTORM</p>
@@ -959,23 +1072,23 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
           <span itemprop="articleBody">
             
               <p>我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.</p>
-<h2 id="u8BBE_u7F6E_u7528_u6237_u540D_u548C_u90AE_u7BB1"><a href="#u8BBE_u7F6E_u7528_u6237_u540D_u548C_u90AE_u7BB1" class="headerlink" title="设置用户名和邮箱"></a>设置用户名和邮箱</h2><pre><code>$git config --global user.name &quot;yourname&quot;
+<h2 id="设置用户名和邮箱"><a href="#设置用户名和邮箱" class="headerlink" title="设置用户名和邮箱"></a>设置用户名和邮箱</h2><pre><code>$git config --global user.name &quot;yourname&quot;
 $git config --global user.email &quot;your@example.com&quot;
-</code></pre><h2 id="u751F_u6210ssh-key"><a href="#u751F_u6210ssh-key" class="headerlink" title="生成ssh-key"></a>生成ssh-key</h2><blockquote>
+</code></pre><h2 id="生成ssh-key"><a href="#生成ssh-key" class="headerlink" title="生成ssh-key"></a>生成ssh-key</h2><blockquote>
 <p>ssh-key保存在 <code>~/.ssh</code> 目录中</p>
 </blockquote>
 <pre><code>$cd ~/.ssh
 $ssh-keygen -t rsa -C &quot;your@example.com&quot;
 </code></pre><p>注意在生成key file的时候可以针对不同的平台来命名, 例如：<code>id_github</code>, 这将会在接下的来的配置中用到.</p>
 <p>生成<strong>Key</strong>之后就是将 <code>xx.pub</code> 的内容配置到平台的SSH配置中.</p>
-<h2 id="u914D_u7F6E_u6587_u4EF6"><a href="#u914D_u7F6E_u6587_u4EF6" class="headerlink" title="配置文件"></a>配置文件</h2><p>在 <code>~/.ssh</code> 目录下新建 <code>config</code> 文件并编辑：</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>在 <code>~/.ssh</code> 目录下新建 <code>config</code> 文件并编辑：</p>
 <pre><code>Host git.coding.net
     User your@example.com
     IdentityFile ~/.ssh/coding_rsa
 Host github.com
     User your@example.com
     IdentityFile ~/.ssh/github_rsa
-</code></pre><h2 id="u6D4B_u8BD5_u662F_u5426_u8FDE_u63A5_u6210_u529F"><a href="#u6D4B_u8BD5_u662F_u5426_u8FDE_u63A5_u6210_u529F" class="headerlink" title="测试是否连接成功"></a>测试是否连接成功</h2><pre><code>$ssh -T git@git.coding.net
+</code></pre><h2 id="测试是否连接成功"><a href="#测试是否连接成功" class="headerlink" title="测试是否连接成功"></a>测试是否连接成功</h2><pre><code>$ssh -T git@git.coding.net
 $ssh -T git@github.com
 </code></pre>
             
@@ -1208,7 +1321,7 @@ $ssh -T git@github.com
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~1</span><br></pre></td></tr></table></figure>
 <p><code>HEAD~1</code>代表当前提交之前的一次提交.</p>
 <p>或者使用 <code>git log</code> 找到你想revert的commit_id：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard &#60;sha1-commit-id&#62;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard &lt;sha1-commit-id&gt;</span><br></pre></td></tr></table></figure>
 <p>如果你已经提交到了远程仓库, 可以通过以下命令来抹掉提交：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin HEAD --force</span><br></pre></td></tr></table></figure>
             
@@ -1327,15 +1440,15 @@ $ssh -T git@github.com
               <blockquote>
 <p>本文讲讲用composer来进行本地开发包,和本地公用包的使用.</p>
 </blockquote>
-<h2 id="u6982_u8981"><a href="#u6982_u8981" class="headerlink" title="概要"></a>概要</h2><p>当我们构建一个本地的类库时, 当并不想推送到<a href="https://packagist.org/" target="_blank" rel="external">packagist</a>, 我们可以使用<code>repositories &gt; path</code></p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>当我们构建一个本地的类库时, 当并不想推送到<a href="https://packagist.org/" target="_blank" rel="external">packagist</a>, 我们可以使用<code>repositories &gt; path</code></p>
 <p>来处理。</p>
 <p>以下目录结构为例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- apps&#10;\_ my-app   &#9;&#9;-- &#24403;&#21069;&#39033;&#30446;&#24320;&#21457;&#30446;&#24405;&#10;  \_ composer.json&#10;- packages&#9;&#9;&#9;-- &#26412;&#22320;&#20849;&#26377;&#24211;, &#23384;&#25918;&#27491;&#22312;&#21644;&#24050;&#32463;&#24320;&#21457;&#22909;&#30340;&#31867;&#24211;&#10;\_ my-package       -- &#19968;&#20010;&#21483; my-package &#30340;&#31867;&#24211; &#10;  \_ composer.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- apps</span><br><span class="line">\_ my-app   		-- 当前项目开发目录</span><br><span class="line">  \_ composer.json</span><br><span class="line">- packages			-- 本地共有库, 存放正在和已经开发好的类库</span><br><span class="line">\_ my-package       -- 一个叫 my-package 的类库 </span><br><span class="line">  \_ composer.json</span><br></pre></td></tr></table></figure>
 <p>现在我们要在 <code>my-app</code> 中依赖 <code>my-package</code>, 那么现在我们可以：</p>
 <ol>
 <li>配置 <code>my-app/composer.json</code></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;&#9;//&#24341;&#20837;&#20381;&#36182;&#10;&#9;&#34;require&#34;: &#123;&#10;&#9;&#9;&#34;myrepositry/package1&#34;: &#34;*@dev&#34;&#10;&#9;&#125;,&#10;&#9;//&#37197;&#32622; repositories&#10;&#9;&#34;repositories&#34;: [&#10;&#10;&#9;&#9;&#123;&#34;type&#34;: &#34;path&#34;, &#34;url&#34;: &#34;../../packages/my-package&#34;&#125;&#10;&#9;]&#9;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	//引入依赖</span><br><span class="line">	&quot;require&quot;: &#123;</span><br><span class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	//配置 repositories</span><br><span class="line">	&quot;repositories&quot;: [</span><br><span class="line"></span><br><span class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</span><br><span class="line">	]	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>composer update</li>
 </ol>
@@ -1343,112 +1456,6 @@ $ssh -T git@github.com
 <p>执行成功后, 我们可以到<code>my-app/vendor</code> 目录下查看, 我们可以看到该类库已经加入到 <code>my-app/vendor</code> 了！</p>
 <p>之后在 <code>my-package</code> 任何改动后我们需要在 <code>my-app</code> 中执行 <code>composer remove myrepositry/package1</code> 来移除,</p>
 <p>然后在require进来.</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/22/hashids-for-yii2/" itemprop="url">
-                  Hashids的yii2封装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-22T00:17:39+00:00" content="2015-08-22">
-              2015-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/22/hashids-for-yii2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/22/hashids-for-yii2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h3 id="u5173_u4E8EHashids"><a href="#u5173_u4E8EHashids" class="headerlink" title="关于Hashids"></a>关于Hashids</h3><p>Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。</p>
-<p>详细： <a href="http://hashids.org/php/" target="_blank" rel="external">http://hashids.org/php/</a></p>
-<h3 id="u4F7F_u7528"><a href="#u4F7F_u7528" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$hashids</span> = Yii::createObject([</span><br><span class="line">    <span class="string">'class'</span> =&gt; <span class="string">'light\hashids\Hashids'</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line"><span class="variable">$id</span> = <span class="variable">$hashids</span>-&gt;encode(<span class="number">100123123</span>);</span><br><span class="line"><span class="variable">$origin</span> = <span class="variable">$hashids</span>-&gt;decode(<span class="variable">$id</span>);</span><br><span class="line">var_dump(<span class="variable">$id</span>, <span class="variable">$origin</span>);</span><br></pre></td></tr></table></figure>
-<p><a href="https://packagist.org/packages/light/hashids" target="_blank" rel="external">详细</a></p>
 
             
           </span>
@@ -1516,7 +1523,7 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

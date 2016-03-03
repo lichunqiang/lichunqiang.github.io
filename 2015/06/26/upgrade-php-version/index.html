@@ -65,7 +65,7 @@
 查看原来安装的配置参数执行php -v | grep config
 安装根据之前的安装配置执行:
 12$ ./configure --prefix=/usr/local/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbs">
-<meta property="og:updated_time" content="2016-01-26T04:16:11.393Z">
+<meta property="og:updated_time" content="2016-03-03T08:23:13.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="更新升级PHP版本">
 <meta name="twitter:description" content="现版本：5.5.21
@@ -271,13 +271,13 @@
       
         <span itemprop="articleBody"><p>现版本：5.5.21</p>
 <p>更新版本： 5.6.10</p>
-<h3 id="u67E5_u770B_u539F_u6765_u5B89_u88C5_u7684_u914D_u7F6E_u53C2_u6570"><a href="#u67E5_u770B_u539F_u6765_u5B89_u88C5_u7684_u914D_u7F6E_u53C2_u6570" class="headerlink" title="查看原来安装的配置参数"></a>查看原来安装的配置参数</h3><p>执行<code>php -v | grep config</code></p>
-<h3 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h3><p>根据之前的安装配置执行:</p>
+<h3 id="查看原来安装的配置参数"><a href="#查看原来安装的配置参数" class="headerlink" title="查看原来安装的配置参数"></a>查看原来安装的配置参数</h3><p>执行<code>php -v | grep config</code></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>根据之前的安装配置执行:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbstring --with-mcrypt --with-openssl --disable-debug --enable-opcache --with-pdo-mysql --with-mysql</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<h3 id="u5269_u4F59_u5DE5_u4F5C"><a href="#u5269_u4F59_u5DE5_u4F5C" class="headerlink" title="剩余工作"></a>剩余工作</h3><p>安装成功后, 并不意味着升级工作完成了。当我们运行 <code>php -v</code> 时会有错误抛出, 那是因为两个版本的扩展编译标示前后不一致，所以我们接下的来的工作就是重新编译扩展。</p>
+<h3 id="剩余工作"><a href="#剩余工作" class="headerlink" title="剩余工作"></a>剩余工作</h3><p>安装成功后, 并不意味着升级工作完成了。当我们运行 <code>php -v</code> 时会有错误抛出, 那是因为两个版本的扩展编译标示前后不一致，所以我们接下的来的工作就是重新编译扩展。</p>
 <p>在 <code>path/to/php5/lib/php/extensions</code> 目录下有两个文件夹: <code>no-debug-non-zts-20121212/</code> (之前版本扩展安装目录) 和 <code>no-debug-non-zts-20131226/</code> (新版本扩展安装目录), 由于新升级的PHP的标示是 <code>20131226</code> , 所以对应的扩展编译也要对应上。</p>
 <p>例如, 我之前的扩展源文件目录 <code>/usr/local/src</code>, 我们并不是直接在之前安装的扩展目录中直接配置编译安装就可以了, 我们需要删除原来解压出来的文件, 重新解压扩展源文件, 进行扩展安装:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//例如重新编译安装 Imagick</span><br><span class="line">$ rm -rf imagick-<span class="number">3.1</span>.<span class="number">1</span></span><br><span class="line">$ tar -zxvf imagick-<span class="number">3.1</span>.<span class="number">1</span>.tar</span><br><span class="line">$ <span class="built_in">cd</span> imgick-<span class="number">3.1</span>.<span class="number">1</span></span><br><span class="line">$ path/to/php5/bin/phpize</span><br><span class="line">&amp; ./configure --with-php-config=/path/to/php5/bin/php-config</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//例如重新编译安装 Imagick</span><br><span class="line">$ rm -rf imagick-3.1.1</span><br><span class="line">$ tar -zxvf imagick-3.1.1.tar</span><br><span class="line">$ <span class="built_in">cd</span> imgick-3.1.1</span><br><span class="line">$ path/to/php5/bin/phpize</span><br><span class="line">&amp; ./configure --with-php-config=/path/to/php5/bin/php-config</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
 <p>接下来最后就是修改 <code>php.ini</code> 中的 <code>extension_dir</code> 为新的目录.</p>
 <blockquote>
 <p>将php加入环境变量: <code>export PATH=$PATH:/usr/local/php5/bin</code></p>
@@ -382,7 +382,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">43</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -454,7 +454,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#u67E5_u770B_u539F_u6765_u5B89_u88C5_u7684_u914D_u7F6E_u53C2_u6570"><span class="nav-number">1.</span> <span class="nav-text">查看原来安装的配置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5B89_u88C5"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u5269_u4F59_u5DE5_u4F5C"><span class="nav-number">3.</span> <span class="nav-text">剩余工作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看原来安装的配置参数"><span class="nav-number">1.</span> <span class="nav-text">查看原来安装的配置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#剩余工作"><span class="nav-number">3.</span> <span class="nav-text">剩余工作</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
