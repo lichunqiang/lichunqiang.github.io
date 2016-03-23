@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Light&#39;s Blog</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.lzuer.net/"/>
+  <updated>2016-03-23T14:24:49.197Z</updated>
+  <id>http://blog.lzuer.net/</id>
+  
+  <author>
+    <name>light</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git tips - 1</title>
+    <link href="http://blog.lzuer.net/2016/03/03/git-tips-one/"/>
+    <id>http://blog.lzuer.net/2016/03/03/git-tips-one/</id>
+    <published>2016-03-03T16:53:42.000Z</published>
+    <updated>2016-03-23T14:24:49.197Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;git-tip-one&quot;&gt;&lt;a href=&quot;#git-tip-one&quot; class=&quot;headerlink&quot; title=&quot;git tip one&quot;&gt;&lt;/a&gt;git tip one&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;git config&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git config&lt;/code&gt; 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。&lt;/p&gt;
+&lt;p&gt;所以在本地某个仓库可以设置用户名和邮箱：&lt;/p&gt;
+&lt;p&gt;  git config user.name “light”&lt;br&gt;  git config user.email “light@qq.com”&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;为常用命令设置快捷别名&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;  git config alias.st status&lt;br&gt;  git config alias.ci commit&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;同样可以使用&lt;code&gt;-g&lt;/code&gt; 来进行全局配置&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用：&lt;/p&gt;
+&lt;p&gt;  $ git st&lt;br&gt;  $ git ci&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;git-tip-one&quot;&gt;&lt;a href=&quot;#git-tip-one&quot; class=&quot;headerlink&quot; title=&quot;git tip one&quot;&gt;&lt;/a&gt;git tip one&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;git config&lt;/strong&gt;&lt;/p&gt;
+&lt;p
+    
+    </summary>
+    
+      <category term="git" scheme="http://blog.lzuer.net/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://blog.lzuer.net/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在phpstorm中使用xdebug</title>
+    <link href="http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/"/>
+    <id>http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/</id>
+    <published>2016-01-26T11:17:39.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;开启xdebug&quot;&gt;&lt;a href=&quot;#开启xdebug&quot; class=&quot;headerlink&quot; title=&quot;开启xdebug&quot;&gt;&lt;/a&gt;开启xdebug&lt;/h2&gt;&lt;p&gt;在&lt;code&gt;php.ini&lt;/code&gt;中配置&lt;code&gt;xdebug&lt;/code&gt;如下：&lt;/p&gt;
+&lt;p&gt;  [xdebug]&lt;br&gt;  xdebug.remote_enable = On&lt;br&gt;  xdebug.remote_handler = dbgp&lt;br&gt;  xdebug.remote_host= localhost&lt;br&gt;  xdebug.remote_port = 9000&lt;br&gt;  xdebug.idekey = PHPSTORM&lt;br&gt;  xdebug.profiler_enable = 1&lt;/p&gt;
+&lt;p&gt;重启服务之后在&lt;code&gt;phpinfo&lt;/code&gt;中查看是否已经开启&lt;code&gt;xdebug&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;配置phpstorm&quot;&gt;&lt;a href=&quot;#配置phpstorm&quot; class=&quot;headerlink&quot; title=&quot;配置phpstorm&quot;&gt;&lt;/a&gt;配置phpstorm&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;配置xdebug端口号&lt;/p&gt;
+&lt;p&gt;在 File &amp;gt; Settings &amp;gt; Langauges&amp;amp;Frameworks 中找到 &lt;code&gt;PHP&lt;/code&gt; 选择&lt;code&gt;Debug&lt;/code&gt;选项卡,找到&lt;code&gt;xdebug&lt;/code&gt;配置项，确认端口号是上面设置的&lt;code&gt;9000&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;配置DBGp Proxy&lt;/p&gt;
+&lt;p&gt; 点击&lt;code&gt;DBGp Proxy&lt;/code&gt;选项卡，在里面设置:&lt;/p&gt;
+&lt;p&gt;   IDE Key: PHPSTORM&lt;br&gt;   Host:   localhost&lt;br&gt;   Port:   9000&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;添加 servers&lt;/p&gt;
+&lt;p&gt;找到 &lt;code&gt;Servers&lt;/code&gt;选项卡,点击添加按钮添加一个配置信息。例如想调试部署好的虚拟地址：&lt;code&gt;www.app.local&lt;/code&gt;,那么你需要在&lt;code&gt;Host&lt;/code&gt;中填上该地址。&lt;br&gt;注意&lt;code&gt;Port&lt;/code&gt;需要和你实际配置的端口要一直。另外保证&lt;code&gt;Debugger&lt;/code&gt;为&lt;code&gt;Xdebug&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;  这里主要记录下如何配合浏览器插件&lt;code&gt;Xdebug helper&lt;/code&gt;来进行调试&lt;/p&gt;
+&lt;h2 id=&quot;安装浏览器插件Xdebug-helper&quot;&gt;&lt;a href=&quot;#安装浏览器插件Xdebug-helper&quot; class=&quot;headerlink&quot; title=&quot;安装浏览器插件Xdebug helper&quot;&gt;&lt;/a&gt;安装浏览器插件&lt;code&gt;Xdebug helper&lt;/code&gt;&lt;/h2&gt;&lt;p&gt;  安装成功之后，在选线卡将你配置的domain进行添加。&lt;/p&gt;
+&lt;h2 id=&quot;在postman中使用xdebug&quot;&gt;&lt;a href=&quot;#在postman中使用xdebug&quot; class=&quot;headerlink&quot; title=&quot;在postman中使用xdebug&quot;&gt;&lt;/a&gt;在postman中使用xdebug&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Configure your xdebug (by editing php.ini) to attempt to debug every php script (xdebug.remote_autostart = 1)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Add xdebug session start parameter to the actual URL (XDEBUG_SESSION_START= – &lt;a href=&quot;http://xdebug.org/docs/remote&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xdebug.org/docs/remote&lt;/a&gt; ), for example: ?XDEBUG_SESSION_START=PHPSTORM&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Pass xdebug cookie as one of the headers (the one which is set by bookmarklet or browser extension, for example)&lt;/p&gt;
+&lt;p&gt;参考文章:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://my.oschina.net/u/248080/blog/351455&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://my.oschina.net/u/248080/blog/351455&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;开启xdebug&quot;&gt;&lt;a href=&quot;#开启xdebug&quot; class=&quot;headerlink&quot; title=&quot;开启xdebug&quot;&gt;&lt;/a&gt;开启xdebug&lt;/h2&gt;&lt;p&gt;在&lt;code&gt;php.ini&lt;/code&gt;中配置&lt;code&gt;xdebug&lt;/code&gt;如下：
+    
+    </summary>
+    
+      <category term="xdebug" scheme="http://blog.lzuer.net/categories/xdebug/"/>
+    
+      <category term="phpstorm" scheme="http://blog.lzuer.net/categories/xdebug/phpstorm/"/>
+    
+    
+      <category term="xdebug" scheme="http://blog.lzuer.net/tags/xdebug/"/>
+    
+      <category term="phpstorm" scheme="http://blog.lzuer.net/tags/phpstorm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>配置travis来自动发布hexo博客</title>
+    <link href="http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/"/>
+    <id>http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/</id>
+    <published>2016-01-18T23:59:20.000Z</published>
+    <updated>2016-03-23T14:24:49.197Z</updated>
+    
+    <content type="html">&lt;p&gt;首先在&lt;a href=&quot;https://travis-ci.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;travis&lt;/a&gt;将你的项目加入到travis。&lt;/p&gt;
+&lt;p&gt;打开设置，添加token变量。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xq6zf.com1.z0.glb.clouddn.com/travis-setting.png&quot; alt=&quot;add-token&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在这之前我们需要在&lt;a href=&quot;https://github.com/settings/tokens&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github&lt;/a&gt;, 生成一个token。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://7xq6zf.com1.z0.glb.clouddn.com/generate-github-token.png&quot; alt=&quot;generate-token&quot;&gt;&lt;/p&gt;
+&lt;p&gt;在项目的 &lt;code&gt;.travis.yml&lt;/code&gt; 中可以进行如下配置：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;language: node_js
+sudo: false
+node_js:
+  - 5.3.0
+
+before_install:
+  - git config --global user.name &amp;quot;lichunqiang&amp;quot;
+  - git config --global user.email &amp;quot;light-li@hotmail.com&amp;quot;
+  - git config --global push.default simple
+
+install:
+  - npm install hexo-cli -g
+
+script:
+  - git clone https://${token}@github.com/lichunqiang/lichunqiang.github.io.git .deploy_git -v
+  - git --version
+  - git remote add -f b https://${token}@github.com/lichunqiang/b.git
+  - git fetch b
+  - npm install
+
+  - hexo g
+  - cp -r public/* .deploy_git/
+  - cd .deploy_git
+  - git add -A
+  - git commit -am &amp;quot;Auto deploy from Travis-CI.&amp;quot;
+  - git push --force -q
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这样就等着 &lt;code&gt;travis&lt;/code&gt; 构建完成之后，我们就可以看到文件就会自动发布了。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;首先在&lt;a href=&quot;https://travis-ci.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;travis&lt;/a&gt;将你的项目加入到travis。&lt;/p&gt;
+&lt;p&gt;打开设置，添加token变量。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http:
+    
+    </summary>
+    
+      <category term="hexo" scheme="http://blog.lzuer.net/categories/hexo/"/>
+    
+      <category term="travis" scheme="http://blog.lzuer.net/categories/hexo/travis/"/>
+    
+    
+      <category term="hexo" scheme="http://blog.lzuer.net/tags/hexo/"/>
+    
+      <category term="travis" scheme="http://blog.lzuer.net/tags/travis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>删除submodule</title>
+    <link href="http://blog.lzuer.net/2016/01/16/git-delete-submoudle/"/>
+    <id>http://blog.lzuer.net/2016/01/16/git-delete-submoudle/</id>
+    <published>2016-01-16T00:16:21.000Z</published>
+    <updated>2016-03-23T14:24:49.197Z</updated>
+    
+    <content type="html">&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Delete the relevant section from the .gitmodules file.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Stage the .gitmodules changes git add .gitmodules&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Delete the relevant section from .git/config.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Run git rm –cached path_to_submodule (no trailing slash).&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Run rm -rf .git/modules/path_to_submodule&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Commit git commit -m “Removed submodule &lt;name&gt;“&lt;/name&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Delete the now untracked submodule files &lt;code&gt;rm -rf path_to_submodule&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Delete the relevant section from the .gitmodules file.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Stage the .gitmodules changes git add .gitmodules&lt;/p&gt;
+&lt;/
+    
+    </summary>
+    
+      <category term="git" scheme="http://blog.lzuer.net/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://blog.lzuer.net/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx重定向小例</title>
+    <link href="http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/"/>
+    <id>http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/</id>
+    <published>2016-01-13T16:17:39.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;code&gt;www.site.com&lt;/code&gt; &lt;code&gt;site.com&lt;/code&gt; 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，&lt;/p&gt;
+&lt;p&gt;因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。&lt;/p&gt;
+&lt;p&gt;配置nginx如下：&lt;/p&gt;
+&lt;p&gt;  server_name site.com www.site.com&lt;/p&gt;
+&lt;p&gt;  if ($host = ‘site.com’) {&lt;br&gt;    rewrite ^/(.*)$ &lt;a href=&quot;http://www.site.com/$1&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.site.com/$1&lt;/a&gt; permanent;&lt;br&gt;  }&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;www.site.com&lt;/code&gt; &lt;code&gt;site.com&lt;/code&gt; 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，&lt;/p&gt;
+&lt;p&gt;因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="nginx" scheme="http://blog.lzuer.net/categories/nginx/"/>
+    
+      <category term="seo" scheme="http://blog.lzuer.net/categories/nginx/seo/"/>
+    
+    
+      <category term="nginx" scheme="http://blog.lzuer.net/tags/nginx/"/>
+    
+      <category term="seo" scheme="http://blog.lzuer.net/tags/seo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如果将多个commit精简成一个commit</title>
+    <link href="http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/"/>
+    <id>http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/</id>
+    <published>2016-01-11T22:22:25.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;在 &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 &lt;code&gt;pull request&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;在项目的作者对发起的 &lt;code&gt;pull request&lt;/code&gt; 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是，&lt;/p&gt;
+&lt;p&gt;这一切在 &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 上被方便的给自动完成了，也就说，当我们在对 &lt;code&gt;patch&lt;/code&gt; 分支 &lt;code&gt;push&lt;/code&gt; 修改代码时，&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 自动会将修改关联到上次已经发起的 &lt;code&gt;pull request&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;当这一切都&lt;strong&gt;ready&lt;/strong&gt;之后，我们需要精简提交信息变成一条，例如： &lt;code&gt;Issue #100: bugfix for fatal error&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;commit 6e9cd88424b5f313f7245c7a43e11063648f2dcd
+Author: lichunqiang &amp;lt;light-li@hotmail.com&amp;gt;
+Date:   Mon Jan 11 16:40:41 2016 +0800
+
+    tweak the description
+
+commit 06ce7e35206b0f8a2e5d41aab4ae21d842a7c8ab
+Author: lichunqiang &amp;lt;light-li@hotmail.com&amp;gt;
+Date:   Sun Jan 10 23:04:25 2016 +0800
+
+    bugfix of mailer
+
+commit e6e0ee8ec14624d11035a0a922617ab5dc69220f
+Author: lichunqiang &amp;lt;light-li@hotmail.com&amp;gt;
+Date:   Sun Jan 10 22:57:25 2016 +0800
+
+    commit message
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在 git log 信息中，我们想要压缩最新的两条commit为一条&lt;/p&gt;
+&lt;p&gt;我们可以按照以下的步骤来进行：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git rebase -i HEAD~2
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;2 代表我们想要压缩的commit数量。注意，在这之前，我们要保证我们的分支要和主线进行了同步。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;执行命令后，在 text editor 中我们将 &lt;code&gt;pick&lt;/code&gt; 替换成 &lt;code&gt;squash&lt;/code&gt;, 只保留我们想保存的那条 &lt;code&gt;commit&lt;/code&gt; 即可。&lt;/p&gt;
+&lt;p&gt;也可以只保留第一条的 &lt;code&gt;pick&lt;/code&gt;, 将其余的替换成 &lt;code&gt;squash&lt;/code&gt;。保存并退出编辑器。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;，如果你已经提交到远程仓库，你需要执行:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$ git push origin branchname --force
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;贴士：&lt;/p&gt;
+&lt;p&gt;你可以执行 &lt;code&gt;git commit --amend&lt;/code&gt; 来修改最后一条commit的提交信息。 &lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在 &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 &lt;code&gt;pull request&lt;/code&gt;。&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="Git" scheme="http://blog.lzuer.net/categories/Git/"/>
+    
+      <category term="github" scheme="http://blog.lzuer.net/categories/Git/github/"/>
+    
+    
+      <category term="github" scheme="http://blog.lzuer.net/tags/github/"/>
+    
+      <category term="Git" scheme="http://blog.lzuer.net/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>多平台Git配置</title>
+    <link href="http://blog.lzuer.net/2016/01/11/multiple-platform-git/"/>
+    <id>http://blog.lzuer.net/2016/01/11/multiple-platform-git/</id>
+    <published>2016-01-11T21:57:21.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.&lt;/p&gt;
+&lt;h2 id=&quot;设置用户名和邮箱&quot;&gt;&lt;a href=&quot;#设置用户名和邮箱&quot; class=&quot;headerlink&quot; title=&quot;设置用户名和邮箱&quot;&gt;&lt;/a&gt;设置用户名和邮箱&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;$git config --global user.name &amp;quot;yourname&amp;quot;
+$git config --global user.email &amp;quot;your@example.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;生成ssh-key&quot;&gt;&lt;a href=&quot;#生成ssh-key&quot; class=&quot;headerlink&quot; title=&quot;生成ssh-key&quot;&gt;&lt;/a&gt;生成ssh-key&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;ssh-key保存在 &lt;code&gt;~/.ssh&lt;/code&gt; 目录中&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;$cd ~/.ssh
+$ssh-keygen -t rsa -C &amp;quot;your@example.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;注意在生成key file的时候可以针对不同的平台来命名, 例如：&lt;code&gt;id_github&lt;/code&gt;, 这将会在接下的来的配置中用到.&lt;/p&gt;
+&lt;p&gt;生成&lt;strong&gt;Key&lt;/strong&gt;之后就是将 &lt;code&gt;xx.pub&lt;/code&gt; 的内容配置到平台的SSH配置中.&lt;/p&gt;
+&lt;h2 id=&quot;配置文件&quot;&gt;&lt;a href=&quot;#配置文件&quot; class=&quot;headerlink&quot; title=&quot;配置文件&quot;&gt;&lt;/a&gt;配置文件&lt;/h2&gt;&lt;p&gt;在 &lt;code&gt;~/.ssh&lt;/code&gt; 目录下新建 &lt;code&gt;config&lt;/code&gt; 文件并编辑：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Host git.coding.net
+    User your@example.com
+    IdentityFile ~/.ssh/coding_rsa
+Host github.com
+    User your@example.com
+    IdentityFile ~/.ssh/github_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;测试是否连接成功&quot;&gt;&lt;a href=&quot;#测试是否连接成功&quot; class=&quot;headerlink&quot; title=&quot;测试是否连接成功&quot;&gt;&lt;/a&gt;测试是否连接成功&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;$ssh -T git@git.coding.net
+$ssh -T git@github.com
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.&lt;/p&gt;
+&lt;h2 id=&quot;设置用户名和邮箱&quot;&gt;&lt;a href=&quot;#设置用户名和邮箱&quot; class=&quot;headerlink&quot; title=&quot;设置用户名和邮箱&quot;&gt;&lt;/a&gt;设置用户名和邮箱&lt;/h2&gt;&lt;pr
+    
+    </summary>
+    
+      <category term="Git" scheme="http://blog.lzuer.net/categories/Git/"/>
+    
+      <category term="github" scheme="http://blog.lzuer.net/categories/Git/github/"/>
+    
+    
+      <category term="github" scheme="http://blog.lzuer.net/tags/github/"/>
+    
+      <category term="Git" scheme="http://blog.lzuer.net/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>讲讲Composer配置项minimumn-stability</title>
+    <link href="http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/"/>
+    <id>http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/</id>
+    <published>2015-12-29T23:57:23.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 &lt;code&gt;minimum-stability&lt;/code&gt; 最低稳定性版本的包将不会被安装。&lt;/p&gt;
+&lt;p&gt;例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：&lt;code&gt;&amp;quot;vendor/library&amp;quot;: &amp;quot;*&amp;quot;&lt;/code&gt;, 乍看上去并没有什么不妥, 但是当我们执行 &lt;code&gt;composer install&lt;/code&gt; 或者 &lt;code&gt;composer update&lt;/code&gt; 去下载包的时候通常会报错。&lt;/p&gt;
+&lt;p&gt;这是为什么呢？&lt;/p&gt;
+&lt;p&gt;通常我们的 &lt;code&gt;composer.json&lt;/code&gt; 都不会显式的去设定 &lt;code&gt;minimum-stability&lt;/code&gt;, 那么 &lt;code&gt;composer&lt;/code&gt; 就会把他默认为 &lt;code&gt;stable&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;那么对于一个尚未发布版本的包来说, 明显是不符合的. 所以安装就不会成功.&lt;/p&gt;
+&lt;p&gt;所以有两个途径来解决：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;设定 &lt;code&gt;minimum-stability&lt;/code&gt; 为 &lt;code&gt;dev&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;显然这是简单粗暴的, 但是这种方法所面临的问题也很严重. 那就是我们去依赖某些开发版中的包, 这显然是我们所不想看到的.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;指定依赖包的版本, 这也是最佳的解决方案&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;composer require vendor/library=dev-master&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！&lt;/p&gt;
+&lt;p&gt;另外我们还需要知道 &lt;code&gt;minimum-stability&lt;/code&gt; 所支持的有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;dev&lt;/li&gt;
+&lt;li&gt;alpha&lt;/li&gt;
+&lt;li&gt;beta&lt;/li&gt;
+&lt;li&gt;RC&lt;/li&gt;
+&lt;li&gt;stable&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 &lt;code&gt;minimum-stability&lt;/code&gt; 最低稳定性版本的包将不会被安装。&lt;/p&gt;
+&lt;p&gt;例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：&lt;code&gt;&amp;quot;vend
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>删除一次错误的提交</title>
+    <link href="http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/"/>
+    <id>http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/</id>
+    <published>2015-12-20T20:17:39.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: &lt;code&gt;git reset --hard&lt;/code&gt;会彻底删除你的变动,你可以在这之前使用 &lt;code&gt;git stash&lt;/code&gt; 来保存变动。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git reset --hard HEAD~1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;code&gt;HEAD~1&lt;/code&gt;代表当前提交之前的一次提交.&lt;/p&gt;
+&lt;p&gt;或者使用 &lt;code&gt;git log&lt;/code&gt; 找到你想revert的commit_id：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git reset --hard &amp;lt;sha1-commit-id&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果你已经提交到了远程仓库, 可以通过以下命令来抹掉提交：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git push origin HEAD --force&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: &lt;code&gt;git reset --hard&lt;/code&gt;会彻底删除你的变动,你可以在这之前使用 &lt;code&gt;git stash&lt;/code&gt; 来保存变动。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;
+    
+    </summary>
+    
+      <category term="git" scheme="http://blog.lzuer.net/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://blog.lzuer.net/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Composer之path</title>
+    <link href="http://blog.lzuer.net/2015/09/18/composer-repositories-path/"/>
+    <id>http://blog.lzuer.net/2015/09/18/composer-repositories-path/</id>
+    <published>2015-09-18T00:17:39.000Z</published>
+    <updated>2016-03-23T14:24:49.197Z</updated>
+    
+    <content type="html">&lt;blockquote&gt;
+&lt;p&gt;本文讲讲用composer来进行本地开发包,和本地公用包的使用.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;当我们构建一个本地的类库时, 当并不想推送到&lt;a href=&quot;https://packagist.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;packagist&lt;/a&gt;, 我们可以使用&lt;code&gt;repositories &amp;gt; path&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;来处理。&lt;/p&gt;
+&lt;p&gt;以下目录结构为例：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;- apps&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\_ my-app   		-- 当前项目开发目录&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \_ composer.json&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- packages			-- 本地共有库, 存放正在和已经开发好的类库&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\_ my-package       -- 一个叫 my-package 的类库 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  \_ composer.json&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;现在我们要在 &lt;code&gt;my-app&lt;/code&gt; 中依赖 &lt;code&gt;my-package&lt;/code&gt;, 那么现在我们可以：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;配置 &lt;code&gt;my-app/composer.json&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	//引入依赖&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;quot;require&amp;quot;: &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;quot;myrepositry/package1&amp;quot;: &amp;quot;*@dev&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	//配置 repositories&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;quot;repositories&amp;quot;: [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		&amp;#123;&amp;quot;type&amp;quot;: &amp;quot;path&amp;quot;, &amp;quot;url&amp;quot;: &amp;quot;../../packages/my-package&amp;quot;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	]	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol&gt;
+&lt;li&gt;composer update&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;接下来就是在 &lt;code&gt;my-app&lt;/code&gt; 目录下执行 &lt;code&gt;composer update&lt;/code&gt;, 来使之前的配置生效!&lt;/p&gt;
+&lt;p&gt;执行成功后, 我们可以到&lt;code&gt;my-app/vendor&lt;/code&gt; 目录下查看, 我们可以看到该类库已经加入到 &lt;code&gt;my-app/vendor&lt;/code&gt; 了！&lt;/p&gt;
+&lt;p&gt;之后在 &lt;code&gt;my-package&lt;/code&gt; 任何改动后我们需要在 &lt;code&gt;my-app&lt;/code&gt; 中执行 &lt;code&gt;composer remove myrepositry/package1&lt;/code&gt; 来移除,&lt;/p&gt;
+&lt;p&gt;然后在require进来.&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;本文讲讲用composer来进行本地开发包,和本地公用包的使用.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;当我们
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
+    
+      <category term="Composer" scheme="http://blog.lzuer.net/categories/PHP/Composer/"/>
+    
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hashids的yii2封装</title>
+    <link href="http://blog.lzuer.net/2015/08/22/hashids-for-yii2/"/>
+    <id>http://blog.lzuer.net/2015/08/22/hashids-for-yii2/</id>
+    <published>2015-08-22T00:17:39.000Z</published>
+    <updated>2016-03-23T14:24:49.197Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;关于Hashids&quot;&gt;&lt;a href=&quot;#关于Hashids&quot; class=&quot;headerlink&quot; title=&quot;关于Hashids&quot;&gt;&lt;/a&gt;关于Hashids&lt;/h3&gt;&lt;p&gt;Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。&lt;/p&gt;
+&lt;p&gt;详细： &lt;a href=&quot;http://hashids.org/php/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://hashids.org/php/&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h3&gt;&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$hashids = Yii::createObject([&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&#39;class&#39;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;string&quot;&gt;&#39;light\hashids\Hashids&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$id = $hashids-&amp;gt;encode(&lt;span class=&quot;number&quot;&gt;100123123&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$origin = $hashids-&amp;gt;decode($id);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;var_dump($id, $origin);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;a href=&quot;https://packagist.org/packages/light/hashids&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;详细&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;关于Hashids&quot;&gt;&lt;a href=&quot;#关于Hashids&quot; class=&quot;headerlink&quot; title=&quot;关于Hashids&quot;&gt;&lt;/a&gt;关于Hashids&lt;/h3&gt;&lt;p&gt;Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。
+    
+    </summary>
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/categories/Yii2/"/>
+    
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>微博@匹配用户正则实现</title>
+    <link href="http://blog.lzuer.net/2015/07/08/reg-the-at-user/"/>
+    <id>http://blog.lzuer.net/2015/07/08/reg-the-at-user/</id>
+    <published>2015-07-08T17:50:15.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/@[^\s]&amp;#123;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;&amp;#125;/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果不限长度&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/@[^\s]+/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果用户名只可能是英文下划线和数字&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/@[a-z0&lt;span class=&quot;number&quot;&gt;-9&lt;/span&gt;_]+/i&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果还有可能是中文&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/@[a-z0&lt;span class=&quot;number&quot;&gt;-9&lt;/span&gt;_\u4E00-\u9FA5]+/i/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>更新升级PHP版本</title>
+    <link href="http://blog.lzuer.net/2015/06/26/upgrade-php-version/"/>
+    <id>http://blog.lzuer.net/2015/06/26/upgrade-php-version/</id>
+    <published>2015-06-26T22:44:42.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;现版本：5.5.21&lt;/p&gt;
+&lt;p&gt;更新版本： 5.6.10&lt;/p&gt;
+&lt;h3 id=&quot;查看原来安装的配置参数&quot;&gt;&lt;a href=&quot;#查看原来安装的配置参数&quot; class=&quot;headerlink&quot; title=&quot;查看原来安装的配置参数&quot;&gt;&lt;/a&gt;查看原来安装的配置参数&lt;/h3&gt;&lt;p&gt;执行&lt;code&gt;php -v | grep config&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h3&gt;&lt;p&gt;根据之前的安装配置执行:&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ ./configure --prefix=/usr/&lt;span class=&quot;built_in&quot;&gt;local&lt;/span&gt;/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbstring --with-mcrypt --with-openssl --disable-debug --enable-opcache --with-pdo-mysql --with-mysql&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ make &amp;amp;&amp;amp; make install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h3 id=&quot;剩余工作&quot;&gt;&lt;a href=&quot;#剩余工作&quot; class=&quot;headerlink&quot; title=&quot;剩余工作&quot;&gt;&lt;/a&gt;剩余工作&lt;/h3&gt;&lt;p&gt;安装成功后, 并不意味着升级工作完成了。当我们运行 &lt;code&gt;php -v&lt;/code&gt; 时会有错误抛出, 那是因为两个版本的扩展编译标示前后不一致，所以我们接下的来的工作就是重新编译扩展。&lt;/p&gt;
+&lt;p&gt;在 &lt;code&gt;path/to/php5/lib/php/extensions&lt;/code&gt; 目录下有两个文件夹: &lt;code&gt;no-debug-non-zts-20121212/&lt;/code&gt; (之前版本扩展安装目录) 和 &lt;code&gt;no-debug-non-zts-20131226/&lt;/code&gt; (新版本扩展安装目录), 由于新升级的PHP的标示是 &lt;code&gt;20131226&lt;/code&gt; , 所以对应的扩展编译也要对应上。&lt;/p&gt;
+&lt;p&gt;例如, 我之前的扩展源文件目录 &lt;code&gt;/usr/local/src&lt;/code&gt;, 我们并不是直接在之前安装的扩展目录中直接配置编译安装就可以了, 我们需要删除原来解压出来的文件, 重新解压扩展源文件, 进行扩展安装:&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;//例如重新编译安装 Imagick&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ rm -rf imagick-3.1.1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ tar -zxvf imagick-3.1.1.tar&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ &lt;span class=&quot;built_in&quot;&gt;cd&lt;/span&gt; imgick-3.1.1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ path/to/php5/bin/phpize&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;amp; ./configure --with-php-config=/path/to/php5/bin/php-config&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ make &amp;amp;&amp;amp; make install&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;接下来最后就是修改 &lt;code&gt;php.ini&lt;/code&gt; 中的 &lt;code&gt;extension_dir&lt;/code&gt; 为新的目录.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;将php加入环境变量: &lt;code&gt;export PATH=$PATH:/usr/local/php5/bin&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;完.&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现版本：5.5.21&lt;/p&gt;
+&lt;p&gt;更新版本： 5.6.10&lt;/p&gt;
+&lt;h3 id=&quot;查看原来安装的配置参数&quot;&gt;&lt;a href=&quot;#查看原来安装的配置参数&quot; class=&quot;headerlink&quot; title=&quot;查看原来安装的配置参数&quot;&gt;&lt;/a&gt;查看原来安装的配置参数&lt;/h3
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在关联表查询的时候是在ON添加条件和在where添加添加条件异同</title>
+    <link href="http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/"/>
+    <id>http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/</id>
+    <published>2015-06-15T22:07:27.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。&lt;/p&gt;
+&lt;p&gt;在使用left jion时，on和where条件的区别如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。 &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部过滤掉。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;假设有两张表：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;表1 tab1：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;id size &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1 10 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2 20 &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3 30&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;表2 tab2：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;size name &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10 AAA &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20 BBB &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20 CCC&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;两条SQL:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1. select * form tab1 left join tab2 on (tab1.size = tab2.size) where tab2.name=’AAA’&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2. select * form tab1 left join tab2 on (tab1.size = tab2.size and tab2.name=’AAA’)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;第一条SQL的过程：&lt;/p&gt;
+&lt;p&gt;1、中间表 on条件:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;tab1.size = tab2.size  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tab1.id    tab1.size    tab2.size     tab2.name &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1             10          10              AAA &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2             20          20              BBB  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2             20          20              CCC &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3             30         (null)          (null) &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;再对中间表过滤where 条件：&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tab2.name=’AAA’&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tab1.id       tab1.size        tab2.size     tab2.name &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1                10                10             AAA&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;第二条SQL的过程：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1、中间表 on条件:   &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tab1.size = tab2.size and tab2.name=’AAA’&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; (条件不为真也会返回左表中的记录)  &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tab1.id      tab1.size       tab2.size      tab2.name &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;1             10                10             AAA &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2             20                (null)        (null) &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3             30                (null)        (null)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;其实以上结果的关键原因就是left join,right join,full join的特殊性，不管on上的条件是否为真都会返回left或right表中的记录，full则具有left和right的特性的并集。而inner jion没这个特殊性，则条件放在on中和where中，返回的结果集是相同的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;参考&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://dba-china.com/topic/default/view/71&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://dba-china.com/topic/default/view/71&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。&lt;/p&gt;
+&lt;p&gt;在使用left jion时，on和where条件的区别如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都
+    
+    </summary>
+    
+      <category term="Mysql" scheme="http://blog.lzuer.net/categories/Mysql/"/>
+    
+    
+      <category term="Mysql" scheme="http://blog.lzuer.net/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>怎么控制用户一定时间未操作自动登出</title>
+    <link href="http://blog.lzuer.net/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/"/>
+    <id>http://blog.lzuer.net/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/</id>
+    <published>2015-06-04T22:35:11.000Z</published>
+    <updated>2016-03-23T14:24:49.197Z</updated>
+    
+    <content type="html">&lt;p&gt;现在需求是：&lt;strong&gt;如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们可以通过配置  &lt;code&gt;yii\web\User::$authTimeout&lt;/code&gt;来达到效果，上代码：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;apos;user&amp;apos; =&amp;gt; [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;apos;identityClass&amp;apos; =&amp;gt; &amp;apos;app\models\User&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;apos;authTimeout&amp;apos; =&amp;gt; 5 //为了测试，设置5秒&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;],&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;还有一个更设定是可以让用户登入多长时间后，不管有没有操作，超过这个设定的时间后都会登出，上代码:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;apos;user&amp;apos; =&amp;gt; [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;apos;identityClass&amp;apos; =&amp;gt; &amp;apos;app\models\User&amp;apos;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;apos;absoluteAuthTimeout&amp;apos; =&amp;gt; 20 //这里为了测试，设置为20秒，登入后不停刷新模拟用户操作，结果可看到，虽然在不断操作，但是过了设置的时间还是会自动登出&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;],&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;em&gt;需要注意的是如果设置 &lt;code&gt;enableAutoLogin = true&lt;/code&gt; 的话，以上两个设置是不会生效的。&lt;/em&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现在需求是：&lt;strong&gt;如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们可以通过配置  &lt;code&gt;yii\web\User::$authTimeout&lt;/code&gt;来达到效果，上代码：&lt;/
+    
+    </summary>
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/categories/Yii2/"/>
+    
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>开始篮球</title>
+    <link href="http://blog.lzuer.net/2015/05/24/hi-basketball/"/>
+    <id>http://blog.lzuer.net/2015/05/24/hi-basketball/</id>
+    <published>2015-05-24T21:58:51.000Z</published>
+    <updated>2016-03-23T14:24:49.197Z</updated>
+    
+    <content type="html">&lt;p&gt;今天打了一下午的篮球，快要中暑了。。。。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我为什么这么喜欢篮球&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;记得在上高中前，基本都没有什么体育运动，那时候的体育除了跑跑步就是跳跳绳。简直弱爆了。真正开始接触篮球还的进入高中后。&lt;/p&gt;
+&lt;p&gt;进入高中感觉最爽的就是体育课的区别了，可以选择自己喜欢的运动，比如足球、篮球。那时候我的性格还十分的内向，毕竟穷苦出身，不爱交际。上体育课来说，我就是场边的选手，不敢加入其中。&lt;/p&gt;
+&lt;p&gt;到了后来和同学熟悉了之后，开始慢慢的融入了大家。我也敢上场了。积极的争抢篮板、跑动，简直打了鸡血似得，几乎跑满整个篮球课。可能是年轻吧，真是活力充沛。&lt;/p&gt;
+&lt;p&gt;再后来，就高三了。升学的压力很大，学校也是个重点，所有体育课就形同虚设了。即有体育课，大部分同学们都还是选择留在教室里面学习，体育老师也是不管的「可能这也是特色了吧」。就这样，暂告别「篮坛」。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;新的开始&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;进过努力，考进了还不错的大学。那是大西北的一所学校。第一次出远门「这是我到现在为止去过的最远的地方」。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;不同的伙食「辣」，这里的菜系基本被川菜所占领，在家里哪吃过辣，第一餐吃的我感觉菊花都疼疼的&lt;/li&gt;
+&lt;li&gt;不同的气候「干热」，在这里运动，你的汗刚出来基本上就被蒸发干了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;还有这样那样的 那样。。。。&lt;/p&gt;
+&lt;p&gt;宿舍离篮球场挺近，还是一如既往的「场边观战」。大学了嘛，所以决定改变自己内向的性格，参加社团、主动加入打篮球。。。&lt;/p&gt;
+&lt;p&gt;变化好快啊，我争强好胜的性格逐渐展现出来，在球场上，不知道多少次和同学吵闹「好愧疚」，本来自己的实力就不咋地，还那么的好胜。哎，在这里向我之前得罪过的同学们道个歉吧，哈哈，虽然我知道他们不会记恨着。&lt;/p&gt;
+&lt;p&gt;怎么办，这段还有好多要写啊！！可是跑题了啊。&lt;/p&gt;
+&lt;p&gt;算了，结束吧，挺累的。以后每个星期都可以打球了，锻炼锻炼，媳妇儿老说我的肚子跟怀孕好几个月的似的。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天打了一下午的篮球，快要中暑了。。。。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;我为什么这么喜欢篮球&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;记得在上高中前，基本都没有什么体育运动，那时候的体育除了跑跑步就是跳跳绳。简直弱爆了。真正开始接触篮球还的进入高中后。&lt;/p&gt;
+&lt;p&gt;进入高中感觉最
+    
+    </summary>
+    
+      <category term="life" scheme="http://blog.lzuer.net/categories/life/"/>
+    
+    
+      <category term="life" scheme="http://blog.lzuer.net/tags/life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Yii2 container的一个应用</title>
+    <link href="http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/"/>
+    <id>http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/</id>
+    <published>2015-05-19T22:26:28.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 &lt;code&gt;[[yii\data\Pagination]]&lt;/code&gt; 的默认每页个数是 20 个.&lt;/p&gt;
+&lt;p&gt;对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? &lt;/p&gt;
+&lt;p&gt;这时候,我们可以使用 [[Yii::$contianer]] 的来实现：&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//这里我们设置默认个数为10, 将此置于 bootstrap.php 中&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\Yii::$container-&amp;gt;set(&lt;span class=&quot;string&quot;&gt;&#39;yii\data\Pagination&#39;&lt;/span&gt;, [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&#39;pageSize&#39;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这样, 我们在使用诸如 &lt;code&gt;ActiveDataProvider&lt;/code&gt; 等方法时，默认每页个数就为 10 了。&lt;/p&gt;
+&lt;h2 id=&quot;思考&quot;&gt;&lt;a href=&quot;#思考&quot; class=&quot;headerlink&quot; title=&quot;思考&quot;&gt;&lt;/a&gt;思考&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;理论上，通过 &lt;code&gt;Yii::createObject&lt;/code&gt; 来实例化的对用都会起作用。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以，说用通过 &lt;code&gt;Yii::createObject&lt;/code&gt; 创建的实例都会使用我们通过以上方法设定的默认值。因为 &lt;code&gt;ActiveDataProvider&lt;/code&gt; 等中的 &lt;code&gt;pagination&lt;/code&gt; 在内部是通过 &lt;code&gt;Yii::createObject&lt;/code&gt; 创建的，所以设置是生效的。&lt;/p&gt;
+&lt;p&gt;因此，考虑一下两种实现方式：&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//1. pageSize 还是默认的20&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$paging = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; \yii\data\Pagination;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//2. pageSize 就是设置的 10 了&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$paging = Yii::createObject(&lt;span class=&quot;string&quot;&gt;&#39;yii\data\Pagination&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;所以Yii提倡使用 &lt;code&gt;Yii::createObject&lt;/code&gt; 来实例化对象，因为它能够自动解决依赖和默认值配置等好处。&lt;/p&gt;
+&lt;h2 id=&quot;Yii-container-是什么&quot;&gt;&lt;a href=&quot;#Yii-container-是什么&quot; class=&quot;headerlink&quot; title=&quot;Yii::$container 是什么&quot;&gt;&lt;/a&gt;Yii::$container 是什么&lt;/h2&gt;&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Yii::$container = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; yii\di\Container();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;所以 &lt;code&gt;Yii::$container&lt;/code&gt; 就是整个生命周期的一个依赖容器。&lt;/p&gt;
+&lt;p&gt;考虑开始的时候的代码，我们可以理解: 通过 &lt;code&gt;Yii::$container-&amp;gt;set()&lt;/code&gt; 其实就是向这个容器注入了一个类和其配置. 当调用 &lt;code&gt;Yii::createObject&lt;/code&gt; 的时候会去这个容器里面找，如果存在则根据 set 的配置进行实例化。&lt;/p&gt;
+&lt;h2 id=&quot;推荐&quot;&gt;&lt;a href=&quot;#推荐&quot; class=&quot;headerlink&quot; title=&quot;推荐&quot;&gt;&lt;/a&gt;推荐&lt;/h2&gt;&lt;p&gt;关于依赖注入和依赖注入容器可以查看博文：&lt;a href=&quot;http://www.digpage.com/di.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.digpage.com/di.html&lt;/a&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 &lt;code&gt;[[yii\data\Pagination]]&lt;/code&gt; 的默认
+    
+    </summary>
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/categories/Yii2/"/>
+    
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>怎样收集js报错</title>
+    <link href="http://blog.lzuer.net/2015/05/13/how-to-track-js-errors/"/>
+    <id>http://blog.lzuer.net/2015/05/13/how-to-track-js-errors/</id>
+    <published>2015-05-13T22:02:06.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;项目上线运行中，由于这样那样奇葩的浏览器的存在，导致我们的js代码存在一定的兼容性问题。那么可否收集到这些问题呢？&lt;/p&gt;
+&lt;p&gt;答案是肯定的。我们可以基于 &lt;code&gt;window.onerror&lt;/code&gt; 事件来收集并上报前段js代码在实际运行中产生的错误，以帮助我们排查解决。&lt;/p&gt;
+&lt;p&gt;在W3C规范里，window.onerror是html5新定义的事件，但实际上，window.onerror从IE6开始就被支持了，而chrome、firefox、safari、opera，目前也都已经支持该事件。&lt;/p&gt;
+&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//收集js报错信息并上报&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.onerror = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;msg, url, line, column, error&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; _e = &lt;span class=&quot;built_in&quot;&gt;encodeURIComponent&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	content = &lt;span class=&quot;string&quot;&gt;&#39;/site/jslog?message=&#39;&lt;/span&gt; + _e(msg) +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;url=&#39;&lt;/span&gt; + _e(url || &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.location.href) + &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;line=&#39;&lt;/span&gt; + _e(line) +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  (error &amp;amp;&amp;amp; error.stack ? &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;stack=&#39;&lt;/span&gt; + _e(error.stack) : &lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt;) +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  (column ? &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;column=&#39;&lt;/span&gt; + _e(column) : &lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt;) +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;ua=&#39;&lt;/span&gt; + &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.navigator.userAgent.replace(&lt;span class=&quot;regexp&quot;&gt;/[\:,;]/g&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;|&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Image()).src = content;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;服务端:&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;actionJslog&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$response = Yii::$app-&amp;gt;getResponse();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//这是必须的，我们要将header设置为image&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    $response-&amp;gt;format = Response::FORMAT_RAW;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//write the log data&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$headers = $response-&amp;gt;getHeaders();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$headers-&amp;gt;set(&lt;span class=&quot;string&quot;&gt;&#39;Content-Type&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;image/png&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; $response;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这段代码需要放在head中并且位于所有script之前！&lt;/p&gt;
+&lt;p&gt;这样当客户端发生js报错时就会上报到服务器端，在服务器端我只需要将提交过来的信息进行保存就可以了。这样我们就可以根据收集到的信息来解决问题。&lt;/p&gt;
+&lt;p&gt;这里有几个点需要注意，一个是日志收集接口暴露在外，最好增加安全措施，比如设置token。&lt;/p&gt;
+&lt;p&gt;另外，脚本部署的时机、位置，以及日志过滤等条件，也需要根据具体情况进行设定。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;教训&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;在代码中我们经常使用 &lt;code&gt;console.log&lt;/code&gt; 来打印代码，但这存在问题的，某些浏览器是不支持该方法的！&lt;/p&gt;
+&lt;p&gt;这就会产生错误，使代码无法正常运行！有两张方法可以解决：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;利用工具来消除所有的打印调试代码&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;提供兼容代码「置于head中所有script之前」&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.console = &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.console || (&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; _c = &amp;#123;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	_c.log = _c.warning = _c.error = _c.info .. = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; _c;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;)();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;项目上线运行中，由于这样那样奇葩的浏览器的存在，导致我们的js代码存在一定的兼容性问题。那么可否收集到这些问题呢？&lt;/p&gt;
+&lt;p&gt;答案是肯定的。我们可以基于 &lt;code&gt;window.onerror&lt;/code&gt; 事件来收集并上报前段js代码在实际运行中产生的错误，以帮助我
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/categories/PHP/Yii2/"/>
+    
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
+    
+      <category term="javascript" scheme="http://blog.lzuer.net/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于ActiveRecord之update需要注意的地方</title>
+    <link href="http://blog.lzuer.net/2015/05/08/yii2-ar-update-note/"/>
+    <id>http://blog.lzuer.net/2015/05/08/yii2-ar-update-note/</id>
+    <published>2015-05-08T23:14:19.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;开发中遇到使用 ActiveRecord::update 来更新数据，那么执行 update 的时候都做了什么：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;检查属性的值是否发生改变，只有属性值改变的属性才保存&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;存在更新但不会对数据行产生影响的情况，此情况下返回受影响的行数为0&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;根据以上，我们在使用的时候需要注意的有：&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$user = User::findOne();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$user-&amp;gt;status = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;; &lt;span class=&quot;comment&quot;&gt;//假设原值也为1&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$user-&amp;gt;updated_at = now();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ($user-&amp;gt;update() === &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;) &amp;#123; &lt;span class=&quot;comment&quot;&gt;//注意这里必须要进行严格的判断「update执行返回的是受影响的行数」&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//update faild&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//update success&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;开发中遇到使用 ActiveRecord::update 来更新数据，那么执行 update 的时候都做了什么：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;检查属性的值是否发生改变，只有属性值改变的属性才保存&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;存在更新但不会对数据行产生影响的情况，此
+    
+    </summary>
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/categories/Yii2/"/>
+    
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Yii2中的Validators之BooleanValidator</title>
+    <link href="http://blog.lzuer.net/2015/05/07/yii2-validators-boolean/"/>
+    <id>http://blog.lzuer.net/2015/05/07/yii2-validators-boolean/</id>
+    <published>2015-05-07T23:01:16.000Z</published>
+    <updated>2016-03-23T14:24:49.201Z</updated>
+    
+    <content type="html">&lt;p&gt;顾名思义，从命名上来看，给人的感觉是进行布尔类型判断的。&lt;/p&gt;
+&lt;p&gt;但其实我们可以用它来做一些更有意思的比较。&lt;/p&gt;
+&lt;p&gt;比较常规的用法：&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;actionSearch&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$model = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DynamicModel([&lt;span class=&quot;string&quot;&gt;&#39;status&#39;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$model-&amp;gt;addRule(&lt;span class=&quot;string&quot;&gt;&#39;status&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;boolean&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$model-&amp;gt;status = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$model-&amp;gt;validate(); &lt;span class=&quot;comment&quot;&gt;// true, status 设置为 0 也会验证为true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$model-&amp;gt;addRule(&lt;span class=&quot;string&quot;&gt;&#39;status&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;boolean&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;strict&#39;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$model-&amp;gt;status = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$model-&amp;gt;validate(); &lt;span class=&quot;comment&quot;&gt;// false&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$model-&amp;gt;status = &lt;span class=&quot;string&quot;&gt;&#39;1&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$model-&amp;gt;validate(); &lt;span class=&quot;comment&quot;&gt;// true&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这里列举了两个验证场景：1是非严格比较， 2是严格比较。&lt;/p&gt;
+&lt;p&gt;在 BooleanValidator 中有两个属性分别代表比较的值，其默认为 &lt;code&gt;trueValue = &amp;#39;1&amp;#39;&lt;/code&gt; 和 &lt;code&gt;falseValue = &amp;#39;0&amp;#39;&lt;/code&gt;,&lt;/p&gt;
+&lt;p&gt;在验证的时候 BooleanValidator 分别对对相应的属性值进行比较，当有一个「trueValue或falseValue」分别在严格比较和非严格比较的情况下和属性值相等时则验证通过。&lt;/p&gt;
+&lt;p&gt;由此，我们可以通过设置 trueValue 和 falseValue 来进行更多的比较，例如：&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//此场景我们需要验证用户的输入为 yes 或者 no&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$model = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; DynamicModel([&lt;span class=&quot;string&quot;&gt;&#39;action&#39;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$model-&amp;gt;load(Yii::$app-&amp;gt;getRequest()-&amp;gt;post(), &lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$model-&amp;gt;addRule(&lt;span class=&quot;string&quot;&gt;&#39;status&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;boolean&#39;&lt;/span&gt;, [&lt;span class=&quot;string&quot;&gt;&#39;strict&#39;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;trueValue&#39;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;string&quot;&gt;&#39;yes&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;falseValue&#39;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;string&quot;&gt;&#39;no&#39;&lt;/span&gt;]);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; ($model-&amp;gt;validate()) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//validate pass&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125; &lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//validate error&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;顾名思义，从命名上来看，给人的感觉是进行布尔类型判断的。&lt;/p&gt;
+&lt;p&gt;但其实我们可以用它来做一些更有意思的比较。&lt;/p&gt;
+&lt;p&gt;比较常规的用法：&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;
+    
+    </summary>
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/categories/Yii2/"/>
+    
+      <category term="Yii2-validator" scheme="http://blog.lzuer.net/categories/Yii2/Yii2-validator/"/>
+    
+    
+      <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
+    
+  </entry>
+  
+</feed>
