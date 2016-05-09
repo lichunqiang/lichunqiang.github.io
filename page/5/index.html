@@ -212,6 +212,141 @@
             
               
                 
+                <a class="post-title-link" href="/2014/04/22/seajs-note/" itemprop="url">
+                  seasj-note
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-04-22T00:28:29+00:00" content="2014-04-22">
+              2014-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/seajs/" itemprop="url" rel="index">
+                    <span itemprop="name">seajs</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/seajs/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/04/22/seajs-note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/22/seajs-note/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p><a href="https://speakerdeck.com/lifesinger/seajs" target="_blank" rel="external">玉伯的一份ppt</a></p>
+<p><strong>在这份Seajs的PPT中，玉伯介绍到了Seajs的实现</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*a.js*/</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>);</span><br><span class="line">    <span class="keyword">var</span> c = <span class="built_in">require</span>(<span class="string">'./c'</span>);</span><br><span class="line">    <span class="comment">//other code</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*main.js*/</span></span><br><span class="line">seajs.use(./a);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>Step1:      解析 ‘./a’</li>
+<li>Step2.1:  下载a</li>
+<li>Step2.2:    执行define,保存a的factory</li>
+<li>Step2.3:     得到依赖b和c</li>
+<li>Step2.4：    加载b和c</li>
+<li>Step3:    执行a的factory，得到a的module.exports</li>
+</ul>
+<p><strong>Step1: 路径解析</strong></p>
+<p>在进行路径解析的时候<code>require(&#39;jquery&#39;)</code>,首先判断在<code>seajs.config</code>是否定义了该<code>alias</code>,</p>
+<p>如果存在替换.(<em>parseAlias</em>)</p>
+<p>这之后在根据<code>base</code>,将id值解析为uri.(<em>id2uri</em>)</p>
+<p>在接下来进行(<em>parseMap</em>), 即对<code>seajs.config</code>中的map进行解析。</p>
+<p>最终得到完整的路径！</p>
+<p><strong>Step2: 模块加载_</strong></p>
+<ul>
+<li>将上一步得到的路径通过 insert script 、xhr、web workder…等方式插入</li>
+</ul>
+<p><strong><a href="https://speakerdeck.com/lifesinger/seajs" target="_blank" rel="external">More See PPT</a></strong></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/04/22/how-to-know-nginx-compiled-config/" itemprop="url">
                   添加nginx模块
                 </a>
@@ -725,7 +860,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
