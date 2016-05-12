@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="git," />
+  <meta name="keywords" content="Mysql," />
 
 
 
@@ -53,31 +53,19 @@
 
 
 
-<meta name="description" content="git tip onegit config
-git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
-所以在本地某个仓库可以设置用户名和邮箱：
-  git config user.name “light”  git config user.email “light@qq.com”
-为常用命令设置快捷别名
-  git config alias.st status  git con">
+<meta name="description" content="create database with utf-81CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+当没有权限访问服务器的mysql的解决办法：1GRANT ALL PRIVILEGES ON *.* TO root@&amp;apos;%&amp;apos; IDENTIFIED BY &amp;a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git tips - 1">
-<meta property="og:url" content="http://blog.lzuer.net/2016/03/03/git-tips-one/index.html">
+<meta property="og:title" content="经常使用到的Mysql命令">
+<meta property="og:url" content="http://blog.lzuer.net/2013/11/21/useful-mysql-command/index.html">
 <meta property="og:site_name" content="Light's Blog">
-<meta property="og:description" content="git tip onegit config
-git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
-所以在本地某个仓库可以设置用户名和邮箱：
-  git config user.name “light”  git config user.email “light@qq.com”
-为常用命令设置快捷别名
-  git config alias.st status  git con">
+<meta property="og:description" content="create database with utf-81CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+当没有权限访问服务器的mysql的解决办法：1GRANT ALL PRIVILEGES ON *.* TO root@&amp;apos;%&amp;apos; IDENTIFIED BY &amp;a">
 <meta property="og:updated_time" content="2016-05-12T03:58:58.602Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git tips - 1">
-<meta name="twitter:description" content="git tip onegit config
-git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
-所以在本地某个仓库可以设置用户名和邮箱：
-  git config user.name “light”  git config user.email “light@qq.com”
-为常用命令设置快捷别名
-  git config alias.st status  git con">
+<meta name="twitter:title" content="经常使用到的Mysql命令">
+<meta name="twitter:description" content="create database with utf-81CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+当没有权限访问服务器的mysql的解决办法：1GRANT ALL PRIVILEGES ON *.* TO root@&amp;apos;%&amp;apos; IDENTIFIED BY &amp;a">
 
 
 
@@ -89,7 +77,7 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
   };
 </script>
 
-  <title> git tips - 1 | Light's Blog </title>
+  <title> 经常使用到的Mysql命令 | Light's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -219,7 +207,7 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
             
             
               
-                git tips - 1
+                经常使用到的Mysql命令
               
             
           </h1>
@@ -228,8 +216,8 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-03-03T16:53:42+00:00" content="2016-03-03">
-              2016-03-03
+            <time itemprop="dateCreated" datetime="2013-11-21T23:57:23+00:00" content="2013-11-21">
+              2013-11-21
             </time>
           </span>
 
@@ -238,8 +226,8 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
                   </a>
                 </span>
 
@@ -254,8 +242,8 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/03/git-tips-one/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/03/git-tips-one/" itemprop="commentsCount"></span>
+                <a href="/2013/11/21/useful-mysql-command/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/21/useful-mysql-command/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -274,17 +262,21 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
       
 
       
-        <span itemprop="articleBody"><h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p>
-<p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p>
-<p>所以在本地某个仓库可以设置用户名和邮箱：</p>
-<p>  git config user.name “light”<br>  git config user.email “light@qq.com”</p>
-<p><strong>为常用命令设置快捷别名</strong></p>
-<p>  git config alias.st status<br>  git config alias.ci commit</p>
-<blockquote>
-<p>同样可以使用<code>-g</code> 来进行全局配置</p>
-</blockquote>
-<p>使用：</p>
-<p>  $ git st<br>  $ git ci</p>
+        <span itemprop="articleBody"><h4 id="create-database-with-utf-8"><a href="#create-database-with-utf-8" class="headerlink" title="create database with utf-8"></a>create database with utf-8</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;</span><br></pre></td></tr></table></figure>
+<h4 id="当没有权限访问服务器的mysql的解决办法："><a href="#当没有权限访问服务器的mysql的解决办法：" class="headerlink" title="当没有权限访问服务器的mysql的解决办法："></a>当没有权限访问服务器的mysql的解决办法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO root@&apos;%&apos; IDENTIFIED BY &apos;root-password&apos; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<h4 id="mysql乱码："><a href="#mysql乱码：" class="headerlink" title="mysql乱码："></a>mysql乱码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/my.cnf</span><br></pre></td></tr></table></figure>
+<p>添加：<br>[client]<br>default-character-set=utf8<br>重启mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service mysqld restart</span><br></pre></td></tr></table></figure></p>
+<h4 id="mysql数据库数据导入与导出"><a href="#mysql数据库数据导入与导出" class="headerlink" title="mysql数据库数据导入与导出"></a>mysql数据库数据导入与导出</h4><p>1、导出数据库为dbname的表结构（其中用戶名为root,密码为dbpasswd,生成的脚本名为db.sql）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd -d dbname &gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>2、导出数据库为dbname某张表(test)结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd -d dbname test&gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>3、导出数据库为dbname所有表结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd  dbname &gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>4、导出数据库为dbname某张表(test)结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd dbname test&gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>5、忽略某张或者多张表导出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd dbname --ignore-table=dbname.table1 --ignore-table=dbname.table2 &gt; db.sql</span><br></pre></td></tr></table></figure>
+<h4 id="修改表名，列名"><a href="#修改表名，列名" class="headerlink" title="修改表名，列名"></a>修改表名，列名</h4><ul>
+<li>添加列：alter table 表名 add column 列名 varchar(30);</li>
+<li>删除列：alter table 表名 drop column 列名;</li>
+<li>修改列名：alter table 表名 change 旧列名 新列名;</li>
+</ul>
 </span>
       
     </div>
@@ -293,7 +285,7 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
       
         <div class="post-tags">
           
-            <a href="/tags/git/" rel="tag">#git</a>
+            <a href="/tags/Mysql/" rel="tag">#Mysql</a>
           
         </div>
       
@@ -302,16 +294,16 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/26/xdebug-phpstorm/" rel="next" title="在phpstorm中使用xdebug">
-                <i class="fa fa-chevron-left"></i> 在phpstorm中使用xdebug
+              <a href="/2013/04/22/apache-multiple-server-setting/" rel="next" title="Apache如何配置支持多域名">
+                <i class="fa fa-chevron-left"></i> Apache如何配置支持多域名
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/05/09/validator-on-the-fly/" rel="prev" title="Validator on the fly">
-                Validator on the fly <i class="fa fa-chevron-right"></i>
+              <a href="/2014/04/22/how-to-know-nginx-compiled-config/" rel="prev" title="添加nginx模块">
+                添加nginx模块 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -327,10 +319,10 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/03/03/git-tips-one/"
-     data-title="git tips - 1"
+        <div class="ds-share flat" data-thread-key="2013/11/21/useful-mysql-command/"
+     data-title="经常使用到的Mysql命令"
      data-content=""
-     data-url="http://blog.lzuer.net/2016/03/03/git-tips-one/">
+     data-url="http://blog.lzuer.net/2013/11/21/useful-mysql-command/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -363,8 +355,8 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/03/03/git-tips-one/"
-           data-title="git tips - 1" data-url="http://blog.lzuer.net/2016/03/03/git-tips-one/">
+      <div class="ds-thread" data-thread-key="2013/11/21/useful-mysql-command/"
+           data-title="经常使用到的Mysql命令" data-url="http://blog.lzuer.net/2013/11/21/useful-mysql-command/">
       </div>
     
   </div>
@@ -487,7 +479,7 @@ git config 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#git-tip-one"><span class="nav-number">1.</span> <span class="nav-text">git tip one</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#create-database-with-utf-8"><span class="nav-number">1.</span> <span class="nav-text">create database with utf-8</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#当没有权限访问服务器的mysql的解决办法："><span class="nav-number">2.</span> <span class="nav-text">当没有权限访问服务器的mysql的解决办法：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mysql乱码："><span class="nav-number">3.</span> <span class="nav-text">mysql乱码：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mysql数据库数据导入与导出"><span class="nav-number">4.</span> <span class="nav-text">mysql数据库数据导入与导出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改表名，列名"><span class="nav-number">5.</span> <span class="nav-text">修改表名，列名</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
