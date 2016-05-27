@@ -212,6 +212,116 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/08/yii2-ar-update-note/" itemprop="url">
+                  关于ActiveRecord之update需要注意的地方
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-05-08T23:14:19+00:00" content="2015-05-08">
+              2015-05-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/08/yii2-ar-update-note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/08/yii2-ar-update-note/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>开发中遇到使用 ActiveRecord::update 来更新数据，那么执行 update 的时候都做了什么：</p>
+<ul>
+<li><p>检查属性的值是否发生改变，只有属性值改变的属性才保存</p>
+</li>
+<li><p>存在更新但不会对数据行产生影响的情况，此情况下返回受影响的行数为0</p>
+</li>
+</ul>
+<p>根据以上，我们在使用的时候需要注意的有：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$user = User::findOne();</span><br><span class="line"></span><br><span class="line">$user-&gt;status = <span class="number">1</span>; <span class="comment">//假设原值也为1</span></span><br><span class="line"></span><br><span class="line">$user-&gt;updated_at = now();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($user-&gt;update() === <span class="keyword">false</span>) &#123; <span class="comment">//注意这里必须要进行严格的判断「update执行返回的是受影响的行数」</span></span><br><span class="line">	<span class="comment">//update faild</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">//update success</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/07/yii2-validators-boolean/" itemprop="url">
                   Yii2中的Validators之BooleanValidator
                 </a>
@@ -522,9 +632,9 @@
               <p>贤心的最懂你的、跨终端的web弹层组件<a href="https://github.com/sentsin/layer" target="_blank" rel="external">layer</a>由于没有发布到bower，所以为了在Yii2的项目中方便使用,特发布了 <a href="https://packagist.org/packages/light/yii2-layer" target="_blank" rel="external">light/yii2-layer</a></p>
 <p>这样我们就可以愉快的依赖 layer 这块强大的插件了。</p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require light/yii2-layer=*</span><br></pre></td></tr></table></figure>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerAsset</span>;</span><br><span class="line"></span><br><span class="line">LayerAsset::register($this);</span><br></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerAsset</span>;</span><br><span class="line"></span><br><span class="line">LayerAsset::register(<span class="keyword">$this</span>);</span><br></pre></td></tr></table></figure>
 <p>或者在移动端使用：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerMobileAsset</span>;</span><br><span class="line"></span><br><span class="line">LayerMobileAsset::register($this);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerMobileAsset</span>;</span><br><span class="line"></span><br><span class="line">LayerMobileAsset::register(<span class="keyword">$this</span>);</span><br></pre></td></tr></table></figure>
 <p>具体这款插件有多炫酷，还是自行到官方站去体验吧！ <a href="http://sentsin.com/jquery/layer/" target="_blank" rel="external">http://sentsin.com/jquery/layer/</a></p>
 <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>这里没有封装使用插件，因为目前还是在js中主动调用 - - ！</p>
 
@@ -1345,135 +1455,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/how-to-revert-an-wrong-push/" itemprop="url">
-                  怎样撤销一次错误的提交
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:15:21+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/github/" itemprop="url" rel="index">
-                    <span itemprop="name">github</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/how-to-revert-an-wrong-push/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/how-to-revert-an-wrong-push/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>一次在给一个项目提交pull request的时候，新建一个<code>patch</code>做修改并进行了<code>pull-request</code>。</p>
-<p>但是在没有注意的情况下，我在本地有做了些修改。<strong>PS:在提交pull-request的分支的操作</strong></p>
-<p>我就不假思索的提交到了github,但是悲剧了：</p>
-<blockquote>
-<p>当在某个分支向原项目提交<code>pull-request</code>后，如果你在自己fork的项目中向该分支进行任何提交都会自动的合并到之前的<code>pull-request</code>中。</p>
-</blockquote>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>简单的搜索了下解决方案，如下:</p>
-<ol>
-<li><p>进入该分支的<code>Commits</code>历史页面，然后拷贝你错误提交的上一次提交的SHA</p>
-</li>
-<li><p>然后执行：</p>
-</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push <span class="_">-f</span> origin 342<span class="built_in">cd</span>123132..dew1dd:patch-1</span><br></pre></td></tr></table></figure>
-<p>问题解决。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1520,21 +1501,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

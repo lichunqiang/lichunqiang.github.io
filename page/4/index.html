@@ -212,6 +212,135 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/22/how-to-revert-an-wrong-push/" itemprop="url">
+                  怎样撤销一次错误的提交
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:15:21+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/how-to-revert-an-wrong-push/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/how-to-revert-an-wrong-push/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>一次在给一个项目提交pull request的时候，新建一个<code>patch</code>做修改并进行了<code>pull-request</code>。</p>
+<p>但是在没有注意的情况下，我在本地有做了些修改。<strong>PS:在提交pull-request的分支的操作</strong></p>
+<p>我就不假思索的提交到了github,但是悲剧了：</p>
+<blockquote>
+<p>当在某个分支向原项目提交<code>pull-request</code>后，如果你在自己fork的项目中向该分支进行任何提交都会自动的合并到之前的<code>pull-request</code>中。</p>
+</blockquote>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>简单的搜索了下解决方案，如下:</p>
+<ol>
+<li><p>进入该分支的<code>Commits</code>历史页面，然后拷贝你错误提交的上一次提交的SHA</p>
+</li>
+<li><p>然后执行：</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push <span class="_">-f</span> origin 342<span class="built_in">cd</span>123132..dew1dd:patch-1</span><br></pre></td></tr></table></figure>
+<p>问题解决。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/22/work-with-github/" itemprop="url">
                   如何在Github上贡献开源项目代码
                 </a>
@@ -2112,162 +2241,6 @@ OR
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/04/22/install-svn-on-centos/" itemprop="url">
-                  centos 配置svn
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2014-04-22T00:29:39+00:00" content="2014-04-22">
-              2014-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/svn/" itemprop="url" rel="index">
-                    <span itemprop="name">svn</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/linux/svn/centos/" itemprop="url" rel="index">
-                    <span itemprop="name">centos</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/04/22/install-svn-on-centos/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/22/install-svn-on-centos/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <ul>
-<li><p>检查是否安装svn</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$rpm</span> -qa subversion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>卸载旧版本的svn</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$yum</span> remove subversion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>安装需要的apache模块</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$yum</span> install mod_dav_svn mod_auth_mysql</span><br><span class="line">//确认是否安装</span><br><span class="line"><span class="variable">$ls</span> /etc/httpd/modules | grep svn</span><br><span class="line">	mod_authz_svn.so</span><br><span class="line">	mod_dav_svn.so</span><br></pre></td></tr></table></figure>
-<ul>
-<li>验证安装</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$svnserve</span> --version</span><br><span class="line">	svnserve，版本 1.6.11 (r934486)</span><br><span class="line">	编译于 Jun 23 2012，00:44:03</span><br><span class="line">	版权所有 (C) 2000-2009 CollabNet。</span><br><span class="line">	Subversion 是开放源代码软件，请参阅 http://subversion.tigris.org/ 站点。</span><br><span class="line">	此产品包含由 CollabNet(http://www.Collab.Net/) 开发的软件。</span><br><span class="line"></span><br><span class="line">	下列版本库后端(FS) 模块可用:</span><br><span class="line"></span><br><span class="line">	* fs_base : 模块只能操作BDB版本库。</span><br><span class="line">	* fs_fs : 模块与文本文件(FSFS)版本库一起工作。</span><br><span class="line"></span><br><span class="line">	Cyrus SASL 认证可用。</span><br></pre></td></tr></table></figure>
-<p>以上的配置参考<a href="http://my.oschina.net/junn/blog/164041" target="_blank" rel="external">CentOS-6.3安装配置SVN</a></p>
-<h3 id="配置apache"><a href="#配置apache" class="headerlink" title="配置apache"></a>配置apache</h3><hr>
-<p>由于我的服务器80端口被nginx占用，所以采用nginx反向代理的办法,apache监听8080端口，<br>配置nginx</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_pass http://127.0.0.1:8080</span><br></pre></td></tr></table></figure>
-<h4 id="配置svn用户密码"><a href="#配置svn用户密码" class="headerlink" title="配置svn用户密码"></a>配置svn用户密码</h4><blockquote>
-<p>设置密码</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo htpasswd -c /opt/svn/passwd abc</span><br></pre></td></tr></table></figure>
-<p>创建用户abc并按照提示设置密码，网页认证的时候使用该用户名和密码登录。后面再添加用户的时候去掉-c选项。</p>
-<p>*初始化版本仓库，导入原始代码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ svn import /data/www/code file:///opt/svn/repos1 -m <span class="string">'first init'</span></span><br><span class="line">$ chown -R apache.apache repos</span><br></pre></td></tr></table></figure>
-<h4 id="创建svn版本库"><a href="#创建svn版本库" class="headerlink" title="创建svn版本库"></a>创建svn版本库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ svnadmin create /opt/svn/testrepos</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>svnadmin在创建版本库时是root身份，需使用<code>chown</code>改变，保证svn对文件目录有权限</p>
-</blockquote>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -2314,21 +2287,21 @@ OR
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

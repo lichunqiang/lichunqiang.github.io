@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="PHP," />
+  <meta name="keywords" content="Golang," />
 
 
 
@@ -53,28 +53,40 @@
 
 
 
-<meta name="description" content="现版本：5.5.21
-更新版本： 5.6.10
-查看原来安装的配置参数执行php -v | grep config
-安装根据之前的安装配置执行:
-12$ ./configure --prefix=/usr/local/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbs">
+<meta name="description" content="Install Golang on CentosDownload
+首先确定操作系统位数, 可执行：
+
+1$ uname -m
+如果输出为 x86_64 的话代表64位操作系统，如果为 i386 则为32为系统。
+
+根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以
+
+1$ wget https://storage.googleapis.com/golang/go1.6.2.linux-">
 <meta property="og:type" content="article">
-<meta property="og:title" content="更新升级PHP版本">
-<meta property="og:url" content="http://blog.lzuer.net/2015/06/26/upgrade-php-version/index.html">
+<meta property="og:title" content="Install Golang on Centos">
+<meta property="og:url" content="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/index.html">
 <meta property="og:site_name" content="Light's Blog">
-<meta property="og:description" content="现版本：5.5.21
-更新版本： 5.6.10
-查看原来安装的配置参数执行php -v | grep config
-安装根据之前的安装配置执行:
-12$ ./configure --prefix=/usr/local/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbs">
+<meta property="og:description" content="Install Golang on CentosDownload
+首先确定操作系统位数, 可执行：
+
+1$ uname -m
+如果输出为 x86_64 的话代表64位操作系统，如果为 i386 则为32为系统。
+
+根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以
+
+1$ wget https://storage.googleapis.com/golang/go1.6.2.linux-">
 <meta property="og:updated_time" content="2016-05-27T07:29:06.357Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="更新升级PHP版本">
-<meta name="twitter:description" content="现版本：5.5.21
-更新版本： 5.6.10
-查看原来安装的配置参数执行php -v | grep config
-安装根据之前的安装配置执行:
-12$ ./configure --prefix=/usr/local/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbs">
+<meta name="twitter:title" content="Install Golang on Centos">
+<meta name="twitter:description" content="Install Golang on CentosDownload
+首先确定操作系统位数, 可执行：
+
+1$ uname -m
+如果输出为 x86_64 的话代表64位操作系统，如果为 i386 则为32为系统。
+
+根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以
+
+1$ wget https://storage.googleapis.com/golang/go1.6.2.linux-">
 
 
 
@@ -86,7 +98,7 @@
   };
 </script>
 
-  <title> 更新升级PHP版本 | Light's Blog </title>
+  <title> Install Golang on Centos | Light's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -216,7 +228,7 @@
             
             
               
-                更新升级PHP版本
+                Install Golang on Centos
               
             
           </h1>
@@ -225,8 +237,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-06-26T22:44:42+00:00" content="2015-06-26">
-              2015-06-26
+            <time itemprop="dateCreated" datetime="2016-05-27T18:57:23+00:00" content="2016-05-27">
+              2016-05-27
             </time>
           </span>
 
@@ -235,8 +247,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
+                  <a href="/categories/Golang/" itemprop="url" rel="index">
+                    <span itemprop="name">Golang</span>
                   </a>
                 </span>
 
@@ -251,8 +263,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/06/26/upgrade-php-version/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/26/upgrade-php-version/" itemprop="commentsCount"></span>
+                <a href="/2016/05/27/install-golang-on-centos/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/27/install-golang-on-centos/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -271,20 +283,37 @@
       
 
       
-        <span itemprop="articleBody"><p>现版本：5.5.21</p>
-<p>更新版本： 5.6.10</p>
-<h3 id="查看原来安装的配置参数"><a href="#查看原来安装的配置参数" class="headerlink" title="查看原来安装的配置参数"></a>查看原来安装的配置参数</h3><p>执行<code>php -v | grep config</code></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>根据之前的安装配置执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbstring --with-mcrypt --with-openssl --disable-debug --enable-opcache --with-pdo-mysql --with-mysql</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<h3 id="剩余工作"><a href="#剩余工作" class="headerlink" title="剩余工作"></a>剩余工作</h3><p>安装成功后, 并不意味着升级工作完成了。当我们运行 <code>php -v</code> 时会有错误抛出, 那是因为两个版本的扩展编译标示前后不一致，所以我们接下的来的工作就是重新编译扩展。</p>
-<p>在 <code>path/to/php5/lib/php/extensions</code> 目录下有两个文件夹: <code>no-debug-non-zts-20121212/</code> (之前版本扩展安装目录) 和 <code>no-debug-non-zts-20131226/</code> (新版本扩展安装目录), 由于新升级的PHP的标示是 <code>20131226</code> , 所以对应的扩展编译也要对应上。</p>
-<p>例如, 我之前的扩展源文件目录 <code>/usr/local/src</code>, 我们并不是直接在之前安装的扩展目录中直接配置编译安装就可以了, 我们需要删除原来解压出来的文件, 重新解压扩展源文件, 进行扩展安装:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//例如重新编译安装 Imagick</span><br><span class="line">$ rm -rf imagick-3.1.1</span><br><span class="line">$ tar -zxvf imagick-3.1.1.tar</span><br><span class="line">$ <span class="built_in">cd</span> imgick-3.1.1</span><br><span class="line">$ path/to/php5/bin/phpize</span><br><span class="line">&amp; ./configure --with-php-config=/path/to/php5/bin/php-config</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<p>接下来最后就是修改 <code>php.ini</code> 中的 <code>extension_dir</code> 为新的目录.</p>
-<blockquote>
-<p>将php加入环境变量: <code>export PATH=$PATH:/usr/local/php5/bin</code></p>
-</blockquote>
-<p>完.</p>
+        <span itemprop="articleBody"><h2 id="Install-Golang-on-Centos"><a href="#Install-Golang-on-Centos" class="headerlink" title="Install Golang on Centos"></a>Install Golang on Centos</h2><h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><ol>
+<li>首先确定操作系统位数, 可执行：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ uname -m</span><br></pre></td></tr></table></figure>
+<p>如果输出为 <code>x86_64</code> 的话代表64位操作系统，如果为 <code>i386</code> 则为32为系统。</p>
+<ol>
+<li>根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<ol>
+<li>解压到安装目录, 我把go安装到 <code>/usr/local/go</code> 中，执行：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf go1.6.2.linux-amd64.tar.gz</span><br><span class="line">$ mv go /usr/local</span><br></pre></td></tr></table></figure>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><ol>
+<li>添加 <code>GOROOT</code> 环境变量</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export GOROOT=&quot;/usr/local/go&quot;</span><br></pre></td></tr></table></figure>
+<p>可以通过执行 <code>env</code> 或者 <code>echo $GOROOT</code> 来确认环境变量是否正常设置.</p>
+<ol>
+<li>设置PATH</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export PATH=$PATH:/usr/local/go/bin</span><br></pre></td></tr></table></figure>
+<h2 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go version</span><br></pre></td></tr></table></figure>
+<p>输出 <code>go version go1.6.2 linux/amd64</code> 表示golang已经成功安装！</p>
+<h2 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h2><p>剩下一步比较重要的就是设置 <code>GOPATH</code>, 详情可查看<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">资料</a></p>
+<p>例如我将GOPATH设置为 <code>/home/go</code>  为我的工作空间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export GOPATH=&quot;/home/go&quot;</span><br></pre></td></tr></table></figure>
+<p><code>/home/go</code>的目录结构为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- go</span><br><span class="line">	bin</span><br><span class="line">	pkg</span><br><span class="line">	src</span><br></pre></td></tr></table></figure>
+<p>有关目录结构的介绍可以参考：<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md</a></p>
+<p>至此Golang已经成功安装！</p>
 </span>
       
     </div>
@@ -293,7 +322,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/PHP/" rel="tag">#PHP</a>
+            <a href="/tags/Golang/" rel="tag">#Golang</a>
           
         </div>
       
@@ -302,17 +331,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/06/15/the-difference-between-on-and-where/" rel="next" title="在关联表查询的时候是在ON添加条件和在where添加添加条件异同">
-                <i class="fa fa-chevron-left"></i> 在关联表查询的时候是在ON添加条件和在where添加添加条件异同
+              <a href="/2016/05/09/validator-on-the-fly/" rel="next" title="Validator on the fly">
+                <i class="fa fa-chevron-left"></i> Validator on the fly
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/07/08/reg-the-at-user/" rel="prev" title="微博@匹配用户正则实现">
-                微博@匹配用户正则实现 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -327,10 +352,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/06/26/upgrade-php-version/"
-     data-title="更新升级PHP版本"
+        <div class="ds-share flat" data-thread-key="2016/05/27/install-golang-on-centos/"
+     data-title="Install Golang on Centos"
      data-content=""
-     data-url="http://blog.lzuer.net/2015/06/26/upgrade-php-version/">
+     data-url="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -363,8 +388,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/06/26/upgrade-php-version/"
-           data-title="更新升级PHP版本" data-url="http://blog.lzuer.net/2015/06/26/upgrade-php-version/">
+      <div class="ds-thread" data-thread-key="2016/05/27/install-golang-on-centos/"
+           data-title="Install Golang on Centos" data-url="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/">
       </div>
     
   </div>
@@ -487,7 +512,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看原来安装的配置参数"><span class="nav-number">1.</span> <span class="nav-text">查看原来安装的配置参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#剩余工作"><span class="nav-number">3.</span> <span class="nav-text">剩余工作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-Golang-on-Centos"><span class="nav-number">1.</span> <span class="nav-text">Install Golang on Centos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Download"><span class="nav-number">2.</span> <span class="nav-text">Download</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置环境变量"><span class="nav-number">3.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试是否安装成功"><span class="nav-number">4.</span> <span class="nav-text">测试是否安装成功</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOPATH"><span class="nav-number">5.</span> <span class="nav-text">GOPATH</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
