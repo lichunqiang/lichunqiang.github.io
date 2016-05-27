@@ -272,27 +272,17 @@
         
           <span itemprop="articleBody">
             
-              <h2 id="Install-Golang-on-Centos"><a href="#Install-Golang-on-Centos" class="headerlink" title="Install Golang on Centos"></a>Install Golang on Centos</h2><h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><ol>
-<li>首先确定操作系统位数, 可执行：</li>
-</ol>
+              <h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>首先确定操作系统位数, 可执行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ uname -m</span><br></pre></td></tr></table></figure>
 <p>如果输出为 <code>x86_64</code> 的话代表64位操作系统，如果为 <code>i386</code> 则为32为系统。</p>
-<ol>
-<li>根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以</li>
-</ol>
+<p>根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
-<ol>
-<li>解压到安装目录, 我把go安装到 <code>/usr/local/go</code> 中，执行：</li>
-</ol>
+<p>解压到安装目录, 我把go安装到 <code>/usr/local/go</code> 中，执行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf go1.6.2.linux-amd64.tar.gz</span><br><span class="line">$ mv go /usr/local</span><br></pre></td></tr></table></figure>
-<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><ol>
-<li>添加 <code>GOROOT</code> 环境变量</li>
-</ol>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>添加 <code>GOROOT</code> 环境变量</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export GOROOT=&quot;/usr/local/go&quot;</span><br></pre></td></tr></table></figure>
 <p>可以通过执行 <code>env</code> 或者 <code>echo $GOROOT</code> 来确认环境变量是否正常设置.</p>
-<ol>
-<li>设置PATH</li>
-</ol>
+<p>设置PATH</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export PATH=$PATH:/usr/local/go/bin</span><br></pre></td></tr></table></figure>
 <h2 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go version</span><br></pre></td></tr></table></figure>
 <p>输出 <code>go version go1.6.2 linux/amd64</code> 表示golang已经成功安装！</p>
@@ -300,7 +290,7 @@
 <p>例如我将GOPATH设置为 <code>/home/go</code>  为我的工作空间：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export GOPATH=&quot;/home/go&quot;</span><br></pre></td></tr></table></figure>
 <p><code>/home/go</code>的目录结构为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- go</span><br><span class="line">	bin</span><br><span class="line">	pkg</span><br><span class="line">	src</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- go</span><br><span class="line">  --bin</span><br><span class="line">  --pkg</span><br><span class="line">  --src</span><br></pre></td></tr></table></figure>
 <p>有关目录结构的介绍可以参考：<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md</a></p>
 <p>至此Golang已经成功安装！</p>
 

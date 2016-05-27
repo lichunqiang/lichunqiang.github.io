@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.lzuer.net/"/>
-  <updated>2016-05-27T07:29:06.357Z</updated>
+  <updated>2016-05-27T07:35:34.336Z</updated>
   <id>http://blog.lzuer.net/</id>
   
   <author>
@@ -20,29 +20,19 @@
     <link href="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/"/>
     <id>http://blog.lzuer.net/2016/05/27/install-golang-on-centos/</id>
     <published>2016-05-27T18:57:23.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
-    <content type="html">&lt;h2 id=&quot;Install-Golang-on-Centos&quot;&gt;&lt;a href=&quot;#Install-Golang-on-Centos&quot; class=&quot;headerlink&quot; title=&quot;Install Golang on Centos&quot;&gt;&lt;/a&gt;Install Golang on Centos&lt;/h2&gt;&lt;h2 id=&quot;Download&quot;&gt;&lt;a href=&quot;#Download&quot; class=&quot;headerlink&quot; title=&quot;Download&quot;&gt;&lt;/a&gt;Download&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;首先确定操作系统位数, 可执行：&lt;/li&gt;
-&lt;/ol&gt;
+    <content type="html">&lt;h2 id=&quot;Download&quot;&gt;&lt;a href=&quot;#Download&quot; class=&quot;headerlink&quot; title=&quot;Download&quot;&gt;&lt;/a&gt;Download&lt;/h2&gt;&lt;p&gt;首先确定操作系统位数, 可执行：&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ uname -m&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;如果输出为 &lt;code&gt;x86_64&lt;/code&gt; 的话代表64位操作系统，如果为 &lt;code&gt;i386&lt;/code&gt; 则为32为系统。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ol&gt;
-&lt;li&gt;解压到安装目录, 我把go安装到 &lt;code&gt;/usr/local/go&lt;/code&gt; 中，执行：&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;解压到安装目录, 我把go安装到 &lt;code&gt;/usr/local/go&lt;/code&gt; 中，执行：&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ tar zxvf go1.6.2.linux-amd64.tar.gz&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$ mv go /usr/local&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;配置环境变量&quot;&gt;&lt;a href=&quot;#配置环境变量&quot; class=&quot;headerlink&quot; title=&quot;配置环境变量&quot;&gt;&lt;/a&gt;配置环境变量&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;添加 &lt;code&gt;GOROOT&lt;/code&gt; 环境变量&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h2 id=&quot;配置环境变量&quot;&gt;&lt;a href=&quot;#配置环境变量&quot; class=&quot;headerlink&quot; title=&quot;配置环境变量&quot;&gt;&lt;/a&gt;配置环境变量&lt;/h2&gt;&lt;p&gt;添加 &lt;code&gt;GOROOT&lt;/code&gt; 环境变量&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ export GOROOT=&amp;quot;/usr/local/go&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;可以通过执行 &lt;code&gt;env&lt;/code&gt; 或者 &lt;code&gt;echo $GOROOT&lt;/code&gt; 来确认环境变量是否正常设置.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;设置PATH&lt;/li&gt;
-&lt;/ol&gt;
+&lt;p&gt;设置PATH&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ export PATH=$PATH:/usr/local/go/bin&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h2 id=&quot;测试是否安装成功&quot;&gt;&lt;a href=&quot;#测试是否安装成功&quot; class=&quot;headerlink&quot; title=&quot;测试是否安装成功&quot;&gt;&lt;/a&gt;测试是否安装成功&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ go version&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;输出 &lt;code&gt;go version go1.6.2 linux/amd64&lt;/code&gt; 表示golang已经成功安装！&lt;/p&gt;
@@ -50,14 +40,15 @@
 &lt;p&gt;例如我将GOPATH设置为 &lt;code&gt;/home/go&lt;/code&gt;  为我的工作空间：&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ export GOPATH=&amp;quot;/home/go&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;&lt;code&gt;/home/go&lt;/code&gt;的目录结构为：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;-- go&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	bin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	pkg&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	src&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;-- go&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  --bin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  --pkg&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  --src&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;有关目录结构的介绍可以参考：&lt;a href=&quot;https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;至此Golang已经成功安装！&lt;/p&gt;
 </content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Install-Golang-on-Centos&quot;&gt;&lt;a href=&quot;#Install-Golang-on-Centos&quot; class=&quot;headerlink&quot; title=&quot;Install Golang on Centos&quot;&gt;&lt;/a&gt;Install Golang
+      &lt;h2 id=&quot;Download&quot;&gt;&lt;a href=&quot;#Download&quot; class=&quot;headerlink&quot; title=&quot;Download&quot;&gt;&lt;/a&gt;Download&lt;/h2&gt;&lt;p&gt;首先确定操作系统位数, 可执行：&lt;/p&gt;
+&lt;figure class=&quot;highlight 
     
     </summary>
     
@@ -73,7 +64,7 @@
     <link href="http://blog.lzuer.net/2016/05/09/validator-on-the-fly/"/>
     <id>http://blog.lzuer.net/2016/05/09/validator-on-the-fly/</id>
     <published>2016-05-09T16:53:42.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的&lt;br&gt;时候其中有一条需求就是把用户提交的评分值由原来的允许的&lt;code&gt;1, 2, 3, 4, 5&lt;/code&gt; 改成允许输入 &lt;code&gt;0, 2, 4, 6, 8, 10&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;自定义的&lt;code&gt;validator&lt;/code&gt;:&lt;/p&gt;
@@ -111,7 +102,7 @@
     <link href="http://blog.lzuer.net/2016/03/03/git-tips-one/"/>
     <id>http://blog.lzuer.net/2016/03/03/git-tips-one/</id>
     <published>2016-03-03T16:53:42.000Z</published>
-    <updated>2016-05-27T07:29:06.353Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;h1 id=&quot;git-tip-one&quot;&gt;&lt;a href=&quot;#git-tip-one&quot; class=&quot;headerlink&quot; title=&quot;git tip one&quot;&gt;&lt;/a&gt;git tip one&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;git config&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;git config&lt;/code&gt; 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。&lt;/p&gt;
@@ -145,7 +136,7 @@
     <link href="http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/"/>
     <id>http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/</id>
     <published>2016-01-26T11:17:39.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.340Z</updated>
     
     <content type="html">&lt;h2 id=&quot;开启xdebug&quot;&gt;&lt;a href=&quot;#开启xdebug&quot; class=&quot;headerlink&quot; title=&quot;开启xdebug&quot;&gt;&lt;/a&gt;开启xdebug&lt;/h2&gt;&lt;p&gt;在&lt;code&gt;php.ini&lt;/code&gt;中配置&lt;code&gt;xdebug&lt;/code&gt;如下：&lt;/p&gt;
 &lt;p&gt;  [xdebug]&lt;br&gt;  xdebug.remote_enable = On&lt;br&gt;  xdebug.remote_handler = dbgp&lt;br&gt;  xdebug.remote_host= localhost&lt;br&gt;  xdebug.remote_port = 9000&lt;br&gt;  xdebug.idekey = PHPSTORM&lt;br&gt;  xdebug.profiler_enable = 1&lt;/p&gt;
@@ -201,7 +192,7 @@
     <link href="http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/"/>
     <id>http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/</id>
     <published>2016-01-18T23:59:20.000Z</published>
-    <updated>2016-05-27T07:29:06.353Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;首先在&lt;a href=&quot;https://travis-ci.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;travis&lt;/a&gt;将你的项目加入到travis。&lt;/p&gt;
 &lt;p&gt;打开设置，添加token变量。&lt;/p&gt;
@@ -262,7 +253,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/16/git-delete-submoudle/"/>
     <id>http://blog.lzuer.net/2016/01/16/git-delete-submoudle/</id>
     <published>2016-01-16T00:16:21.000Z</published>
-    <updated>2016-05-27T07:29:06.353Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Delete the relevant section from the .gitmodules file.&lt;/p&gt;
@@ -304,7 +295,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/"/>
     <id>http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/</id>
     <published>2016-01-13T16:17:39.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;&lt;code&gt;www.site.com&lt;/code&gt; &lt;code&gt;site.com&lt;/code&gt; 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，&lt;/p&gt;
 &lt;p&gt;因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。&lt;/p&gt;
@@ -337,7 +328,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/"/>
     <id>http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/</id>
     <published>2016-01-11T22:22:25.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;在 &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 &lt;code&gt;pull request&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;在项目的作者对发起的 &lt;code&gt;pull request&lt;/code&gt; 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是，&lt;/p&gt;
@@ -398,7 +389,7 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
     <link href="http://blog.lzuer.net/2016/01/11/multiple-platform-git/"/>
     <id>http://blog.lzuer.net/2016/01/11/multiple-platform-git/</id>
     <published>2016-01-11T21:57:21.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.&lt;/p&gt;
 &lt;h2 id=&quot;设置用户名和邮箱&quot;&gt;&lt;a href=&quot;#设置用户名和邮箱&quot; class=&quot;headerlink&quot; title=&quot;设置用户名和邮箱&quot;&gt;&lt;/a&gt;设置用户名和邮箱&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;$git config --global user.name &amp;quot;yourname&amp;quot;
@@ -444,7 +435,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/"/>
     <id>http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/</id>
     <published>2015-12-29T23:57:23.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 &lt;code&gt;minimum-stability&lt;/code&gt; 最低稳定性版本的包将不会被安装。&lt;/p&gt;
 &lt;p&gt;例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：&lt;code&gt;&amp;quot;vendor/library&amp;quot;: &amp;quot;*&amp;quot;&lt;/code&gt;, 乍看上去并没有什么不妥, 但是当我们执行 &lt;code&gt;composer install&lt;/code&gt; 或者 &lt;code&gt;composer update&lt;/code&gt; 去下载包的时候通常会报错。&lt;/p&gt;
@@ -490,7 +481,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/"/>
     <id>http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/</id>
     <published>2015-12-20T20:17:39.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: &lt;code&gt;git reset --hard&lt;/code&gt;会彻底删除你的变动,你可以在这之前使用 &lt;code&gt;git stash&lt;/code&gt; 来保存变动。&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git reset --hard HEAD~1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -519,7 +510,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/09/18/composer-repositories-path/"/>
     <id>http://blog.lzuer.net/2015/09/18/composer-repositories-path/</id>
     <published>2015-09-18T00:17:39.000Z</published>
-    <updated>2016-05-27T07:29:06.353Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;本文讲讲用composer来进行本地开发包,和本地公用包的使用.&lt;/p&gt;
@@ -565,7 +556,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/08/22/hashids-for-yii2/"/>
     <id>http://blog.lzuer.net/2015/08/22/hashids-for-yii2/</id>
     <published>2015-08-22T00:17:39.000Z</published>
-    <updated>2016-05-27T07:29:06.353Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;h3 id=&quot;关于Hashids&quot;&gt;&lt;a href=&quot;#关于Hashids&quot; class=&quot;headerlink&quot; title=&quot;关于Hashids&quot;&gt;&lt;/a&gt;关于Hashids&lt;/h3&gt;&lt;p&gt;Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。&lt;/p&gt;
 &lt;p&gt;详细： &lt;a href=&quot;http://hashids.org/php/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://hashids.org/php/&lt;/a&gt;&lt;/p&gt;
@@ -591,7 +582,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/07/08/reg-the-at-user/"/>
     <id>http://blog.lzuer.net/2015/07/08/reg-the-at-user/</id>
     <published>2015-07-08T17:50:15.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名&lt;/p&gt;
 &lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/@[^\s]&amp;#123;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;&amp;#125;/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -621,7 +612,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/06/26/upgrade-php-version/"/>
     <id>http://blog.lzuer.net/2015/06/26/upgrade-php-version/</id>
     <published>2015-06-26T22:44:42.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;现版本：5.5.21&lt;/p&gt;
 &lt;p&gt;更新版本： 5.6.10&lt;/p&gt;
@@ -659,7 +650,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/"/>
     <id>http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/</id>
     <published>2015-06-15T22:07:27.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。&lt;/p&gt;
 &lt;p&gt;在使用left jion时，on和where条件的区别如下：&lt;/p&gt;
@@ -712,7 +703,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/"/>
     <id>http://blog.lzuer.net/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/</id>
     <published>2015-06-04T22:35:11.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;现在需求是：&lt;strong&gt;如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;我们可以通过配置  &lt;code&gt;yii\web\User::$authTimeout&lt;/code&gt;来达到效果，上代码：&lt;/p&gt;
@@ -741,7 +732,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/05/24/hi-basketball/"/>
     <id>http://blog.lzuer.net/2015/05/24/hi-basketball/</id>
     <published>2015-05-24T21:58:51.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;今天打了一下午的篮球，快要中暑了。。。。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;我为什么这么喜欢篮球&lt;/strong&gt;&lt;/p&gt;
@@ -783,7 +774,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/"/>
     <id>http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/</id>
     <published>2015-05-19T22:26:28.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 &lt;code&gt;[[yii\data\Pagination]]&lt;/code&gt; 的默认每页个数是 20 个.&lt;/p&gt;
 &lt;p&gt;对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? &lt;/p&gt;
@@ -821,7 +812,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/05/13/how-to-track-js-errors/"/>
     <id>http://blog.lzuer.net/2015/05/13/how-to-track-js-errors/</id>
     <published>2015-05-13T22:02:06.000Z</published>
-    <updated>2016-05-27T07:29:06.357Z</updated>
+    <updated>2016-05-27T07:35:34.336Z</updated>
     
     <content type="html">&lt;p&gt;项目上线运行中，由于这样那样奇葩的浏览器的存在，导致我们的js代码存在一定的兼容性问题。那么可否收集到这些问题呢？&lt;/p&gt;
 &lt;p&gt;答案是肯定的。我们可以基于 &lt;code&gt;window.onerror&lt;/code&gt; 事件来收集并上报前段js代码在实际运行中产生的错误，以帮助我们排查解决。&lt;/p&gt;
