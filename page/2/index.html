@@ -212,6 +212,264 @@
             
               
                 
+                <a class="post-title-link" href="/2016/01/11/multiple-platform-git/" itemprop="url">
+                  多平台Git配置
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-11T21:57:21+00:00" content="2016-01-11">
+              2016-01-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/11/multiple-platform-git/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/11/multiple-platform-git/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.</p>
+<h2 id="设置用户名和邮箱"><a href="#设置用户名和邮箱" class="headerlink" title="设置用户名和邮箱"></a>设置用户名和邮箱</h2><pre><code>$git config --global user.name &quot;yourname&quot;
+$git config --global user.email &quot;your@example.com&quot;
+</code></pre><h2 id="生成ssh-key"><a href="#生成ssh-key" class="headerlink" title="生成ssh-key"></a>生成ssh-key</h2><blockquote>
+<p>ssh-key保存在 <code>~/.ssh</code> 目录中</p>
+</blockquote>
+<pre><code>$cd ~/.ssh
+$ssh-keygen -t rsa -C &quot;your@example.com&quot;
+</code></pre><p>注意在生成key file的时候可以针对不同的平台来命名, 例如：<code>id_github</code>, 这将会在接下的来的配置中用到.</p>
+<p>生成<strong>Key</strong>之后就是将 <code>xx.pub</code> 的内容配置到平台的SSH配置中.</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>在 <code>~/.ssh</code> 目录下新建 <code>config</code> 文件并编辑：</p>
+<pre><code>Host git.coding.net
+    User your@example.com
+    IdentityFile ~/.ssh/coding_rsa
+Host github.com
+    User your@example.com
+    IdentityFile ~/.ssh/github_rsa
+</code></pre><h2 id="测试是否连接成功"><a href="#测试是否连接成功" class="headerlink" title="测试是否连接成功"></a>测试是否连接成功</h2><pre><code>$ssh -T git@git.coding.net
+$ssh -T git@github.com
+</code></pre>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/29/talk-about-composer-minimum-stability/" itemprop="url">
+                  讲讲Composer配置项minimumn-stability
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-12-29T23:57:23+00:00" content="2015-12-29">
+              2015-12-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/12/29/talk-about-composer-minimum-stability/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/29/talk-about-composer-minimum-stability/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 <code>minimum-stability</code> 最低稳定性版本的包将不会被安装。</p>
+<p>例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：<code>&quot;vendor/library&quot;: &quot;*&quot;</code>, 乍看上去并没有什么不妥, 但是当我们执行 <code>composer install</code> 或者 <code>composer update</code> 去下载包的时候通常会报错。</p>
+<p>这是为什么呢？</p>
+<p>通常我们的 <code>composer.json</code> 都不会显式的去设定 <code>minimum-stability</code>, 那么 <code>composer</code> 就会把他默认为 <code>stable</code>.</p>
+<p>那么对于一个尚未发布版本的包来说, 明显是不符合的. 所以安装就不会成功.</p>
+<p>所以有两个途径来解决：</p>
+<ol>
+<li>设定 <code>minimum-stability</code> 为 <code>dev</code></li>
+</ol>
+<p>显然这是简单粗暴的, 但是这种方法所面临的问题也很严重. 那就是我们去依赖某些开发版中的包, 这显然是我们所不想看到的.</p>
+<ol>
+<li>指定依赖包的版本, 这也是最佳的解决方案</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require vendor/library=dev-master</span><br></pre></td></tr></table></figure>
+<p>所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！</p>
+<p>另外我们还需要知道 <code>minimum-stability</code> 所支持的有：</p>
+<ul>
+<li>dev</li>
+<li>alpha</li>
+<li>beta</li>
+<li>RC</li>
+<li>stable</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/12/20/how-to-delete-one-commit-of-git/" itemprop="url">
                   删除一次错误的提交
                 </a>
@@ -1120,257 +1378,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/19/one-using-of-yii2-container/" itemprop="url">
-                  Yii2 container的一个应用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-05-19T22:26:28+00:00" content="2015-05-19">
-              2015-05-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/19/one-using-of-yii2-container/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/19/one-using-of-yii2-container/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 <code>[[yii\data\Pagination]]</code> 的默认每页个数是 20 个.</p>
-<p>对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? </p>
-<p>这时候,我们可以使用 [[Yii::$contianer]] 的来实现：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里我们设置默认个数为10, 将此置于 bootstrap.php 中</span></span><br><span class="line">\Yii::$container-&gt;set(<span class="string">'yii\data\Pagination'</span>, [</span><br><span class="line">    <span class="string">'pageSize'</span> =&gt; <span class="number">10</span>,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-<p>这样, 我们在使用诸如 <code>ActiveDataProvider</code> 等方法时，默认每页个数就为 10 了。</p>
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><blockquote>
-<p>理论上，通过 <code>Yii::createObject</code> 来实例化的对用都会起作用。</p>
-</blockquote>
-<p>所以，说用通过 <code>Yii::createObject</code> 创建的实例都会使用我们通过以上方法设定的默认值。因为 <code>ActiveDataProvider</code> 等中的 <code>pagination</code> 在内部是通过 <code>Yii::createObject</code> 创建的，所以设置是生效的。</p>
-<p>因此，考虑一下两种实现方式：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. pageSize 还是默认的20</span></span><br><span class="line">$paging = <span class="keyword">new</span> \yii\data\Pagination;</span><br><span class="line"><span class="comment">//2. pageSize 就是设置的 10 了</span></span><br><span class="line">$paging = Yii::createObject(<span class="string">'yii\data\Pagination'</span>);</span><br></pre></td></tr></table></figure>
-<p>所以Yii提倡使用 <code>Yii::createObject</code> 来实例化对象，因为它能够自动解决依赖和默认值配置等好处。</p>
-<h2 id="Yii-container-是什么"><a href="#Yii-container-是什么" class="headerlink" title="Yii::$container 是什么"></a>Yii::$container 是什么</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Yii::$container = <span class="keyword">new</span> yii\di\Container();</span><br></pre></td></tr></table></figure>
-<p>所以 <code>Yii::$container</code> 就是整个生命周期的一个依赖容器。</p>
-<p>考虑开始的时候的代码，我们可以理解: 通过 <code>Yii::$container-&gt;set()</code> 其实就是向这个容器注入了一个类和其配置. 当调用 <code>Yii::createObject</code> 的时候会去这个容器里面找，如果存在则根据 set 的配置进行实例化。</p>
-<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p>关于依赖注入和依赖注入容器可以查看博文：<a href="http://www.digpage.com/di.html" target="_blank" rel="external">http://www.digpage.com/di.html</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/13/how-to-track-js-errors/" itemprop="url">
-                  怎样收集js报错
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-05-13T22:02:06+00:00" content="2015-05-13">
-              2015-05-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/13/how-to-track-js-errors/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/13/how-to-track-js-errors/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>项目上线运行中，由于这样那样奇葩的浏览器的存在，导致我们的js代码存在一定的兼容性问题。那么可否收集到这些问题呢？</p>
-<p>答案是肯定的。我们可以基于 <code>window.onerror</code> 事件来收集并上报前段js代码在实际运行中产生的错误，以帮助我们排查解决。</p>
-<p>在W3C规范里，window.onerror是html5新定义的事件，但实际上，window.onerror从IE6开始就被支持了，而chrome、firefox、safari、opera，目前也都已经支持该事件。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//收集js报错信息并上报</span></span><br><span class="line"><span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">msg, url, line, column, error</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> _e = <span class="built_in">encodeURIComponent</span>,</span><br><span class="line">	content = <span class="string">'/site/jslog?message='</span> + _e(msg) +</span><br><span class="line">	  <span class="string">'&amp;url='</span> + _e(url || <span class="built_in">window</span>.location.href) + <span class="string">'&amp;line='</span> + _e(line) +</span><br><span class="line">	  (error &amp;&amp; error.stack ? <span class="string">'&amp;stack='</span> + _e(error.stack) : <span class="string">''</span>) +</span><br><span class="line">	  (column ? <span class="string">'&amp;column='</span> + _e(column) : <span class="string">''</span>) +</span><br><span class="line">	  <span class="string">'&amp;ua='</span> + <span class="built_in">window</span>.navigator.userAgent.replace(<span class="regexp">/[\:,;]/g</span>,<span class="string">"|"</span>);</span><br><span class="line">	(<span class="keyword">new</span> Image()).src = content;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>服务端:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">actionJslog</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	$response = Yii::$app-&gt;getResponse();</span><br><span class="line">	<span class="comment">//这是必须的，我们要将header设置为image</span></span><br><span class="line">    $response-&gt;format = Response::FORMAT_RAW;</span><br><span class="line">	<span class="comment">//write the log data</span></span><br><span class="line">	$headers = $response-&gt;getHeaders();</span><br><span class="line">	$headers-&gt;set(<span class="string">'Content-Type'</span>, <span class="string">'image/png'</span>);</span><br><span class="line">	<span class="keyword">return</span> $response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这段代码需要放在head中并且位于所有script之前！</p>
-<p>这样当客户端发生js报错时就会上报到服务器端，在服务器端我只需要将提交过来的信息进行保存就可以了。这样我们就可以根据收集到的信息来解决问题。</p>
-<p>这里有几个点需要注意，一个是日志收集接口暴露在外，最好增加安全措施，比如设置token。</p>
-<p>另外，脚本部署的时机、位置，以及日志过滤等条件，也需要根据具体情况进行设定。</p>
-<p><strong>教训</strong>:</p>
-<p>在代码中我们经常使用 <code>console.log</code> 来打印代码，但这存在问题的，某些浏览器是不支持该方法的！</p>
-<p>这就会产生错误，使代码无法正常运行！有两张方法可以解决：</p>
-<ol>
-<li><p>利用工具来消除所有的打印调试代码</p>
-</li>
-<li><p>提供兼容代码「置于head中所有script之前」</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.console = <span class="built_in">window</span>.console || (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> _c = &#123;&#125;;</span><br><span class="line">	_c.log = _c.warning = _c.error = _c.info .. = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">	<span class="keyword">return</span> _c;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1417,21 +1424,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">49</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

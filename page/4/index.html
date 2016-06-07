@@ -212,6 +212,302 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/22/about-switch-case-in-javascript/" itemprop="url">
+                  关于switch在js中需要注意的地方
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:17:39+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/about-switch-case-in-javascript/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/about-switch-case-in-javascript/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'1'</span>; <span class="comment">// switch and case use '==='</span></span><br><span class="line"><span class="keyword">switch</span>(a) &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'this is 1'</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'this is 2'</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'this is default'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>switch语句后面的表达式与case语句后面的表示式，在比较运行结果时，采用的是严格相等运算符（===），而不是相等运算符（==），这意味着比较时不会发生类型转换。</p>
+<h1 id="Extends"><a href="#Extends" class="headerlink" title="Extends"></a>Extends</h1><blockquote>
+<p>switch结构不利于代码重用，往往可以用对象形式重写。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;</span><br><span class="line">    banana: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;,</span><br><span class="line">    apple: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;,</span><br><span class="line">    <span class="keyword">default</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (o[fruit])&#123;</span><br><span class="line">    o[fruit]();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    o[<span class="string">'default'</span>]();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/22/git-cheat-sheet/" itemprop="url">
+                  git常用操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:16:21+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/git-cheat-sheet/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/git-cheat-sheet/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="Git-Cheat-Sheet-Chinese"><a href="#Git-Cheat-Sheet-Chinese" class="headerlink" title="Git Cheat Sheet Chinese"></a>Git Cheat Sheet Chinese</h1><p>###索引</p>
+<ul>
+<li><a href="#创建">创建</a></li>
+<li><a href="#本地修改">本地修改</a></li>
+<li><a href="#搜索">搜索</a></li>
+<li><a href="#提交历史">提交历史</a></li>
+<li><a href="#分支与标签">分支与标签</a></li>
+<li><a href="#更新与发布">更新与发布</a></li>
+<li><a href="#合并与重置">合并与重置</a></li>
+<li><a href="#撤销">撤销</a></li>
+</ul>
+<hr>
+<p>###创建</p>
+<p>复制一个已创建的仓库:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone ssh://user@domain.com/repo.git</span><br></pre></td></tr></table></figure></p>
+<p>创建一个新的本地仓库:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>###本地修改</p>
+<p>显示工作路径下已修改的文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br></pre></td></tr></table></figure></p>
+<p>显示与上次提交版本文件的不同：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git diff</span><br></pre></td></tr></table></figure></p>
+<p>把当前所有修改添加到下次提交中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br></pre></td></tr></table></figure></p>
+<p>把对某个文件的修改添加到下次提交中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add -p &lt;file&gt;</span><br></pre></td></tr></table></figure></p>
+<p>提交本地的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -a</span><br></pre></td></tr></table></figure></p>
+<p>提交之前已标记的变化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit</span><br></pre></td></tr></table></figure></p>
+<p>附加消息提交：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &apos;message here&apos;</span><br></pre></td></tr></table></figure></p>
+<p>Commit to some previous date:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --date=&quot;`date --date=&apos;n day ago&apos;`&quot; -am &quot;Commit Message&quot;</span><br></pre></td></tr></table></figure></p>
+<p>修改上次提交<br><br><em><sub>Don’t amend published commits!</sub></em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit --amend</span><br></pre></td></tr></table></figure></p>
+<p>把当前分支中未提交的修改移动到其他分支<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br><span class="line">git checkout branch2</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure></p>
+<p>###搜索</p>
+<p>从当前目录的所有文件中查找文本内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git grep &quot;Hello&quot;</span><br></pre></td></tr></table></figure></p>
+<p>在某一版本中搜索文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git grep &quot;Hello&quot; v2.5</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>###提交历史</p>
+<p>从最新提交开始，显示所有的提交记录（显示hash， 作者信息，提交的标题和时间）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log</span><br></pre></td></tr></table></figure></p>
+<p>显示所有提交（仅显示提交的hash和message）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log --oneline</span><br></pre></td></tr></table></figure></p>
+<p>显示某个用户的所有提交：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log --author=&quot;username&quot;</span><br></pre></td></tr></table></figure></p>
+<p>显示某个文件的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log -p &lt;file&gt;</span><br></pre></td></tr></table></figure></p>
+<p>谁，在什么时间，修改了文件的什么内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git blame &lt;file&gt;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>###分支与标签</p>
+<p>列出所有的分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br></pre></td></tr></table></figure></p>
+<p>切换分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
+<p>基于当前分支创建新分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch &lt;new-branch&gt;</span><br></pre></td></tr></table></figure></p>
+<p>基于远程分支创建新的可追溯的分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch --track &lt;new-branch&gt; &lt;remote-branch&gt;</span><br></pre></td></tr></table></figure></p>
+<p>删除本地分支:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
+<p>给当前版本打标签：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git tag &lt;tag-name&gt;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>###更新与发布</p>
+<p>列出对当前远程端的操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote -v</span><br></pre></td></tr></table></figure></p>
+<p>显示远程端的信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote show &lt;remote&gt;</span><br></pre></td></tr></table></figure></p>
+<p>添加新的远程端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add &lt;remote&gt; &lt;url&gt;</span><br></pre></td></tr></table></figure></p>
+<p>下载远程端版本，但不合并到HEAD中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch &lt;remote&gt;</span><br></pre></td></tr></table></figure></p>
+<p>下载远程端版本，并自动与HEAD版本合并：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote pull &lt;remote&gt; &lt;url&gt;</span><br></pre></td></tr></table></figure></p>
+<p>将远程端版本合并到本地版本中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull origin master</span><br></pre></td></tr></table></figure></p>
+<p>将本地版本发布到远程端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push remote &lt;remote&gt; &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
+<p>删除远程端分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git push &lt;remote&gt; :&lt;branch&gt; (since Git v1.5.0)</span><br><span class="line">or</span><br><span class="line">git push &lt;remote&gt; --delete &lt;branch&gt; (since Git v1.7.0)</span><br></pre></td></tr></table></figure></p>
+<p>发布标签:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push --tags</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>###合并与重置</p>
+<p>将分支合并到当前HEAD中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git merge &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
+<p>将当前HEAD版本重置到分支中:<br><br><em><sub>Don’t rebase published commit!</sub></em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rebase &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
+<p>退出重置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rebase --abort</span><br></pre></td></tr></table></figure></p>
+<p>解决冲突后继续重置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rebase --continue</span><br></pre></td></tr></table></figure></p>
+<p>使用配置好的merge tool 解决冲突：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git mergetool</span><br></pre></td></tr></table></figure></p>
+<p>在编辑器中手动解决冲突后，标记文件为<code>已解决冲突</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;resolved-file&gt;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rm &lt;resolved-file&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>###撤销</p>
+<p>放弃工作目录下的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD</span><br></pre></td></tr></table></figure></p>
+<p>移除缓存区的所有文件（i.e. 撤销上次<code>git add</code>）:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset HEAD</span><br></pre></td></tr></table></figure></p>
+<p>放弃某个文件的所有本地修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout HEAD &lt;file&gt;</span><br></pre></td></tr></table></figure></p>
+<p>重置一个提交（通过创建一个截然不同的新提交）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git revert &lt;commit&gt;</span><br></pre></td></tr></table></figure></p>
+<p>将HEAD重置到上一次提交的版本，并放弃之后的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard &lt;commit&gt;</span><br></pre></td></tr></table></figure></p>
+<p>将HEAD重置到上一次提交的版本，并将之后的修改标记为未添加到缓存区的修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset &lt;commit&gt;</span><br></pre></td></tr></table></figure></p>
+<p>将HEAD重置到上一次提交的版本，并保留未提交的本地修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --keep &lt;commit&gt;</span><br></pre></td></tr></table></figure></p>
+<hr>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/22/how-to-revert-an-wrong-push/" itemprop="url">
                   怎样撤销一次错误的提交
                 </a>
@@ -1793,454 +2089,6 @@ _   底线
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/09/22/differences-between-providers-in-angular/" itemprop="url">
-                  Angular之provider异同
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2014-09-22T00:08:27+00:00" content="2014-09-22">
-              2014-09-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/Angular/" itemprop="url" rel="index">
-                    <span itemprop="name">Angular</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/09/22/differences-between-providers-in-angular/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/09/22/differences-between-providers-in-angular/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <blockquote>
-<p>原文<a href="http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/" target="_blank" rel="external">http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/</a></p>
-</blockquote>
-<h2 id="什么是Provider"><a href="#什么是Provider" class="headerlink" title="什么是Provider"></a>什么是Provider</h2><p>AngularJS官方文档定义：</p>
-<blockquote>
-<p>A provider is an object with a $get() method.<br>The injector calls the $get method to create a new instance of a service.<br>The Provider can have additional methods which would allow for configuration of the provider.</p>
-</blockquote>
-<p>AngularJS使用$provide 来注册新的provider. 每个Provider只进行一次实例的创建。</p>
-<p>$provide 有六个方法来创建定制化的Provider：</p>
-<ul>
-<li>constant</li>
-<li>value</li>
-<li>service</li>
-<li>factory</li>
-<li>decorator</li>
-<li>provider</li>
-</ul>
-<h3 id="constant"><a href="#constant" class="headerlink" title="constant"></a>constant</h3><p>constant能够被注入到任何地方。constant不能被装饰器拦截，这意味着contant的值将永远无法改变。</p>
-<pre><code>var app = angular.module(&apos;app&apos;, []);
-
-app.config(function($provide){
-    $provide.constant(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
-});
-
-app.controller(&apos;ctrl&apos;, function(movieTitle){
-    expect(movieTitle).toEqual(&apos;The Matrix&apos;);
-});
-</code></pre><p>AngularJs提供一种更加简便的方式创建constant:</p>
-<pre><code>app.constant(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
-</code></pre><h3 id="value"><a href="#value" class="headerlink" title="value"></a>value</h3><p>value只是一个简单的可注入的值，这个值可以是字符串、数字和方法。和constant不同的是它不能够被注入到配置，但是能够被装饰器拦截。</p>
-<pre><code>var app = angular.module(&apos;app&apos;, []);
-
-app.config(function($provide){
-     $provide.value(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
-});
-
-app.controller(&apos;ctrl&apos;, function(movieTitle){
-    expect(movieTitle).toEqual(&apos;The Matrix&apos;);
-});
-</code></pre><p>AngularJs提供一种更加简便的方式创建value:</p>
-<pre><code>app.value(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
-</code></pre><h3 id="service"><a href="#service" class="headerlink" title="service"></a>service</h3><p>service 是一个可注入的构造函数。你可以在函数中指定依赖。service是单例的，只被anguarJs创建一次。service是一个非常棒的方法来进行controller之间的通信，例如共享数据.</p>
-<pre><code>var app = angular.module(&apos;app&apos;, []);
-
-app.config(function($provide){
-    $provide.service(&apos;movie&apos;, function(){
-        this.title = &apos;The Matrix&apos;;
-    });
-});
-
-app.controller(&apos;ctrl&apos;, function(movie){
-    expect(movive.title).toEequal(&apos;The Matrix&apos;);
-});
-</code></pre><p>AngularJs提供一种更加简便的方式创建service:</p>
-<pre><code>app.service(&apos;movieTitle&apos;, function(){
-    this.title = &apos;The Matrix&apos;;
-});
-</code></pre><h3 id="Factory"><a href="#Factory" class="headerlink" title="Factory"></a>Factory</h3><p>factory是一个可注入的方法。从某种的意义而言factory非常像service，它也是单例的同样能够在函数中定义依赖。两者不同的是，factory注入是一个plain function，所以angularjs能够执行该方法，而service注入的是一个构造函数。当去new一个serivce的时候，构造函数创建一个新的对象。但是使用factory你可以让函数返回任何东西。</p>
-<p>稍后你会看见，factory仅仅是一个拥有 $get 方法的provider。</p>
-<pre><code>var app = angular.module(&apos;app&apos;, []);
-
-app.config(function($provide){
-    $provide.factory(&apos;movie&apos;, function() {
-        return {
-            title: &apos;The Matrix&apos;
-        };
-    });
-});
-
-app.controlller(&apos;ctrl&apos;, function(movie){
-    expect(movive.title).toEequal(&apos;The Matrix&apos;);
-});
-</code></pre><p>AngularJS还提供一种更加简便的方法：</p>
-<pre><code>app.factory(&apos;movie&apos;, function() {
-    return {
-        title: &apos;The Matrix&apos;
-    };
-});
-</code></pre><h3 id="Decorator"><a href="#Decorator" class="headerlink" title="Decorator"></a>Decorator</h3><p>decorator能够修改和压缩其他provider，正如上面提到的constant是一个列外。</p>
-<pre><code>var app = angular.module(&apos;app&apos;, []);
-
-app.value(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
-
-app.config(function($provide){
-    $provide.decorator(&apos;movieTitle&apos;, function($delegate){
-        return $delegate + &apos; - starring Keanu Reeves&apos;
-    });
-});
-
-app.controller(&apos;myCtrl&apos;, function(movieTile){
-    expect(movieTitle).toEqual(&apos;The Matrix - starring Keanu Reeves&apos;);
-});
-</code></pre><h3 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h3><p>provide在所有的provider中是最复杂的方法，它允许你创建一个复杂的功能和配置选项.</p>
-<p>provide 实际上是一个配置的factory.它可以是一个对象或者构造函数。</p>
-<pre><code>var app = angular.module(&apos;app&apos;, []);
-
-app.provider(&apos;movie&apos;, function(){
-    var version;
-    return {
-        setVersion: function(value) {
-            version = value;
-        },
-        $get: function() {
-            return {
-                title: &apos;The Matrix&apos; + &apos; &apos; + version
-            }
-        }
-    };
-});
-
-app.config(function(movieProvider){
-    movieProvider.setVersion(&apos;Reloaded&apos;);
-});
-
-app.controller(&apos;ctrl&apos;, function(movie) {
-    expect(movie.title).toEqual(&apos;The Matrix Reloaded&apos;);
-});
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li>所有的provider只被实例化一次，它们全是单例的。</li>
-<li>除了constant的所有provider都能够被装饰</li>
-<li>constant是一个能被注入到任何地方的值，而且不能被修改</li>
-<li>value只是一个简单能被注入的值</li>
-<li>service是一个能被注入的构造方法</li>
-<li>factory是一个能被注入的函数</li>
-<li>decoratory能够修改压缩除了constant的其他provider</li>
-<li>provider是一个可配置的facotry</li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/07/22/how-to-create-a-npm-package/" itemprop="url">
-                  创建一个简单的NodeJS程序
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2014-07-22T00:22:27+00:00" content="2014-07-22">
-              2014-07-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/NodeJS/" itemprop="url" rel="index">
-                    <span itemprop="name">NodeJS</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/NodeJS/NPM/" itemprop="url" rel="index">
-                    <span itemprop="name">NPM</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/07/22/how-to-create-a-npm-package/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/07/22/how-to-create-a-npm-package/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>创建一个文件夹test，并创建一个新文件uppercaseme.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// uppercaseme.js</span></span><br><span class="line"><span class="meta">"use strict"</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> myfile = <span class="string">"myfile.txt"</span>;</span><br><span class="line"><span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</span><br><span class="line">    <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</span><br><span class="line">    fs.writeFileSync(myfile, content.toUpperCase());</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码的目的是读取myfile.txt并转化内容为大写。</p>
-<p><strong>(执行:)</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node uppercaseme</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>执行命令行命令时需在同一个目录</p>
-</blockquote>
-<p>在命令行可以查看输出，并得知是否执行成功。</p>
-<h2 id="使用命令行参数"><a href="#使用命令行参数" class="headerlink" title="使用命令行参数"></a>使用命令行参数</h2><p>上一个列子将读取的文件hardcoding了，我们稍作改进,通过命令行读取要执行操作的文件。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用process.argv</span></span><br><span class="line"><span class="number">0</span>: node</span><br><span class="line"><span class="number">1</span>: &lt;name-of-your-js-file&gt;</span><br><span class="line">2+....&lt;additional arguments passed&gt;</span><br></pre></td></tr></table></figure>
-<p>更新代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</span><br><span class="line"><span class="comment">// Read the first additional argument passed to the program</span></span><br><span class="line"><span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</span><br><span class="line">    <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</span><br><span class="line">    fs.writeFileSync(myfile, content.toUpperCase());</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</span><br><span class="line">&#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"ERROR: Pass on a file name/path"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码做了简单的判断，当我们没有获取到输入的文件名时，抛出错误。</p>
-<p><strong>(执行:)</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node uppercaseme myfile.txt</span><br></pre></td></tr></table></figure>
-<h2 id="创一个Node模块"><a href="#创一个Node模块" class="headerlink" title="创一个Node模块"></a>创一个Node模块</h2><p>将我们写好的模块发布出来，让更多人使用，发布之后其他人就可以像下面一样使用：</p>
-<ul>
-<li>通过NPM安装</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install uppercase</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在命令行中使用</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uppercaseme &lt;filename&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>被当作模块在其他模块中使用</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'uppercaseme'</span>);</span><br></pre></td></tr></table></figure>
-<h4 id="为了做到以上的效果，我们将会创建一个NPM包"><a href="#为了做到以上的效果，我们将会创建一个NPM包" class="headerlink" title="为了做到以上的效果，我们将会创建一个NPM包"></a>为了做到以上的效果，我们将会创建一个NPM包</h4><ol>
-<li>首先我们需要做的是改变目录结构</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">test</span><br><span class="line">    src</span><br><span class="line">      -- bin</span><br><span class="line">        -- uppercaseme</span><br><span class="line">      -- lib</span><br><span class="line">        -- uppercaseme.js</span><br><span class="line">      -- package.json</span><br><span class="line">      -- README.md</span><br><span class="line"></span><br><span class="line">    myfile.txt</span><br></pre></td></tr></table></figure>
-<p>将我们刚刚写好的uppercaseme.js移动到lib目录。其他文件先留空在接下来进行完善。</p>
-<p><em>(命令行仍然在test文件夹)</em></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./src/lib/uppercaseme ./myfile.txt</span><br></pre></td></tr></table></figure>
-<p>和之前的运行效果相同。</p>
-<ol>
-<li>接下来创建 src/bin/uppercaseme</li>
-</ol>
-<blockquote>
-<p>请注意这个文件没有扩展名</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="string">"use strict"</span>;</span><br><span class="line">var path = require(<span class="string">'path'</span>);</span><br><span class="line">var fs = require(<span class="string">'fs'</span>);</span><br><span class="line">var lib = path.join(path.dirname(fs.realpathSync(__filename)), <span class="string">'../lib'</span>);</span><br><span class="line"></span><br><span class="line">require(lib + <span class="string">'/uppercaseme.js'</span>).convert();</span><br></pre></td></tr></table></figure>
-<ol>
-<li>改造文件为Node模块</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertThis</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</span><br><span class="line">            <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</span><br><span class="line">            fs.writeFileSync(myfile, content.toUpperCase());</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Pass on a file name/path"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">exports.convert = convertThis;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>暴露出convert接口</p>
-</blockquote>
-<p>现在在进行测试，将会和之前效果相同</p>
-<pre><code>node ./src/bin/uppercaseme ./myfile.txt
-</code></pre><h2 id="创建NPM包"><a href="#创建NPM包" class="headerlink" title="创建NPM包"></a>创建NPM包</h2><ol>
-<li>创建 src/package.json 和 src/README.md</li>
-</ol>
-<p>package.json:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"author"</span>: <span class="string">"authoer"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"uppercaseme"</span>,</span><br><span class="line">  <span class="string">"description"</span>: <span class="string">"Converts files to uppercase"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="string">"repository"</span>: &#123;</span><br><span class="line">    <span class="string">"url"</span>: <span class="string">""</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"main"</span>: <span class="string">"./lib/uppercaseme"</span>,</span><br><span class="line">  <span class="string">"keywords"</span>: [</span><br><span class="line">    <span class="string">"upper"</span>,</span><br><span class="line">    <span class="string">"case"</span>,</span><br><span class="line">    <span class="string">"file"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="string">"bin"</span>: &#123;</span><br><span class="line">    <span class="string">"uppercaseme"</span>: <span class="string">"./bin/uppercaseme"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">"engines"</span>: &#123;</span><br><span class="line">    <span class="string">"node"</span>: <span class="string">"*"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>main是一个模块的ID，也是程序的主要入口。在例子中我们的package被命名为 uppercaseme 。当用户安装之后，并 require(‘uppercaseme’)之后我们的主模块的export object会被返回。</p>
-<p>bin 我们会通过命令行在任何地方运行，安装之后，npm全局安装后会创建 bin/uppercaseme的符号链接，或者 ./node_modules/.bin/ 本地安装</p>
-<p>dependencies 我们package的所需的依赖列表</p>
-</blockquote>
-<ol>
-<li>发布</li>
-</ol>
-<p>在发布之前，必须有一个user。如果没有:</p>
-<pre><code>npm adduser
-</code></pre><p>提供你的用户名和邮件地址，会为你新建一个用户。</p>
-<p>假设你仍然在 test 目录，请执行：</p>
-<pre><code>cd src
-npm publish
-</code></pre><p>提示成功，则表明你已经成功发布一个NPM package</p>
-<h2 id="安装我们的NPM包"><a href="#安装我们的NPM包" class="headerlink" title="安装我们的NPM包"></a>安装我们的NPM包</h2><p>切换到其他目录，并输入命令：</p>
-<pre><code>npm install uppercaseme
-</code></pre><p>这将会获取 uppercaseme 包，并创建一个本地安装。这只是一个本地安装，我们并不能在任何地方使用。<br>这个命令会在目录创建一个 node_modules 目录，我们的 uppercaseme 模块就安装在此。并且在 .bin 中创建了一个链接。</p>
-<p>接下来进行测试：</p>
-<pre><code>echo &apos;my lowercase file&apos; &gt; myfile.txt
-</code></pre><p>使用我们的模块进行转化：</p>
-<pre><code>./node_modules/.bin/uppercaseme myfile.txt
-
-OR
-
-&quot;./node_modules/.bin/uppercaseme&quot; myfile.txt
-</code></pre><p>检查执行之后的文件，是否被成功转化。</p>
-<p>接下来进行全局安装，在这之前先将本地安装卸载：</p>
-<pre><code>npm uninstall uppercaseme
-</code></pre><p>这将会把我们的模块在node_modules中移除。</p>
-<p>现在我们来进行全局安装：</p>
-<pre><code>npm install -g uppercaseme
-</code></pre><p>安装成功后，我们可以在任何目录进行操作：</p>
-<pre><code>uppercaseme myfile.txt
-</code></pre><p><a href="http://www.tuicool.com/articles/F7f22i" target="_blank" rel="external">参考文章</a></p>
-<h3 id="note"><a href="#note" class="headerlink" title="[note]"></a>[note]</h3><p>在package.json所在目录下使用npm install . -g可先在本地安装当前命令行程序，可用于发布前的本地测试。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -2287,21 +2135,21 @@ OR
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">49</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

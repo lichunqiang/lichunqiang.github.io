@@ -53,24 +53,27 @@
 
 
 
-<meta name="description" content="1.在目录中查找包含文字的文件1$ grep -l -r findstring /dir
-2.查找文件1$ find -type d -name .svn
-3.批量删除文件1$ find -type d -name .svn | xargs rm -rf
+<meta name="description" content="在目录中查找包含文字的文件1$ grep -l -r findstring /dir
+查找文件夹1$ find -type d -name .svn
+查找目录下所有的php文件1$ find -name &quot;*.php&quot;
+批量删除文件1$ find -type d -name .svn | xargs rm -rf
 查看linux版本1$ cat /etc/redhat-release">
 <meta property="og:type" content="article">
 <meta property="og:title" content="awesome-command-in-linux">
 <meta property="og:url" content="http://blog.lzuer.net/2015/04/22/awesome-command-in-linux/index.html">
 <meta property="og:site_name" content="Light's Blog">
-<meta property="og:description" content="1.在目录中查找包含文字的文件1$ grep -l -r findstring /dir
-2.查找文件1$ find -type d -name .svn
-3.批量删除文件1$ find -type d -name .svn | xargs rm -rf
+<meta property="og:description" content="在目录中查找包含文字的文件1$ grep -l -r findstring /dir
+查找文件夹1$ find -type d -name .svn
+查找目录下所有的php文件1$ find -name &quot;*.php&quot;
+批量删除文件1$ find -type d -name .svn | xargs rm -rf
 查看linux版本1$ cat /etc/redhat-release">
-<meta property="og:updated_time" content="2016-05-30T09:12:44.773Z">
+<meta property="og:updated_time" content="2016-06-07T14:13:49.812Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="awesome-command-in-linux">
-<meta name="twitter:description" content="1.在目录中查找包含文字的文件1$ grep -l -r findstring /dir
-2.查找文件1$ find -type d -name .svn
-3.批量删除文件1$ find -type d -name .svn | xargs rm -rf
+<meta name="twitter:description" content="在目录中查找包含文字的文件1$ grep -l -r findstring /dir
+查找文件夹1$ find -type d -name .svn
+查找目录下所有的php文件1$ find -name &quot;*.php&quot;
+批量删除文件1$ find -type d -name .svn | xargs rm -rf
 查看linux版本1$ cat /etc/redhat-release">
 
 
@@ -280,10 +283,12 @@
       
 
       
-        <span itemprop="articleBody"><h4 id="1-在目录中查找包含文字的文件"><a href="#1-在目录中查找包含文字的文件" class="headerlink" title="1.在目录中查找包含文字的文件"></a>1.在目录中查找包含文字的文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep <span class="_">-l</span> -r findstring /dir</span><br></pre></td></tr></table></figure>
-<h4 id="2-查找文件"><a href="#2-查找文件" class="headerlink" title="2.查找文件"></a>2.查找文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -type d -name .svn</span><br></pre></td></tr></table></figure>
-<h4 id="3-批量删除文件"><a href="#3-批量删除文件" class="headerlink" title="3.批量删除文件"></a>3.批量删除文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -type d -name .svn | xargs rm -rf</span><br></pre></td></tr></table></figure>
-<h4 id="查看linux版本"><a href="#查看linux版本" class="headerlink" title="查看linux版本"></a>查看linux版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/redhat-release</span><br></pre></td></tr></table></figure></span>
+        <span itemprop="articleBody"><h4 id="在目录中查找包含文字的文件"><a href="#在目录中查找包含文字的文件" class="headerlink" title="在目录中查找包含文字的文件"></a>在目录中查找包含文字的文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep <span class="_">-l</span> -r findstring /dir</span><br></pre></td></tr></table></figure>
+<h4 id="查找文件夹"><a href="#查找文件夹" class="headerlink" title="查找文件夹"></a>查找文件夹</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -type d -name .svn</span><br></pre></td></tr></table></figure>
+<h4 id="查找目录下所有的php文件"><a href="#查找目录下所有的php文件" class="headerlink" title="查找目录下所有的php文件"></a>查找目录下所有的php文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -name <span class="string">"*.php"</span></span><br></pre></td></tr></table></figure>
+<h4 id="批量删除文件"><a href="#批量删除文件" class="headerlink" title="批量删除文件"></a>批量删除文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -type d -name .svn | xargs rm -rf</span><br></pre></td></tr></table></figure>
+<h4 id="查看linux版本"><a href="#查看linux版本" class="headerlink" title="查看linux版本"></a>查看linux版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/redhat-release</span><br></pre></td></tr></table></figure>
+</span>
       
     </div>
 
@@ -406,21 +411,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">49</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -485,7 +490,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-在目录中查找包含文字的文件"><span class="nav-number">1.</span> <span class="nav-text">1.在目录中查找包含文字的文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-查找文件"><span class="nav-number">2.</span> <span class="nav-text">2.查找文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-批量删除文件"><span class="nav-number">3.</span> <span class="nav-text">3.批量删除文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看linux版本"><span class="nav-number">4.</span> <span class="nav-text">查看linux版本</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#在目录中查找包含文字的文件"><span class="nav-number">1.</span> <span class="nav-text">在目录中查找包含文字的文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找文件夹"><span class="nav-number">2.</span> <span class="nav-text">查找文件夹</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找目录下所有的php文件"><span class="nav-number">3.</span> <span class="nav-text">查找目录下所有的php文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#批量删除文件"><span class="nav-number">4.</span> <span class="nav-text">批量删除文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看linux版本"><span class="nav-number">5.</span> <span class="nav-text">查看linux版本</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.lzuer.net/"/>
-  <updated>2016-05-30T09:12:44.777Z</updated>
+  <updated>2016-06-07T14:13:49.812Z</updated>
   <id>http://blog.lzuer.net/</id>
   
   <author>
@@ -16,11 +16,61 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Redis和Memcache的区别</title>
+    <link href="http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/"/>
+    <id>http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/</id>
+    <published>2016-06-07T21:57:23.000Z</published>
+    <updated>2016-06-07T14:13:49.812Z</updated>
+    
+    <content type="html">&lt;ol&gt;
+&lt;li&gt;Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别&lt;/li&gt;
+&lt;li&gt;Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构&lt;/li&gt;
+&lt;li&gt;Redis支持数据备份，即master-slave模式的数据备份&lt;/li&gt;
+&lt;li&gt;Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Redis作者对Redis和memcache进行的比对：&lt;/p&gt;
+&lt;p&gt;没有必要过多的关心性能，因为二者的性能都已经足够高了。由于Redis使用单核，而memcache可以使用多核，所以在比较上，平均每一个核上Redis在存储小数据时比memcache性能更高。而在100k以上的数据中，memcache性能高于Redis，最终，无论使用哪一个，每秒处理请求的次数都不会成为瓶颈。(比如瓶颈可能会在网卡)&lt;/p&gt;
+&lt;p&gt;如果要说内存使用效率，使用简单的key-value存储的话，memcache的内存利用率更高，而如果Redis采用hash结构来做key-value存储，由于其组合式的压缩，其内存利用率会高于memcache。&lt;/p&gt;
+&lt;p&gt;如果你对数据持久化和数据同步有所要求，那么推荐你选择Redis，因为这两个特性Memcached都不具备。即使你只是希望在升级或者重启系统后缓存数据不会丢失，选择Redis也是明智的。&lt;/p&gt;
+&lt;p&gt;当然，最后还得说到你的具体应用需求。Redis相比Memcached来说，拥有更多的数据结构和并支持更丰富的数据操作，通常在Memcached里， 你需要将数据拿到客户端来进行类似的修改再set回去。这大大增加了网络IO的次数和数据体积。在Redis中，这些复杂的操作通常和一般的 GET/SET一样高效。所以，如果你需要缓存能够支持更复杂的结构和操作，那么Redis会是不错的选择。&lt;/p&gt;
+&lt;p&gt;1、 Redis和Memcache都是将数据存放在内存中，都是内存数据库。不过memcache还可用于缓存其他东西，例如图片、视频等等。&lt;br&gt;2、Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，hash等数据结构的存储。&lt;br&gt;3、虚拟内存–Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘&lt;br&gt;4、过期策略–memcache在set时就指定，例如set key1 0 0 8,即永不过期。Redis可以通过例如expire 设定，例如expire name 10&lt;br&gt;5、分布式–设定memcache集群，利用magent做一主多从;redis可以做一主多从。都可以一主一从&lt;br&gt;6、存储数据安全–memcache挂掉后，数据没了；redis可以定期保存到磁盘（持久化）&lt;br&gt;7、灾难恢复–memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复&lt;br&gt;8、Redis支持数据的备份，即master-slave模式的数据备份&lt;/p&gt;
+&lt;p&gt;参考：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000004012181&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://segmentfault.com/a/1190000004012181&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别&lt;/li&gt;
+&lt;li&gt;Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构&lt;/li&gt;
+&lt;li&gt;Redis支持数据备份，即master-slav
+    
+    </summary>
+    
+      <category term="Redis" scheme="http://blog.lzuer.net/categories/Redis/"/>
+    
+      <category term="Memcache" scheme="http://blog.lzuer.net/categories/Redis/Memcache/"/>
+    
+      <category term="NoSQL" scheme="http://blog.lzuer.net/categories/Redis/Memcache/NoSQL/"/>
+    
+    
+      <category term="Redis" scheme="http://blog.lzuer.net/tags/Redis/"/>
+    
+      <category term="Memcache" scheme="http://blog.lzuer.net/tags/Memcache/"/>
+    
+      <category term="NoSQL" scheme="http://blog.lzuer.net/tags/NoSQL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Install Golang on Centos</title>
     <link href="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/"/>
     <id>http://blog.lzuer.net/2016/05/27/install-golang-on-centos/</id>
     <published>2016-05-27T18:57:23.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;h2 id=&quot;Download&quot;&gt;&lt;a href=&quot;#Download&quot; class=&quot;headerlink&quot; title=&quot;Download&quot;&gt;&lt;/a&gt;Download&lt;/h2&gt;&lt;p&gt;首先确定操作系统位数, 可执行：&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ uname -m&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -70,7 +120,7 @@
     <link href="http://blog.lzuer.net/2016/05/09/validator-on-the-fly/"/>
     <id>http://blog.lzuer.net/2016/05/09/validator-on-the-fly/</id>
     <published>2016-05-09T16:53:42.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的&lt;br&gt;时候其中有一条需求就是把用户提交的评分值由原来的允许的&lt;code&gt;1, 2, 3, 4, 5&lt;/code&gt; 改成允许输入 &lt;code&gt;0, 2, 4, 6, 8, 10&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;自定义的&lt;code&gt;validator&lt;/code&gt;:&lt;/p&gt;
@@ -104,11 +154,31 @@
   </entry>
   
   <entry>
+    <title>关于switch在js中需要注意的地方</title>
+    <link href="http://blog.lzuer.net/2016/05/07/upload-file-with-php/"/>
+    <id>http://blog.lzuer.net/2016/05/07/upload-file-with-php/</id>
+    <published>2016-05-07T00:17:39.000Z</published>
+    <updated>2016-06-07T14:13:49.816Z</updated>
+    
+    <content type="html"></content>
+    
+    <summary type="html">
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
     <title>git tips - 1</title>
     <link href="http://blog.lzuer.net/2016/03/03/git-tips-one/"/>
     <id>http://blog.lzuer.net/2016/03/03/git-tips-one/</id>
     <published>2016-03-03T16:53:42.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.812Z</updated>
     
     <content type="html">&lt;h1 id=&quot;git-tip-one&quot;&gt;&lt;a href=&quot;#git-tip-one&quot; class=&quot;headerlink&quot; title=&quot;git tip one&quot;&gt;&lt;/a&gt;git tip one&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;git config&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;git config&lt;/code&gt; 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。&lt;/p&gt;
@@ -142,7 +212,7 @@
     <link href="http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/"/>
     <id>http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/</id>
     <published>2016-01-26T11:17:39.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;h2 id=&quot;开启xdebug&quot;&gt;&lt;a href=&quot;#开启xdebug&quot; class=&quot;headerlink&quot; title=&quot;开启xdebug&quot;&gt;&lt;/a&gt;开启xdebug&lt;/h2&gt;&lt;p&gt;在&lt;code&gt;php.ini&lt;/code&gt;中配置&lt;code&gt;xdebug&lt;/code&gt;如下：&lt;/p&gt;
 &lt;p&gt;  [xdebug]&lt;br&gt;  xdebug.remote_enable = On&lt;br&gt;  xdebug.remote_handler = dbgp&lt;br&gt;  xdebug.remote_host= localhost&lt;br&gt;  xdebug.remote_port = 9000&lt;br&gt;  xdebug.idekey = PHPSTORM&lt;br&gt;  xdebug.profiler_enable = 1&lt;/p&gt;
@@ -198,7 +268,7 @@
     <link href="http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/"/>
     <id>http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/</id>
     <published>2016-01-18T23:59:20.000Z</published>
-    <updated>2016-05-30T09:12:44.773Z</updated>
+    <updated>2016-06-07T14:13:49.812Z</updated>
     
     <content type="html">&lt;p&gt;首先在&lt;a href=&quot;https://travis-ci.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;travis&lt;/a&gt;将你的项目加入到travis。&lt;/p&gt;
 &lt;p&gt;打开设置，添加token变量。&lt;/p&gt;
@@ -259,7 +329,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/16/git-delete-submoudle/"/>
     <id>http://blog.lzuer.net/2016/01/16/git-delete-submoudle/</id>
     <published>2016-01-16T00:16:21.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.812Z</updated>
     
     <content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Delete the relevant section from the .gitmodules file.&lt;/p&gt;
@@ -301,7 +371,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/"/>
     <id>http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/</id>
     <published>2016-01-13T16:17:39.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;&lt;code&gt;www.site.com&lt;/code&gt; &lt;code&gt;site.com&lt;/code&gt; 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，&lt;/p&gt;
 &lt;p&gt;因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。&lt;/p&gt;
@@ -334,7 +404,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/"/>
     <id>http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/</id>
     <published>2016-01-11T22:22:25.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;在 &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 &lt;code&gt;pull request&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;在项目的作者对发起的 &lt;code&gt;pull request&lt;/code&gt; 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是，&lt;/p&gt;
@@ -395,7 +465,7 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
     <link href="http://blog.lzuer.net/2016/01/11/multiple-platform-git/"/>
     <id>http://blog.lzuer.net/2016/01/11/multiple-platform-git/</id>
     <published>2016-01-11T21:57:21.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.&lt;/p&gt;
 &lt;h2 id=&quot;设置用户名和邮箱&quot;&gt;&lt;a href=&quot;#设置用户名和邮箱&quot; class=&quot;headerlink&quot; title=&quot;设置用户名和邮箱&quot;&gt;&lt;/a&gt;设置用户名和邮箱&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;$git config --global user.name &amp;quot;yourname&amp;quot;
@@ -441,7 +511,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/"/>
     <id>http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/</id>
     <published>2015-12-29T23:57:23.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 &lt;code&gt;minimum-stability&lt;/code&gt; 最低稳定性版本的包将不会被安装。&lt;/p&gt;
 &lt;p&gt;例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：&lt;code&gt;&amp;quot;vendor/library&amp;quot;: &amp;quot;*&amp;quot;&lt;/code&gt;, 乍看上去并没有什么不妥, 但是当我们执行 &lt;code&gt;composer install&lt;/code&gt; 或者 &lt;code&gt;composer update&lt;/code&gt; 去下载包的时候通常会报错。&lt;/p&gt;
@@ -487,7 +557,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/"/>
     <id>http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/</id>
     <published>2015-12-20T20:17:39.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: &lt;code&gt;git reset --hard&lt;/code&gt;会彻底删除你的变动,你可以在这之前使用 &lt;code&gt;git stash&lt;/code&gt; 来保存变动。&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git reset --hard HEAD~1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -516,7 +586,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/09/18/composer-repositories-path/"/>
     <id>http://blog.lzuer.net/2015/09/18/composer-repositories-path/</id>
     <published>2015-09-18T00:17:39.000Z</published>
-    <updated>2016-05-30T09:12:44.773Z</updated>
+    <updated>2016-06-07T14:13:49.812Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;本文讲讲用composer来进行本地开发包,和本地公用包的使用.&lt;/p&gt;
@@ -562,7 +632,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/08/22/hashids-for-yii2/"/>
     <id>http://blog.lzuer.net/2015/08/22/hashids-for-yii2/</id>
     <published>2015-08-22T00:17:39.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;h3 id=&quot;关于Hashids&quot;&gt;&lt;a href=&quot;#关于Hashids&quot; class=&quot;headerlink&quot; title=&quot;关于Hashids&quot;&gt;&lt;/a&gt;关于Hashids&lt;/h3&gt;&lt;p&gt;Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。&lt;/p&gt;
 &lt;p&gt;详细： &lt;a href=&quot;http://hashids.org/php/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://hashids.org/php/&lt;/a&gt;&lt;/p&gt;
@@ -588,7 +658,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/07/08/reg-the-at-user/"/>
     <id>http://blog.lzuer.net/2015/07/08/reg-the-at-user/</id>
     <published>2015-07-08T17:50:15.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名&lt;/p&gt;
 &lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/@[^\s]&amp;#123;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;&amp;#125;/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -618,7 +688,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/06/26/upgrade-php-version/"/>
     <id>http://blog.lzuer.net/2015/06/26/upgrade-php-version/</id>
     <published>2015-06-26T22:44:42.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;现版本：5.5.21&lt;/p&gt;
 &lt;p&gt;更新版本： 5.6.10&lt;/p&gt;
@@ -656,7 +726,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/"/>
     <id>http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/</id>
     <published>2015-06-15T22:07:27.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。&lt;/p&gt;
 &lt;p&gt;在使用left jion时，on和where条件的区别如下：&lt;/p&gt;
@@ -709,7 +779,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/"/>
     <id>http://blog.lzuer.net/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/</id>
     <published>2015-06-04T22:35:11.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;现在需求是：&lt;strong&gt;如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;我们可以通过配置  &lt;code&gt;yii\web\User::$authTimeout&lt;/code&gt;来达到效果，上代码：&lt;/p&gt;
@@ -738,7 +808,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/05/24/hi-basketball/"/>
     <id>http://blog.lzuer.net/2015/05/24/hi-basketball/</id>
     <published>2015-05-24T21:58:51.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
+    <updated>2016-06-07T14:13:49.816Z</updated>
     
     <content type="html">&lt;p&gt;今天打了一下午的篮球，快要中暑了。。。。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;我为什么这么喜欢篮球&lt;/strong&gt;&lt;/p&gt;
@@ -772,90 +842,6 @@ $ssh -T git@github.com
     
     
       <category term="life" scheme="http://blog.lzuer.net/tags/life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Yii2 container的一个应用</title>
-    <link href="http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/"/>
-    <id>http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/</id>
-    <published>2015-05-19T22:26:28.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 &lt;code&gt;[[yii\data\Pagination]]&lt;/code&gt; 的默认每页个数是 20 个.&lt;/p&gt;
-&lt;p&gt;对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? &lt;/p&gt;
-&lt;p&gt;这时候,我们可以使用 [[Yii::$contianer]] 的来实现：&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//这里我们设置默认个数为10, 将此置于 bootstrap.php 中&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;\Yii::$container-&amp;gt;set(&lt;span class=&quot;string&quot;&gt;&#39;yii\data\Pagination&#39;&lt;/span&gt;, [&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&#39;pageSize&#39;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;]);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;这样, 我们在使用诸如 &lt;code&gt;ActiveDataProvider&lt;/code&gt; 等方法时，默认每页个数就为 10 了。&lt;/p&gt;
-&lt;h2 id=&quot;思考&quot;&gt;&lt;a href=&quot;#思考&quot; class=&quot;headerlink&quot; title=&quot;思考&quot;&gt;&lt;/a&gt;思考&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;理论上，通过 &lt;code&gt;Yii::createObject&lt;/code&gt; 来实例化的对用都会起作用。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;所以，说用通过 &lt;code&gt;Yii::createObject&lt;/code&gt; 创建的实例都会使用我们通过以上方法设定的默认值。因为 &lt;code&gt;ActiveDataProvider&lt;/code&gt; 等中的 &lt;code&gt;pagination&lt;/code&gt; 在内部是通过 &lt;code&gt;Yii::createObject&lt;/code&gt; 创建的，所以设置是生效的。&lt;/p&gt;
-&lt;p&gt;因此，考虑一下两种实现方式：&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//1. pageSize 还是默认的20&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$paging = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; \yii\data\Pagination;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//2. pageSize 就是设置的 10 了&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$paging = Yii::createObject(&lt;span class=&quot;string&quot;&gt;&#39;yii\data\Pagination&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;所以Yii提倡使用 &lt;code&gt;Yii::createObject&lt;/code&gt; 来实例化对象，因为它能够自动解决依赖和默认值配置等好处。&lt;/p&gt;
-&lt;h2 id=&quot;Yii-container-是什么&quot;&gt;&lt;a href=&quot;#Yii-container-是什么&quot; class=&quot;headerlink&quot; title=&quot;Yii::$container 是什么&quot;&gt;&lt;/a&gt;Yii::$container 是什么&lt;/h2&gt;&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Yii::$container = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; yii\di\Container();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;所以 &lt;code&gt;Yii::$container&lt;/code&gt; 就是整个生命周期的一个依赖容器。&lt;/p&gt;
-&lt;p&gt;考虑开始的时候的代码，我们可以理解: 通过 &lt;code&gt;Yii::$container-&amp;gt;set()&lt;/code&gt; 其实就是向这个容器注入了一个类和其配置. 当调用 &lt;code&gt;Yii::createObject&lt;/code&gt; 的时候会去这个容器里面找，如果存在则根据 set 的配置进行实例化。&lt;/p&gt;
-&lt;h2 id=&quot;推荐&quot;&gt;&lt;a href=&quot;#推荐&quot; class=&quot;headerlink&quot; title=&quot;推荐&quot;&gt;&lt;/a&gt;推荐&lt;/h2&gt;&lt;p&gt;关于依赖注入和依赖注入容器可以查看博文：&lt;a href=&quot;http://www.digpage.com/di.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.digpage.com/di.html&lt;/a&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 &lt;code&gt;[[yii\data\Pagination]]&lt;/code&gt; 的默认
-    
-    </summary>
-    
-      <category term="Yii2" scheme="http://blog.lzuer.net/categories/Yii2/"/>
-    
-    
-      <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>怎样收集js报错</title>
-    <link href="http://blog.lzuer.net/2015/05/13/how-to-track-js-errors/"/>
-    <id>http://blog.lzuer.net/2015/05/13/how-to-track-js-errors/</id>
-    <published>2015-05-13T22:02:06.000Z</published>
-    <updated>2016-05-30T09:12:44.777Z</updated>
-    
-    <content type="html">&lt;p&gt;项目上线运行中，由于这样那样奇葩的浏览器的存在，导致我们的js代码存在一定的兼容性问题。那么可否收集到这些问题呢？&lt;/p&gt;
-&lt;p&gt;答案是肯定的。我们可以基于 &lt;code&gt;window.onerror&lt;/code&gt; 事件来收集并上报前段js代码在实际运行中产生的错误，以帮助我们排查解决。&lt;/p&gt;
-&lt;p&gt;在W3C规范里，window.onerror是html5新定义的事件，但实际上，window.onerror从IE6开始就被支持了，而chrome、firefox、safari、opera，目前也都已经支持该事件。&lt;/p&gt;
-&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//收集js报错信息并上报&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.onerror = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;msg, url, line, column, error&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; _e = &lt;span class=&quot;built_in&quot;&gt;encodeURIComponent&lt;/span&gt;,&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	content = &lt;span class=&quot;string&quot;&gt;&#39;/site/jslog?message=&#39;&lt;/span&gt; + _e(msg) +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;url=&#39;&lt;/span&gt; + _e(url || &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.location.href) + &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;line=&#39;&lt;/span&gt; + _e(line) +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  (error &amp;amp;&amp;amp; error.stack ? &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;stack=&#39;&lt;/span&gt; + _e(error.stack) : &lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt;) +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  (column ? &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;column=&#39;&lt;/span&gt; + _e(column) : &lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt;) +&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	  &lt;span class=&quot;string&quot;&gt;&#39;&amp;amp;ua=&#39;&lt;/span&gt; + &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.navigator.userAgent.replace(&lt;span class=&quot;regexp&quot;&gt;/[\:,;]/g&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;|&quot;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Image()).src = content;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;服务端:&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;actionJslog&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$response = Yii::$app-&amp;gt;getResponse();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//这是必须的，我们要将header设置为image&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    $response-&amp;gt;format = Response::FORMAT_RAW;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//write the log data&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$headers = $response-&amp;gt;getHeaders();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	$headers-&amp;gt;set(&lt;span class=&quot;string&quot;&gt;&#39;Content-Type&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;image/png&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; $response;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;这段代码需要放在head中并且位于所有script之前！&lt;/p&gt;
-&lt;p&gt;这样当客户端发生js报错时就会上报到服务器端，在服务器端我只需要将提交过来的信息进行保存就可以了。这样我们就可以根据收集到的信息来解决问题。&lt;/p&gt;
-&lt;p&gt;这里有几个点需要注意，一个是日志收集接口暴露在外，最好增加安全措施，比如设置token。&lt;/p&gt;
-&lt;p&gt;另外，脚本部署的时机、位置，以及日志过滤等条件，也需要根据具体情况进行设定。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;教训&lt;/strong&gt;:&lt;/p&gt;
-&lt;p&gt;在代码中我们经常使用 &lt;code&gt;console.log&lt;/code&gt; 来打印代码，但这存在问题的，某些浏览器是不支持该方法的！&lt;/p&gt;
-&lt;p&gt;这就会产生错误，使代码无法正常运行！有两张方法可以解决：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;利用工具来消除所有的打印调试代码&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;提供兼容代码「置于head中所有script之前」&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight javascript&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.console = &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.console || (&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; _c = &amp;#123;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	_c.log = _c.warning = _c.error = _c.info .. = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; _c;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;)();&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;项目上线运行中，由于这样那样奇葩的浏览器的存在，导致我们的js代码存在一定的兼容性问题。那么可否收集到这些问题呢？&lt;/p&gt;
-&lt;p&gt;答案是肯定的。我们可以基于 &lt;code&gt;window.onerror&lt;/code&gt; 事件来收集并上报前段js代码在实际运行中产生的错误，以帮助我
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
-    
-      <category term="Yii2" scheme="http://blog.lzuer.net/categories/PHP/Yii2/"/>
-    
-    
-      <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
-    
-      <category term="javascript" scheme="http://blog.lzuer.net/tags/javascript/"/>
     
   </entry>
   

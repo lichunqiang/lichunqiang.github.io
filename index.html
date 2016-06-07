@@ -212,6 +212,149 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/07/difference-between-redis-and-memcache/" itemprop="url">
+                  Redis和Memcache的区别
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-06-07T21:57:23+00:00" content="2016-06-07">
+              2016-06-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Redis/Memcache/" itemprop="url" rel="index">
+                    <span itemprop="name">Memcache</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Redis/Memcache/NoSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">NoSQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/07/difference-between-redis-and-memcache/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/07/difference-between-redis-and-memcache/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <ol>
+<li>Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别</li>
+<li>Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构</li>
+<li>Redis支持数据备份，即master-slave模式的数据备份</li>
+<li>Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。</li>
+</ol>
+<p>Redis作者对Redis和memcache进行的比对：</p>
+<p>没有必要过多的关心性能，因为二者的性能都已经足够高了。由于Redis使用单核，而memcache可以使用多核，所以在比较上，平均每一个核上Redis在存储小数据时比memcache性能更高。而在100k以上的数据中，memcache性能高于Redis，最终，无论使用哪一个，每秒处理请求的次数都不会成为瓶颈。(比如瓶颈可能会在网卡)</p>
+<p>如果要说内存使用效率，使用简单的key-value存储的话，memcache的内存利用率更高，而如果Redis采用hash结构来做key-value存储，由于其组合式的压缩，其内存利用率会高于memcache。</p>
+<p>如果你对数据持久化和数据同步有所要求，那么推荐你选择Redis，因为这两个特性Memcached都不具备。即使你只是希望在升级或者重启系统后缓存数据不会丢失，选择Redis也是明智的。</p>
+<p>当然，最后还得说到你的具体应用需求。Redis相比Memcached来说，拥有更多的数据结构和并支持更丰富的数据操作，通常在Memcached里， 你需要将数据拿到客户端来进行类似的修改再set回去。这大大增加了网络IO的次数和数据体积。在Redis中，这些复杂的操作通常和一般的 GET/SET一样高效。所以，如果你需要缓存能够支持更复杂的结构和操作，那么Redis会是不错的选择。</p>
+<p>1、 Redis和Memcache都是将数据存放在内存中，都是内存数据库。不过memcache还可用于缓存其他东西，例如图片、视频等等。<br>2、Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，hash等数据结构的存储。<br>3、虚拟内存–Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘<br>4、过期策略–memcache在set时就指定，例如set key1 0 0 8,即永不过期。Redis可以通过例如expire 设定，例如expire name 10<br>5、分布式–设定memcache集群，利用magent做一主多从;redis可以做一主多从。都可以一主一从<br>6、存储数据安全–memcache挂掉后，数据没了；redis可以定期保存到磁盘（持久化）<br>7、灾难恢复–memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复<br>8、Redis支持数据的备份，即master-slave模式的数据备份</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000004012181" target="_blank" rel="external">https://segmentfault.com/a/1190000004012181</a></li>
+<li><a href="http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis" target="_blank" rel="external">http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis</a></li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/27/install-golang-on-centos/" itemprop="url">
                   Install Golang on Centos
                 </a>
@@ -417,6 +560,108 @@
 <p>这样在<code>v1</code>接口下的涉及到<code>ScoreValidator</code>验证的地方就会按照这个规则来进行验证了。同样新的需求也可以兼顾到。</p>
 <p>利用Yii2的容器和依赖注入可以很轻松写意的实现更多，还需要我们不停的探索！</p>
 
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/07/upload-file-with-php/" itemprop="url">
+                  关于switch在js中需要注意的地方
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-05-07T00:17:39+00:00" content="2016-05-07">
+              2016-05-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/07/upload-file-with-php/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/07/upload-file-with-php/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              
             
           </span>
         
@@ -1226,264 +1471,6 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/11/multiple-platform-git/" itemprop="url">
-                  多平台Git配置
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-11T21:57:21+00:00" content="2016-01-11">
-              2016-01-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Git/github/" itemprop="url" rel="index">
-                    <span itemprop="name">github</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/11/multiple-platform-git/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/11/multiple-platform-git/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.</p>
-<h2 id="设置用户名和邮箱"><a href="#设置用户名和邮箱" class="headerlink" title="设置用户名和邮箱"></a>设置用户名和邮箱</h2><pre><code>$git config --global user.name &quot;yourname&quot;
-$git config --global user.email &quot;your@example.com&quot;
-</code></pre><h2 id="生成ssh-key"><a href="#生成ssh-key" class="headerlink" title="生成ssh-key"></a>生成ssh-key</h2><blockquote>
-<p>ssh-key保存在 <code>~/.ssh</code> 目录中</p>
-</blockquote>
-<pre><code>$cd ~/.ssh
-$ssh-keygen -t rsa -C &quot;your@example.com&quot;
-</code></pre><p>注意在生成key file的时候可以针对不同的平台来命名, 例如：<code>id_github</code>, 这将会在接下的来的配置中用到.</p>
-<p>生成<strong>Key</strong>之后就是将 <code>xx.pub</code> 的内容配置到平台的SSH配置中.</p>
-<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>在 <code>~/.ssh</code> 目录下新建 <code>config</code> 文件并编辑：</p>
-<pre><code>Host git.coding.net
-    User your@example.com
-    IdentityFile ~/.ssh/coding_rsa
-Host github.com
-    User your@example.com
-    IdentityFile ~/.ssh/github_rsa
-</code></pre><h2 id="测试是否连接成功"><a href="#测试是否连接成功" class="headerlink" title="测试是否连接成功"></a>测试是否连接成功</h2><pre><code>$ssh -T git@git.coding.net
-$ssh -T git@github.com
-</code></pre>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/12/29/talk-about-composer-minimum-stability/" itemprop="url">
-                  讲讲Composer配置项minimumn-stability
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-12-29T23:57:23+00:00" content="2015-12-29">
-              2015-12-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/12/29/talk-about-composer-minimum-stability/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/29/talk-about-composer-minimum-stability/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 <code>minimum-stability</code> 最低稳定性版本的包将不会被安装。</p>
-<p>例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：<code>&quot;vendor/library&quot;: &quot;*&quot;</code>, 乍看上去并没有什么不妥, 但是当我们执行 <code>composer install</code> 或者 <code>composer update</code> 去下载包的时候通常会报错。</p>
-<p>这是为什么呢？</p>
-<p>通常我们的 <code>composer.json</code> 都不会显式的去设定 <code>minimum-stability</code>, 那么 <code>composer</code> 就会把他默认为 <code>stable</code>.</p>
-<p>那么对于一个尚未发布版本的包来说, 明显是不符合的. 所以安装就不会成功.</p>
-<p>所以有两个途径来解决：</p>
-<ol>
-<li>设定 <code>minimum-stability</code> 为 <code>dev</code></li>
-</ol>
-<p>显然这是简单粗暴的, 但是这种方法所面临的问题也很严重. 那就是我们去依赖某些开发版中的包, 这显然是我们所不想看到的.</p>
-<ol>
-<li>指定依赖包的版本, 这也是最佳的解决方案</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require vendor/library=dev-master</span><br></pre></td></tr></table></figure>
-<p>所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！</p>
-<p>另外我们还需要知道 <code>minimum-stability</code> 所支持的有：</p>
-<ul>
-<li>dev</li>
-<li>alpha</li>
-<li>beta</li>
-<li>RC</li>
-<li>stable</li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1530,21 +1517,21 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">49</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

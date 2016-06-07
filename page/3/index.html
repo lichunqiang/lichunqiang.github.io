@@ -212,6 +212,257 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/19/one-using-of-yii2-container/" itemprop="url">
+                  Yii2 container的一个应用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-05-19T22:26:28+00:00" content="2015-05-19">
+              2015-05-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/19/one-using-of-yii2-container/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/19/one-using-of-yii2-container/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 <code>[[yii\data\Pagination]]</code> 的默认每页个数是 20 个.</p>
+<p>对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? </p>
+<p>这时候,我们可以使用 [[Yii::$contianer]] 的来实现：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里我们设置默认个数为10, 将此置于 bootstrap.php 中</span></span><br><span class="line">\Yii::$container-&gt;set(<span class="string">'yii\data\Pagination'</span>, [</span><br><span class="line">    <span class="string">'pageSize'</span> =&gt; <span class="number">10</span>,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>这样, 我们在使用诸如 <code>ActiveDataProvider</code> 等方法时，默认每页个数就为 10 了。</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><blockquote>
+<p>理论上，通过 <code>Yii::createObject</code> 来实例化的对用都会起作用。</p>
+</blockquote>
+<p>所以，说用通过 <code>Yii::createObject</code> 创建的实例都会使用我们通过以上方法设定的默认值。因为 <code>ActiveDataProvider</code> 等中的 <code>pagination</code> 在内部是通过 <code>Yii::createObject</code> 创建的，所以设置是生效的。</p>
+<p>因此，考虑一下两种实现方式：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. pageSize 还是默认的20</span></span><br><span class="line">$paging = <span class="keyword">new</span> \yii\data\Pagination;</span><br><span class="line"><span class="comment">//2. pageSize 就是设置的 10 了</span></span><br><span class="line">$paging = Yii::createObject(<span class="string">'yii\data\Pagination'</span>);</span><br></pre></td></tr></table></figure>
+<p>所以Yii提倡使用 <code>Yii::createObject</code> 来实例化对象，因为它能够自动解决依赖和默认值配置等好处。</p>
+<h2 id="Yii-container-是什么"><a href="#Yii-container-是什么" class="headerlink" title="Yii::$container 是什么"></a>Yii::$container 是什么</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Yii::$container = <span class="keyword">new</span> yii\di\Container();</span><br></pre></td></tr></table></figure>
+<p>所以 <code>Yii::$container</code> 就是整个生命周期的一个依赖容器。</p>
+<p>考虑开始的时候的代码，我们可以理解: 通过 <code>Yii::$container-&gt;set()</code> 其实就是向这个容器注入了一个类和其配置. 当调用 <code>Yii::createObject</code> 的时候会去这个容器里面找，如果存在则根据 set 的配置进行实例化。</p>
+<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p>关于依赖注入和依赖注入容器可以查看博文：<a href="http://www.digpage.com/di.html" target="_blank" rel="external">http://www.digpage.com/di.html</a></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/13/how-to-track-js-errors/" itemprop="url">
+                  怎样收集js报错
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-05-13T22:02:06+00:00" content="2015-05-13">
+              2015-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/13/how-to-track-js-errors/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/13/how-to-track-js-errors/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>项目上线运行中，由于这样那样奇葩的浏览器的存在，导致我们的js代码存在一定的兼容性问题。那么可否收集到这些问题呢？</p>
+<p>答案是肯定的。我们可以基于 <code>window.onerror</code> 事件来收集并上报前段js代码在实际运行中产生的错误，以帮助我们排查解决。</p>
+<p>在W3C规范里，window.onerror是html5新定义的事件，但实际上，window.onerror从IE6开始就被支持了，而chrome、firefox、safari、opera，目前也都已经支持该事件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//收集js报错信息并上报</span></span><br><span class="line"><span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">msg, url, line, column, error</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> _e = <span class="built_in">encodeURIComponent</span>,</span><br><span class="line">	content = <span class="string">'/site/jslog?message='</span> + _e(msg) +</span><br><span class="line">	  <span class="string">'&amp;url='</span> + _e(url || <span class="built_in">window</span>.location.href) + <span class="string">'&amp;line='</span> + _e(line) +</span><br><span class="line">	  (error &amp;&amp; error.stack ? <span class="string">'&amp;stack='</span> + _e(error.stack) : <span class="string">''</span>) +</span><br><span class="line">	  (column ? <span class="string">'&amp;column='</span> + _e(column) : <span class="string">''</span>) +</span><br><span class="line">	  <span class="string">'&amp;ua='</span> + <span class="built_in">window</span>.navigator.userAgent.replace(<span class="regexp">/[\:,;]/g</span>,<span class="string">"|"</span>);</span><br><span class="line">	(<span class="keyword">new</span> Image()).src = content;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>服务端:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">actionJslog</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	$response = Yii::$app-&gt;getResponse();</span><br><span class="line">	<span class="comment">//这是必须的，我们要将header设置为image</span></span><br><span class="line">    $response-&gt;format = Response::FORMAT_RAW;</span><br><span class="line">	<span class="comment">//write the log data</span></span><br><span class="line">	$headers = $response-&gt;getHeaders();</span><br><span class="line">	$headers-&gt;set(<span class="string">'Content-Type'</span>, <span class="string">'image/png'</span>);</span><br><span class="line">	<span class="keyword">return</span> $response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码需要放在head中并且位于所有script之前！</p>
+<p>这样当客户端发生js报错时就会上报到服务器端，在服务器端我只需要将提交过来的信息进行保存就可以了。这样我们就可以根据收集到的信息来解决问题。</p>
+<p>这里有几个点需要注意，一个是日志收集接口暴露在外，最好增加安全措施，比如设置token。</p>
+<p>另外，脚本部署的时机、位置，以及日志过滤等条件，也需要根据具体情况进行设定。</p>
+<p><strong>教训</strong>:</p>
+<p>在代码中我们经常使用 <code>console.log</code> 来打印代码，但这存在问题的，某些浏览器是不支持该方法的！</p>
+<p>这就会产生错误，使代码无法正常运行！有两张方法可以解决：</p>
+<ol>
+<li><p>利用工具来消除所有的打印调试代码</p>
+</li>
+<li><p>提供兼容代码「置于head中所有script之前」</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.console = <span class="built_in">window</span>.console || (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> _c = &#123;&#125;;</span><br><span class="line">	_c.log = _c.warning = _c.error = _c.info .. = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">	<span class="keyword">return</span> _c;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/08/yii2-ar-update-note/" itemprop="url">
                   关于ActiveRecord之update需要注意的地方
                 </a>
@@ -1135,305 +1386,11 @@
         
           <span itemprop="articleBody">
             
-              <h4 id="1-在目录中查找包含文字的文件"><a href="#1-在目录中查找包含文字的文件" class="headerlink" title="1.在目录中查找包含文字的文件"></a>1.在目录中查找包含文字的文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep <span class="_">-l</span> -r findstring /dir</span><br></pre></td></tr></table></figure>
-<h4 id="2-查找文件"><a href="#2-查找文件" class="headerlink" title="2.查找文件"></a>2.查找文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -type d -name .svn</span><br></pre></td></tr></table></figure>
-<h4 id="3-批量删除文件"><a href="#3-批量删除文件" class="headerlink" title="3.批量删除文件"></a>3.批量删除文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -type d -name .svn | xargs rm -rf</span><br></pre></td></tr></table></figure>
+              <h4 id="在目录中查找包含文字的文件"><a href="#在目录中查找包含文字的文件" class="headerlink" title="在目录中查找包含文字的文件"></a>在目录中查找包含文字的文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ grep <span class="_">-l</span> -r findstring /dir</span><br></pre></td></tr></table></figure>
+<h4 id="查找文件夹"><a href="#查找文件夹" class="headerlink" title="查找文件夹"></a>查找文件夹</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -type d -name .svn</span><br></pre></td></tr></table></figure>
+<h4 id="查找目录下所有的php文件"><a href="#查找目录下所有的php文件" class="headerlink" title="查找目录下所有的php文件"></a>查找目录下所有的php文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -name <span class="string">"*.php"</span></span><br></pre></td></tr></table></figure>
+<h4 id="批量删除文件"><a href="#批量删除文件" class="headerlink" title="批量删除文件"></a>批量删除文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ find -type d -name .svn | xargs rm -rf</span><br></pre></td></tr></table></figure>
 <h4 id="查看linux版本"><a href="#查看linux版本" class="headerlink" title="查看linux版本"></a>查看linux版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/redhat-release</span><br></pre></td></tr></table></figure>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/about-switch-case-in-javascript/" itemprop="url">
-                  关于switch在js中需要注意的地方
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:17:39+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/about-switch-case-in-javascript/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/about-switch-case-in-javascript/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'1'</span>; <span class="comment">// switch and case use '==='</span></span><br><span class="line"><span class="keyword">switch</span>(a) &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'this is 1'</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'this is 2'</span>);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'this is default'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>switch语句后面的表达式与case语句后面的表示式，在比较运行结果时，采用的是严格相等运算符（===），而不是相等运算符（==），这意味着比较时不会发生类型转换。</p>
-<h1 id="Extends"><a href="#Extends" class="headerlink" title="Extends"></a>Extends</h1><blockquote>
-<p>switch结构不利于代码重用，往往可以用对象形式重写。</p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123;</span><br><span class="line">    banana: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;,</span><br><span class="line">    apple: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;,</span><br><span class="line">    <span class="keyword">default</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (o[fruit])&#123;</span><br><span class="line">    o[fruit]();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    o[<span class="string">'default'</span>]();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/git-cheat-sheet/" itemprop="url">
-                  git常用操作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:16:21+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/github/" itemprop="url" rel="index">
-                    <span itemprop="name">github</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/git-cheat-sheet/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/git-cheat-sheet/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="Git-Cheat-Sheet-Chinese"><a href="#Git-Cheat-Sheet-Chinese" class="headerlink" title="Git Cheat Sheet Chinese"></a>Git Cheat Sheet Chinese</h1><p>###索引</p>
-<ul>
-<li><a href="#创建">创建</a></li>
-<li><a href="#本地修改">本地修改</a></li>
-<li><a href="#搜索">搜索</a></li>
-<li><a href="#提交历史">提交历史</a></li>
-<li><a href="#分支与标签">分支与标签</a></li>
-<li><a href="#更新与发布">更新与发布</a></li>
-<li><a href="#合并与重置">合并与重置</a></li>
-<li><a href="#撤销">撤销</a></li>
-</ul>
-<hr>
-<p>###创建</p>
-<p>复制一个已创建的仓库:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone ssh://user@domain.com/repo.git</span><br></pre></td></tr></table></figure></p>
-<p>创建一个新的本地仓库:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git init</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>###本地修改</p>
-<p>显示工作路径下已修改的文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br></pre></td></tr></table></figure></p>
-<p>显示与上次提交版本文件的不同：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git diff</span><br></pre></td></tr></table></figure></p>
-<p>把当前所有修改添加到下次提交中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add .</span><br></pre></td></tr></table></figure></p>
-<p>把对某个文件的修改添加到下次提交中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add -p &lt;file&gt;</span><br></pre></td></tr></table></figure></p>
-<p>提交本地的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -a</span><br></pre></td></tr></table></figure></p>
-<p>提交之前已标记的变化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit</span><br></pre></td></tr></table></figure></p>
-<p>附加消息提交：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m &apos;message here&apos;</span><br></pre></td></tr></table></figure></p>
-<p>Commit to some previous date:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --date=&quot;`date --date=&apos;n day ago&apos;`&quot; -am &quot;Commit Message&quot;</span><br></pre></td></tr></table></figure></p>
-<p>修改上次提交<br><br><em><sub>Don’t amend published commits!</sub></em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit --amend</span><br></pre></td></tr></table></figure></p>
-<p>把当前分支中未提交的修改移动到其他分支<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br><span class="line">git checkout branch2</span><br><span class="line">git stash pop</span><br></pre></td></tr></table></figure></p>
-<p>###搜索</p>
-<p>从当前目录的所有文件中查找文本内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git grep &quot;Hello&quot;</span><br></pre></td></tr></table></figure></p>
-<p>在某一版本中搜索文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git grep &quot;Hello&quot; v2.5</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>###提交历史</p>
-<p>从最新提交开始，显示所有的提交记录（显示hash， 作者信息，提交的标题和时间）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log</span><br></pre></td></tr></table></figure></p>
-<p>显示所有提交（仅显示提交的hash和message）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log --oneline</span><br></pre></td></tr></table></figure></p>
-<p>显示某个用户的所有提交：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log --author=&quot;username&quot;</span><br></pre></td></tr></table></figure></p>
-<p>显示某个文件的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git log -p &lt;file&gt;</span><br></pre></td></tr></table></figure></p>
-<p>谁，在什么时间，修改了文件的什么内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git blame &lt;file&gt;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>###分支与标签</p>
-<p>列出所有的分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch</span><br></pre></td></tr></table></figure></p>
-<p>切换分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
-<p>基于当前分支创建新分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch &lt;new-branch&gt;</span><br></pre></td></tr></table></figure></p>
-<p>基于远程分支创建新的可追溯的分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch --track &lt;new-branch&gt; &lt;remote-branch&gt;</span><br></pre></td></tr></table></figure></p>
-<p>删除本地分支:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
-<p>给当前版本打标签：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git tag &lt;tag-name&gt;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>###更新与发布</p>
-<p>列出对当前远程端的操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote -v</span><br></pre></td></tr></table></figure></p>
-<p>显示远程端的信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote show &lt;remote&gt;</span><br></pre></td></tr></table></figure></p>
-<p>添加新的远程端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add &lt;remote&gt; &lt;url&gt;</span><br></pre></td></tr></table></figure></p>
-<p>下载远程端版本，但不合并到HEAD中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch &lt;remote&gt;</span><br></pre></td></tr></table></figure></p>
-<p>下载远程端版本，并自动与HEAD版本合并：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote pull &lt;remote&gt; &lt;url&gt;</span><br></pre></td></tr></table></figure></p>
-<p>将远程端版本合并到本地版本中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git pull origin master</span><br></pre></td></tr></table></figure></p>
-<p>将本地版本发布到远程端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push remote &lt;remote&gt; &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
-<p>删除远程端分支：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git push &lt;remote&gt; :&lt;branch&gt; (since Git v1.5.0)</span><br><span class="line">or</span><br><span class="line">git push &lt;remote&gt; --delete &lt;branch&gt; (since Git v1.7.0)</span><br></pre></td></tr></table></figure></p>
-<p>发布标签:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push --tags</span><br></pre></td></tr></table></figure></p>
-<hr>
-<p>###合并与重置</p>
-<p>将分支合并到当前HEAD中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git merge &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
-<p>将当前HEAD版本重置到分支中:<br><br><em><sub>Don’t rebase published commit!</sub></em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rebase &lt;branch&gt;</span><br></pre></td></tr></table></figure></p>
-<p>退出重置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rebase --abort</span><br></pre></td></tr></table></figure></p>
-<p>解决冲突后继续重置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rebase --continue</span><br></pre></td></tr></table></figure></p>
-<p>使用配置好的merge tool 解决冲突：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git mergetool</span><br></pre></td></tr></table></figure></p>
-<p>在编辑器中手动解决冲突后，标记文件为<code>已解决冲突</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add &lt;resolved-file&gt;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git rm &lt;resolved-file&gt;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>###撤销</p>
-<p>放弃工作目录下的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD</span><br></pre></td></tr></table></figure></p>
-<p>移除缓存区的所有文件（i.e. 撤销上次<code>git add</code>）:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset HEAD</span><br></pre></td></tr></table></figure></p>
-<p>放弃某个文件的所有本地修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout HEAD &lt;file&gt;</span><br></pre></td></tr></table></figure></p>
-<p>重置一个提交（通过创建一个截然不同的新提交）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git revert &lt;commit&gt;</span><br></pre></td></tr></table></figure></p>
-<p>将HEAD重置到上一次提交的版本，并放弃之后的所有修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard &lt;commit&gt;</span><br></pre></td></tr></table></figure></p>
-<p>将HEAD重置到上一次提交的版本，并将之后的修改标记为未添加到缓存区的修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset &lt;commit&gt;</span><br></pre></td></tr></table></figure></p>
-<p>将HEAD重置到上一次提交的版本，并保留未提交的本地修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --keep &lt;commit&gt;</span><br></pre></td></tr></table></figure></p>
-<hr>
 
             
           </span>
@@ -1501,21 +1458,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">49</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
