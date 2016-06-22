@@ -35,7 +35,7 @@
 <link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Redis,Memcache,NoSQL," />
+  <meta name="keywords" content="PHP," />
 
 
 
@@ -53,34 +53,25 @@
 
 
 
-<meta name="description" content="Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别
-Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构
-Redis支持数据备份，即master-slave模式的数据备份
-Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。
-
-Redis作者对Redis和memcache进行的比对：
-没">
+<meta name="description" content="首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。
++号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。
+举个栗子： 
+1234567$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;ap">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis和Memcache的区别">
-<meta property="og:url" content="http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/index.html">
+<meta property="og:title" content="array_merge 和 + 之间的区别">
+<meta property="og:url" content="http://blog.lzuer.net/2016/06/22/array_merge-vs-+/index.html">
 <meta property="og:site_name" content="Light's Blog">
-<meta property="og:description" content="Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别
-Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构
-Redis支持数据备份，即master-slave模式的数据备份
-Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。
-
-Redis作者对Redis和memcache进行的比对：
-没">
+<meta property="og:description" content="首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。
++号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。
+举个栗子： 
+1234567$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;ap">
 <meta property="og:updated_time" content="2016-06-22T13:56:37.539Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis和Memcache的区别">
-<meta name="twitter:description" content="Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别
-Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构
-Redis支持数据备份，即master-slave模式的数据备份
-Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。
-
-Redis作者对Redis和memcache进行的比对：
-没">
+<meta name="twitter:title" content="array_merge 和 + 之间的区别">
+<meta name="twitter:description" content="首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。
++号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。
+举个栗子： 
+1234567$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;ap">
 
 
 
@@ -92,7 +83,7 @@ Redis作者对Redis和memcache进行的比对：
   };
 </script>
 
-  <title> Redis和Memcache的区别 | Light's Blog </title>
+  <title> array_merge 和 + 之间的区别 | Light's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -222,7 +213,7 @@ Redis作者对Redis和memcache进行的比对：
             
             
               
-                Redis和Memcache的区别
+                array_merge 和 + 之间的区别
               
             
           </h1>
@@ -231,8 +222,8 @@ Redis作者对Redis和memcache进行的比对：
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-06-07T21:57:23+00:00" content="2016-06-07">
-              2016-06-07
+            <time itemprop="dateCreated" datetime="2016-06-22T21:57:23+00:00" content="2016-06-22">
+              2016-06-22
             </time>
           </span>
 
@@ -241,32 +232,8 @@ Redis作者对Redis和memcache进行的比对：
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/Memcache/" itemprop="url" rel="index">
-                    <span itemprop="name">Memcache</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/Memcache/NoSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">NoSQL</span>
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
                   </a>
                 </span>
 
@@ -281,8 +248,8 @@ Redis作者对Redis和memcache进行的比对：
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/07/difference-between-redis-and-memcache/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/07/difference-between-redis-and-memcache/" itemprop="commentsCount"></span>
+                <a href="/2016/06/22/array_merge-vs-+/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/22/array_merge-vs-+/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -301,22 +268,31 @@ Redis作者对Redis和memcache进行的比对：
       
 
       
-        <span itemprop="articleBody"><ol>
-<li>Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别</li>
-<li>Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构</li>
-<li>Redis支持数据备份，即master-slave模式的数据备份</li>
-<li>Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。</li>
-</ol>
-<p>Redis作者对Redis和memcache进行的比对：</p>
-<p>没有必要过多的关心性能，因为二者的性能都已经足够高了。由于Redis使用单核，而memcache可以使用多核，所以在比较上，平均每一个核上Redis在存储小数据时比memcache性能更高。而在100k以上的数据中，memcache性能高于Redis，最终，无论使用哪一个，每秒处理请求的次数都不会成为瓶颈。(比如瓶颈可能会在网卡)</p>
-<p>如果要说内存使用效率，使用简单的key-value存储的话，memcache的内存利用率更高，而如果Redis采用hash结构来做key-value存储，由于其组合式的压缩，其内存利用率会高于memcache。</p>
-<p>如果你对数据持久化和数据同步有所要求，那么推荐你选择Redis，因为这两个特性Memcached都不具备。即使你只是希望在升级或者重启系统后缓存数据不会丢失，选择Redis也是明智的。</p>
-<p>当然，最后还得说到你的具体应用需求。Redis相比Memcached来说，拥有更多的数据结构和并支持更丰富的数据操作，通常在Memcached里， 你需要将数据拿到客户端来进行类似的修改再set回去。这大大增加了网络IO的次数和数据体积。在Redis中，这些复杂的操作通常和一般的 GET/SET一样高效。所以，如果你需要缓存能够支持更复杂的结构和操作，那么Redis会是不错的选择。</p>
-<p>1、 Redis和Memcache都是将数据存放在内存中，都是内存数据库。不过memcache还可用于缓存其他东西，例如图片、视频等等。<br>2、Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，hash等数据结构的存储。<br>3、虚拟内存–Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘<br>4、过期策略–memcache在set时就指定，例如set key1 0 0 8,即永不过期。Redis可以通过例如expire 设定，例如expire name 10<br>5、分布式–设定memcache集群，利用magent做一主多从;redis可以做一主多从。都可以一主一从<br>6、存储数据安全–memcache挂掉后，数据没了；redis可以定期保存到磁盘（持久化）<br>7、灾难恢复–memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复<br>8、Redis支持数据的备份，即master-slave模式的数据备份</p>
-<p>参考：</p>
+        <span itemprop="articleBody"><p>首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。</p>
+<p>+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。</p>
+<p>举个栗子： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</span><br><span class="line"></span><br><span class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</span><br><span class="line"></span><br><span class="line">$c = $a + $b;</span><br><span class="line"></span><br><span class="line">var_dump($c);</span><br></pre></td></tr></table></figure>
+<p>将会输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">array(3) &#123;</span><br><span class="line">  [&quot;a&quot;]=&gt;</span><br><span class="line">  string(5) &quot;apple&quot;</span><br><span class="line">  [&quot;b&quot;]=&gt;</span><br><span class="line">  string(6) &quot;banana&quot;</span><br><span class="line">  [&quot;c&quot;]=&gt;</span><br><span class="line">  string(6) &quot;cherry&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么如果存在数字键值，又会有是什么表现方式呢？稍微改动下上一个栗子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</span><br><span class="line"></span><br><span class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</span><br><span class="line"></span><br><span class="line">$c = $a + $b;</span><br><span class="line"></span><br><span class="line">var_dump($c);</span><br></pre></td></tr></table></figure>
+<p>将会输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">array(4) &#123;</span><br><span class="line">  [&quot;a&quot;]=&gt;</span><br><span class="line">  string(5) &quot;apple&quot;</span><br><span class="line">  [&quot;b&quot;]=&gt;</span><br><span class="line">  string(6) &quot;banana&quot;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  int(1)</span><br><span class="line">  [&quot;c&quot;]=&gt;</span><br><span class="line">  string(6) &quot;cherry&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到和字符串表现一致。</p>
+<p>再来测试下上面的代码， array_merge 的表现是怎样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</span><br><span class="line"></span><br><span class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</span><br><span class="line"></span><br><span class="line">$c = array_merge($a, $b);</span><br><span class="line"></span><br><span class="line">var_dump($c);</span><br></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">array(3) &#123;</span><br><span class="line">  [&quot;a&quot;]=&gt;</span><br><span class="line">  string(6) &quot;orange&quot;</span><br><span class="line">  [&quot;b&quot;]=&gt;</span><br><span class="line">  string(6) &quot;banana&quot;</span><br><span class="line">  [&quot;c&quot;]=&gt;</span><br><span class="line">  string(6) &quot;cherry&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么正如文档中所说的，将会对相同的键值进行覆盖！那么对于数字键值是不是也是同样的处理呢？再看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</span><br><span class="line"></span><br><span class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</span><br><span class="line"></span><br><span class="line">$c = $a + $b;</span><br><span class="line"></span><br><span class="line">var_dump($c);</span><br></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">array(5) &#123;</span><br><span class="line">  [&quot;a&quot;]=&gt;</span><br><span class="line">  string(6) &quot;orange&quot;</span><br><span class="line">  [&quot;b&quot;]=&gt;</span><br><span class="line">  string(6) &quot;banana&quot;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  int(1)</span><br><span class="line">  [&quot;c&quot;]=&gt;</span><br><span class="line">  string(6) &quot;cherry&quot;</span><br><span class="line">  [1]=&gt;</span><br><span class="line">  int(2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，并没有进行覆盖!由此可以得出结论，当两个数组中含有数值健的时候，会进行附加，并且键值会从0开始重建索引键值。</p>
+<p>参看资料：</p>
 <ul>
-<li><a href="https://segmentfault.com/a/1190000004012181" target="_blank" rel="external">https://segmentfault.com/a/1190000004012181</a></li>
-<li><a href="http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis" target="_blank" rel="external">http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis</a></li>
+<li><a href="http://stackoverflow.com/questions/7059721/array-merge-versus" target="_blank" rel="external">http://stackoverflow.com/questions/7059721/array-merge-versus</a></li>
+<li><a href="http://php.net/manual/en/language.operators.array.php" target="_blank" rel="external">http://php.net/manual/en/language.operators.array.php</a></li>
+<li><a href="http://php.net/manual/en/function.array-merge.php" target="_blank" rel="external">http://php.net/manual/en/function.array-merge.php</a></li>
 </ul>
 </span>
       
@@ -326,11 +302,7 @@ Redis作者对Redis和memcache进行的比对：
       
         <div class="post-tags">
           
-            <a href="/tags/Redis/" rel="tag">#Redis</a>
-          
-            <a href="/tags/Memcache/" rel="tag">#Memcache</a>
-          
-            <a href="/tags/NoSQL/" rel="tag">#NoSQL</a>
+            <a href="/tags/PHP/" rel="tag">#PHP</a>
           
         </div>
       
@@ -339,17 +311,13 @@ Redis作者对Redis和memcache进行的比对：
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/05/27/install-golang-on-centos/" rel="next" title="Install Golang on Centos">
-                <i class="fa fa-chevron-left"></i> Install Golang on Centos
+              <a href="/2016/06/07/difference-between-redis-and-memcache/" rel="next" title="Redis和Memcache的区别">
+                <i class="fa fa-chevron-left"></i> Redis和Memcache的区别
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/22/array_merge-vs-+/" rel="prev" title="array_merge 和 + 之间的区别">
-                array_merge 和 + 之间的区别 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -364,10 +332,10 @@ Redis作者对Redis和memcache进行的比对：
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/06/07/difference-between-redis-and-memcache/"
-     data-title="Redis和Memcache的区别"
+        <div class="ds-share flat" data-thread-key="2016/06/22/array_merge-vs-+/"
+     data-title="array_merge 和 + 之间的区别"
      data-content=""
-     data-url="http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/">
+     data-url="http://blog.lzuer.net/2016/06/22/array_merge-vs-+/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -400,8 +368,8 @@ Redis作者对Redis和memcache进行的比对：
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/07/difference-between-redis-and-memcache/"
-           data-title="Redis和Memcache的区别" data-url="http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/">
+      <div class="ds-thread" data-thread-key="2016/06/22/array_merge-vs-+/"
+           data-title="array_merge 和 + 之间的区别" data-url="http://blog.lzuer.net/2016/06/22/array_merge-vs-+/">
       </div>
     
   </div>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.lzuer.net/"/>
-  <updated>2016-06-07T14:13:49.812Z</updated>
+  <updated>2016-06-22T13:56:37.539Z</updated>
   <id>http://blog.lzuer.net/</id>
   
   <author>
@@ -16,11 +16,62 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>array_merge 和 + 之间的区别</title>
+    <link href="http://blog.lzuer.net/2016/06/22/array_merge-vs-+/"/>
+    <id>http://blog.lzuer.net/2016/06/22/array_merge-vs-+/</id>
+    <published>2016-06-22T21:57:23.000Z</published>
+    <updated>2016-06-22T13:56:37.539Z</updated>
+    
+    <content type="html">&lt;p&gt;首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。&lt;/p&gt;
+&lt;p&gt;+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。&lt;/p&gt;
+&lt;p&gt;举个栗子： &lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;apos;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$b = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;orange&amp;apos;, &amp;apos;c&amp;apos; =&amp;gt; &amp;apos;cherry&amp;apos;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$c = $a + $b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;var_dump($c);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;将会输出：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;array(3) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;a&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(5) &amp;quot;apple&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;b&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;banana&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;c&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;cherry&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;那么如果存在数字键值，又会有是什么表现方式呢？稍微改动下上一个栗子：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;apos;, 1];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$b = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;orange&amp;apos;, &amp;apos;c&amp;apos; =&amp;gt; &amp;apos;cherry&amp;apos;, 2];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$c = $a + $b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;var_dump($c);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;将会输出：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;array(4) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;a&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(5) &amp;quot;apple&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;b&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;banana&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [0]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  int(1)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;c&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;cherry&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可以看到和字符串表现一致。&lt;/p&gt;
+&lt;p&gt;再来测试下上面的代码， array_merge 的表现是怎样的：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;apos;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$b = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;orange&amp;apos;, &amp;apos;c&amp;apos; =&amp;gt; &amp;apos;cherry&amp;apos;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$c = array_merge($a, $b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;var_dump($c);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;输出结果为：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;array(3) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;a&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;orange&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;b&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;banana&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;c&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;cherry&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;那么正如文档中所说的，将会对相同的键值进行覆盖！那么对于数字键值是不是也是同样的处理呢？再看：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;apos;, 1];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$b = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;orange&amp;apos;, &amp;apos;c&amp;apos; =&amp;gt; &amp;apos;cherry&amp;apos;, 2];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;$c = $a + $b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;var_dump($c);&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;输出结果：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;array(5) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;a&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;orange&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;b&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;banana&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [0]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  int(1)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [&amp;quot;c&amp;quot;]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  string(6) &amp;quot;cherry&amp;quot;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  [1]=&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  int(2)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可以看到，并没有进行覆盖!由此可以得出结论，当两个数组中含有数值健的时候，会进行附加，并且键值会从0开始重建索引键值。&lt;/p&gt;
+&lt;p&gt;参看资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/7059721/array-merge-versus&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/7059721/array-merge-versus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://php.net/manual/en/language.operators.array.php&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://php.net/manual/en/language.operators.array.php&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://php.net/manual/en/function.array-merge.php&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://php.net/manual/en/function.array-merge.php&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。&lt;/p&gt;
+&lt;p&gt;+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。&lt;/p&gt;
+&lt;p&gt;举个栗子： &lt;/p&gt;
+&lt;figur
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
+    
+    
+      <category term="PHP" scheme="http://blog.lzuer.net/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Redis和Memcache的区别</title>
     <link href="http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/"/>
     <id>http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/</id>
     <published>2016-06-07T21:57:23.000Z</published>
-    <updated>2016-06-07T14:13:49.812Z</updated>
+    <updated>2016-06-22T13:56:37.539Z</updated>
     
     <content type="html">&lt;ol&gt;
 &lt;li&gt;Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别&lt;/li&gt;
@@ -70,7 +121,7 @@
     <link href="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/"/>
     <id>http://blog.lzuer.net/2016/05/27/install-golang-on-centos/</id>
     <published>2016-05-27T18:57:23.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;h2 id=&quot;Download&quot;&gt;&lt;a href=&quot;#Download&quot; class=&quot;headerlink&quot; title=&quot;Download&quot;&gt;&lt;/a&gt;Download&lt;/h2&gt;&lt;p&gt;首先确定操作系统位数, 可执行：&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ uname -m&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -120,7 +171,7 @@
     <link href="http://blog.lzuer.net/2016/05/09/validator-on-the-fly/"/>
     <id>http://blog.lzuer.net/2016/05/09/validator-on-the-fly/</id>
     <published>2016-05-09T16:53:42.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的&lt;br&gt;时候其中有一条需求就是把用户提交的评分值由原来的允许的&lt;code&gt;1, 2, 3, 4, 5&lt;/code&gt; 改成允许输入 &lt;code&gt;0, 2, 4, 6, 8, 10&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;自定义的&lt;code&gt;validator&lt;/code&gt;:&lt;/p&gt;
@@ -158,7 +209,7 @@
     <link href="http://blog.lzuer.net/2016/05/07/upload-file-with-php/"/>
     <id>http://blog.lzuer.net/2016/05/07/upload-file-with-php/</id>
     <published>2016-05-07T00:17:39.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html"></content>
     
@@ -178,7 +229,7 @@
     <link href="http://blog.lzuer.net/2016/03/03/git-tips-one/"/>
     <id>http://blog.lzuer.net/2016/03/03/git-tips-one/</id>
     <published>2016-03-03T16:53:42.000Z</published>
-    <updated>2016-06-07T14:13:49.812Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;h1 id=&quot;git-tip-one&quot;&gt;&lt;a href=&quot;#git-tip-one&quot; class=&quot;headerlink&quot; title=&quot;git tip one&quot;&gt;&lt;/a&gt;git tip one&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;git config&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;git config&lt;/code&gt; 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。&lt;/p&gt;
@@ -212,7 +263,7 @@
     <link href="http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/"/>
     <id>http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/</id>
     <published>2016-01-26T11:17:39.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;h2 id=&quot;开启xdebug&quot;&gt;&lt;a href=&quot;#开启xdebug&quot; class=&quot;headerlink&quot; title=&quot;开启xdebug&quot;&gt;&lt;/a&gt;开启xdebug&lt;/h2&gt;&lt;p&gt;在&lt;code&gt;php.ini&lt;/code&gt;中配置&lt;code&gt;xdebug&lt;/code&gt;如下：&lt;/p&gt;
 &lt;p&gt;  [xdebug]&lt;br&gt;  xdebug.remote_enable = On&lt;br&gt;  xdebug.remote_handler = dbgp&lt;br&gt;  xdebug.remote_host= localhost&lt;br&gt;  xdebug.remote_port = 9000&lt;br&gt;  xdebug.idekey = PHPSTORM&lt;br&gt;  xdebug.profiler_enable = 1&lt;/p&gt;
@@ -268,7 +319,7 @@
     <link href="http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/"/>
     <id>http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/</id>
     <published>2016-01-18T23:59:20.000Z</published>
-    <updated>2016-06-07T14:13:49.812Z</updated>
+    <updated>2016-06-22T13:56:37.539Z</updated>
     
     <content type="html">&lt;p&gt;首先在&lt;a href=&quot;https://travis-ci.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;travis&lt;/a&gt;将你的项目加入到travis。&lt;/p&gt;
 &lt;p&gt;打开设置，添加token变量。&lt;/p&gt;
@@ -329,7 +380,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/16/git-delete-submoudle/"/>
     <id>http://blog.lzuer.net/2016/01/16/git-delete-submoudle/</id>
     <published>2016-01-16T00:16:21.000Z</published>
-    <updated>2016-06-07T14:13:49.812Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Delete the relevant section from the .gitmodules file.&lt;/p&gt;
@@ -371,7 +422,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/"/>
     <id>http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/</id>
     <published>2016-01-13T16:17:39.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;&lt;code&gt;www.site.com&lt;/code&gt; &lt;code&gt;site.com&lt;/code&gt; 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，&lt;/p&gt;
 &lt;p&gt;因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。&lt;/p&gt;
@@ -404,7 +455,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/"/>
     <id>http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/</id>
     <published>2016-01-11T22:22:25.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;在 &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 &lt;code&gt;pull request&lt;/code&gt;。&lt;/p&gt;
 &lt;p&gt;在项目的作者对发起的 &lt;code&gt;pull request&lt;/code&gt; 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是，&lt;/p&gt;
@@ -465,7 +516,7 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
     <link href="http://blog.lzuer.net/2016/01/11/multiple-platform-git/"/>
     <id>http://blog.lzuer.net/2016/01/11/multiple-platform-git/</id>
     <published>2016-01-11T21:57:21.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.&lt;/p&gt;
 &lt;h2 id=&quot;设置用户名和邮箱&quot;&gt;&lt;a href=&quot;#设置用户名和邮箱&quot; class=&quot;headerlink&quot; title=&quot;设置用户名和邮箱&quot;&gt;&lt;/a&gt;设置用户名和邮箱&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;$git config --global user.name &amp;quot;yourname&amp;quot;
@@ -511,7 +562,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/"/>
     <id>http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/</id>
     <published>2015-12-29T23:57:23.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 &lt;code&gt;minimum-stability&lt;/code&gt; 最低稳定性版本的包将不会被安装。&lt;/p&gt;
 &lt;p&gt;例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：&lt;code&gt;&amp;quot;vendor/library&amp;quot;: &amp;quot;*&amp;quot;&lt;/code&gt;, 乍看上去并没有什么不妥, 但是当我们执行 &lt;code&gt;composer install&lt;/code&gt; 或者 &lt;code&gt;composer update&lt;/code&gt; 去下载包的时候通常会报错。&lt;/p&gt;
@@ -557,7 +608,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/"/>
     <id>http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/</id>
     <published>2015-12-20T20:17:39.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: &lt;code&gt;git reset --hard&lt;/code&gt;会彻底删除你的变动,你可以在这之前使用 &lt;code&gt;git stash&lt;/code&gt; 来保存变动。&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git reset --hard HEAD~1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -586,7 +637,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/09/18/composer-repositories-path/"/>
     <id>http://blog.lzuer.net/2015/09/18/composer-repositories-path/</id>
     <published>2015-09-18T00:17:39.000Z</published>
-    <updated>2016-06-07T14:13:49.812Z</updated>
+    <updated>2016-06-22T13:56:37.539Z</updated>
     
     <content type="html">&lt;blockquote&gt;
 &lt;p&gt;本文讲讲用composer来进行本地开发包,和本地公用包的使用.&lt;/p&gt;
@@ -632,7 +683,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/08/22/hashids-for-yii2/"/>
     <id>http://blog.lzuer.net/2015/08/22/hashids-for-yii2/</id>
     <published>2015-08-22T00:17:39.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;h3 id=&quot;关于Hashids&quot;&gt;&lt;a href=&quot;#关于Hashids&quot; class=&quot;headerlink&quot; title=&quot;关于Hashids&quot;&gt;&lt;/a&gt;关于Hashids&lt;/h3&gt;&lt;p&gt;Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。&lt;/p&gt;
 &lt;p&gt;详细： &lt;a href=&quot;http://hashids.org/php/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://hashids.org/php/&lt;/a&gt;&lt;/p&gt;
@@ -658,7 +709,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/07/08/reg-the-at-user/"/>
     <id>http://blog.lzuer.net/2015/07/08/reg-the-at-user/</id>
     <published>2015-07-08T17:50:15.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名&lt;/p&gt;
 &lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/@[^\s]&amp;#123;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;&amp;#125;/&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -688,7 +739,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/06/26/upgrade-php-version/"/>
     <id>http://blog.lzuer.net/2015/06/26/upgrade-php-version/</id>
     <published>2015-06-26T22:44:42.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;现版本：5.5.21&lt;/p&gt;
 &lt;p&gt;更新版本： 5.6.10&lt;/p&gt;
@@ -726,7 +777,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/"/>
     <id>http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/</id>
     <published>2015-06-15T22:07:27.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。&lt;/p&gt;
 &lt;p&gt;在使用left jion时，on和where条件的区别如下：&lt;/p&gt;
@@ -779,7 +830,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/"/>
     <id>http://blog.lzuer.net/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/</id>
     <published>2015-06-04T22:35:11.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
+    <updated>2016-06-22T13:56:37.543Z</updated>
     
     <content type="html">&lt;p&gt;现在需求是：&lt;strong&gt;如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;我们可以通过配置  &lt;code&gt;yii\web\User::$authTimeout&lt;/code&gt;来达到效果，上代码：&lt;/p&gt;
@@ -800,48 +851,6 @@ $ssh -T git@github.com
     
     
       <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>开始篮球</title>
-    <link href="http://blog.lzuer.net/2015/05/24/hi-basketball/"/>
-    <id>http://blog.lzuer.net/2015/05/24/hi-basketball/</id>
-    <published>2015-05-24T21:58:51.000Z</published>
-    <updated>2016-06-07T14:13:49.816Z</updated>
-    
-    <content type="html">&lt;p&gt;今天打了一下午的篮球，快要中暑了。。。。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;我为什么这么喜欢篮球&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;记得在上高中前，基本都没有什么体育运动，那时候的体育除了跑跑步就是跳跳绳。简直弱爆了。真正开始接触篮球还的进入高中后。&lt;/p&gt;
-&lt;p&gt;进入高中感觉最爽的就是体育课的区别了，可以选择自己喜欢的运动，比如足球、篮球。那时候我的性格还十分的内向，毕竟穷苦出身，不爱交际。上体育课来说，我就是场边的选手，不敢加入其中。&lt;/p&gt;
-&lt;p&gt;到了后来和同学熟悉了之后，开始慢慢的融入了大家。我也敢上场了。积极的争抢篮板、跑动，简直打了鸡血似得，几乎跑满整个篮球课。可能是年轻吧，真是活力充沛。&lt;/p&gt;
-&lt;p&gt;再后来，就高三了。升学的压力很大，学校也是个重点，所有体育课就形同虚设了。即有体育课，大部分同学们都还是选择留在教室里面学习，体育老师也是不管的「可能这也是特色了吧」。就这样，暂告别「篮坛」。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;新的开始&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;进过努力，考进了还不错的大学。那是大西北的一所学校。第一次出远门「这是我到现在为止去过的最远的地方」。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;不同的伙食「辣」，这里的菜系基本被川菜所占领，在家里哪吃过辣，第一餐吃的我感觉菊花都疼疼的&lt;/li&gt;
-&lt;li&gt;不同的气候「干热」，在这里运动，你的汗刚出来基本上就被蒸发干了。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;还有这样那样的 那样。。。。&lt;/p&gt;
-&lt;p&gt;宿舍离篮球场挺近，还是一如既往的「场边观战」。大学了嘛，所以决定改变自己内向的性格，参加社团、主动加入打篮球。。。&lt;/p&gt;
-&lt;p&gt;变化好快啊，我争强好胜的性格逐渐展现出来，在球场上，不知道多少次和同学吵闹「好愧疚」，本来自己的实力就不咋地，还那么的好胜。哎，在这里向我之前得罪过的同学们道个歉吧，哈哈，虽然我知道他们不会记恨着。&lt;/p&gt;
-&lt;p&gt;怎么办，这段还有好多要写啊！！可是跑题了啊。&lt;/p&gt;
-&lt;p&gt;算了，结束吧，挺累的。以后每个星期都可以打球了，锻炼锻炼，媳妇儿老说我的肚子跟怀孕好几个月的似的。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;今天打了一下午的篮球，快要中暑了。。。。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;我为什么这么喜欢篮球&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;记得在上高中前，基本都没有什么体育运动，那时候的体育除了跑跑步就是跳跳绳。简直弱爆了。真正开始接触篮球还的进入高中后。&lt;/p&gt;
-&lt;p&gt;进入高中感觉最
-    
-    </summary>
-    
-      <category term="life" scheme="http://blog.lzuer.net/categories/life/"/>
-    
-    
-      <category term="life" scheme="http://blog.lzuer.net/tags/life/"/>
     
   </entry>
   
