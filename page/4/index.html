@@ -212,6 +212,130 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/22/how-to-test-local-package/" itemprop="url">
+                  怎样将本地包安装到全局
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:25:15+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NodeJS/" itemprop="url" rel="index">
+                    <span itemprop="name">NodeJS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NodeJS/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/how-to-test-local-package/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/how-to-test-local-package/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <ol>
+<li>In package directory</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm link</span><br></pre></td></tr></table></figure>
+<p>This createsa symlink to the current folder in npm’s global installation directory.</p>
+<ol>
+<li>Somewhere else, where you want to use the modules:</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$npm  link &lt;pkgname&gt;</span><br></pre></td></tr></table></figure>
+<p>This will  create a symlink in your project’s <code>node_modules/</code> folder to the global installation.</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/22/awesome-command-in-linux/" itemprop="url">
                   awesome-command-in-linux
                 </a>
@@ -1922,189 +2046,12 @@ _   底线
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/21/about_php_namespace/" itemprop="url">
-                  关于php的命名空间
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-21T23:59:20+00:00" content="2015-04-21">
-              2015-04-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/21/about_php_namespace/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/21/about_php_namespace/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <blockquote>
-<p>PHP命名空间提供了一种将相关的类、函数和常量组合到一起的途径。PHP 在 5.3.0 以后的版本开始支持命名空间。</p>
-</blockquote>
-<h2 id="定义命名空间"><a href="#定义命名空间" class="headerlink" title="定义命名空间"></a>定义命名空间</h2><p>命名空间通过关键字namespace来声明。如果一个文件中包含命名空间，它必须在其它所有代码之前声明命名空间。</p>
-<p>将全局的非命名空间中的代码和命名空间的代码组合在一起，只能使用大括号的形式。全局代码必须用一个不带名称的namespace语句加上大括号括起来：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyPorject</span> &#123;</span><br><span class="line">  <span class="title">const</span> <span class="title">CONNECT_OK</span> = 1;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Connection</span> </span>&#123;&#125;;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">connect</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line">  <span class="title">session_start</span>();</span><br><span class="line">  $a = <span class="keyword">new</span> MyProject\Connection();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="使用命名空间"><a href="#使用命名空间" class="headerlink" title="使用命名空间"></a>使用命名空间</h2><ol>
-<li>非限定名称，或不包含前缀的类型名称。</li>
-</ol>
-<blockquote>
-<p>名称中不包含命名空间分隔符的标识符，例如 Foo</p>
-</blockquote>
-<ol>
-<li>限定名称，或包含前缀的名称。</li>
-</ol>
-<blockquote>
-<p>名称中含有命名空间分隔符的标识符，例如 Foo\Bar</p>
-</blockquote>
-<ol>
-<li>完全限定名称，或包含了全局前缀操作符的名称。</li>
-</ol>
-<blockquote>
-<p>名称中包含命名空间分隔符，并以命名空间分隔符开始的标识符，例如 \Foo\Bar。 namespace\Foo 也是一个完全限定名称.</p>
-<p>注意访问任意全局类、函数或常量，都可以使用完全限定名称，例如 \strlen() 或 \Exception 或 \INI_ALL。</p>
-</blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Foo</span> \ <span class="title">Bar</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">strlen</span><span class="params">($str)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> strlen(<span class="string">'test'</span>); <span class="comment">//print test</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> \strlen(<span class="string">'test'</span>); <span class="comment">//print 4</span></span><br></pre></td></tr></table></figure>
-<h3 id="命名空间和动态语言特征"><a href="#命名空间和动态语言特征" class="headerlink" title="命名空间和动态语言特征"></a>命名空间和动态语言特征</h3><p>必须使用完全限定名称（包括命名空间前缀的类名称）。注意因为在动态的类名称、函数名称或常量名称中，限定名称和完全限定名称没有区别，因此其前导的反斜杠是不必要的。</p>
-<p>PHP支持两种抽象的访问当前命名空间内部元素的方法， <strong>NAMESPACE</strong> 魔术常量和namespace关键字。</p>
-<p>常量<strong>NAMESPACE</strong>的值是包含当前命名空间名称的字符串。在全局的，不包括在任何命名空间中的代码，它包含一个空的字符串。</p>
-<p>关键字 namespace 可用来显式访问当前命名空间或子命名空间中的元素。它等价于类中的 self 操作符。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> \ <span class="title">foo</span>(); <span class="comment">// calls function MyProject \ foo()</span></span><br></pre></td></tr></table></figure>
-<h3 id="使用命名空间：别名-导入"><a href="#使用命名空间：别名-导入" class="headerlink" title="使用命名空间：别名/导入"></a>使用命名空间：别名/导入</h3><blockquote>
-<p>注意PHP不支持导入函数或常量。</p>
-</blockquote>
-<p>导入的命名空间必须是完全限定的，不会根据当前的命名空间做相对解析，所以前道的反斜杠是不必要的也不允许有反斜杠。</p>
-<h5 id="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"><a href="#导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。" class="headerlink" title="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"></a>导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</span><br><span class="line"></span><br><span class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">//实例化 My \ Full \ classname 对象</span></span><br><span class="line">$a = <span class="string">'Another'</span>;</span><br><span class="line">$obj2 = <span class="keyword">new</span> $a; <span class="comment">//实例化一个Another对象</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>另外，导入操作只影响非限定名称和限定名称。完全限定名称由于是确定的，故不受导入的影响</p>
-</blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</span><br><span class="line"></span><br><span class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">// My\Full\classname</span></span><br><span class="line">$obj = <span class="keyword">new</span> \Another; <span class="comment">// instance of class Another</span></span><br><span class="line">$obj = <span class="keyword">new</span> Another \ thing; <span class="comment">// My\Full\classname\thing;</span></span><br><span class="line">$obj = <span class="keyword">new</span> \Another\thing; <span class="comment">// Another\thing</span></span><br></pre></td></tr></table></figure>
-<h5 id="后备全局函数-常量"><a href="#后备全局函数-常量" class="headerlink" title="后备全局函数/常量"></a>后备全局函数/常量</h5><p>在命名空间中遇到一个非限定的类、函数和常量名称时，使用不同的优先策略来解析该名称。</p>
-<p>类名称总是解析到当前命名空间中的名称。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">'hi'</span>); <span class="comment">//会报错：Class 'MyProject\Exception' not found.</span></span><br></pre></td></tr></table></figure>
-<p>因此在访问系统内部或不包含在命名空间中的类名称时，必须使用完全限定名称。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">namspace MyProject;</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> \<span class="keyword">Exception</span>(<span class="string">'hi'</span>);<span class="comment">// success</span></span><br></pre></td></tr></table></figure>
-<p>对于函数和常量来说，如果当前命名空间中不存在该函数或常量，PHP 会退而使用全局空间中的函数或常量。</p>
-<h2 id="名称解析规则"><a href="#名称解析规则" class="headerlink" title="名称解析规则"></a>名称解析规则</h2><ol>
-<li><p>对完全限定名称的函数、类和常量的调用在编译时解析.例如 new \A\B 解析为类 A\B.</p>
-</li>
-<li><p>所有的非限定名称和限定名称根据当前的导入规则在编译时进行转换。例如,如果命名空间A\B\C被导入C，那么对 C\D\e() 的调用会被转换为 A\B\C\D\e().</p>
-</li>
-<li><p>在命名空间内部，所有的没有根据导入规则转换的限定名称均会在其前面加上当前的命名空间名称。例如，如果命名空间 A\B 内容中调用 C\D\e(),则会转换为 A\B\C\D\e().</p>
-</li>
-<li><p>非限定名称根据当前的导入规则在编译时转换(用全名代替短的导入名)。例如，如果命名空间 A\B\C 导入为 C，则 new C() 被转化为 new A\B\C().</p>
-</li>
-<li><p>在命名空间(例如A\B)内部对非限定名称或限定名称类的调用是在运行时解析的。下面是调用 new C() 及 new D\E()的解析过程：</p>
-<ul>
-<li><p>new C()的解析:</p>
-<ol>
-<li>在当前命名空间中查找 A\B\C 类</li>
-<li>尝试自动加载类 A\B\C</li>
-</ol>
-</li>
-<li><p>new D\E()的解析：</p>
-<ol>
-<li>在类名称前加上当前命名空间名称变成：A\B\D\E,然后查找该类。</li>
-<li>尝试自动加载类 A\B\D\E</li>
-</ol>
-</li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p>为了引用全局命名空间中的全局类，必须使用完全限定名称 new \C();</p>
-</blockquote>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2145,21 +2092,21 @@ _   底线
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">50</span>
+              <span class="site-state-item-count">51</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">41</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
