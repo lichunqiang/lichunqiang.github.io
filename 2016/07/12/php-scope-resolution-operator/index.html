@@ -53,31 +53,40 @@
 
 
 
-<meta name="description" content="本文讲讲用composer来进行本地开发包,和本地公用包的使用.
+<meta name="description" content="在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。
 
-概要当我们构建一个本地的类库时, 当并不想推送到packagist, 我们可以使用repositories &amp;gt; path
-来处理。
-以下目录结构为例：
-123456- apps\_ my-app   		-- 当前项目开发目录  \_ composer.json- packages			-- 本地共有库, 存放正在和已经开">
+这是手册中，对于范围解析符的概论。
+在日常工作中，我们经常会用在例如：
+
+调用类常量: SomeCls::THE_CONST，和public的静态变量 SomeCls::$VAR
+调用静态方法: SomeCls::staticMethod()
+
+当然，在于类的内部，我们可以使用 self，parent 和">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Composer之path">
-<meta property="og:url" content="http://blog.lzuer.net/2015/09/18/composer-repositories-path/index.html">
+<meta property="og:title" content="聊聊PHP中的范围解析操作符">
+<meta property="og:url" content="http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/index.html">
 <meta property="og:site_name" content="Light's Blog">
-<meta property="og:description" content="本文讲讲用composer来进行本地开发包,和本地公用包的使用.
+<meta property="og:description" content="在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。
 
-概要当我们构建一个本地的类库时, 当并不想推送到packagist, 我们可以使用repositories &amp;gt; path
-来处理。
-以下目录结构为例：
-123456- apps\_ my-app   		-- 当前项目开发目录  \_ composer.json- packages			-- 本地共有库, 存放正在和已经开">
-<meta property="og:updated_time" content="2016-07-12T14:25:30.162Z">
+这是手册中，对于范围解析符的概论。
+在日常工作中，我们经常会用在例如：
+
+调用类常量: SomeCls::THE_CONST，和public的静态变量 SomeCls::$VAR
+调用静态方法: SomeCls::staticMethod()
+
+当然，在于类的内部，我们可以使用 self，parent 和">
+<meta property="og:updated_time" content="2016-07-12T14:25:30.166Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Composer之path">
-<meta name="twitter:description" content="本文讲讲用composer来进行本地开发包,和本地公用包的使用.
+<meta name="twitter:title" content="聊聊PHP中的范围解析操作符">
+<meta name="twitter:description" content="在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。
 
-概要当我们构建一个本地的类库时, 当并不想推送到packagist, 我们可以使用repositories &amp;gt; path
-来处理。
-以下目录结构为例：
-123456- apps\_ my-app   		-- 当前项目开发目录  \_ composer.json- packages			-- 本地共有库, 存放正在和已经开">
+这是手册中，对于范围解析符的概论。
+在日常工作中，我们经常会用在例如：
+
+调用类常量: SomeCls::THE_CONST，和public的静态变量 SomeCls::$VAR
+调用静态方法: SomeCls::staticMethod()
+
+当然，在于类的内部，我们可以使用 self，parent 和">
 
 
 
@@ -89,7 +98,7 @@
   };
 </script>
 
-  <title> Composer之path | Light's Blog </title>
+  <title> 聊聊PHP中的范围解析操作符 | Light's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -219,7 +228,7 @@
             
             
               
-                Composer之path
+                聊聊PHP中的范围解析操作符
               
             
           </h1>
@@ -228,8 +237,8 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-09-18T00:17:39+00:00" content="2015-09-18">
-              2015-09-18
+            <time itemprop="dateCreated" datetime="2016-07-12T23:57:23+00:00" content="2016-07-12">
+              2016-07-12
             </time>
           </span>
 
@@ -245,18 +254,6 @@
 
                 
                 
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/Composer/" itemprop="url" rel="index">
-                    <span itemprop="name">Composer</span>
-                  </a>
-                </span>
-
-                
-                
 
               
             </span>
@@ -266,8 +263,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/09/18/composer-repositories-path/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/18/composer-repositories-path/" itemprop="commentsCount"></span>
+                <a href="/2016/07/12/php-scope-resolution-operator/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/12/php-scope-resolution-operator/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -287,24 +284,31 @@
 
       
         <span itemprop="articleBody"><blockquote>
-<p>本文讲讲用composer来进行本地开发包,和本地公用包的使用.</p>
+<p>在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。</p>
 </blockquote>
-<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>当我们构建一个本地的类库时, 当并不想推送到<a href="https://packagist.org/" target="_blank" rel="external">packagist</a>, 我们可以使用<code>repositories &gt; path</code></p>
-<p>来处理。</p>
-<p>以下目录结构为例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- apps</div><div class="line">\_ my-app   		-- 当前项目开发目录</div><div class="line">  \_ composer.json</div><div class="line">- packages			-- 本地共有库, 存放正在和已经开发好的类库</div><div class="line">\_ my-package       -- 一个叫 my-package 的类库 </div><div class="line">  \_ composer.json</div></pre></td></tr></table></figure>
-<p>现在我们要在 <code>my-app</code> 中依赖 <code>my-package</code>, 那么现在我们可以：</p>
+<p>这是手册中，对于范围解析符的概论。</p>
+<p>在日常工作中，我们经常会用在例如：</p>
 <ol>
-<li>配置 <code>my-app/composer.json</code></li>
+<li>调用类常量: <code>SomeCls::THE_CONST</code>，和<code>public</code>的静态变量 <code>SomeCls::$VAR</code></li>
+<li>调用静态方法: <code>SomeCls::staticMethod()</code></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	//引入依赖</div><div class="line">	&quot;require&quot;: &#123;</div><div class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</div><div class="line">	&#125;,</div><div class="line">	//配置 repositories</div><div class="line">	&quot;repositories&quot;: [</div><div class="line"></div><div class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</div><div class="line">	]	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ol>
-<li>composer update</li>
-</ol>
-<p>接下来就是在 <code>my-app</code> 目录下执行 <code>composer update</code>, 来使之前的配置生效!</p>
-<p>执行成功后, 我们可以到<code>my-app/vendor</code> 目录下查看, 我们可以看到该类库已经加入到 <code>my-app/vendor</code> 了！</p>
-<p>之后在 <code>my-package</code> 任何改动后我们需要在 <code>my-app</code> 中执行 <code>composer remove myrepositry/package1</code> 来移除,</p>
-<p>然后在require进来.</p>
+<p>当然，在于类的内部，我们可以使用 <code>self</code>，<code>parent</code> 和 <code>static</code> 关键字来进行访问。</p>
+<p>这里，我要强调的是一种比较常见但是通常我们会忽略的一种用法。</p>
+<p>我们经常会看到这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Child extends Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()</div><div class="line">	&#123;</div><div class="line">		parent::__construct();</div><div class="line">		//some other logic</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们都知道，在 <code>Child</code> 的构造方法中 <code>parent::__construct()</code> 是主动调用父类的构造方法。</p>
+<p>但是，为什么会需要我们主动去调用呢？</p>
+<blockquote>
+<p>当一个子类覆盖父类的方法时，PHP不会调用父类已被覆盖的方法。是否调用父类的方法取决于子类。<br>这种机制也作用于构造函数和析构函数，重载以及魔术方法</p>
+</blockquote>
+<p>所以，当见到诸如 <code>parent::__construct</code>，<code>parent::__get</code> … 等调用时我们就知道其中的原由了。</p>
+<p>为什么会写这篇文章？因为有一天, 我因为看到下面的代码而蒙逼了…当我知道上面的原理后才明白过来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class BasePage</div><div class="line">&#123;</div><div class="line">	protected function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		//...</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Page extends BasePage</div><div class="line">&#123;</div><div class="line">	public function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		$key = $key + $value;</div><div class="line">		parent::renderValue($key, $value);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以文档熟烂于心才是硬道理！</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php" target="_blank" rel="external">http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php</a></li>
+</ul>
 </span>
       
     </div>
@@ -322,17 +326,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/22/hashids-for-yii2/" rel="next" title="Hashids的yii2封装">
-                <i class="fa fa-chevron-left"></i> Hashids的yii2封装
+              <a href="/2016/06/23/singleton-and-multiton/" rel="next" title="设计模式之单例和多例">
+                <i class="fa fa-chevron-left"></i> 设计模式之单例和多例
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/20/how-to-delete-one-commit-of-git/" rel="prev" title="删除一次错误的提交">
-                删除一次错误的提交 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -347,10 +347,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/09/18/composer-repositories-path/"
-     data-title="Composer之path"
+        <div class="ds-share flat" data-thread-key="2016/07/12/php-scope-resolution-operator/"
+     data-title="聊聊PHP中的范围解析操作符"
      data-content=""
-     data-url="http://blog.lzuer.net/2015/09/18/composer-repositories-path/">
+     data-url="http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -383,8 +383,8 @@
         
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/09/18/composer-repositories-path/"
-           data-title="Composer之path" data-url="http://blog.lzuer.net/2015/09/18/composer-repositories-path/">
+      <div class="ds-thread" data-thread-key="2016/07/12/php-scope-resolution-operator/"
+           data-title="聊聊PHP中的范围解析操作符" data-url="http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/">
       </div>
     
   </div>
@@ -507,7 +507,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

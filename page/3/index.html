@@ -53,15 +53,12 @@
 
 
 
-<meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Light's Blog">
 <meta property="og:url" content="http://blog.lzuer.net/page/3/index.html">
 <meta property="og:site_name" content="Light's Blog">
-<meta property="og:description">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Light's Blog">
-<meta name="twitter:description">
 
 
 
@@ -212,6 +209,136 @@
             
               
                 
+                <a class="post-title-link" href="/2015/06/15/the-difference-between-on-and-where/" itemprop="url">
+                  在关联表查询的时候是在ON添加条件和在where添加添加条件异同
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-06-15T22:07:27+00:00" content="2015-06-15">
+              2015-06-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/15/the-difference-between-on-and-where/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/15/the-difference-between-on-and-where/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。</p>
+<p>在使用left jion时，on和where条件的区别如下：</p>
+<ol>
+<li><p>on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。 </p>
+</li>
+<li><p>where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部过滤掉。</p>
+</li>
+</ol>
+<p><strong>假设有两张表：</strong></p>
+<p>表1 tab1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">id size </div><div class="line">1 10 </div><div class="line">2 20 </div><div class="line">3 30</div></pre></td></tr></table></figure>
+<p>表2 tab2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">size name </div><div class="line">10 AAA </div><div class="line">20 BBB </div><div class="line">20 CCC</div></pre></td></tr></table></figure>
+<p>两条SQL:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. select * form tab1 left join tab2 on (tab1.size = tab2.size) where tab2.name=’AAA’</div><div class="line"></div><div class="line">2. select * form tab1 left join tab2 on (tab1.size = tab2.size and tab2.name=’AAA’)</div></pre></td></tr></table></figure>
+<p>第一条SQL的过程：</p>
+<p>1、中间表 on条件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">tab1.size = tab2.size  </div><div class="line">tab1.id    tab1.size    tab2.size     tab2.name </div><div class="line">1             10          10              AAA </div><div class="line">2             20          20              BBB  </div><div class="line">2             20          20              CCC </div><div class="line">3             30         (null)          (null) </div><div class="line">2</div><div class="line"></div><div class="line">再对中间表过滤where 条件：</div><div class="line"></div><div class="line">tab2.name=’AAA’</div><div class="line">tab1.id       tab1.size        tab2.size     tab2.name </div><div class="line">1                10                10             AAA</div></pre></td></tr></table></figure>
+<p>第二条SQL的过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1、中间表 on条件:   </div><div class="line">tab1.size = tab2.size and tab2.name=’AAA’</div><div class="line"> (条件不为真也会返回左表中的记录)  </div><div class="line">tab1.id      tab1.size       tab2.size      tab2.name </div><div class="line">1             10                10             AAA </div><div class="line">2             20                (null)        (null) </div><div class="line">3             30                (null)        (null)</div></pre></td></tr></table></figure>
+<p>其实以上结果的关键原因就是left join,right join,full join的特殊性，不管on上的条件是否为真都会返回left或right表中的记录，full则具有left和right的特性的并集。而inner jion没这个特殊性，则条件放在on中和where中，返回的结果集是相同的。</p>
+<p><strong>参考</strong></p>
+<ul>
+<li><p><a href="http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause" target="_blank" rel="external">http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause</a></p>
+</li>
+<li><p><a href="http://dba-china.com/topic/default/view/71" target="_blank" rel="external">http://dba-china.com/topic/default/view/71</a></p>
+</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/" itemprop="url">
                   怎么控制用户一定时间未操作自动登出
                 </a>
@@ -274,9 +401,9 @@
             
               <p>现在需求是：<strong>如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录</strong></p>
 <p>我们可以通过配置  <code>yii\web\User::$authTimeout</code>来达到效果，上代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&apos;user&apos; =&gt; [</span><br><span class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</span><br><span class="line">    &apos;authTimeout&apos; =&gt; 5 //为了测试，设置5秒</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;user&apos; =&gt; [</div><div class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</div><div class="line">    &apos;authTimeout&apos; =&gt; 5 //为了测试，设置5秒</div><div class="line">],</div></pre></td></tr></table></figure>
 <p>还有一个更设定是可以让用户登入多长时间后，不管有没有操作，超过这个设定的时间后都会登出，上代码:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&apos;user&apos; =&gt; [</span><br><span class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</span><br><span class="line">    &apos;absoluteAuthTimeout&apos; =&gt; 20 //这里为了测试，设置为20秒，登入后不停刷新模拟用户操作，结果可看到，虽然在不断操作，但是过了设置的时间还是会自动登出</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;user&apos; =&gt; [</div><div class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</div><div class="line">    &apos;absoluteAuthTimeout&apos; =&gt; 20 //这里为了测试，设置为20秒，登入后不停刷新模拟用户操作，结果可看到，虽然在不断操作，但是过了设置的时间还是会自动登出</div><div class="line">],</div></pre></td></tr></table></figure>
 <p><em>需要注意的是如果设置 <code>enableAutoLogin = true</code> 的话，以上两个设置是不会生效的。</em></p>
 
             
@@ -502,16 +629,16 @@
               <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 <code>[[yii\data\Pagination]]</code> 的默认每页个数是 20 个.</p>
 <p>对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? </p>
 <p>这时候,我们可以使用 [[Yii::$contianer]] 的来实现：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里我们设置默认个数为10, 将此置于 bootstrap.php 中</span></span><br><span class="line">\Yii::$container-&gt;set(<span class="string">'yii\data\Pagination'</span>, [</span><br><span class="line">    <span class="string">'pageSize'</span> =&gt; <span class="number">10</span>,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//这里我们设置默认个数为10, 将此置于 bootstrap.php 中</span></div><div class="line">\Yii::$container-&gt;set(<span class="string">'yii\data\Pagination'</span>, [</div><div class="line">    <span class="string">'pageSize'</span> =&gt; <span class="number">10</span>,</div><div class="line">]);</div></pre></td></tr></table></figure>
 <p>这样, 我们在使用诸如 <code>ActiveDataProvider</code> 等方法时，默认每页个数就为 10 了。</p>
 <h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><blockquote>
 <p>理论上，通过 <code>Yii::createObject</code> 来实例化的对用都会起作用。</p>
 </blockquote>
 <p>所以，说用通过 <code>Yii::createObject</code> 创建的实例都会使用我们通过以上方法设定的默认值。因为 <code>ActiveDataProvider</code> 等中的 <code>pagination</code> 在内部是通过 <code>Yii::createObject</code> 创建的，所以设置是生效的。</p>
 <p>因此，考虑一下两种实现方式：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. pageSize 还是默认的20</span></span><br><span class="line">$paging = <span class="keyword">new</span> \yii\data\Pagination;</span><br><span class="line"><span class="comment">//2. pageSize 就是设置的 10 了</span></span><br><span class="line">$paging = Yii::createObject(<span class="string">'yii\data\Pagination'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1. pageSize 还是默认的20</span></div><div class="line">$paging = <span class="keyword">new</span> \yii\data\Pagination;</div><div class="line"><span class="comment">//2. pageSize 就是设置的 10 了</span></div><div class="line">$paging = Yii::createObject(<span class="string">'yii\data\Pagination'</span>);</div></pre></td></tr></table></figure>
 <p>所以Yii提倡使用 <code>Yii::createObject</code> 来实例化对象，因为它能够自动解决依赖和默认值配置等好处。</p>
-<h2 id="Yii-container-是什么"><a href="#Yii-container-是什么" class="headerlink" title="Yii::$container 是什么"></a>Yii::$container 是什么</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Yii::$container = <span class="keyword">new</span> yii\di\Container();</span><br></pre></td></tr></table></figure>
+<h2 id="Yii-container-是什么"><a href="#Yii-container-是什么" class="headerlink" title="Yii::$container 是什么"></a>Yii::$container 是什么</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Yii::$container = <span class="keyword">new</span> yii\di\Container();</div></pre></td></tr></table></figure>
 <p>所以 <code>Yii::$container</code> 就是整个生命周期的一个依赖容器。</p>
 <p>考虑开始的时候的代码，我们可以理解: 通过 <code>Yii::$container-&gt;set()</code> 其实就是向这个容器注入了一个类和其配置. 当调用 <code>Yii::createObject</code> 的时候会去这个容器里面找，如果存在则根据 set 的配置进行实例化。</p>
 <h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p>关于依赖注入和依赖注入容器可以查看博文：<a href="http://www.digpage.com/di.html" target="_blank" rel="external">http://www.digpage.com/di.html</a></p>
@@ -632,9 +759,9 @@
               <p>项目上线运行中，由于这样那样奇葩的浏览器的存在，导致我们的js代码存在一定的兼容性问题。那么可否收集到这些问题呢？</p>
 <p>答案是肯定的。我们可以基于 <code>window.onerror</code> 事件来收集并上报前段js代码在实际运行中产生的错误，以帮助我们排查解决。</p>
 <p>在W3C规范里，window.onerror是html5新定义的事件，但实际上，window.onerror从IE6开始就被支持了，而chrome、firefox、safari、opera，目前也都已经支持该事件。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//收集js报错信息并上报</span></span><br><span class="line"><span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">msg, url, line, column, error</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> _e = <span class="built_in">encodeURIComponent</span>,</span><br><span class="line">	content = <span class="string">'/site/jslog?message='</span> + _e(msg) +</span><br><span class="line">	  <span class="string">'&amp;url='</span> + _e(url || <span class="built_in">window</span>.location.href) + <span class="string">'&amp;line='</span> + _e(line) +</span><br><span class="line">	  (error &amp;&amp; error.stack ? <span class="string">'&amp;stack='</span> + _e(error.stack) : <span class="string">''</span>) +</span><br><span class="line">	  (column ? <span class="string">'&amp;column='</span> + _e(column) : <span class="string">''</span>) +</span><br><span class="line">	  <span class="string">'&amp;ua='</span> + <span class="built_in">window</span>.navigator.userAgent.replace(<span class="regexp">/[\:,;]/g</span>,<span class="string">"|"</span>);</span><br><span class="line">	(<span class="keyword">new</span> Image()).src = content;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//收集js报错信息并上报</span></div><div class="line"><span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">msg, url, line, column, error</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> _e = <span class="built_in">encodeURIComponent</span>,</div><div class="line">	content = <span class="string">'/site/jslog?message='</span> + _e(msg) +</div><div class="line">	  <span class="string">'&amp;url='</span> + _e(url || <span class="built_in">window</span>.location.href) + <span class="string">'&amp;line='</span> + _e(line) +</div><div class="line">	  (error &amp;&amp; error.stack ? <span class="string">'&amp;stack='</span> + _e(error.stack) : <span class="string">''</span>) +</div><div class="line">	  (column ? <span class="string">'&amp;column='</span> + _e(column) : <span class="string">''</span>) +</div><div class="line">	  <span class="string">'&amp;ua='</span> + <span class="built_in">window</span>.navigator.userAgent.replace(<span class="regexp">/[\:,;]/g</span>,<span class="string">"|"</span>);</div><div class="line">	(<span class="keyword">new</span> Image()).src = content;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>服务端:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">actionJslog</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	$response = Yii::$app-&gt;getResponse();</span><br><span class="line">	<span class="comment">//这是必须的，我们要将header设置为image</span></span><br><span class="line">    $response-&gt;format = Response::FORMAT_RAW;</span><br><span class="line">	<span class="comment">//write the log data</span></span><br><span class="line">	$headers = $response-&gt;getHeaders();</span><br><span class="line">	$headers-&gt;set(<span class="string">'Content-Type'</span>, <span class="string">'image/png'</span>);</span><br><span class="line">	<span class="keyword">return</span> $response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">actionJslog</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	$response = Yii::$app-&gt;getResponse();</div><div class="line">	<span class="comment">//这是必须的，我们要将header设置为image</span></div><div class="line">    $response-&gt;format = Response::FORMAT_RAW;</div><div class="line">	<span class="comment">//write the log data</span></div><div class="line">	$headers = $response-&gt;getHeaders();</div><div class="line">	$headers-&gt;set(<span class="string">'Content-Type'</span>, <span class="string">'image/png'</span>);</div><div class="line">	<span class="keyword">return</span> $response;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这段代码需要放在head中并且位于所有script之前！</p>
 <p>这样当客户端发生js报错时就会上报到服务器端，在服务器端我只需要将提交过来的信息进行保存就可以了。这样我们就可以根据收集到的信息来解决问题。</p>
 <p>这里有几个点需要注意，一个是日志收集接口暴露在外，最好增加安全措施，比如设置token。</p>
@@ -648,7 +775,7 @@
 <li><p>提供兼容代码「置于head中所有script之前」</p>
 </li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.console = <span class="built_in">window</span>.console || (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> _c = &#123;&#125;;</span><br><span class="line">	_c.log = _c.warning = _c.error = _c.info .. = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">	<span class="keyword">return</span> _c;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.console = <span class="built_in">window</span>.console || (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> _c = &#123;&#125;;</div><div class="line">	_c.log = _c.warning = _c.error = _c.info .. = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">	<span class="keyword">return</span> _c;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
             
           </span>
         
@@ -758,7 +885,7 @@
 </li>
 </ul>
 <p>根据以上，我们在使用的时候需要注意的有：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$user = User::findOne();</span><br><span class="line"></span><br><span class="line">$user-&gt;status = <span class="number">1</span>; <span class="comment">//假设原值也为1</span></span><br><span class="line"></span><br><span class="line">$user-&gt;updated_at = now();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($user-&gt;update() === <span class="keyword">false</span>) &#123; <span class="comment">//注意这里必须要进行严格的判断「update执行返回的是受影响的行数」</span></span><br><span class="line">	<span class="comment">//update faild</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">//update success</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$user = User::findOne();</div><div class="line"></div><div class="line">$user-&gt;status = <span class="number">1</span>; <span class="comment">//假设原值也为1</span></div><div class="line"></div><div class="line">$user-&gt;updated_at = now();</div><div class="line"></div><div class="line"><span class="keyword">if</span> ($user-&gt;update() === <span class="keyword">false</span>) &#123; <span class="comment">//注意这里必须要进行严格的判断「update执行返回的是受影响的行数」</span></div><div class="line">	<span class="comment">//update faild</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">//update success</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
             
           </span>
         
@@ -875,12 +1002,12 @@
               <p>顾名思义，从命名上来看，给人的感觉是进行布尔类型判断的。</p>
 <p>但其实我们可以用它来做一些更有意思的比较。</p>
 <p>比较常规的用法：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionSearch</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	$model = <span class="keyword">new</span> DynamicModel([<span class="string">'status'</span>]);</span><br><span class="line"></span><br><span class="line">	$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>);</span><br><span class="line">	$model-&gt;status = <span class="number">1</span>;</span><br><span class="line">	$model-&gt;validate(); <span class="comment">// true, status 设置为 0 也会验证为true</span></span><br><span class="line"></span><br><span class="line">	$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>, [<span class="string">'strict'</span> =&gt; <span class="keyword">true</span>]);</span><br><span class="line">	$model-&gt;status = <span class="number">1</span>;</span><br><span class="line">	$model-&gt;validate(); <span class="comment">// false</span></span><br><span class="line">	$model-&gt;status = <span class="string">'1'</span>;</span><br><span class="line">	$model-&gt;validate(); <span class="comment">// true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionSearch</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	$model = <span class="keyword">new</span> DynamicModel([<span class="string">'status'</span>]);</div><div class="line"></div><div class="line">	$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>);</div><div class="line">	$model-&gt;status = <span class="number">1</span>;</div><div class="line">	$model-&gt;validate(); <span class="comment">// true, status 设置为 0 也会验证为true</span></div><div class="line"></div><div class="line">	$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>, [<span class="string">'strict'</span> =&gt; <span class="keyword">true</span>]);</div><div class="line">	$model-&gt;status = <span class="number">1</span>;</div><div class="line">	$model-&gt;validate(); <span class="comment">// false</span></div><div class="line">	$model-&gt;status = <span class="string">'1'</span>;</div><div class="line">	$model-&gt;validate(); <span class="comment">// true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里列举了两个验证场景：1是非严格比较， 2是严格比较。</p>
 <p>在 BooleanValidator 中有两个属性分别代表比较的值，其默认为 <code>trueValue = &#39;1&#39;</code> 和 <code>falseValue = &#39;0&#39;</code>,</p>
 <p>在验证的时候 BooleanValidator 分别对对相应的属性值进行比较，当有一个「trueValue或falseValue」分别在严格比较和非严格比较的情况下和属性值相等时则验证通过。</p>
 <p>由此，我们可以通过设置 trueValue 和 falseValue 来进行更多的比较，例如：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此场景我们需要验证用户的输入为 yes 或者 no</span></span><br><span class="line"></span><br><span class="line">$model = <span class="keyword">new</span> DynamicModel([<span class="string">'action'</span>]);</span><br><span class="line">$model-&gt;load(Yii::$app-&gt;getRequest()-&gt;post(), <span class="string">''</span>);</span><br><span class="line">$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>, [<span class="string">'strict'</span> =&gt; <span class="keyword">true</span>, <span class="string">'trueValue'</span> =&gt; <span class="string">'yes'</span>, <span class="string">'falseValue'</span> =&gt; <span class="string">'no'</span>]);</span><br><span class="line"><span class="keyword">if</span> ($model-&gt;validate()) &#123;</span><br><span class="line">	<span class="comment">//validate pass</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">//validate error</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//此场景我们需要验证用户的输入为 yes 或者 no</span></div><div class="line"></div><div class="line">$model = <span class="keyword">new</span> DynamicModel([<span class="string">'action'</span>]);</div><div class="line">$model-&gt;load(Yii::$app-&gt;getRequest()-&gt;post(), <span class="string">''</span>);</div><div class="line">$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>, [<span class="string">'strict'</span> =&gt; <span class="keyword">true</span>, <span class="string">'trueValue'</span> =&gt; <span class="string">'yes'</span>, <span class="string">'falseValue'</span> =&gt; <span class="string">'no'</span>]);</div><div class="line"><span class="keyword">if</span> ($model-&gt;validate()) &#123;</div><div class="line">	<span class="comment">//validate pass</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">//validate error</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
             
           </span>
         
@@ -996,15 +1123,15 @@
             
               <h3 id="什么是DynamicModel"><a href="#什么是DynamicModel" class="headerlink" title="什么是DynamicModel"></a>什么是DynamicModel</h3><p>DynamicModel是用来进行临时的数据验证，有些情况，我们不希望为一次数据提交建立专门的Model来处理「例如：操作只是进行更改商品的状态」.</p>
 <h3 id="如何来用"><a href="#如何来用" class="headerlink" title="如何来用"></a>如何来用</h3><h4 id="DynamicModel-validateData"><a href="#DynamicModel-validateData" class="headerlink" title="DynamicModel::validateData"></a>DynamicModel::validateData</h4><p>DynamicModel提供了静态方法 <code>validateData</code> 来辅助我们实现动态验证，考虑一下代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionUpdateStatus</span><span class="params">($id, $status)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	$model = DynamicModel::validateData(compact(<span class="string">'id'</span>, <span class="string">'status'</span>), [</span><br><span class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>],</span><br><span class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>],</span><br><span class="line">		[<span class="string">'status'</span>, <span class="string">'in'</span>, <span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]],</span><br><span class="line">		...</span><br><span class="line">	]);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ($model-&gt;validate()) &#123;</span><br><span class="line">		<span class="comment">//validation success</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">//validation error</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionUpdateStatus</span><span class="params">($id, $status)</span></span></div><div class="line">&#123;</div><div class="line">	$model = DynamicModel::validateData(compact(<span class="string">'id'</span>, <span class="string">'status'</span>), [</div><div class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>],</div><div class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>],</div><div class="line">		[<span class="string">'status'</span>, <span class="string">'in'</span>, <span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]],</div><div class="line">		...</div><div class="line">	]);</div><div class="line"></div><div class="line">	<span class="keyword">if</span> ($model-&gt;validate()) &#123;</div><div class="line">		<span class="comment">//validation success</span></div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="comment">//validation error</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里的 <code>validateData</code> 方法接受两个参数：model的属性值和对应的验证方法，它返回的是一个 DynamicModel的实例，拥有赋予的属性和对应的值，当然还有定义的验证方法。</p>
 <h4 id="面向对象的方法"><a href="#面向对象的方法" class="headerlink" title="面向对象的方法"></a>面向对象的方法</h4><p>调用 <code>validateData</code> 方法，并传入属性值和验证方法会为我们自动生成一个 DynamicModel 的实力，当然我们也可以：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$model = <span class="keyword">new</span> DynamicModel(compact(<span class="string">'id'</span>, <span class="string">'status'</span>));</span><br><span class="line">$model-&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>)</span><br><span class="line">	  -&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>)</span><br><span class="line">	  -&gt;addRule(<span class="string">'status'</span>, <span class="string">'in'</span>, [<span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]]);</span><br><span class="line">	  ...</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($model-&gt;validate()) &#123;</span><br><span class="line">	<span class="comment">//validate success</span></span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">$model = <span class="keyword">new</span> DynamicModel(compact(<span class="string">'id'</span>, <span class="string">'status'</span>));</div><div class="line">$model-&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>)</div><div class="line">	  -&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>)</div><div class="line">	  -&gt;addRule(<span class="string">'status'</span>, <span class="string">'in'</span>, [<span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]]);</div><div class="line">	  ...</div><div class="line"></div><div class="line"><span class="keyword">if</span> ($model-&gt;validate()) &#123;</div><div class="line">	<span class="comment">//validate success</span></div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
 <h3 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h3><p>通过以上两个方法得到动态model后，我们可以通过 <code>$model-&gt;id</code> 的方式来获取对应的值。</p>
 <p>当然也可以调用 <code>$model-&gt;attributes()</code> 来获取所有属性.</p>
 <p>当希望为创建好的model新增属性时，我们可以：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$model-&gt;defineAttribute(<span class="string">'user_id'</span>, <span class="number">1111</span>);</span><br><span class="line">$model-&gt;defineAttribute(<span class="string">'name'</span>);</span><br></pre></td></tr></table></figure>
-<p>需要删除某一属性时：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$model-&gt;undefineAttribute(<span class="string">'name'</span>);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$model-&gt;defineAttribute(<span class="string">'user_id'</span>, <span class="number">1111</span>);</div><div class="line">$model-&gt;defineAttribute(<span class="string">'name'</span>);</div></pre></td></tr></table></figure>
+<p>需要删除某一属性时：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$model-&gt;undefineAttribute(<span class="string">'name'</span>);</div></pre></td></tr></table></figure></p>
 
             
           </span>
@@ -1109,10 +1236,10 @@
             
               <p>贤心的最懂你的、跨终端的web弹层组件<a href="https://github.com/sentsin/layer" target="_blank" rel="external">layer</a>由于没有发布到bower，所以为了在Yii2的项目中方便使用,特发布了 <a href="https://packagist.org/packages/light/yii2-layer" target="_blank" rel="external">light/yii2-layer</a></p>
 <p>这样我们就可以愉快的依赖 layer 这块强大的插件了。</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require light/yii2-layer=*</span><br></pre></td></tr></table></figure>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerAsset</span>;</span><br><span class="line"></span><br><span class="line">LayerAsset::register(<span class="keyword">$this</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require light/yii2-layer=*</div></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerAsset</span>;</div><div class="line"></div><div class="line">LayerAsset::register(<span class="keyword">$this</span>);</div></pre></td></tr></table></figure>
 <p>或者在移动端使用：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerMobileAsset</span>;</span><br><span class="line"></span><br><span class="line">LayerMobileAsset::register(<span class="keyword">$this</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> <span class="title">light</span>\<span class="title">assets</span>\<span class="title">LayerMobileAsset</span>;</div><div class="line"></div><div class="line">LayerMobileAsset::register(<span class="keyword">$this</span>);</div></pre></td></tr></table></figure>
 <p>具体这款插件有多炫酷，还是自行到官方站去体验吧！ <a href="http://sentsin.com/jquery/layer/" target="_blank" rel="external">http://sentsin.com/jquery/layer/</a></p>
 <h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>这里没有封装使用插件，因为目前还是在js中主动调用 - - ！</p>
 
@@ -1234,10 +1361,10 @@
 <p>具体可以参看下玉伯大神的一篇文章<a href="https://github.com/lifesinger/lifesinger.github.com/issues/118" target="_blank" rel="external">聊聊 JSONP 的 P</a></p>
 </blockquote>
 <h2 id="怎么发送JSONP请求"><a href="#怎么发送JSONP请求" class="headerlink" title="怎么发送JSONP请求"></a>怎么发送JSONP请求</h2><p>这里我使用jQuery的 <code>getJSON</code> 方法：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.getJSON(<span class="string">'http://www.b.com/api/users?callback=?'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(data)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$.getJSON(<span class="string">'http://www.b.com/api/users?callback=?'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">	<span class="built_in">console</span>.log(data)</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>这里jQuery一切都为我们做好了,只需要加上参数 <code>callback=?</code>！</p>
 <h2 id="Yii接受处理并返回"><a href="#Yii接受处理并返回" class="headerlink" title="Yii接受处理并返回"></a>Yii接受处理并返回</h2><p>先上代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Yii::$app-&gt;getResponse()-&gt;format = Response::FORMAT_JSONP;</span><br><span class="line">$user_count = (<span class="keyword">new</span> Query)-&gt;from(<span class="string">'users'</span>)-&gt;count();</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    <span class="string">'data'</span> =&gt; [</span><br><span class="line">        <span class="string">'errcode'</span> =&gt; <span class="number">0</span>,</span><br><span class="line">        <span class="string">'data'</span> =&gt; [<span class="string">'count'</span> =&gt; $user_count],</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">'callback'</span> =&gt; Yii::$app-&gt;getRequest()-&gt;get(<span class="string">'callback'</span>),</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Yii::$app-&gt;getResponse()-&gt;format = Response::FORMAT_JSONP;</div><div class="line">$user_count = (<span class="keyword">new</span> Query)-&gt;from(<span class="string">'users'</span>)-&gt;count();</div><div class="line"></div><div class="line"><span class="keyword">return</span> [</div><div class="line">    <span class="string">'data'</span> =&gt; [</div><div class="line">        <span class="string">'errcode'</span> =&gt; <span class="number">0</span>,</div><div class="line">        <span class="string">'data'</span> =&gt; [<span class="string">'count'</span> =&gt; $user_count],</div><div class="line">    ],</div><div class="line">    <span class="string">'callback'</span> =&gt; Yii::$app-&gt;getRequest()-&gt;get(<span class="string">'callback'</span>),</div><div class="line">];</div></pre></td></tr></table></figure>
 <p>首先，我们需要在 action 中指定 Response 的格式为 FORMAT_JSONP.</p>
 <p>当设置 Response 的格式为 JSONP 后，同 FORMAT 设置为JSON 我们需要返回 <em>数组数据</em></p>
 <p>不同点是这个数组需要有两个关键的Key，一个是data，另外一个是 callback。</p>
@@ -1247,133 +1374,12 @@
 </ul>
 <p>我们来看下Yii的源代码：</p>
 <p>位于 [[yii\web\JsonResponseFormatter]]</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * Formats response data in JSONP format.</span><br><span class="line"> * <span class="doctag">@param</span> Response $response</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">formatJsonp</span><span class="params">($response)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    $response-&gt;getHeaders()-&gt;set(<span class="string">'Content-Type'</span>, <span class="string">'application/javascript; charset=UTF-8'</span>);</span><br><span class="line">    <span class="keyword">if</span> (is_array($response-&gt;data) &amp;&amp; <span class="keyword">isset</span>($response-&gt;data[<span class="string">'data'</span>], $response-&gt;data[<span class="string">'callback'</span>])) &#123;</span><br><span class="line">        $response-&gt;content = sprintf(<span class="string">'%s(%s);'</span>, $response-&gt;data[<span class="string">'callback'</span>], Json::encode($response-&gt;data[<span class="string">'data'</span>]));</span><br><span class="line">    &#125; <span class="keyword">elseif</span> ($response-&gt;data !== <span class="keyword">null</span>) &#123;</span><br><span class="line">        $response-&gt;content = <span class="string">''</span>;</span><br><span class="line">        Yii::warning(<span class="string">"The 'jsonp' response requires that the data be an array consisting of both 'data' and 'callback' elements."</span>, <span class="keyword">__METHOD__</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * Formats response data in JSONP format.</div><div class="line"> * <span class="doctag">@param</span> Response $response</div><div class="line"> */</div><div class="line"><span class="keyword">protected</span> <span class="function"><span class="keyword">function</span> <span class="title">formatJsonp</span><span class="params">($response)</span></span></div><div class="line">&#123;</div><div class="line">    $response-&gt;getHeaders()-&gt;set(<span class="string">'Content-Type'</span>, <span class="string">'application/javascript; charset=UTF-8'</span>);</div><div class="line">    <span class="keyword">if</span> (is_array($response-&gt;data) &amp;&amp; <span class="keyword">isset</span>($response-&gt;data[<span class="string">'data'</span>], $response-&gt;data[<span class="string">'callback'</span>])) &#123;</div><div class="line">        $response-&gt;content = sprintf(<span class="string">'%s(%s);'</span>, $response-&gt;data[<span class="string">'callback'</span>], Json::encode($response-&gt;data[<span class="string">'data'</span>]));</div><div class="line">    &#125; <span class="keyword">elseif</span> ($response-&gt;data !== <span class="keyword">null</span>) &#123;</div><div class="line">        $response-&gt;content = <span class="string">''</span>;</div><div class="line">        Yii::warning(<span class="string">"The 'jsonp' response requires that the data be an array consisting of both 'data' and 'callback' elements."</span>, <span class="keyword">__METHOD__</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>可以看到，Yii做的处理有：</p>
 <ul>
 <li>设置HEADER的Content-Type为 application/javascript</li>
 <li>判断Response::data 是否为数组且设置了 data 和 callback 两个参数</li>
 <li>组装JSONP返回</li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/node-export-vs-exports/" itemprop="url">
-                  export vs exports
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:27:01+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/NodeJS/" itemprop="url" rel="index">
-                    <span itemprop="name">NodeJS</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/NodeJS/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/node-export-vs-exports/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/node-export-vs-exports/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>参考文章：<a href="https://cnodejs.org/topic/5231a630101e574521e45ef8" target="_blank" rel="external">https://cnodejs.org/topic/5231a630101e574521e45ef8</a></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们只需知道三点即可知道 exports 和 module.exports 的区别了：</p>
-<ul>
-<li>exports 是指向的 module.exports 的引用</li>
-<li>module.exports 初始值为一个空对象 {}，所以 exports 初始值也是 {}</li>
-<li>require() 返回的是 module.exports 而不是 exports</li>
 </ul>
 
             
@@ -1442,7 +1448,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">52</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

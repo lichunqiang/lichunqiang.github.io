@@ -65,7 +65,7 @@
 对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? 
 这时候,我们可以使用 [[Yii::$contianer]] 的来实现：
 1234//这里我们设置默认个数为10, 将此置于 bootstrap.php 中\Yi">
-<meta property="og:updated_time" content="2016-06-23T01:47:56.955Z">
+<meta property="og:updated_time" content="2016-07-12T14:25:30.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Yii2 container的一个应用">
 <meta name="twitter:description" content="起因我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 [[yii\data\Pagination]] 的默认每页个数是 20 个.
@@ -271,16 +271,16 @@
         <span itemprop="articleBody"><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 <code>[[yii\data\Pagination]]</code> 的默认每页个数是 20 个.</p>
 <p>对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? </p>
 <p>这时候,我们可以使用 [[Yii::$contianer]] 的来实现：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里我们设置默认个数为10, 将此置于 bootstrap.php 中</span></span><br><span class="line">\Yii::$container-&gt;set(<span class="string">'yii\data\Pagination'</span>, [</span><br><span class="line">    <span class="string">'pageSize'</span> =&gt; <span class="number">10</span>,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//这里我们设置默认个数为10, 将此置于 bootstrap.php 中</span></div><div class="line">\Yii::$container-&gt;set(<span class="string">'yii\data\Pagination'</span>, [</div><div class="line">    <span class="string">'pageSize'</span> =&gt; <span class="number">10</span>,</div><div class="line">]);</div></pre></td></tr></table></figure>
 <p>这样, 我们在使用诸如 <code>ActiveDataProvider</code> 等方法时，默认每页个数就为 10 了。</p>
 <h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><blockquote>
 <p>理论上，通过 <code>Yii::createObject</code> 来实例化的对用都会起作用。</p>
 </blockquote>
 <p>所以，说用通过 <code>Yii::createObject</code> 创建的实例都会使用我们通过以上方法设定的默认值。因为 <code>ActiveDataProvider</code> 等中的 <code>pagination</code> 在内部是通过 <code>Yii::createObject</code> 创建的，所以设置是生效的。</p>
 <p>因此，考虑一下两种实现方式：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. pageSize 还是默认的20</span></span><br><span class="line">$paging = <span class="keyword">new</span> \yii\data\Pagination;</span><br><span class="line"><span class="comment">//2. pageSize 就是设置的 10 了</span></span><br><span class="line">$paging = Yii::createObject(<span class="string">'yii\data\Pagination'</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1. pageSize 还是默认的20</span></div><div class="line">$paging = <span class="keyword">new</span> \yii\data\Pagination;</div><div class="line"><span class="comment">//2. pageSize 就是设置的 10 了</span></div><div class="line">$paging = Yii::createObject(<span class="string">'yii\data\Pagination'</span>);</div></pre></td></tr></table></figure>
 <p>所以Yii提倡使用 <code>Yii::createObject</code> 来实例化对象，因为它能够自动解决依赖和默认值配置等好处。</p>
-<h2 id="Yii-container-是什么"><a href="#Yii-container-是什么" class="headerlink" title="Yii::$container 是什么"></a>Yii::$container 是什么</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Yii::$container = <span class="keyword">new</span> yii\di\Container();</span><br></pre></td></tr></table></figure>
+<h2 id="Yii-container-是什么"><a href="#Yii-container-是什么" class="headerlink" title="Yii::$container 是什么"></a>Yii::$container 是什么</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Yii::$container = <span class="keyword">new</span> yii\di\Container();</div></pre></td></tr></table></figure>
 <p>所以 <code>Yii::$container</code> 就是整个生命周期的一个依赖容器。</p>
 <p>考虑开始的时候的代码，我们可以理解: 通过 <code>Yii::$container-&gt;set()</code> 其实就是向这个容器注入了一个类和其配置. 当调用 <code>Yii::createObject</code> 的时候会去这个容器里面找，如果存在则根据 set 的配置进行实例化。</p>
 <h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p>关于依赖注入和依赖注入容器可以查看博文：<a href="http://www.digpage.com/di.html" target="_blank" rel="external">http://www.digpage.com/di.html</a></p>
@@ -407,7 +407,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">52</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

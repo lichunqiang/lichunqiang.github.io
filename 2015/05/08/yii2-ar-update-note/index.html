@@ -75,7 +75,7 @@
 
 根据以上，我们在使用的时候需要注意的有：
 1234567891011$user = User::findOne();$user-&amp;gt;status = 1">
-<meta property="og:updated_time" content="2016-06-23T01:47:56.955Z">
+<meta property="og:updated_time" content="2016-07-12T14:25:30.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于ActiveRecord之update需要注意的地方">
 <meta name="twitter:description" content="开发中遇到使用 ActiveRecord::update 来更新数据，那么执行 update 的时候都做了什么：
@@ -291,7 +291,7 @@
 </li>
 </ul>
 <p>根据以上，我们在使用的时候需要注意的有：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$user = User::findOne();</span><br><span class="line"></span><br><span class="line">$user-&gt;status = <span class="number">1</span>; <span class="comment">//假设原值也为1</span></span><br><span class="line"></span><br><span class="line">$user-&gt;updated_at = now();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($user-&gt;update() === <span class="keyword">false</span>) &#123; <span class="comment">//注意这里必须要进行严格的判断「update执行返回的是受影响的行数」</span></span><br><span class="line">	<span class="comment">//update faild</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">//update success</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$user = User::findOne();</div><div class="line"></div><div class="line">$user-&gt;status = <span class="number">1</span>; <span class="comment">//假设原值也为1</span></div><div class="line"></div><div class="line">$user-&gt;updated_at = now();</div><div class="line"></div><div class="line"><span class="keyword">if</span> ($user-&gt;update() === <span class="keyword">false</span>) &#123; <span class="comment">//注意这里必须要进行严格的判断「update执行返回的是受影响的行数」</span></div><div class="line">	<span class="comment">//update faild</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">//update success</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></span>
       
     </div>
 
@@ -414,7 +414,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">52</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

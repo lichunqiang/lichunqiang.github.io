@@ -63,7 +63,7 @@
 <meta property="og:description" content="首先查看之前编译安装nginx的配置1$ nginx -V
 会列出配置的参数：
 1configure arguments: --prefix=/usr/local/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_modul">
-<meta property="og:updated_time" content="2016-06-23T01:47:56.955Z">
+<meta property="og:updated_time" content="2016-07-12T14:25:30.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="添加nginx模块">
 <meta name="twitter:description" content="首先查看之前编译安装nginx的配置1$ nginx -V
@@ -265,18 +265,18 @@
       
 
       
-        <span itemprop="articleBody"><h4 id="首先查看之前编译安装nginx的配置"><a href="#首先查看之前编译安装nginx的配置" class="headerlink" title="首先查看之前编译安装nginx的配置"></a>首先查看之前编译安装nginx的配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nginx -V</span><br></pre></td></tr></table></figure>
+        <span itemprop="articleBody"><h4 id="首先查看之前编译安装nginx的配置"><a href="#首先查看之前编译安装nginx的配置" class="headerlink" title="首先查看之前编译安装nginx的配置"></a>首先查看之前编译安装nginx的配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nginx -V</div></pre></td></tr></table></figure>
 <p>会列出配置的参数：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure arguments: --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">configure arguments: --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module</div></pre></td></tr></table></figure>
 <h4 id="重新编译增加模块"><a href="#重新编译增加模块" class="headerlink" title="重新编译增加模块"></a>重新编译增加模块</h4><blockquote>
 <p>这个过程不会替换现有的nginx的东西，既可以在不停止服务的前提下进行替换</p>
 </blockquote>
 <p>首先找到原来安装nginx的目录(如果已经删除，则重新现在nginx源程序)</p>
 <p>进入该目录，然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line"></span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</div><div class="line"></div><div class="line">$ make</div><div class="line"></div><div class="line">$ make install</div></pre></td></tr></table></figure>
 <p>保险做法：</p>
 <p>不执行make install, 将执行make之后objs目录下的nginx替换现有的。(不要忘记对之前的进行备份)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line"></span><br><span class="line">$ service nginx stop</span><br><span class="line"></span><br><span class="line">$ cp /etc/nginx/sbin/nginx /etc/nginx/sbin/nginx.bak</span><br><span class="line"></span><br><span class="line">$ cp objs/nginx /etc/nginx/sbin/</span><br><span class="line"></span><br><span class="line">$ service nginx start</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</div><div class="line"></div><div class="line">$ make</div><div class="line"></div><div class="line">$ service nginx stop</div><div class="line"></div><div class="line">$ cp /etc/nginx/sbin/nginx /etc/nginx/sbin/nginx.bak</div><div class="line"></div><div class="line">$ cp objs/nginx /etc/nginx/sbin/</div><div class="line"></div><div class="line">$ service nginx start</div></pre></td></tr></table></figure>
 <h4 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h4></span>
       
     </div>
@@ -400,7 +400,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">52</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

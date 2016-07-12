@@ -53,15 +53,12 @@
 
 
 
-<meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Light's Blog">
 <meta property="og:url" content="http://blog.lzuer.net/page/2/index.html">
 <meta property="og:site_name" content="Light's Blog">
-<meta property="og:description">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Light's Blog">
-<meta name="twitter:description">
 
 
 
@@ -189,6 +186,124 @@
 
     
     
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/01/16/git-delete-submoudle/" itemprop="url">
+                  删除submodule
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-16T00:16:21+00:00" content="2016-01-16">
+              2016-01-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/16/git-delete-submoudle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/16/git-delete-submoudle/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <ol>
+<li><p>Delete the relevant section from the .gitmodules file.</p>
+</li>
+<li><p>Stage the .gitmodules changes git add .gitmodules</p>
+</li>
+<li><p>Delete the relevant section from .git/config.</p>
+</li>
+<li><p>Run git rm –cached path_to_submodule (no trailing slash).</p>
+</li>
+<li><p>Run rm -rf .git/modules/path_to_submodule</p>
+</li>
+<li><p>Commit git commit -m “Removed submodule <name>“</name></p>
+</li>
+<li><p>Delete the now untracked submodule files <code>rm -rf path_to_submodule</code></p>
+</li>
+</ol>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -685,7 +800,7 @@ $ssh -T git@github.com
 <ol>
 <li>指定依赖包的版本, 这也是最佳的解决方案</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require vendor/library=dev-master</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require vendor/library=dev-master</div></pre></td></tr></table></figure>
 <p>所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！</p>
 <p>另外我们还需要知道 <code>minimum-stability</code> 所支持的有：</p>
 <ul>
@@ -798,12 +913,12 @@ $ssh -T git@github.com
           <span itemprop="articleBody">
             
               <p><strong>注意</strong>: <code>git reset --hard</code>会彻底删除你的变动,你可以在这之前使用 <code>git stash</code> 来保存变动。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard HEAD~1</div></pre></td></tr></table></figure>
 <p><code>HEAD~1</code>代表当前提交之前的一次提交.</p>
 <p>或者使用 <code>git log</code> 找到你想revert的commit_id：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard &lt;sha1-commit-id&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard &lt;sha1-commit-id&gt;</div></pre></td></tr></table></figure>
 <p>如果你已经提交到了远程仓库, 可以通过以下命令来抹掉提交：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin HEAD --force</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin HEAD --force</div></pre></td></tr></table></figure>
             
           </span>
         
@@ -923,12 +1038,12 @@ $ssh -T git@github.com
 <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>当我们构建一个本地的类库时, 当并不想推送到<a href="https://packagist.org/" target="_blank" rel="external">packagist</a>, 我们可以使用<code>repositories &gt; path</code></p>
 <p>来处理。</p>
 <p>以下目录结构为例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- apps</span><br><span class="line">\_ my-app   		-- 当前项目开发目录</span><br><span class="line">  \_ composer.json</span><br><span class="line">- packages			-- 本地共有库, 存放正在和已经开发好的类库</span><br><span class="line">\_ my-package       -- 一个叫 my-package 的类库 </span><br><span class="line">  \_ composer.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- apps</div><div class="line">\_ my-app   		-- 当前项目开发目录</div><div class="line">  \_ composer.json</div><div class="line">- packages			-- 本地共有库, 存放正在和已经开发好的类库</div><div class="line">\_ my-package       -- 一个叫 my-package 的类库 </div><div class="line">  \_ composer.json</div></pre></td></tr></table></figure>
 <p>现在我们要在 <code>my-app</code> 中依赖 <code>my-package</code>, 那么现在我们可以：</p>
 <ol>
 <li>配置 <code>my-app/composer.json</code></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	//引入依赖</span><br><span class="line">	&quot;require&quot;: &#123;</span><br><span class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	//配置 repositories</span><br><span class="line">	&quot;repositories&quot;: [</span><br><span class="line"></span><br><span class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</span><br><span class="line">	]	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	//引入依赖</div><div class="line">	&quot;require&quot;: &#123;</div><div class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</div><div class="line">	&#125;,</div><div class="line">	//配置 repositories</div><div class="line">	&quot;repositories&quot;: [</div><div class="line"></div><div class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</div><div class="line">	]	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <ol>
 <li>composer update</li>
 </ol>
@@ -1040,7 +1155,7 @@ $ssh -T git@github.com
             
               <h3 id="关于Hashids"><a href="#关于Hashids" class="headerlink" title="关于Hashids"></a>关于Hashids</h3><p>Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。</p>
 <p>详细： <a href="http://hashids.org/php/" target="_blank" rel="external">http://hashids.org/php/</a></p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$hashids = Yii::createObject([</span><br><span class="line">    <span class="string">'class'</span> =&gt; <span class="string">'light\hashids\Hashids'</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">$id = $hashids-&gt;encode(<span class="number">100123123</span>);</span><br><span class="line">$origin = $hashids-&gt;decode($id);</span><br><span class="line">var_dump($id, $origin);</span><br></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$hashids = Yii::createObject([</div><div class="line">    <span class="string">'class'</span> =&gt; <span class="string">'light\hashids\Hashids'</span></div><div class="line">]);</div><div class="line"></div><div class="line">$id = $hashids-&gt;encode(<span class="number">100123123</span>);</div><div class="line">$origin = $hashids-&gt;decode($id);</div><div class="line">var_dump($id, $origin);</div></pre></td></tr></table></figure>
 <p><a href="https://packagist.org/packages/light/hashids" target="_blank" rel="external">详细</a></p>
 
             
@@ -1145,13 +1260,13 @@ $ssh -T git@github.com
           <span itemprop="articleBody">
             
               <p>这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[^\s]&#123;<span class="number">1</span>,<span class="number">20</span>&#125;/</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/@[^\s]&#123;<span class="number">1</span>,<span class="number">20</span>&#125;/</div></pre></td></tr></table></figure>
 <p>如果不限长度</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[^\s]+/</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/@[^\s]+/</div></pre></td></tr></table></figure>
 <p>如果用户名只可能是英文下划线和数字</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[a-z0<span class="number">-9</span>_]+/i</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/@[a-z0<span class="number">-9</span>_]+/i</div></pre></td></tr></table></figure>
 <p>如果还有可能是中文</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/@[a-z0<span class="number">-9</span>_\u4E00-\u9FA5]+/i/</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/@[a-z0<span class="number">-9</span>_\u4E00-\u9FA5]+/i/</div></pre></td></tr></table></figure>
             
           </span>
         
@@ -1257,146 +1372,16 @@ $ssh -T git@github.com
 <p>更新版本： 5.6.10</p>
 <h3 id="查看原来安装的配置参数"><a href="#查看原来安装的配置参数" class="headerlink" title="查看原来安装的配置参数"></a>查看原来安装的配置参数</h3><p>执行<code>php -v | grep config</code></p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>根据之前的安装配置执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbstring --with-mcrypt --with-openssl --disable-debug --enable-opcache --with-pdo-mysql --with-mysql</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbstring --with-mcrypt --with-openssl --disable-debug --enable-opcache --with-pdo-mysql --with-mysql</div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
 <h3 id="剩余工作"><a href="#剩余工作" class="headerlink" title="剩余工作"></a>剩余工作</h3><p>安装成功后, 并不意味着升级工作完成了。当我们运行 <code>php -v</code> 时会有错误抛出, 那是因为两个版本的扩展编译标示前后不一致，所以我们接下的来的工作就是重新编译扩展。</p>
 <p>在 <code>path/to/php5/lib/php/extensions</code> 目录下有两个文件夹: <code>no-debug-non-zts-20121212/</code> (之前版本扩展安装目录) 和 <code>no-debug-non-zts-20131226/</code> (新版本扩展安装目录), 由于新升级的PHP的标示是 <code>20131226</code> , 所以对应的扩展编译也要对应上。</p>
 <p>例如, 我之前的扩展源文件目录 <code>/usr/local/src</code>, 我们并不是直接在之前安装的扩展目录中直接配置编译安装就可以了, 我们需要删除原来解压出来的文件, 重新解压扩展源文件, 进行扩展安装:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//例如重新编译安装 Imagick</span><br><span class="line">$ rm -rf imagick-3.1.1</span><br><span class="line">$ tar -zxvf imagick-3.1.1.tar</span><br><span class="line">$ <span class="built_in">cd</span> imgick-3.1.1</span><br><span class="line">$ path/to/php5/bin/phpize</span><br><span class="line">&amp; ./configure --with-php-config=/path/to/php5/bin/php-config</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//例如重新编译安装 Imagick</div><div class="line">$ rm -rf imagick-3.1.1</div><div class="line">$ tar -zxvf imagick-3.1.1.tar</div><div class="line">$ <span class="built_in">cd</span> imgick-3.1.1</div><div class="line">$ path/to/php5/bin/phpize</div><div class="line">&amp; ./configure --with-php-config=/path/to/php5/bin/php-config</div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
 <p>接下来最后就是修改 <code>php.ini</code> 中的 <code>extension_dir</code> 为新的目录.</p>
 <blockquote>
 <p>将php加入环境变量: <code>export PATH=$PATH:/usr/local/php5/bin</code></p>
 </blockquote>
 <p>完.</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/06/15/the-difference-between-on-and-where/" itemprop="url">
-                  在关联表查询的时候是在ON添加条件和在where添加添加条件异同
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-06-15T22:07:27+00:00" content="2015-06-15">
-              2015-06-15
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">Mysql</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/15/the-difference-between-on-and-where/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/15/the-difference-between-on-and-where/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。</p>
-<p>在使用left jion时，on和where条件的区别如下：</p>
-<ol>
-<li><p>on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。 </p>
-</li>
-<li><p>where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部过滤掉。</p>
-</li>
-</ol>
-<p><strong>假设有两张表：</strong></p>
-<p>表1 tab1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id size </span><br><span class="line">1 10 </span><br><span class="line">2 20 </span><br><span class="line">3 30</span><br></pre></td></tr></table></figure>
-<p>表2 tab2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">size name </span><br><span class="line">10 AAA </span><br><span class="line">20 BBB </span><br><span class="line">20 CCC</span><br></pre></td></tr></table></figure>
-<p>两条SQL:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. select * form tab1 left join tab2 on (tab1.size = tab2.size) where tab2.name=’AAA’</span><br><span class="line"></span><br><span class="line">2. select * form tab1 left join tab2 on (tab1.size = tab2.size and tab2.name=’AAA’)</span><br></pre></td></tr></table></figure>
-<p>第一条SQL的过程：</p>
-<p>1、中间表 on条件:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">tab1.size = tab2.size  </span><br><span class="line">tab1.id    tab1.size    tab2.size     tab2.name </span><br><span class="line">1             10          10              AAA </span><br><span class="line">2             20          20              BBB  </span><br><span class="line">2             20          20              CCC </span><br><span class="line">3             30         (null)          (null) </span><br><span class="line">2</span><br><span class="line"></span><br><span class="line">再对中间表过滤where 条件：</span><br><span class="line"></span><br><span class="line">tab2.name=’AAA’</span><br><span class="line">tab1.id       tab1.size        tab2.size     tab2.name </span><br><span class="line">1                10                10             AAA</span><br></pre></td></tr></table></figure>
-<p>第二条SQL的过程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1、中间表 on条件:   </span><br><span class="line">tab1.size = tab2.size and tab2.name=’AAA’</span><br><span class="line"> (条件不为真也会返回左表中的记录)  </span><br><span class="line">tab1.id      tab1.size       tab2.size      tab2.name </span><br><span class="line">1             10                10             AAA </span><br><span class="line">2             20                (null)        (null) </span><br><span class="line">3             30                (null)        (null)</span><br></pre></td></tr></table></figure>
-<p>其实以上结果的关键原因就是left join,right join,full join的特殊性，不管on上的条件是否为真都会返回left或right表中的记录，full则具有left和right的特性的并集。而inner jion没这个特殊性，则条件放在on中和where中，返回的结果集是相同的。</p>
-<p><strong>参考</strong></p>
-<ul>
-<li><p><a href="http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause" target="_blank" rel="external">http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause</a></p>
-</li>
-<li><p><a href="http://dba-china.com/topic/default/view/71" target="_blank" rel="external">http://dba-china.com/topic/default/view/71</a></p>
-</li>
-</ul>
 
             
           </span>
@@ -1464,7 +1449,7 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">52</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

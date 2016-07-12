@@ -69,7 +69,7 @@
 根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以
 1$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz
 解压到安装目录, 我把go安装">
-<meta property="og:updated_time" content="2016-06-23T01:47:56.955Z">
+<meta property="og:updated_time" content="2016-07-12T14:25:30.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Install Golang on Centos">
 <meta name="twitter:description" content="Download首先确定操作系统位数, 可执行：
@@ -275,31 +275,31 @@
 
       
         <span itemprop="articleBody"><h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>首先确定操作系统位数, 可执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ uname -m</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ uname -m</div></pre></td></tr></table></figure>
 <p>如果输出为 <code>x86_64</code> 的话代表64位操作系统，如果为 <code>i386</code> 则为32为系统。</p>
 <p>根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz</div></pre></td></tr></table></figure>
 <p>解压到安装目录, 我把go安装到 <code>/usr/local/go</code> 中，执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf go1.6.2.linux-amd64.tar.gz</span><br><span class="line">$ mv go /usr/local</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ tar zxvf go1.6.2.linux-amd64.tar.gz</div><div class="line">$ mv go /usr/local</div></pre></td></tr></table></figure>
 <h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>添加 <code>GOROOT</code> 环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export GOROOT=&quot;/usr/local/go&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOROOT=&quot;/usr/local/go&quot;</div></pre></td></tr></table></figure>
 <p>可以通过执行 <code>env</code> 或者 <code>echo $GOROOT</code> 来确认环境变量是否正常设置.</p>
 <p>设置PATH</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export PATH=$PATH:/usr/local/go/bin</span><br></pre></td></tr></table></figure>
-<h2 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go version</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export PATH=$PATH:/usr/local/go/bin</div></pre></td></tr></table></figure>
+<h2 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ go version</div></pre></td></tr></table></figure>
 <p>输出 <code>go version go1.6.2 linux/amd64</code> 表示golang已经成功安装！</p>
 <h2 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h2><p>剩下一步比较重要的就是设置 <code>GOPATH</code>, 详情可查看<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">资料</a></p>
 <p>例如我将GOPATH设置为 <code>/home/go</code>  为我的工作空间：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export GOPATH=&quot;/home/go&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOPATH=&quot;/home/go&quot;</div></pre></td></tr></table></figure>
 <p><code>/home/go</code>的目录结构为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- go</span><br><span class="line">  --bin</span><br><span class="line">  --pkg</span><br><span class="line">  --src</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- go</div><div class="line">  --bin</div><div class="line">  --pkg</div><div class="line">  --src</div></pre></td></tr></table></figure>
 <p>有关目录结构的介绍可以参考：<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md</a></p>
 <p>至此Golang已经成功安装！</p>
 <h2 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h2><p>直接在命令行运行 <code>$ export PATH=$PATH:/usr/local/go</code>， 只会在当前会话有效，登出或者注销系统后，PATH的设置就会失效。</p>
 <p>如果想永久保存设置，则需要修改<code>/etc/profile</code>，在末尾加上(如果之前没有添加过的话):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PATH=$PATH:/usr/local/go</span><br><span class="line">export PATH</span><br><span class="line">GOPATH=/home/go</span><br><span class="line">export GOPATH</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PATH=$PATH:/usr/local/go</div><div class="line">export PATH</div><div class="line">GOPATH=/home/go</div><div class="line">export GOPATH</div></pre></td></tr></table></figure>
 <p>然后执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$source /etc/profile</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$source /etc/profile</div></pre></td></tr></table></figure>
 <p>之后可以通过 <code>echo $PATH</code> 来查看设置是否生效。</p>
 </span>
       
@@ -424,7 +424,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">52</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
