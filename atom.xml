@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.lzuer.net/"/>
-  <updated>2016-07-14T06:26:49.454Z</updated>
+  <updated>2016-07-30T13:21:27.558Z</updated>
   <id>http://blog.lzuer.net/</id>
   
   <author>
@@ -16,32 +16,82 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>一个进程管理工具-supervisor</title>
+    <link href="http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/"/>
+    <id>http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/</id>
+    <published>2016-07-30T20:50:22.000Z</published>
+    <updated>2016-07-30T13:21:27.558Z</updated>
+    
+    <content type="html"><![CDATA[<p>在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$nohup php beanstalkd-consumer.php &amp;</div></pre></td></tr></table></figure>
+<p>使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，<br>这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。</p>
+<p><a href="http://supervisord.org" target="_blank" rel="external">supervisor</a>就是这样一个工具，可以让我们很轻松愉快的对它们进行统一管理，而且省去了我们担心的某个任务会因为特殊的原因自己偷偷的挂掉。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>这里我直接使用 <code>yum</code> 进行安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ yum install -y supervisor</div></pre></td></tr></table></figure>
+<p>安装成功后，会有两个可执行程序：</p>
+<ul>
+<li><strong>supervisord</strong>    – supervisor 服务守护进程</li>
+<li><strong>supervisorctl</strong> – supervisor 服务控制程序.例如: <code>status/start/stop/restart program</code></li>
+</ul>
+<p><strong>supervisord</strong>启动时可以通过 <code>-c /some/path/supervisor.conf</code> 来指定加载的配置文件。当然如果没有指定配置文件的位置 <code>supervisord</code> 会按照内部的寻找方式来加载配置文件</p>
+<p>因为我是用<code>yum</code>来安装的，所以在 <code>/etc/supervisor.conf</code> 已经存在了默认的配置文件，<code>supervisord</code> 会默认加载。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>最重要的就是对<code>supervisor</code>的行为方式进行配置，通过修改<code>/etc/supervisord.conf</code>来管理.</p>
+<p>例如，我们加入上面提到的消费进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[program:beanstalkd_comsumer]</div><div class="line">command=/usr/local/php/bin/php /path/to/beanstalkd-consumer.php //此项指定要执行的命令</div></pre></td></tr></table></figure>
+<p>默认的，<code>supervisor</code>就自动管理进程挂掉自动重启等，我们来看下比较全的配置信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">;[program:theprogramname]</div><div class="line">;command=/bin/cat              ; the program (relative uses PATH, can take args)</div><div class="line">;process_name=%(program_name)s ; process_name expr (default %(program_name)s)</div><div class="line">;numprocs=1                    ; number of processes copies to start (def 1)</div><div class="line">;directory=/tmp                ; directory to cwd to before exec (def no cwd)</div><div class="line">;umask=022                     ; umask for process (default None)</div><div class="line">;priority=999                  ; the relative start priority (default 999)</div><div class="line">;autostart=true                ; start at supervisord start (default: true)</div><div class="line">;autorestart=true              ; retstart at unexpected quit (default: true)</div><div class="line">;startsecs=10                  ; number of secs prog must stay running (def. 1)</div><div class="line">;startretries=3                ; max # of serial start failures (default 3)</div><div class="line">;exitcodes=0,2                 ; &apos;expected&apos; exit codes for process (default 0,2)</div><div class="line">;stopsignal=QUIT               ; signal used to kill process (default TERM)</div><div class="line">;stopwaitsecs=10               ; max num secs to wait b4 SIGKILL (default 10)</div><div class="line">;user=chrism                   ; setuid to this UNIX account to run the program</div><div class="line">;redirect_stderr=true          ; redirect proc stderr to stdout (default false)</div><div class="line">;stdout_logfile=/a/path        ; stdout log path, NONE for none; default AUTO</div><div class="line">;stdout_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</div><div class="line">;stdout_logfile_backups=10     ; # of stdout logfile backups (default 10)</div><div class="line">;stdout_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</div><div class="line">;stdout_events_enabled=false   ; emit events on stdout writes (default false)</div><div class="line">;stderr_logfile=/a/path        ; stderr log path, NONE for none; default AUTO</div><div class="line">;stderr_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</div><div class="line">;stderr_logfile_backups=10     ; # of stderr logfile backups (default 10)</div><div class="line">;stderr_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</div><div class="line">;stderr_events_enabled=false   ; emit events on stderr writes (default false)</div><div class="line">;environment=A=1,B=2           ; process environment additions (def no adds)</div><div class="line">;serverurl=AUTO                ; override serverurl computation (childutils)</div></pre></td></tr></table></figure>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>启动<code>supervisord</code>来启动和管理所有的进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ /usr/bin/supervisord</div></pre></td></tr></table></figure>
+<p>启动之后我们可以通过<code>supervisor</code>的另外一个工具来查看所有配置的进程状态:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$supervisorctl status</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">beanstalkd_comsumer           RUNNING   pid 26995, uptime 4:09:54</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line
+    
+    </summary>
+    
+      <category term="supervisor" scheme="http://blog.lzuer.net/categories/supervisor/"/>
+    
+      <category term="进程管理" scheme="http://blog.lzuer.net/categories/supervisor/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"/>
+    
+    
+      <category term="supervisor" scheme="http://blog.lzuer.net/tags/supervisor/"/>
+    
+      <category term="进程管理" scheme="http://blog.lzuer.net/tags/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>beanstalkd在centos7下部署小记</title>
     <link href="http://blog.lzuer.net/2016/07/14/deploy-beanstalkd-on-centos7/"/>
     <id>http://blog.lzuer.net/2016/07/14/deploy-beanstalkd-on-centos7/</id>
     <published>2016-07-14T09:26:12.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;ol&gt;
-&lt;li&gt;下载源代码到本地&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ wget https://github.com/kr/beanstalkd/archive/v1.10.tar.gz&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ol&gt;
-&lt;li&gt;解压安装&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ tar zxvf v1.10.tar.gz &amp;amp;&amp;amp; rm -rf v1.10.tar.gz&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ mv beanstalkd-1.10/ /usr/local/beanstalkd&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ cd /usr/local/beanstalkd&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ make &amp;amp;&amp;amp; make install&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ol&gt;
-&lt;li&gt;加入服务以及开机启动&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ cp /usr/local/beanstalkd/adm/systemd/beanstalkd.service /usr/lib/systemd/system&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ systemctl enable beanstalkd.service&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ systemctl start beanstalkd.service&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;blockquote&gt;
-&lt;p&gt;默认beanstalkd开始了binlog, 所以确保默认的目录存在 &lt;code&gt;mkdir -p /var/lib/beanstalkd/binlog&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;参考资料:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000002784775&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://segmentfault.com/a/1190000002784775&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
+    <content type="html"><![CDATA[<ol>
+<li>下载源代码到本地</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wget https://github.com/kr/beanstalkd/archive/v1.10.tar.gz</div></pre></td></tr></table></figure>
+<ol>
+<li>解压安装</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ tar zxvf v1.10.tar.gz &amp;&amp; rm -rf v1.10.tar.gz</div><div class="line">$ mv beanstalkd-1.10/ /usr/local/beanstalkd</div><div class="line">$ cd /usr/local/beanstalkd</div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<ol>
+<li>加入服务以及开机启动</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cp /usr/local/beanstalkd/adm/systemd/beanstalkd.service /usr/lib/systemd/system</div><div class="line">$ systemctl enable beanstalkd.service</div><div class="line">$ systemctl start beanstalkd.service</div></pre></td></tr></table></figure>
+<blockquote>
+<p>默认beanstalkd开始了binlog, 所以确保默认的目录存在 <code>mkdir -p /var/lib/beanstalkd/binlog</code></p>
+</blockquote>
+<p>参考资料:</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000002784775" target="_blank" rel="external">https://segmentfault.com/a/1190000002784775</a></li>
+</ul>
+]]></content>
     
     <summary type="html">
     
@@ -68,35 +118,35 @@
     <link href="http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/"/>
     <id>http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/</id>
     <published>2016-07-12T23:57:23.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.558Z</updated>
     
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这是手册中，对于范围解析符的概论。&lt;/p&gt;
-&lt;p&gt;在日常工作中，我们经常会用在例如：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;调用类常量: &lt;code&gt;SomeCls::THE_CONST&lt;/code&gt;，和&lt;code&gt;public&lt;/code&gt;的静态变量 &lt;code&gt;SomeCls::$VAR&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;调用静态方法: &lt;code&gt;SomeCls::staticMethod()&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;当然，在于类的内部，我们可以使用 &lt;code&gt;self&lt;/code&gt;，&lt;code&gt;parent&lt;/code&gt; 和 &lt;code&gt;static&lt;/code&gt; 关键字来进行访问。&lt;/p&gt;
-&lt;p&gt;这里，我要强调的是一种比较常见但是通常我们会忽略的一种用法。&lt;/p&gt;
-&lt;p&gt;我们经常会看到这样的代码：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;class Parent&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	public function __construct()&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;class Child extends Parent&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	public function __construct()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		parent::__construct();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		//some other logic&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;我们都知道，在 &lt;code&gt;Child&lt;/code&gt; 的构造方法中 &lt;code&gt;parent::__construct()&lt;/code&gt; 是主动调用父类的构造方法。&lt;/p&gt;
-&lt;p&gt;但是，为什么会需要我们主动去调用呢？&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;当一个子类覆盖父类的方法时，PHP不会调用父类已被覆盖的方法。是否调用父类的方法取决于子类。&lt;br&gt;这种机制也作用于构造函数和析构函数，重载以及魔术方法&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;所以，当见到诸如 &lt;code&gt;parent::__construct&lt;/code&gt;，&lt;code&gt;parent::__get&lt;/code&gt; … 等调用时我们就知道其中的原由了。&lt;/p&gt;
-&lt;p&gt;为什么会写这篇文章？因为有一天, 我因为看到下面的代码而蒙逼了…当我知道上面的原理后才明白过来。&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;class BasePage&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	protected function renderValue($key, $value)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		//...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;class Page extends BasePage&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	public function renderValue($key, $value)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		$key = $key + $value;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		parent::renderValue($key, $value);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;所以文档熟烂于心才是硬道理！&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
+    <content type="html"><![CDATA[<blockquote>
+<p>在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。</p>
+</blockquote>
+<p>这是手册中，对于范围解析符的概论。</p>
+<p>在日常工作中，我们经常会用在例如：</p>
+<ol>
+<li>调用类常量: <code>SomeCls::THE_CONST</code>，和<code>public</code>的静态变量 <code>SomeCls::$VAR</code></li>
+<li>调用静态方法: <code>SomeCls::staticMethod()</code></li>
+</ol>
+<p>当然，在于类的内部，我们可以使用 <code>self</code>，<code>parent</code> 和 <code>static</code> 关键字来进行访问。</p>
+<p>这里，我要强调的是一种比较常见但是通常我们会忽略的一种用法。</p>
+<p>我们经常会看到这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Child extends Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()</div><div class="line">	&#123;</div><div class="line">		parent::__construct();</div><div class="line">		//some other logic</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们都知道，在 <code>Child</code> 的构造方法中 <code>parent::__construct()</code> 是主动调用父类的构造方法。</p>
+<p>但是，为什么会需要我们主动去调用呢？</p>
+<blockquote>
+<p>当一个子类覆盖父类的方法时，PHP不会调用父类已被覆盖的方法。是否调用父类的方法取决于子类。<br>这种机制也作用于构造函数和析构函数，重载以及魔术方法</p>
+</blockquote>
+<p>所以，当见到诸如 <code>parent::__construct</code>，<code>parent::__get</code> … 等调用时我们就知道其中的原由了。</p>
+<p>为什么会写这篇文章？因为有一天, 我因为看到下面的代码而蒙逼了…当我知道上面的原理后才明白过来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class BasePage</div><div class="line">&#123;</div><div class="line">	protected function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		//...</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Page extends BasePage</div><div class="line">&#123;</div><div class="line">	public function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		$key = $key + $value;</div><div class="line">		parent::renderValue($key, $value);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以文档熟烂于心才是硬道理！</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php" target="_blank" rel="external">http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php</a></li>
+</ul>
+]]></content>
     
     <summary type="html">
     
@@ -122,20 +172,20 @@
     <link href="http://blog.lzuer.net/2016/06/23/singleton-and-multiton/"/>
     <id>http://blog.lzuer.net/2016/06/23/singleton-and-multiton/</id>
     <published>2016-06-23T09:26:12.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.558Z</updated>
     
-    <content type="html">&lt;p&gt;单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。&lt;/p&gt;
-&lt;h2 id=&quot;单例模式&quot;&gt;&lt;a href=&quot;#单例模式&quot; class=&quot;headerlink&quot; title=&quot;单例模式&quot;&gt;&lt;/a&gt;单例模式&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;class Singleton&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	/**&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	 * @var static&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	 */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	private static $instance;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	public static function getInstance()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		if (null === static::$instance) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;			static::$instance = new static();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		return static::$instance;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	//单例模式不允许被new&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	private function __construct()&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	//不允许被clone&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	final public function __clone()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		throw new \Exception(&amp;apos;This is singleton, Clone is forbidden.&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	//不允许被unserialize&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	final public function __wakeup()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		throw new \Exception(&amp;apos;This is singleton, __wakeup is forbidden.&amp;apos;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;多例&quot;&gt;&lt;a href=&quot;#多例&quot; class=&quot;headerlink&quot; title=&quot;多例&quot;&gt;&lt;/a&gt;多例&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;class Multiton&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	const INSTANCE_1 = &amp;apos;1&amp;apos;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	const INSTANCE_2 = &amp;apos;2&amp;apos;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	private static $instances = [];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	private function __construct()&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	private function __clone()&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	private function __wakeup()&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	public static function getInstance($instanceName)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		if (!array_key_exists($instanceName, self::$instances)) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;			self::$instances[$instanceName] = new self();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		return self::$instances[$instanceName];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;p&gt;单例模式的主要优点：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;* 提供了对唯一实例的受控访问
+    <content type="html"><![CDATA[<p>单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。</p>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">class Singleton</div><div class="line">&#123;</div><div class="line">	/**</div><div class="line">	 * @var static</div><div class="line">	 */</div><div class="line">	private static $instance;</div><div class="line"></div><div class="line">	public static function getInstance()</div><div class="line">	&#123;</div><div class="line">		if (null === static::$instance) &#123;</div><div class="line">			static::$instance = new static();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return static::$instance;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//单例模式不允许被new</div><div class="line">	private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">	//不允许被clone</div><div class="line">	final public function __clone()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, Clone is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//不允许被unserialize</div><div class="line">	final public function __wakeup()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, __wakeup is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="多例"><a href="#多例" class="headerlink" title="多例"></a>多例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class Multiton</div><div class="line">&#123;</div><div class="line">	const INSTANCE_1 = &apos;1&apos;;</div><div class="line"></div><div class="line">	const INSTANCE_2 = &apos;2&apos;;</div><div class="line"></div><div class="line">	private static $instances = [];</div><div class="line"></div><div class="line">	private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">	private function __clone()&#123;&#125;</div><div class="line"></div><div class="line">	private function __wakeup()&#123;&#125;</div><div class="line"></div><div class="line">	public static function getInstance($instanceName)</div><div class="line">	&#123;</div><div class="line">		if (!array_key_exists($instanceName, self::$instances)) &#123;</div><div class="line">			self::$instances[$instanceName] = new self();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return self::$instances[$instanceName];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>单例模式的主要优点：</p>
+<pre><code>* 提供了对唯一实例的受控访问
 * 由于在系统中只存在一个对象，因此可以节约资源，对于一些需要频繁创建和销毁的对象可以提高系统性能
 * 允许可变数目的实例
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;主要缺点：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;* 单例模式没有抽象层，因此扩展很麻烦
+</code></pre><p>主要缺点：</p>
+<pre><code>* 单例模式没有抽象层，因此扩展很麻烦
 * 职责过重，一定程度上违背了“单一职责原则”
 * 滥用会带来一些负面问题
-&lt;/code&gt;&lt;/pre&gt;</content>
+</code></pre>]]></content>
     
     <summary type="html">
     
@@ -160,35 +210,35 @@
     <link href="http://blog.lzuer.net/2016/06/22/array_merge-vs-+/"/>
     <id>http://blog.lzuer.net/2016/06/22/array_merge-vs-+/</id>
     <published>2016-06-22T21:57:23.000Z</published>
-    <updated>2016-07-14T06:26:49.450Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;p&gt;首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。&lt;/p&gt;
-&lt;p&gt;+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。&lt;/p&gt;
-&lt;p&gt;举个栗子： &lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;apos;];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$b = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;orange&amp;apos;, &amp;apos;c&amp;apos; =&amp;gt; &amp;apos;cherry&amp;apos;];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$c = $a + $b;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var_dump($c);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;将会输出：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;array(3) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;a&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(5) &amp;quot;apple&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;b&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;banana&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;c&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;cherry&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;那么如果存在数字键值，又会有是什么表现方式呢？稍微改动下上一个栗子：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;apos;, 1];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$b = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;orange&amp;apos;, &amp;apos;c&amp;apos; =&amp;gt; &amp;apos;cherry&amp;apos;, 2];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$c = $a + $b;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var_dump($c);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;将会输出：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;array(4) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;a&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(5) &amp;quot;apple&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;b&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;banana&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [0]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  int(1)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;c&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;cherry&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;可以看到和字符串表现一致。&lt;/p&gt;
-&lt;p&gt;再来测试下上面的代码， array_merge 的表现是怎样的：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;apos;];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$b = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;orange&amp;apos;, &amp;apos;c&amp;apos; =&amp;gt; &amp;apos;cherry&amp;apos;];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$c = array_merge($a, $b);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var_dump($c);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;输出结果为：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;array(3) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;a&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;orange&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;b&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;banana&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;c&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;cherry&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;那么正如文档中所说的，将会对相同的键值进行覆盖！那么对于数字键值是不是也是同样的处理呢？再看：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;apos;, 1];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$b = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;orange&amp;apos;, &amp;apos;c&amp;apos; =&amp;gt; &amp;apos;cherry&amp;apos;, 2];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$c = $a + $b;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var_dump($c);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;输出结果：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;array(5) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;a&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;orange&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;b&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;banana&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [0]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  int(1)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [&amp;quot;c&amp;quot;]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  string(6) &amp;quot;cherry&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  [1]=&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  int(2)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;可以看到，并没有进行覆盖!由此可以得出结论，当两个数组中含有数值健的时候，会进行附加，并且键值会从0开始重建索引键值。&lt;/p&gt;
-&lt;p&gt;参看资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/7059721/array-merge-versus&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/7059721/array-merge-versus&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://php.net/manual/en/language.operators.array.php&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://php.net/manual/en/language.operators.array.php&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://php.net/manual/en/function.array-merge.php&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://php.net/manual/en/function.array-merge.php&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
+    <content type="html"><![CDATA[<p>首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。</p>
+<p>+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。</p>
+<p>举个栗子： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
+<p>将会输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">array(3) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(5) &quot;apple&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么如果存在数字键值，又会有是什么表现方式呢？稍微改动下上一个栗子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
+<p>将会输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(5) &quot;apple&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [0]=&gt;</div><div class="line">  int(1)</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到和字符串表现一致。</p>
+<p>再来测试下上面的代码， array_merge 的表现是怎样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</div><div class="line"></div><div class="line">$c = array_merge($a, $b);</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
+<p>输出结果为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">array(3) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(6) &quot;orange&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么正如文档中所说的，将会对相同的键值进行覆盖！那么对于数字键值是不是也是同样的处理呢？再看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">array(5) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(6) &quot;orange&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [0]=&gt;</div><div class="line">  int(1)</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">  [1]=&gt;</div><div class="line">  int(2)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，并没有进行覆盖!由此可以得出结论，当两个数组中含有数值健的时候，会进行附加，并且键值会从0开始重建索引键值。</p>
+<p>参看资料：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/7059721/array-merge-versus" target="_blank" rel="external">http://stackoverflow.com/questions/7059721/array-merge-versus</a></li>
+<li><a href="http://php.net/manual/en/language.operators.array.php" target="_blank" rel="external">http://php.net/manual/en/language.operators.array.php</a></li>
+<li><a href="http://php.net/manual/en/function.array-merge.php" target="_blank" rel="external">http://php.net/manual/en/function.array-merge.php</a></li>
+</ul>
+]]></content>
     
     <summary type="html">
     
@@ -211,26 +261,26 @@
     <link href="http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/"/>
     <id>http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/</id>
     <published>2016-06-07T21:57:23.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;ol&gt;
-&lt;li&gt;Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别&lt;/li&gt;
-&lt;li&gt;Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构&lt;/li&gt;
-&lt;li&gt;Redis支持数据备份，即master-slave模式的数据备份&lt;/li&gt;
-&lt;li&gt;Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Redis作者对Redis和memcache进行的比对：&lt;/p&gt;
-&lt;p&gt;没有必要过多的关心性能，因为二者的性能都已经足够高了。由于Redis使用单核，而memcache可以使用多核，所以在比较上，平均每一个核上Redis在存储小数据时比memcache性能更高。而在100k以上的数据中，memcache性能高于Redis，最终，无论使用哪一个，每秒处理请求的次数都不会成为瓶颈。(比如瓶颈可能会在网卡)&lt;/p&gt;
-&lt;p&gt;如果要说内存使用效率，使用简单的key-value存储的话，memcache的内存利用率更高，而如果Redis采用hash结构来做key-value存储，由于其组合式的压缩，其内存利用率会高于memcache。&lt;/p&gt;
-&lt;p&gt;如果你对数据持久化和数据同步有所要求，那么推荐你选择Redis，因为这两个特性Memcached都不具备。即使你只是希望在升级或者重启系统后缓存数据不会丢失，选择Redis也是明智的。&lt;/p&gt;
-&lt;p&gt;当然，最后还得说到你的具体应用需求。Redis相比Memcached来说，拥有更多的数据结构和并支持更丰富的数据操作，通常在Memcached里， 你需要将数据拿到客户端来进行类似的修改再set回去。这大大增加了网络IO的次数和数据体积。在Redis中，这些复杂的操作通常和一般的 GET/SET一样高效。所以，如果你需要缓存能够支持更复杂的结构和操作，那么Redis会是不错的选择。&lt;/p&gt;
-&lt;p&gt;1、 Redis和Memcache都是将数据存放在内存中，都是内存数据库。不过memcache还可用于缓存其他东西，例如图片、视频等等。&lt;br&gt;2、Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，hash等数据结构的存储。&lt;br&gt;3、虚拟内存–Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘&lt;br&gt;4、过期策略–memcache在set时就指定，例如set key1 0 0 8,即永不过期。Redis可以通过例如expire 设定，例如expire name 10&lt;br&gt;5、分布式–设定memcache集群，利用magent做一主多从;redis可以做一主多从。都可以一主一从&lt;br&gt;6、存储数据安全–memcache挂掉后，数据没了；redis可以定期保存到磁盘（持久化）&lt;br&gt;7、灾难恢复–memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复&lt;br&gt;8、Redis支持数据的备份，即master-slave模式的数据备份&lt;/p&gt;
-&lt;p&gt;参考：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://segmentfault.com/a/1190000004012181&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://segmentfault.com/a/1190000004012181&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
+    <content type="html"><![CDATA[<ol>
+<li>Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别</li>
+<li>Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构</li>
+<li>Redis支持数据备份，即master-slave模式的数据备份</li>
+<li>Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。</li>
+</ol>
+<p>Redis作者对Redis和memcache进行的比对：</p>
+<p>没有必要过多的关心性能，因为二者的性能都已经足够高了。由于Redis使用单核，而memcache可以使用多核，所以在比较上，平均每一个核上Redis在存储小数据时比memcache性能更高。而在100k以上的数据中，memcache性能高于Redis，最终，无论使用哪一个，每秒处理请求的次数都不会成为瓶颈。(比如瓶颈可能会在网卡)</p>
+<p>如果要说内存使用效率，使用简单的key-value存储的话，memcache的内存利用率更高，而如果Redis采用hash结构来做key-value存储，由于其组合式的压缩，其内存利用率会高于memcache。</p>
+<p>如果你对数据持久化和数据同步有所要求，那么推荐你选择Redis，因为这两个特性Memcached都不具备。即使你只是希望在升级或者重启系统后缓存数据不会丢失，选择Redis也是明智的。</p>
+<p>当然，最后还得说到你的具体应用需求。Redis相比Memcached来说，拥有更多的数据结构和并支持更丰富的数据操作，通常在Memcached里， 你需要将数据拿到客户端来进行类似的修改再set回去。这大大增加了网络IO的次数和数据体积。在Redis中，这些复杂的操作通常和一般的 GET/SET一样高效。所以，如果你需要缓存能够支持更复杂的结构和操作，那么Redis会是不错的选择。</p>
+<p>1、 Redis和Memcache都是将数据存放在内存中，都是内存数据库。不过memcache还可用于缓存其他东西，例如图片、视频等等。<br>2、Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，hash等数据结构的存储。<br>3、虚拟内存–Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘<br>4、过期策略–memcache在set时就指定，例如set key1 0 0 8,即永不过期。Redis可以通过例如expire 设定，例如expire name 10<br>5、分布式–设定memcache集群，利用magent做一主多从;redis可以做一主多从。都可以一主一从<br>6、存储数据安全–memcache挂掉后，数据没了；redis可以定期保存到磁盘（持久化）<br>7、灾难恢复–memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复<br>8、Redis支持数据的备份，即master-slave模式的数据备份</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://segmentfault.com/a/1190000004012181" target="_blank" rel="external">https://segmentfault.com/a/1190000004012181</a></li>
+<li><a href="http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis" target="_blank" rel="external">http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis</a></li>
+</ul>
+]]></content>
     
     <summary type="html">
     
@@ -261,36 +311,36 @@
     <link href="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/"/>
     <id>http://blog.lzuer.net/2016/05/27/install-golang-on-centos/</id>
     <published>2016-05-27T18:57:23.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;h2 id=&quot;Download&quot;&gt;&lt;a href=&quot;#Download&quot; class=&quot;headerlink&quot; title=&quot;Download&quot;&gt;&lt;/a&gt;Download&lt;/h2&gt;&lt;p&gt;首先确定操作系统位数, 可执行：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ uname -m&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如果输出为 &lt;code&gt;x86_64&lt;/code&gt; 的话代表64位操作系统，如果为 &lt;code&gt;i386&lt;/code&gt; 则为32为系统。&lt;/p&gt;
-&lt;p&gt;根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;解压到安装目录, 我把go安装到 &lt;code&gt;/usr/local/go&lt;/code&gt; 中，执行：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ tar zxvf go1.6.2.linux-amd64.tar.gz&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ mv go /usr/local&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;配置环境变量&quot;&gt;&lt;a href=&quot;#配置环境变量&quot; class=&quot;headerlink&quot; title=&quot;配置环境变量&quot;&gt;&lt;/a&gt;配置环境变量&lt;/h2&gt;&lt;p&gt;添加 &lt;code&gt;GOROOT&lt;/code&gt; 环境变量&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ export GOROOT=&amp;quot;/usr/local/go&amp;quot;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;可以通过执行 &lt;code&gt;env&lt;/code&gt; 或者 &lt;code&gt;echo $GOROOT&lt;/code&gt; 来确认环境变量是否正常设置.&lt;/p&gt;
-&lt;p&gt;设置PATH&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ export PATH=$PATH:/usr/local/go/bin&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;测试是否安装成功&quot;&gt;&lt;a href=&quot;#测试是否安装成功&quot; class=&quot;headerlink&quot; title=&quot;测试是否安装成功&quot;&gt;&lt;/a&gt;测试是否安装成功&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ go version&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;输出 &lt;code&gt;go version go1.6.2 linux/amd64&lt;/code&gt; 表示golang已经成功安装！&lt;/p&gt;
-&lt;h2 id=&quot;GOPATH&quot;&gt;&lt;a href=&quot;#GOPATH&quot; class=&quot;headerlink&quot; title=&quot;GOPATH&quot;&gt;&lt;/a&gt;GOPATH&lt;/h2&gt;&lt;p&gt;剩下一步比较重要的就是设置 &lt;code&gt;GOPATH&lt;/code&gt;, 详情可查看&lt;a href=&quot;https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;资料&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;例如我将GOPATH设置为 &lt;code&gt;/home/go&lt;/code&gt;  为我的工作空间：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ export GOPATH=&amp;quot;/home/go&amp;quot;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;code&gt;/home/go&lt;/code&gt;的目录结构为：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;-- go&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  --bin&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  --pkg&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  --src&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;有关目录结构的介绍可以参考：&lt;a href=&quot;https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;至此Golang已经成功安装！&lt;/p&gt;
-&lt;h2 id=&quot;小知识&quot;&gt;&lt;a href=&quot;#小知识&quot; class=&quot;headerlink&quot; title=&quot;小知识&quot;&gt;&lt;/a&gt;小知识&lt;/h2&gt;&lt;p&gt;直接在命令行运行 &lt;code&gt;$ export PATH=$PATH:/usr/local/go&lt;/code&gt;， 只会在当前会话有效，登出或者注销系统后，PATH的设置就会失效。&lt;/p&gt;
-&lt;p&gt;如果想永久保存设置，则需要修改&lt;code&gt;/etc/profile&lt;/code&gt;，在末尾加上(如果之前没有添加过的话):&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;PATH=$PATH:/usr/local/go&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;export PATH&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;GOPATH=/home/go&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;export GOPATH&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;然后执行&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$source /etc/profile&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;之后可以通过 &lt;code&gt;echo $PATH&lt;/code&gt; 来查看设置是否生效。&lt;/p&gt;
-</content>
+    <content type="html"><![CDATA[<h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>首先确定操作系统位数, 可执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ uname -m</div></pre></td></tr></table></figure>
+<p>如果输出为 <code>x86_64</code> 的话代表64位操作系统，如果为 <code>i386</code> 则为32为系统。</p>
+<p>根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz</div></pre></td></tr></table></figure>
+<p>解压到安装目录, 我把go安装到 <code>/usr/local/go</code> 中，执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ tar zxvf go1.6.2.linux-amd64.tar.gz</div><div class="line">$ mv go /usr/local</div></pre></td></tr></table></figure>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>添加 <code>GOROOT</code> 环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOROOT=&quot;/usr/local/go&quot;</div></pre></td></tr></table></figure>
+<p>可以通过执行 <code>env</code> 或者 <code>echo $GOROOT</code> 来确认环境变量是否正常设置.</p>
+<p>设置PATH</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export PATH=$PATH:/usr/local/go/bin</div></pre></td></tr></table></figure>
+<h2 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ go version</div></pre></td></tr></table></figure>
+<p>输出 <code>go version go1.6.2 linux/amd64</code> 表示golang已经成功安装！</p>
+<h2 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h2><p>剩下一步比较重要的就是设置 <code>GOPATH</code>, 详情可查看<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">资料</a></p>
+<p>例如我将GOPATH设置为 <code>/home/go</code>  为我的工作空间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOPATH=&quot;/home/go&quot;</div></pre></td></tr></table></figure>
+<p><code>/home/go</code>的目录结构为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- go</div><div class="line">  --bin</div><div class="line">  --pkg</div><div class="line">  --src</div></pre></td></tr></table></figure>
+<p>有关目录结构的介绍可以参考：<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md</a></p>
+<p>至此Golang已经成功安装！</p>
+<h2 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h2><p>直接在命令行运行 <code>$ export PATH=$PATH:/usr/local/go</code>， 只会在当前会话有效，登出或者注销系统后，PATH的设置就会失效。</p>
+<p>如果想永久保存设置，则需要修改<code>/etc/profile</code>，在末尾加上(如果之前没有添加过的话):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PATH=$PATH:/usr/local/go</div><div class="line">export PATH</div><div class="line">GOPATH=/home/go</div><div class="line">export GOPATH</div></pre></td></tr></table></figure>
+<p>然后执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$source /etc/profile</div></pre></td></tr></table></figure>
+<p>之后可以通过 <code>echo $PATH</code> 来查看设置是否生效。</p>
+]]></content>
     
     <summary type="html">
     
@@ -311,24 +361,24 @@
     <link href="http://blog.lzuer.net/2016/05/09/validator-on-the-fly/"/>
     <id>http://blog.lzuer.net/2016/05/09/validator-on-the-fly/</id>
     <published>2016-05-09T16:53:42.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.558Z</updated>
     
-    <content type="html">&lt;p&gt;首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的&lt;br&gt;时候其中有一条需求就是把用户提交的评分值由原来的允许的&lt;code&gt;1, 2, 3, 4, 5&lt;/code&gt; 改成允许输入 &lt;code&gt;0, 2, 4, 6, 8, 10&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;自定义的&lt;code&gt;validator&lt;/code&gt;:&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;//ScoreValidator.php&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;class ScoreValidator extends Validator&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    protected function validateValue($value)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        if (in_array($value, [1, 2, 3, 4, 5])) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            return null;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        return [$this-&amp;gt;message, []];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;//User.php&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;public function rules()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    return [&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        ...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        [&amp;apos;rate&amp;apos;, ScoreValidator::className()],&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        ...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;那么应该如何做兼容性，来保证多个版本的接口中都按照规则来赋值呢？我第一个想到的是利用di来解决。&lt;/p&gt;
-&lt;p&gt;为什么这么想？可以参考下之前的&lt;a href=&quot;http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/&quot;&gt;一篇文章&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;那么我们来具体实施.&lt;/p&gt;
-&lt;p&gt;首先，接口版本控制的结构是遵循官方来的：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;modules&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;--v1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   -- controllers&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   -- ...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   -- Module.php&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;--v2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   -- controllers&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   -- ...&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   -- Module.php&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;在这之前我们需要对之前定义的&lt;code&gt;ScoreValidator&lt;/code&gt;进行下修改：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;//ScoreValidator.php&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;class ScoreValidator extends Validator&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    public $ranges = [0, 2, 4, 6, 8, 10];// 这里直接改成满足现有需求的数据区间&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    protected function validateValue($value)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        if (in_array($value, $this-&amp;gt;ranges)) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            return null;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        return [$this-&amp;gt;message, []];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;我们希望在v2版本的接口中来实现默认值的修改, 那么可以在原来的&lt;code&gt;v1&lt;/code&gt;版本下的&lt;code&gt;Module::init&lt;/code&gt;中来配置:&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;class Module extend \yii\base\Module&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    public function init()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        parent::init();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        Yii::$container-&amp;gt;set(ScoreValidator::className(), [&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &amp;apos;ranges&amp;apos; =&amp;gt; [1, 2, 3, 4, 5]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        ]);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;这样在&lt;code&gt;v1&lt;/code&gt;接口下的涉及到&lt;code&gt;ScoreValidator&lt;/code&gt;验证的地方就会按照这个规则来进行验证了。同样新的需求也可以兼顾到。&lt;/p&gt;
-&lt;p&gt;利用Yii2的容器和依赖注入可以很轻松写意的实现更多，还需要我们不停的探索！&lt;/p&gt;
-</content>
+    <content type="html"><![CDATA[<p>首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的<br>时候其中有一条需求就是把用户提交的评分值由原来的允许的<code>1, 2, 3, 4, 5</code> 改成允许输入 <code>0, 2, 4, 6, 8, 10</code></p>
+<p>自定义的<code>validator</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//ScoreValidator.php</div><div class="line">class ScoreValidator extends Validator</div><div class="line">&#123;</div><div class="line">    protected function validateValue($value)</div><div class="line">    &#123;</div><div class="line">        if (in_array($value, [1, 2, 3, 4, 5])) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [$this-&gt;message, []];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//User.php</div><div class="line">public function rules()</div><div class="line">&#123;</div><div class="line">    return [</div><div class="line">        ...</div><div class="line">        [&apos;rate&apos;, ScoreValidator::className()],</div><div class="line">        ...</div><div class="line">    ];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么应该如何做兼容性，来保证多个版本的接口中都按照规则来赋值呢？我第一个想到的是利用di来解决。</p>
+<p>为什么这么想？可以参考下之前的<a href="http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/">一篇文章</a></p>
+<p>那么我们来具体实施.</p>
+<p>首先，接口版本控制的结构是遵循官方来的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">modules</div><div class="line">--v1</div><div class="line">   -- controllers</div><div class="line">   -- ...</div><div class="line">   -- Module.php</div><div class="line">--v2</div><div class="line">   -- controllers</div><div class="line">   -- ...</div><div class="line">   -- Module.php</div></pre></td></tr></table></figure>
+<p>在这之前我们需要对之前定义的<code>ScoreValidator</code>进行下修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//ScoreValidator.php</div><div class="line">class ScoreValidator extends Validator</div><div class="line">&#123;</div><div class="line">    public $ranges = [0, 2, 4, 6, 8, 10];// 这里直接改成满足现有需求的数据区间</div><div class="line"></div><div class="line">    protected function validateValue($value)</div><div class="line">    &#123;</div><div class="line">        if (in_array($value, $this-&gt;ranges)) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [$this-&gt;message, []];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们希望在v2版本的接口中来实现默认值的修改, 那么可以在原来的<code>v1</code>版本下的<code>Module::init</code>中来配置:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Module extend \yii\base\Module</div><div class="line">&#123;</div><div class="line">    public function init()</div><div class="line">    &#123;</div><div class="line">        parent::init();</div><div class="line"></div><div class="line">        Yii::$container-&gt;set(ScoreValidator::className(), [</div><div class="line">            &apos;ranges&apos; =&gt; [1, 2, 3, 4, 5]</div><div class="line">        ]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样在<code>v1</code>接口下的涉及到<code>ScoreValidator</code>验证的地方就会按照这个规则来进行验证了。同样新的需求也可以兼顾到。</p>
+<p>利用Yii2的容器和依赖注入可以很轻松写意的实现更多，还需要我们不停的探索！</p>
+]]></content>
     
     <summary type="html">
     
@@ -349,9 +399,7 @@
     <link href="http://blog.lzuer.net/2016/05/07/upload-file-with-php/"/>
     <id>http://blog.lzuer.net/2016/05/07/upload-file-with-php/</id>
     <published>2016-05-07T00:17:39.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
-    
-    <content type="html"></content>
+    <updated>2016-07-30T13:21:27.558Z</updated>
     
     <summary type="html">
     
@@ -369,20 +417,20 @@
     <link href="http://blog.lzuer.net/2016/03/03/git-tips-one/"/>
     <id>http://blog.lzuer.net/2016/03/03/git-tips-one/</id>
     <published>2016-03-03T16:53:42.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;h1 id=&quot;git-tip-one&quot;&gt;&lt;a href=&quot;#git-tip-one&quot; class=&quot;headerlink&quot; title=&quot;git tip one&quot;&gt;&lt;/a&gt;git tip one&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;git config&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;git config&lt;/code&gt; 配置项由本地 &amp;gt; 用户 &amp;gt; 系统层级覆盖。&lt;/p&gt;
-&lt;p&gt;所以在本地某个仓库可以设置用户名和邮箱：&lt;/p&gt;
-&lt;p&gt;  git config user.name “light”&lt;br&gt;  git config user.email “light@qq.com”&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;为常用命令设置快捷别名&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;  git config alias.st status&lt;br&gt;  git config alias.ci commit&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;同样可以使用&lt;code&gt;-g&lt;/code&gt; 来进行全局配置&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;使用：&lt;/p&gt;
-&lt;p&gt;  $ git st&lt;br&gt;  $ git ci&lt;/p&gt;
-</content>
+    <content type="html"><![CDATA[<h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p>
+<p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p>
+<p>所以在本地某个仓库可以设置用户名和邮箱：</p>
+<p>  git config user.name “light”<br>  git config user.email “light@qq.com”</p>
+<p><strong>为常用命令设置快捷别名</strong></p>
+<p>  git config alias.st status<br>  git config alias.ci commit</p>
+<blockquote>
+<p>同样可以使用<code>-g</code> 来进行全局配置</p>
+</blockquote>
+<p>使用：</p>
+<p>  $ git st<br>  $ git ci</p>
+]]></content>
     
     <summary type="html">
     
@@ -403,39 +451,39 @@
     <link href="http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/"/>
     <id>http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/</id>
     <published>2016-01-26T11:17:39.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.558Z</updated>
     
-    <content type="html">&lt;h2 id=&quot;开启xdebug&quot;&gt;&lt;a href=&quot;#开启xdebug&quot; class=&quot;headerlink&quot; title=&quot;开启xdebug&quot;&gt;&lt;/a&gt;开启xdebug&lt;/h2&gt;&lt;p&gt;在&lt;code&gt;php.ini&lt;/code&gt;中配置&lt;code&gt;xdebug&lt;/code&gt;如下：&lt;/p&gt;
-&lt;p&gt;  [xdebug]&lt;br&gt;  xdebug.remote_enable = On&lt;br&gt;  xdebug.remote_handler = dbgp&lt;br&gt;  xdebug.remote_host= localhost&lt;br&gt;  xdebug.remote_port = 9000&lt;br&gt;  xdebug.idekey = PHPSTORM&lt;br&gt;  xdebug.profiler_enable = 1&lt;/p&gt;
-&lt;p&gt;重启服务之后在&lt;code&gt;phpinfo&lt;/code&gt;中查看是否已经开启&lt;code&gt;xdebug&lt;/code&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;配置phpstorm&quot;&gt;&lt;a href=&quot;#配置phpstorm&quot; class=&quot;headerlink&quot; title=&quot;配置phpstorm&quot;&gt;&lt;/a&gt;配置phpstorm&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;配置xdebug端口号&lt;/p&gt;
-&lt;p&gt;在 File &amp;gt; Settings &amp;gt; Langauges&amp;amp;Frameworks 中找到 &lt;code&gt;PHP&lt;/code&gt; 选择&lt;code&gt;Debug&lt;/code&gt;选项卡,找到&lt;code&gt;xdebug&lt;/code&gt;配置项，确认端口号是上面设置的&lt;code&gt;9000&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;配置DBGp Proxy&lt;/p&gt;
-&lt;p&gt; 点击&lt;code&gt;DBGp Proxy&lt;/code&gt;选项卡，在里面设置:&lt;/p&gt;
-&lt;p&gt;   IDE Key: PHPSTORM&lt;br&gt;   Host:   localhost&lt;br&gt;   Port:   9000&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;添加 servers&lt;/p&gt;
-&lt;p&gt;找到 &lt;code&gt;Servers&lt;/code&gt;选项卡,点击添加按钮添加一个配置信息。例如想调试部署好的虚拟地址：&lt;code&gt;www.app.local&lt;/code&gt;,那么你需要在&lt;code&gt;Host&lt;/code&gt;中填上该地址。&lt;br&gt;注意&lt;code&gt;Port&lt;/code&gt;需要和你实际配置的端口要一直。另外保证&lt;code&gt;Debugger&lt;/code&gt;为&lt;code&gt;Xdebug&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;  这里主要记录下如何配合浏览器插件&lt;code&gt;Xdebug helper&lt;/code&gt;来进行调试&lt;/p&gt;
-&lt;h2 id=&quot;安装浏览器插件Xdebug-helper&quot;&gt;&lt;a href=&quot;#安装浏览器插件Xdebug-helper&quot; class=&quot;headerlink&quot; title=&quot;安装浏览器插件Xdebug helper&quot;&gt;&lt;/a&gt;安装浏览器插件&lt;code&gt;Xdebug helper&lt;/code&gt;&lt;/h2&gt;&lt;p&gt;  安装成功之后，在选线卡将你配置的domain进行添加。&lt;/p&gt;
-&lt;h2 id=&quot;在postman中使用xdebug&quot;&gt;&lt;a href=&quot;#在postman中使用xdebug&quot; class=&quot;headerlink&quot; title=&quot;在postman中使用xdebug&quot;&gt;&lt;/a&gt;在postman中使用xdebug&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Configure your xdebug (by editing php.ini) to attempt to debug every php script (xdebug.remote_autostart = 1)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Add xdebug session start parameter to the actual URL (XDEBUG_SESSION_START= – &lt;a href=&quot;http://xdebug.org/docs/remote&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xdebug.org/docs/remote&lt;/a&gt; ), for example: ?XDEBUG_SESSION_START=PHPSTORM&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Pass xdebug cookie as one of the headers (the one which is set by bookmarklet or browser extension, for example)&lt;/p&gt;
-&lt;p&gt;参考文章:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://my.oschina.net/u/248080/blog/351455&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://my.oschina.net/u/248080/blog/351455&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
+    <content type="html"><![CDATA[<h2 id="开启xdebug"><a href="#开启xdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p>
+<p>  [xdebug]<br>  xdebug.remote_enable = On<br>  xdebug.remote_handler = dbgp<br>  xdebug.remote_host= localhost<br>  xdebug.remote_port = 9000<br>  xdebug.idekey = PHPSTORM<br>  xdebug.profiler_enable = 1</p>
+<p>重启服务之后在<code>phpinfo</code>中查看是否已经开启<code>xdebug</code>.</p>
+<h2 id="配置phpstorm"><a href="#配置phpstorm" class="headerlink" title="配置phpstorm"></a>配置phpstorm</h2><ol>
+<li><p>配置xdebug端口号</p>
+<p>在 File &gt; Settings &gt; Langauges&amp;Frameworks 中找到 <code>PHP</code> 选择<code>Debug</code>选项卡,找到<code>xdebug</code>配置项，确认端口号是上面设置的<code>9000</code></p>
+</li>
+<li><p>配置DBGp Proxy</p>
+<p> 点击<code>DBGp Proxy</code>选项卡，在里面设置:</p>
+<p>   IDE Key: PHPSTORM<br>   Host:   localhost<br>   Port:   9000</p>
+</li>
+<li><p>添加 servers</p>
+<p>找到 <code>Servers</code>选项卡,点击添加按钮添加一个配置信息。例如想调试部署好的虚拟地址：<code>www.app.local</code>,那么你需要在<code>Host</code>中填上该地址。<br>注意<code>Port</code>需要和你实际配置的端口要一直。另外保证<code>Debugger</code>为<code>Xdebug</code></p>
+</li>
+</ol>
+<p>  这里主要记录下如何配合浏览器插件<code>Xdebug helper</code>来进行调试</p>
+<h2 id="安装浏览器插件Xdebug-helper"><a href="#安装浏览器插件Xdebug-helper" class="headerlink" title="安装浏览器插件Xdebug helper"></a>安装浏览器插件<code>Xdebug helper</code></h2><p>  安装成功之后，在选线卡将你配置的domain进行添加。</p>
+<h2 id="在postman中使用xdebug"><a href="#在postman中使用xdebug" class="headerlink" title="在postman中使用xdebug"></a>在postman中使用xdebug</h2><ol>
+<li><p>Configure your xdebug (by editing php.ini) to attempt to debug every php script (xdebug.remote_autostart = 1)</p>
+</li>
+<li><p>Add xdebug session start parameter to the actual URL (XDEBUG_SESSION_START= – <a href="http://xdebug.org/docs/remote" target="_blank" rel="external">http://xdebug.org/docs/remote</a> ), for example: ?XDEBUG_SESSION_START=PHPSTORM</p>
+</li>
+<li><p>Pass xdebug cookie as one of the headers (the one which is set by bookmarklet or browser extension, for example)</p>
+<p>参考文章:</p>
+<ul>
+<li><a href="http://my.oschina.net/u/248080/blog/351455" target="_blank" rel="external">http://my.oschina.net/u/248080/blog/351455</a></li>
+<li><a href="http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman" target="_blank" rel="external">http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman</a></li>
+</ul>
+</li>
+</ol>
+]]></content>
     
     <summary type="html">
     
@@ -459,22 +507,22 @@
     <link href="http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/"/>
     <id>http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/</id>
     <published>2016-01-18T23:59:20.000Z</published>
-    <updated>2016-07-14T06:26:49.450Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;p&gt;首先在&lt;a href=&quot;https://travis-ci.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;travis&lt;/a&gt;将你的项目加入到travis。&lt;/p&gt;
-&lt;p&gt;打开设置，添加token变量。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xq6zf.com1.z0.glb.clouddn.com/travis-setting.png&quot; alt=&quot;add-token&quot;&gt;&lt;/p&gt;
-&lt;p&gt;在这之前我们需要在&lt;a href=&quot;https://github.com/settings/tokens&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github&lt;/a&gt;, 生成一个token。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://7xq6zf.com1.z0.glb.clouddn.com/generate-github-token.png&quot; alt=&quot;generate-token&quot;&gt;&lt;/p&gt;
-&lt;p&gt;在项目的 &lt;code&gt;.travis.yml&lt;/code&gt; 中可以进行如下配置：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;language: node_js
+    <content type="html"><![CDATA[<p>首先在<a href="https://travis-ci.org" target="_blank" rel="external">travis</a>将你的项目加入到travis。</p>
+<p>打开设置，添加token变量。</p>
+<p><img src="http://7xq6zf.com1.z0.glb.clouddn.com/travis-setting.png" alt="add-token"></p>
+<p>在这之前我们需要在<a href="https://github.com/settings/tokens" target="_blank" rel="external">github</a>, 生成一个token。</p>
+<p><img src="http://7xq6zf.com1.z0.glb.clouddn.com/generate-github-token.png" alt="generate-token"></p>
+<p>在项目的 <code>.travis.yml</code> 中可以进行如下配置：</p>
+<pre><code>language: node_js
 sudo: false
 node_js:
   - 5.3.0
 
 before_install:
-  - git config --global user.name &amp;quot;lichunqiang&amp;quot;
-  - git config --global user.email &amp;quot;light-li@hotmail.com&amp;quot;
+  - git config --global user.name &quot;lichunqiang&quot;
+  - git config --global user.email &quot;light-li@hotmail.com&quot;
   - git config --global push.default simple
 
 install:
@@ -491,10 +539,10 @@ script:
   - cp -r public/* .deploy_git/
   - cd .deploy_git
   - git add -A
-  - git commit -am &amp;quot;Auto deploy from Travis-CI.&amp;quot;
+  - git commit -am &quot;Auto deploy from Travis-CI.&quot;
   - git push --force -q
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这样就等着 &lt;code&gt;travis&lt;/code&gt; 构建完成之后，我们就可以看到文件就会自动发布了。&lt;/p&gt;
-</content>
+</code></pre><p>这样就等着 <code>travis</code> 构建完成之后，我们就可以看到文件就会自动发布了。</p>
+]]></content>
     
     <summary type="html">
     
@@ -520,25 +568,25 @@ script:
     <link href="http://blog.lzuer.net/2016/01/16/git-delete-submoudle/"/>
     <id>http://blog.lzuer.net/2016/01/16/git-delete-submoudle/</id>
     <published>2016-01-16T00:16:21.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;Delete the relevant section from the .gitmodules file.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Stage the .gitmodules changes git add .gitmodules&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Delete the relevant section from .git/config.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Run git rm –cached path_to_submodule (no trailing slash).&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Run rm -rf .git/modules/path_to_submodule&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Commit git commit -m “Removed submodule &lt;name&gt;“&lt;/name&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Delete the now untracked submodule files &lt;code&gt;rm -rf path_to_submodule&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
+    <content type="html"><![CDATA[<ol>
+<li><p>Delete the relevant section from the .gitmodules file.</p>
+</li>
+<li><p>Stage the .gitmodules changes git add .gitmodules</p>
+</li>
+<li><p>Delete the relevant section from .git/config.</p>
+</li>
+<li><p>Run git rm –cached path_to_submodule (no trailing slash).</p>
+</li>
+<li><p>Run rm -rf .git/modules/path_to_submodule</p>
+</li>
+<li><p>Commit git commit -m “Removed submodule <name>“</name></p>
+</li>
+<li><p>Delete the now untracked submodule files <code>rm -rf path_to_submodule</code></p>
+</li>
+</ol>
+]]></content>
     
     <summary type="html">
     
@@ -562,14 +610,14 @@ script:
     <link href="http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/"/>
     <id>http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/</id>
     <published>2016-01-13T16:17:39.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.558Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;code&gt;www.site.com&lt;/code&gt; &lt;code&gt;site.com&lt;/code&gt; 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，&lt;/p&gt;
-&lt;p&gt;因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。&lt;/p&gt;
-&lt;p&gt;配置nginx如下：&lt;/p&gt;
-&lt;p&gt;  server_name site.com www.site.com&lt;/p&gt;
-&lt;p&gt;  if ($host = ‘site.com’) {&lt;br&gt;    rewrite ^/(.*)$ &lt;a href=&quot;http://www.site.com/$1&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.site.com/$1&lt;/a&gt; permanent;&lt;br&gt;  }&lt;/p&gt;
-</content>
+    <content type="html"><![CDATA[<p><code>www.site.com</code> <code>site.com</code> 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，</p>
+<p>因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。</p>
+<p>配置nginx如下：</p>
+<p>  server_name site.com www.site.com</p>
+<p>  if ($host = ‘site.com’) {<br>    rewrite ^/(.*)$ <a href="http://www.site.com/$1" target="_blank" rel="external">http://www.site.com/$1</a> permanent;<br>  }</p>
+]]></content>
     
     <summary type="html">
     
@@ -595,43 +643,43 @@ script:
     <link href="http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/"/>
     <id>http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/</id>
     <published>2016-01-11T22:22:25.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.558Z</updated>
     
-    <content type="html">&lt;p&gt;在 &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 &lt;code&gt;pull request&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;在项目的作者对发起的 &lt;code&gt;pull request&lt;/code&gt; 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是，&lt;/p&gt;
-&lt;p&gt;这一切在 &lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 上被方便的给自动完成了，也就说，当我们在对 &lt;code&gt;patch&lt;/code&gt; 分支 &lt;code&gt;push&lt;/code&gt; 修改代码时，&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 自动会将修改关联到上次已经发起的 &lt;code&gt;pull request&lt;/code&gt;。&lt;/p&gt;
-&lt;p&gt;当这一切都&lt;strong&gt;ready&lt;/strong&gt;之后，我们需要精简提交信息变成一条，例如： &lt;code&gt;Issue #100: bugfix for fatal error&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;commit 6e9cd88424b5f313f7245c7a43e11063648f2dcd
-Author: lichunqiang &amp;lt;light-li@hotmail.com&amp;gt;
+    <content type="html"><![CDATA[<p>在 <a href="https://www.github.com" target="_blank" rel="external">Github</a> 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 <code>pull request</code>。</p>
+<p>在项目的作者对发起的 <code>pull request</code> 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是，</p>
+<p>这一切在 <a href="https://www.github.com" target="_blank" rel="external">Github</a> 上被方便的给自动完成了，也就说，当我们在对 <code>patch</code> 分支 <code>push</code> 修改代码时，</p>
+<p><a href="https://www.github.com" target="_blank" rel="external">Github</a> 自动会将修改关联到上次已经发起的 <code>pull request</code>。</p>
+<p>当这一切都<strong>ready</strong>之后，我们需要精简提交信息变成一条，例如： <code>Issue #100: bugfix for fatal error</code>.</p>
+<pre><code>commit 6e9cd88424b5f313f7245c7a43e11063648f2dcd
+Author: lichunqiang &lt;light-li@hotmail.com&gt;
 Date:   Mon Jan 11 16:40:41 2016 +0800
 
     tweak the description
 
 commit 06ce7e35206b0f8a2e5d41aab4ae21d842a7c8ab
-Author: lichunqiang &amp;lt;light-li@hotmail.com&amp;gt;
+Author: lichunqiang &lt;light-li@hotmail.com&gt;
 Date:   Sun Jan 10 23:04:25 2016 +0800
 
     bugfix of mailer
 
 commit e6e0ee8ec14624d11035a0a922617ab5dc69220f
-Author: lichunqiang &amp;lt;light-li@hotmail.com&amp;gt;
+Author: lichunqiang &lt;light-li@hotmail.com&gt;
 Date:   Sun Jan 10 22:57:25 2016 +0800
 
     commit message
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;在 git log 信息中，我们想要压缩最新的两条commit为一条&lt;/p&gt;
-&lt;p&gt;我们可以按照以下的步骤来进行：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git rebase -i HEAD~2
-&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
-&lt;p&gt;2 代表我们想要压缩的commit数量。注意，在这之前，我们要保证我们的分支要和主线进行了同步。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;执行命令后，在 text editor 中我们将 &lt;code&gt;pick&lt;/code&gt; 替换成 &lt;code&gt;squash&lt;/code&gt;, 只保留我们想保存的那条 &lt;code&gt;commit&lt;/code&gt; 即可。&lt;/p&gt;
-&lt;p&gt;也可以只保留第一条的 &lt;code&gt;pick&lt;/code&gt;, 将其余的替换成 &lt;code&gt;squash&lt;/code&gt;。保存并退出编辑器。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;，如果你已经提交到远程仓库，你需要执行:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$ git push origin branchname --force
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;贴士：&lt;/p&gt;
-&lt;p&gt;你可以执行 &lt;code&gt;git commit --amend&lt;/code&gt; 来修改最后一条commit的提交信息。 &lt;/p&gt;
-</content>
+</code></pre><p>在 git log 信息中，我们想要压缩最新的两条commit为一条</p>
+<p>我们可以按照以下的步骤来进行：</p>
+<pre><code>$ git rebase -i HEAD~2
+</code></pre><blockquote>
+<p>2 代表我们想要压缩的commit数量。注意，在这之前，我们要保证我们的分支要和主线进行了同步。</p>
+</blockquote>
+<p>执行命令后，在 text editor 中我们将 <code>pick</code> 替换成 <code>squash</code>, 只保留我们想保存的那条 <code>commit</code> 即可。</p>
+<p>也可以只保留第一条的 <code>pick</code>, 将其余的替换成 <code>squash</code>。保存并退出编辑器。</p>
+<p><strong>注意</strong>，如果你已经提交到远程仓库，你需要执行:</p>
+<pre><code>$ git push origin branchname --force
+</code></pre><p>贴士：</p>
+<p>你可以执行 <code>git commit --amend</code> 来修改最后一条commit的提交信息。 </p>
+]]></content>
     
     <summary type="html">
     
@@ -656,28 +704,28 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
     <link href="http://blog.lzuer.net/2016/01/11/multiple-platform-git/"/>
     <id>http://blog.lzuer.net/2016/01/11/multiple-platform-git/</id>
     <published>2016-01-11T21:57:21.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;p&gt;我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.&lt;/p&gt;
-&lt;h2 id=&quot;设置用户名和邮箱&quot;&gt;&lt;a href=&quot;#设置用户名和邮箱&quot; class=&quot;headerlink&quot; title=&quot;设置用户名和邮箱&quot;&gt;&lt;/a&gt;设置用户名和邮箱&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;$git config --global user.name &amp;quot;yourname&amp;quot;
-$git config --global user.email &amp;quot;your@example.com&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;生成ssh-key&quot;&gt;&lt;a href=&quot;#生成ssh-key&quot; class=&quot;headerlink&quot; title=&quot;生成ssh-key&quot;&gt;&lt;/a&gt;生成ssh-key&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;ssh-key保存在 &lt;code&gt;~/.ssh&lt;/code&gt; 目录中&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;pre&gt;&lt;code&gt;$cd ~/.ssh
-$ssh-keygen -t rsa -C &amp;quot;your@example.com&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;注意在生成key file的时候可以针对不同的平台来命名, 例如：&lt;code&gt;id_github&lt;/code&gt;, 这将会在接下的来的配置中用到.&lt;/p&gt;
-&lt;p&gt;生成&lt;strong&gt;Key&lt;/strong&gt;之后就是将 &lt;code&gt;xx.pub&lt;/code&gt; 的内容配置到平台的SSH配置中.&lt;/p&gt;
-&lt;h2 id=&quot;配置文件&quot;&gt;&lt;a href=&quot;#配置文件&quot; class=&quot;headerlink&quot; title=&quot;配置文件&quot;&gt;&lt;/a&gt;配置文件&lt;/h2&gt;&lt;p&gt;在 &lt;code&gt;~/.ssh&lt;/code&gt; 目录下新建 &lt;code&gt;config&lt;/code&gt; 文件并编辑：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Host git.coding.net
+    <content type="html"><![CDATA[<p>我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.</p>
+<h2 id="设置用户名和邮箱"><a href="#设置用户名和邮箱" class="headerlink" title="设置用户名和邮箱"></a>设置用户名和邮箱</h2><pre><code>$git config --global user.name &quot;yourname&quot;
+$git config --global user.email &quot;your@example.com&quot;
+</code></pre><h2 id="生成ssh-key"><a href="#生成ssh-key" class="headerlink" title="生成ssh-key"></a>生成ssh-key</h2><blockquote>
+<p>ssh-key保存在 <code>~/.ssh</code> 目录中</p>
+</blockquote>
+<pre><code>$cd ~/.ssh
+$ssh-keygen -t rsa -C &quot;your@example.com&quot;
+</code></pre><p>注意在生成key file的时候可以针对不同的平台来命名, 例如：<code>id_github</code>, 这将会在接下的来的配置中用到.</p>
+<p>生成<strong>Key</strong>之后就是将 <code>xx.pub</code> 的内容配置到平台的SSH配置中.</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>在 <code>~/.ssh</code> 目录下新建 <code>config</code> 文件并编辑：</p>
+<pre><code>Host git.coding.net
     User your@example.com
     IdentityFile ~/.ssh/coding_rsa
 Host github.com
     User your@example.com
     IdentityFile ~/.ssh/github_rsa
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;测试是否连接成功&quot;&gt;&lt;a href=&quot;#测试是否连接成功&quot; class=&quot;headerlink&quot; title=&quot;测试是否连接成功&quot;&gt;&lt;/a&gt;测试是否连接成功&lt;/h2&gt;&lt;pre&gt;&lt;code&gt;$ssh -T git@git.coding.net
+</code></pre><h2 id="测试是否连接成功"><a href="#测试是否连接成功" class="headerlink" title="测试是否连接成功"></a>测试是否连接成功</h2><pre><code>$ssh -T git@git.coding.net
 $ssh -T git@github.com
-&lt;/code&gt;&lt;/pre&gt;</content>
+</code></pre>]]></content>
     
     <summary type="html">
     
@@ -702,32 +750,32 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/"/>
     <id>http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/</id>
     <published>2015-12-29T23:57:23.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.558Z</updated>
     
-    <content type="html">&lt;p&gt;Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 &lt;code&gt;minimum-stability&lt;/code&gt; 最低稳定性版本的包将不会被安装。&lt;/p&gt;
-&lt;p&gt;例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：&lt;code&gt;&amp;quot;vendor/library&amp;quot;: &amp;quot;*&amp;quot;&lt;/code&gt;, 乍看上去并没有什么不妥, 但是当我们执行 &lt;code&gt;composer install&lt;/code&gt; 或者 &lt;code&gt;composer update&lt;/code&gt; 去下载包的时候通常会报错。&lt;/p&gt;
-&lt;p&gt;这是为什么呢？&lt;/p&gt;
-&lt;p&gt;通常我们的 &lt;code&gt;composer.json&lt;/code&gt; 都不会显式的去设定 &lt;code&gt;minimum-stability&lt;/code&gt;, 那么 &lt;code&gt;composer&lt;/code&gt; 就会把他默认为 &lt;code&gt;stable&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;那么对于一个尚未发布版本的包来说, 明显是不符合的. 所以安装就不会成功.&lt;/p&gt;
-&lt;p&gt;所以有两个途径来解决：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;设定 &lt;code&gt;minimum-stability&lt;/code&gt; 为 &lt;code&gt;dev&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;显然这是简单粗暴的, 但是这种方法所面临的问题也很严重. 那就是我们去依赖某些开发版中的包, 这显然是我们所不想看到的.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;指定依赖包的版本, 这也是最佳的解决方案&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;composer require vendor/library=dev-master&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！&lt;/p&gt;
-&lt;p&gt;另外我们还需要知道 &lt;code&gt;minimum-stability&lt;/code&gt; 所支持的有：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;dev&lt;/li&gt;
-&lt;li&gt;alpha&lt;/li&gt;
-&lt;li&gt;beta&lt;/li&gt;
-&lt;li&gt;RC&lt;/li&gt;
-&lt;li&gt;stable&lt;/li&gt;
-&lt;/ul&gt;
-</content>
+    <content type="html"><![CDATA[<p>Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 <code>minimum-stability</code> 最低稳定性版本的包将不会被安装。</p>
+<p>例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：<code>&quot;vendor/library&quot;: &quot;*&quot;</code>, 乍看上去并没有什么不妥, 但是当我们执行 <code>composer install</code> 或者 <code>composer update</code> 去下载包的时候通常会报错。</p>
+<p>这是为什么呢？</p>
+<p>通常我们的 <code>composer.json</code> 都不会显式的去设定 <code>minimum-stability</code>, 那么 <code>composer</code> 就会把他默认为 <code>stable</code>.</p>
+<p>那么对于一个尚未发布版本的包来说, 明显是不符合的. 所以安装就不会成功.</p>
+<p>所以有两个途径来解决：</p>
+<ol>
+<li>设定 <code>minimum-stability</code> 为 <code>dev</code></li>
+</ol>
+<p>显然这是简单粗暴的, 但是这种方法所面临的问题也很严重. 那就是我们去依赖某些开发版中的包, 这显然是我们所不想看到的.</p>
+<ol>
+<li>指定依赖包的版本, 这也是最佳的解决方案</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require vendor/library=dev-master</div></pre></td></tr></table></figure>
+<p>所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！</p>
+<p>另外我们还需要知道 <code>minimum-stability</code> 所支持的有：</p>
+<ul>
+<li>dev</li>
+<li>alpha</li>
+<li>beta</li>
+<li>RC</li>
+<li>stable</li>
+</ul>
+]]></content>
     
     <summary type="html">
     
@@ -748,15 +796,15 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/"/>
     <id>http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/</id>
     <published>2015-12-20T20:17:39.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;strong&gt;注意&lt;/strong&gt;: &lt;code&gt;git reset --hard&lt;/code&gt;会彻底删除你的变动,你可以在这之前使用 &lt;code&gt;git stash&lt;/code&gt; 来保存变动。&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;git reset --hard HEAD~1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;code&gt;HEAD~1&lt;/code&gt;代表当前提交之前的一次提交.&lt;/p&gt;
-&lt;p&gt;或者使用 &lt;code&gt;git log&lt;/code&gt; 找到你想revert的commit_id：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;git reset --hard &amp;lt;sha1-commit-id&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如果你已经提交到了远程仓库, 可以通过以下命令来抹掉提交：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;git push origin HEAD --force&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
+    <content type="html"><![CDATA[<p><strong>注意</strong>: <code>git reset --hard</code>会彻底删除你的变动,你可以在这之前使用 <code>git stash</code> 来保存变动。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard HEAD~1</div></pre></td></tr></table></figure>
+<p><code>HEAD~1</code>代表当前提交之前的一次提交.</p>
+<p>或者使用 <code>git log</code> 找到你想revert的commit_id：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard &lt;sha1-commit-id&gt;</div></pre></td></tr></table></figure>
+<p>如果你已经提交到了远程仓库, 可以通过以下命令来抹掉提交：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin HEAD --force</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
@@ -777,28 +825,28 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/09/18/composer-repositories-path/"/>
     <id>http://blog.lzuer.net/2015/09/18/composer-repositories-path/</id>
     <published>2015-09-18T00:17:39.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;本文讲讲用composer来进行本地开发包,和本地公用包的使用.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;当我们构建一个本地的类库时, 当并不想推送到&lt;a href=&quot;https://packagist.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;packagist&lt;/a&gt;, 我们可以使用&lt;code&gt;repositories &amp;gt; path&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;来处理。&lt;/p&gt;
-&lt;p&gt;以下目录结构为例：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;- apps&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;\_ my-app   		-- 当前项目开发目录&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  \_ composer.json&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- packages			-- 本地共有库, 存放正在和已经开发好的类库&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;\_ my-package       -- 一个叫 my-package 的类库 &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  \_ composer.json&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;现在我们要在 &lt;code&gt;my-app&lt;/code&gt; 中依赖 &lt;code&gt;my-package&lt;/code&gt;, 那么现在我们可以：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;配置 &lt;code&gt;my-app/composer.json&lt;/code&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	//引入依赖&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;quot;require&amp;quot;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;quot;myrepositry/package1&amp;quot;: &amp;quot;*@dev&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	//配置 repositories&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;quot;repositories&amp;quot;: [&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;#123;&amp;quot;type&amp;quot;: &amp;quot;path&amp;quot;, &amp;quot;url&amp;quot;: &amp;quot;../../packages/my-package&amp;quot;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	]	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ol&gt;
-&lt;li&gt;composer update&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;接下来就是在 &lt;code&gt;my-app&lt;/code&gt; 目录下执行 &lt;code&gt;composer update&lt;/code&gt;, 来使之前的配置生效!&lt;/p&gt;
-&lt;p&gt;执行成功后, 我们可以到&lt;code&gt;my-app/vendor&lt;/code&gt; 目录下查看, 我们可以看到该类库已经加入到 &lt;code&gt;my-app/vendor&lt;/code&gt; 了！&lt;/p&gt;
-&lt;p&gt;之后在 &lt;code&gt;my-package&lt;/code&gt; 任何改动后我们需要在 &lt;code&gt;my-app&lt;/code&gt; 中执行 &lt;code&gt;composer remove myrepositry/package1&lt;/code&gt; 来移除,&lt;/p&gt;
-&lt;p&gt;然后在require进来.&lt;/p&gt;
-</content>
+    <content type="html"><![CDATA[<blockquote>
+<p>本文讲讲用composer来进行本地开发包,和本地公用包的使用.</p>
+</blockquote>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>当我们构建一个本地的类库时, 当并不想推送到<a href="https://packagist.org/" target="_blank" rel="external">packagist</a>, 我们可以使用<code>repositories &gt; path</code></p>
+<p>来处理。</p>
+<p>以下目录结构为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- apps</div><div class="line">\_ my-app   		-- 当前项目开发目录</div><div class="line">  \_ composer.json</div><div class="line">- packages			-- 本地共有库, 存放正在和已经开发好的类库</div><div class="line">\_ my-package       -- 一个叫 my-package 的类库 </div><div class="line">  \_ composer.json</div></pre></td></tr></table></figure>
+<p>现在我们要在 <code>my-app</code> 中依赖 <code>my-package</code>, 那么现在我们可以：</p>
+<ol>
+<li>配置 <code>my-app/composer.json</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	//引入依赖</div><div class="line">	&quot;require&quot;: &#123;</div><div class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</div><div class="line">	&#125;,</div><div class="line">	//配置 repositories</div><div class="line">	&quot;repositories&quot;: [</div><div class="line"></div><div class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</div><div class="line">	]	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>composer update</li>
+</ol>
+<p>接下来就是在 <code>my-app</code> 目录下执行 <code>composer update</code>, 来使之前的配置生效!</p>
+<p>执行成功后, 我们可以到<code>my-app/vendor</code> 目录下查看, 我们可以看到该类库已经加入到 <code>my-app/vendor</code> 了！</p>
+<p>之后在 <code>my-package</code> 任何改动后我们需要在 <code>my-app</code> 中执行 <code>composer remove myrepositry/package1</code> 来移除,</p>
+<p>然后在require进来.</p>
+]]></content>
     
     <summary type="html">
     
@@ -823,13 +871,13 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/08/22/hashids-for-yii2/"/>
     <id>http://blog.lzuer.net/2015/08/22/hashids-for-yii2/</id>
     <published>2015-08-22T00:17:39.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
+    <updated>2016-07-30T13:21:27.554Z</updated>
     
-    <content type="html">&lt;h3 id=&quot;关于Hashids&quot;&gt;&lt;a href=&quot;#关于Hashids&quot; class=&quot;headerlink&quot; title=&quot;关于Hashids&quot;&gt;&lt;/a&gt;关于Hashids&lt;/h3&gt;&lt;p&gt;Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。&lt;/p&gt;
-&lt;p&gt;详细： &lt;a href=&quot;http://hashids.org/php/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://hashids.org/php/&lt;/a&gt;&lt;/p&gt;
-&lt;h3 id=&quot;使用&quot;&gt;&lt;a href=&quot;#使用&quot; class=&quot;headerlink&quot; title=&quot;使用&quot;&gt;&lt;/a&gt;使用&lt;/h3&gt;&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$hashids = Yii::createObject([&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&#39;class&#39;&lt;/span&gt; =&amp;gt; &lt;span class=&quot;string&quot;&gt;&#39;light\hashids\Hashids&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;]);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$id = $hashids-&amp;gt;encode(&lt;span class=&quot;number&quot;&gt;100123123&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$origin = $hashids-&amp;gt;decode($id);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var_dump($id, $origin);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;a href=&quot;https://packagist.org/packages/light/hashids&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;详细&lt;/a&gt;&lt;/p&gt;
-</content>
+    <content type="html"><![CDATA[<h3 id="关于Hashids"><a href="#关于Hashids" class="headerlink" title="关于Hashids"></a>关于Hashids</h3><p>Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。</p>
+<p>详细： <a href="http://hashids.org/php/" target="_blank" rel="external">http://hashids.org/php/</a></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$hashids = Yii::createObject([</div><div class="line">    <span class="string">'class'</span> =&gt; <span class="string">'light\hashids\Hashids'</span></div><div class="line">]);</div><div class="line"></div><div class="line">$id = $hashids-&gt;encode(<span class="number">100123123</span>);</div><div class="line">$origin = $hashids-&gt;decode($id);</div><div class="line">var_dump($id, $origin);</div></pre></td></tr></table></figure>
+<p><a href="https://packagist.org/packages/light/hashids" target="_blank" rel="external">详细</a></p>
+]]></content>
     
     <summary type="html">
     
@@ -841,36 +889,6 @@ $ssh -T git@github.com
     
     
       <category term="Yii2" scheme="http://blog.lzuer.net/tags/Yii2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>微博@匹配用户正则实现</title>
-    <link href="http://blog.lzuer.net/2015/07/08/reg-the-at-user/"/>
-    <id>http://blog.lzuer.net/2015/07/08/reg-the-at-user/</id>
-    <published>2015-07-08T17:50:15.000Z</published>
-    <updated>2016-07-14T06:26:49.454Z</updated>
-    
-    <content type="html">&lt;p&gt;这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;/@[^\s]&amp;#123;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;&amp;#125;/&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如果不限长度&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;/@[^\s]+/&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如果用户名只可能是英文下划线和数字&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;/@[a-z0&lt;span class=&quot;number&quot;&gt;-9&lt;/span&gt;_]+/i&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如果还有可能是中文&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;/@[a-z0&lt;span class=&quot;number&quot;&gt;-9&lt;/span&gt;_\u4E00-\u9FA5]+/i/&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
-    
-    
-      <category term="PHP" scheme="http://blog.lzuer.net/tags/PHP/"/>
     
   </entry>
   
