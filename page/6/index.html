@@ -209,6 +209,120 @@
             
               
                 
+                <a class="post-title-link" href="/2014/04/22/how-to-know-nginx-compiled-config/" itemprop="url">
+                  添加nginx模块
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-04-22T00:21:08+00:00" content="2014-04-22">
+              2014-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/04/22/how-to-know-nginx-compiled-config/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/22/how-to-know-nginx-compiled-config/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h4 id="首先查看之前编译安装nginx的配置"><a href="#首先查看之前编译安装nginx的配置" class="headerlink" title="首先查看之前编译安装nginx的配置"></a>首先查看之前编译安装nginx的配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nginx -V</div></pre></td></tr></table></figure>
+<p>会列出配置的参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">configure arguments: --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module</div></pre></td></tr></table></figure>
+<h4 id="重新编译增加模块"><a href="#重新编译增加模块" class="headerlink" title="重新编译增加模块"></a>重新编译增加模块</h4><blockquote>
+<p>这个过程不会替换现有的nginx的东西，既可以在不停止服务的前提下进行替换</p>
+</blockquote>
+<p>首先找到原来安装nginx的目录(如果已经删除，则重新现在nginx源程序)</p>
+<p>进入该目录，然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</div><div class="line"></div><div class="line">$ make</div><div class="line"></div><div class="line">$ make install</div></pre></td></tr></table></figure>
+<p>保险做法：</p>
+<p>不执行make install, 将执行make之后objs目录下的nginx替换现有的。(不要忘记对之前的进行备份)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</div><div class="line"></div><div class="line">$ make</div><div class="line"></div><div class="line">$ service nginx stop</div><div class="line"></div><div class="line">$ cp /etc/nginx/sbin/nginx /etc/nginx/sbin/nginx.bak</div><div class="line"></div><div class="line">$ cp objs/nginx /etc/nginx/sbin/</div><div class="line"></div><div class="line">$ service nginx start</div></pre></td></tr></table></figure>
+<h4 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h4>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/11/21/useful-mysql-command/" itemprop="url">
                   经常使用到的Mysql命令
                 </a>
@@ -725,7 +839,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-count">55</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

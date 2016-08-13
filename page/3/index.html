@@ -209,6 +209,112 @@
             
               
                 
+                <a class="post-title-link" href="/2015/08/22/hashids-for-yii2/" itemprop="url">
+                  Hashids的yii2封装
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-22T00:17:39+00:00" content="2015-08-22">
+              2015-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/08/22/hashids-for-yii2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/22/hashids-for-yii2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h3 id="关于Hashids"><a href="#关于Hashids" class="headerlink" title="关于Hashids"></a>关于Hashids</h3><p>Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。</p>
+<p>详细： <a href="http://hashids.org/php/" target="_blank" rel="external">http://hashids.org/php/</a></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$hashids = Yii::createObject([</div><div class="line">    <span class="string">'class'</span> =&gt; <span class="string">'light\hashids\Hashids'</span></div><div class="line">]);</div><div class="line"></div><div class="line">$id = $hashids-&gt;encode(<span class="number">100123123</span>);</div><div class="line">$origin = $hashids-&gt;decode($id);</div><div class="line">var_dump($id, $origin);</div></pre></td></tr></table></figure>
+<p><a href="https://packagist.org/packages/light/hashids" target="_blank" rel="external">详细</a></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/07/08/reg-the-at-user/" itemprop="url">
                   微博@匹配用户正则实现
                 </a>
@@ -1253,131 +1359,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/06/yii2-dynamicmodel/" itemprop="url">
-                  yii2之DynamicModel
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-05-06T21:53:42+00:00" content="2015-05-06">
-              2015-05-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/06/yii2-dynamicmodel/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/06/yii2-dynamicmodel/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h3 id="什么是DynamicModel"><a href="#什么是DynamicModel" class="headerlink" title="什么是DynamicModel"></a>什么是DynamicModel</h3><p>DynamicModel是用来进行临时的数据验证，有些情况，我们不希望为一次数据提交建立专门的Model来处理「例如：操作只是进行更改商品的状态」.</p>
-<h3 id="如何来用"><a href="#如何来用" class="headerlink" title="如何来用"></a>如何来用</h3><h4 id="DynamicModel-validateData"><a href="#DynamicModel-validateData" class="headerlink" title="DynamicModel::validateData"></a>DynamicModel::validateData</h4><p>DynamicModel提供了静态方法 <code>validateData</code> 来辅助我们实现动态验证，考虑一下代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionUpdateStatus</span><span class="params">($id, $status)</span></span></div><div class="line">&#123;</div><div class="line">	$model = DynamicModel::validateData(compact(<span class="string">'id'</span>, <span class="string">'status'</span>), [</div><div class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>],</div><div class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>],</div><div class="line">		[<span class="string">'status'</span>, <span class="string">'in'</span>, <span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]],</div><div class="line">		...</div><div class="line">	]);</div><div class="line"></div><div class="line">	<span class="keyword">if</span> ($model-&gt;validate()) &#123;</div><div class="line">		<span class="comment">//validation success</span></div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="comment">//validation error</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这里的 <code>validateData</code> 方法接受两个参数：model的属性值和对应的验证方法，它返回的是一个 DynamicModel的实例，拥有赋予的属性和对应的值，当然还有定义的验证方法。</p>
-<h4 id="面向对象的方法"><a href="#面向对象的方法" class="headerlink" title="面向对象的方法"></a>面向对象的方法</h4><p>调用 <code>validateData</code> 方法，并传入属性值和验证方法会为我们自动生成一个 DynamicModel 的实力，当然我们也可以：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">$model = <span class="keyword">new</span> DynamicModel(compact(<span class="string">'id'</span>, <span class="string">'status'</span>));</div><div class="line">$model-&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>)</div><div class="line">	  -&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>)</div><div class="line">	  -&gt;addRule(<span class="string">'status'</span>, <span class="string">'in'</span>, [<span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]]);</div><div class="line">	  ...</div><div class="line"></div><div class="line"><span class="keyword">if</span> ($model-&gt;validate()) &#123;</div><div class="line">	<span class="comment">//validate success</span></div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
-<h3 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h3><p>通过以上两个方法得到动态model后，我们可以通过 <code>$model-&gt;id</code> 的方式来获取对应的值。</p>
-<p>当然也可以调用 <code>$model-&gt;attributes()</code> 来获取所有属性.</p>
-<p>当希望为创建好的model新增属性时，我们可以：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$model-&gt;defineAttribute(<span class="string">'user_id'</span>, <span class="number">1111</span>);</div><div class="line">$model-&gt;defineAttribute(<span class="string">'name'</span>);</div></pre></td></tr></table></figure>
-<p>需要删除某一属性时：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$model-&gt;undefineAttribute(<span class="string">'name'</span>);</div></pre></td></tr></table></figure></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1424,7 +1405,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-count">55</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

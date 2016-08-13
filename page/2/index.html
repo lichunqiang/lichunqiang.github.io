@@ -209,6 +209,119 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/03/git-tips-one/" itemprop="url">
+                  git tips - 1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-03T16:53:42+00:00" content="2016-03-03">
+              2016-03-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/03/git-tips-one/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/03/git-tips-one/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p>
+<p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p>
+<p>所以在本地某个仓库可以设置用户名和邮箱：</p>
+<p>  git config user.name “light”<br>  git config user.email “light@qq.com”</p>
+<p><strong>为常用命令设置快捷别名</strong></p>
+<p>  git config alias.st status<br>  git config alias.ci commit</p>
+<blockquote>
+<p>同样可以使用<code>-g</code> 来进行全局配置</p>
+</blockquote>
+<p>使用：</p>
+<p>  $ git st<br>  $ git ci</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/01/26/xdebug-phpstorm/" itemprop="url">
                   在phpstorm中使用xdebug
                 </a>
@@ -1363,112 +1476,6 @@ $ssh -T git@github.com
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/22/hashids-for-yii2/" itemprop="url">
-                  Hashids的yii2封装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-22T00:17:39+00:00" content="2015-08-22">
-              2015-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/22/hashids-for-yii2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/22/hashids-for-yii2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h3 id="关于Hashids"><a href="#关于Hashids" class="headerlink" title="关于Hashids"></a>关于Hashids</h3><p>Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。</p>
-<p>详细： <a href="http://hashids.org/php/" target="_blank" rel="external">http://hashids.org/php/</a></p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$hashids = Yii::createObject([</div><div class="line">    <span class="string">'class'</span> =&gt; <span class="string">'light\hashids\Hashids'</span></div><div class="line">]);</div><div class="line"></div><div class="line">$id = $hashids-&gt;encode(<span class="number">100123123</span>);</div><div class="line">$origin = $hashids-&gt;decode($id);</div><div class="line">var_dump($id, $origin);</div></pre></td></tr></table></figure>
-<p><a href="https://packagist.org/packages/light/hashids" target="_blank" rel="external">详细</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1515,7 +1522,7 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-count">55</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -209,6 +209,131 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/06/yii2-dynamicmodel/" itemprop="url">
+                  yii2之DynamicModel
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-05-06T21:53:42+00:00" content="2015-05-06">
+              2015-05-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/06/yii2-dynamicmodel/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/06/yii2-dynamicmodel/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h3 id="什么是DynamicModel"><a href="#什么是DynamicModel" class="headerlink" title="什么是DynamicModel"></a>什么是DynamicModel</h3><p>DynamicModel是用来进行临时的数据验证，有些情况，我们不希望为一次数据提交建立专门的Model来处理「例如：操作只是进行更改商品的状态」.</p>
+<h3 id="如何来用"><a href="#如何来用" class="headerlink" title="如何来用"></a>如何来用</h3><h4 id="DynamicModel-validateData"><a href="#DynamicModel-validateData" class="headerlink" title="DynamicModel::validateData"></a>DynamicModel::validateData</h4><p>DynamicModel提供了静态方法 <code>validateData</code> 来辅助我们实现动态验证，考虑一下代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionUpdateStatus</span><span class="params">($id, $status)</span></span></div><div class="line">&#123;</div><div class="line">	$model = DynamicModel::validateData(compact(<span class="string">'id'</span>, <span class="string">'status'</span>), [</div><div class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>],</div><div class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>],</div><div class="line">		[<span class="string">'status'</span>, <span class="string">'in'</span>, <span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]],</div><div class="line">		...</div><div class="line">	]);</div><div class="line"></div><div class="line">	<span class="keyword">if</span> ($model-&gt;validate()) &#123;</div><div class="line">		<span class="comment">//validation success</span></div><div class="line">	&#125; <span class="keyword">else</span> &#123;</div><div class="line">		<span class="comment">//validation error</span></div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的 <code>validateData</code> 方法接受两个参数：model的属性值和对应的验证方法，它返回的是一个 DynamicModel的实例，拥有赋予的属性和对应的值，当然还有定义的验证方法。</p>
+<h4 id="面向对象的方法"><a href="#面向对象的方法" class="headerlink" title="面向对象的方法"></a>面向对象的方法</h4><p>调用 <code>validateData</code> 方法，并传入属性值和验证方法会为我们自动生成一个 DynamicModel 的实力，当然我们也可以：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">$model = <span class="keyword">new</span> DynamicModel(compact(<span class="string">'id'</span>, <span class="string">'status'</span>));</div><div class="line">$model-&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>)</div><div class="line">	  -&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>)</div><div class="line">	  -&gt;addRule(<span class="string">'status'</span>, <span class="string">'in'</span>, [<span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]]);</div><div class="line">	  ...</div><div class="line"></div><div class="line"><span class="keyword">if</span> ($model-&gt;validate()) &#123;</div><div class="line">	<span class="comment">//validate success</span></div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
+<h3 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h3><p>通过以上两个方法得到动态model后，我们可以通过 <code>$model-&gt;id</code> 的方式来获取对应的值。</p>
+<p>当然也可以调用 <code>$model-&gt;attributes()</code> 来获取所有属性.</p>
+<p>当希望为创建好的model新增属性时，我们可以：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$model-&gt;defineAttribute(<span class="string">'user_id'</span>, <span class="number">1111</span>);</div><div class="line">$model-&gt;defineAttribute(<span class="string">'name'</span>);</div></pre></td></tr></table></figure>
+<p>需要删除某一属性时：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$model-&gt;undefineAttribute(<span class="string">'name'</span>);</div></pre></td></tr></table></figure></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/25/yii2-layer-asset-plugin-published/" itemprop="url">
                   yii2-layer发布
                 </a>
@@ -1340,179 +1465,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/good-repos-on-github/" itemprop="url">
-                  Github 上不错的项目以及博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:12:36+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/github/" itemprop="url" rel="index">
-                    <span itemprop="name">github</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/good-repos-on-github/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/good-repos-on-github/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <blockquote>
-<p>将在这里收集一些在Github上发现的比较不错并且值得学习的项目</p>
-</blockquote>
-<p><strong>PHP</strong></p>
-<ul>
-<li><a href="https://github.com/justjavac/PHP-Best-Practices-zh_CN" target="_blank" rel="external">PHP-Best-Practices-zh_CN</a></li>
-<li><a href="https://github.com/domnikl/DesignPatternsPHP" target="_blank" rel="external">DesignPatternsPHP</a></li>
-<li><a href="https://github.com/5-say/laravel-4.1-quick-start-cn" target="_blank" rel="external"> laravel-4.1 的完整包，常用的源码已经补充中文注释</a></li>
-<li><a href="https://github.com/laruence/phpbook" target="_blank" rel="external">PHP扩展开发及内核应用</a></li>
-<li><a href="https://github.com/wulijun/php-the-right-way" target="_blank" rel="external">收集PHP最佳实践、编码规范和权威学习指南</a></li>
-<li><a href="http://wulijun.github.io/php-the-right-way/" target="_blank" rel="external">PHP之道</a></li>
-<li><a href="https://github.com/reeze/tipi" target="_blank" rel="external">Thinking In PHP Internals</a></li>
-<li><a href="http://weizhifeng.net/manage-php-dependency-with-composer.html" target="_blank" rel="external">Composer chinese</a></li>
-</ul>
-<p><strong>javascript</strong></p>
-<ul>
-<li><a href="https://github.com/nanjixiong218/javascriptPattern" target="_blank" rel="external">javascriptPattern</a></li>
-<li><a href="https://github.com/JacksonTian/fks" target="_blank" rel="external">前端技能总汇</a></li>
-<li><a href="https://github.com/AlloyTeam/Mars" target="_blank" rel="external">腾讯移动Web前端知识库</a></li>
-<li><a href="https://github.com/sanshi/JavaScript-Garden" target="_blank" rel="external">JavaScript 语言古怪用法的文档集合</a></li>
-<li><a href="https://github.com/zensh/AngularjsTutorial_cn" target="_blank" rel="external">AngularJS入门教程</a></li>
-<li><a href="https://github.com/totorojs/javascript-exception-archives" target="_blank" rel="external">JavaScript 异常档案，沉淀、交流与分享</a></li>
-<li><a href="https://github.com/justjavac/12-javascript-quirks" target="_blank" rel="external">javascript 的 12 个怪癖</a></li>
-<li><a href="https://github.com/airbnb/javascript" target="_blank" rel="external">JavaScript Style Guide</a></li>
-<li><a href="https://github.com/RobinQu/Programing-In-Javascript" target="_blank" rel="external">Programing-In-Javascript</a></li>
-<li><a href="http://javascript.ruanyifeng.com/" target="_blank" rel="external">ruanyifeng Javascript Tutorial</a></li>
-<li><a href="http://bonsaiden.github.io/JavaScript-Garden/zh/" target="_blank" rel="external">JavaScript-Garden</a></li>
-</ul>
-<p><strong>Seajs</strong></p>
-<ul>
-<li><a href="https://github.com/island205/HelloSea.js" target="_blank" rel="external">专注Sea.js，深入浅出分析Sea.js模块机制</a></li>
-</ul>
-<p><strong>Git</strong></p>
-<ul>
-<li><a href="https://github.com/numbbbbb/Git-Tutorial-By-liaoxuefeng" target="_blank" rel="external">Git-Tutorial</a></li>
-<li><a href="https://github.com/gotgit/gotgithub" target="_blank" rel="external">一本关于GitHub的书</a></li>
-<li><a href="https://github.com/blynn/gitmagic" target="_blank" rel="external">A guide to using Git</a></li>
-</ul>
-<p><strong>Markdown</strong></p>
-<ul>
-<li><a href="http://dillinger.io/" target="_blank" rel="external">Online Markdown editor</a> 可在线查看Markdown的效果</li>
-</ul>
-<p><strong>NodeJS</strong></p>
-<ul>
-<li><a href="http://nqdeng.github.io/7-days-nodejs" target="_blank" rel="external">七天学会NodeJS</a></li>
-<li><a href="https://github.com/dead-horse/node-style-guide" target="_blank" rel="external">Node.js Style Guide</a></li>
-<li><a href="https://github.com/FredKSchott/NodeJS-Handbook" target="_blank" rel="external">NodeJS-Handbook</a></li>
-<li><a href="http://www.nodebeginner.org/index-zh-cn.html" target="_blank" rel="external">Node入门</a></li>
-</ul>
-<p><strong>不错的博客</strong></p>
-<ul>
-<li><a href="https://github.com/markyun/My-blog" target="_blank" rel="external">markyun</a>  设计前端知识</li>
-<li><a href="https://github.com/fool2fish/blog/issues?state=open" target="_blank" rel="external">fool2fish</a></li>
-<li><a href="https://github.com/fouber/blog" target="_blank" rel="external">fouber</a> 主要涉及前端知识</li>
-<li><a href="https://github.com/lifesinger/lifesinger.github.com/issues?labels=blog" target="_blank" rel="external">玉伯在Github上写博</a></li>
-<li><a href="https://github.com/cssmagic/blog" target="_blank" rel="external">CSS魔法 - 博客</a></li>
-</ul>
-<p><strong>other</strong></p>
-<ul>
-<li><a href="https://github.com/interagent/http-api-design" target="_blank" rel="external">http-api-design</a></li>
-<li><a href="https://github.com/justjavac/free-programming-books-zh_CN" target="_blank" rel="external">免费的计算机编程类中文书籍</a></li>
-<li><a href="https://github.com/justjavac/stackoverflow-cn" target="_blank" rel="external">翻译 stackoverflow.com 上的热门问题</a></li>
-<li><a href="http://icomoon.io/app/#/select" target="_blank" rel="external">IcoMoon App</a></li>
-<li><a href="https://github.com/julycoding/The-Art-Of-Programming-By-July" target="_blank" rel="external">The-Art-Of-Programming-By-July</a></li>
-<li><a href="https://github.com/foru17/front-end-collect" target="_blank" rel="external">front-end-collect</a></li>
-</ul>
-<blockquote>
-<p>有推荐欢迎留言</p>
-<p>以上有涉及到个人隐私请及时联系我！</p>
-</blockquote>
-<p><em>(未完待续…)</em></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1559,7 +1511,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-count">55</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
