@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light's Blog">
 <meta property="og:description" content="单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。
 单例模式12345678910111213141516171819202122232425262728293031class Singleton&amp;#123;	/**	 * @var static	 */	private static $instance;	public static function getIn">
-<meta property="og:updated_time" content="2016-08-14T02:28:51.514Z">
+<meta property="og:updated_time" content="2016-08-14T03:56:47.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之单例和多例">
 <meta name="twitter:description" content="单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。
@@ -86,7 +86,6 @@
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
-  console.log('installed')
   </script>
 </head>
 
@@ -762,6 +761,19 @@
 
   
   
-
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 </body>
 </html>

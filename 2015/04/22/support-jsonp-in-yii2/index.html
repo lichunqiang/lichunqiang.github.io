@@ -69,7 +69,7 @@
 
 怎么发送JSONP请求这里我使用jQuery的 getJSON 方法：
 123$.getJSON(&apos;http://www.b.com/ap">
-<meta property="og:updated_time" content="2016-08-14T02:28:51.514Z">
+<meta property="og:updated_time" content="2016-08-14T03:56:47.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何让Yii2支持jsonp">
 <meta name="twitter:description" content="什么是JSONPJSONP是一个非官方的协议，它允许在服务器端集成Script tags返回至客户端，通过javascript callback的形式实现跨域访问（这仅仅是JSONP简单的实现形式）
@@ -98,7 +98,6 @@
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
-  console.log('installed')
   </script>
 </head>
 
@@ -786,6 +785,19 @@
 
   
   
-
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 </body>
 </html>

@@ -65,7 +65,7 @@
 具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了maxlength属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了.
 首先我们来看一下字数统计功能是怎么做的：
 123count() &amp;#123;	return thi">
-<meta property="og:updated_time" content="2016-08-14T02:28:51.514Z">
+<meta property="og:updated_time" content="2016-08-14T03:56:47.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="修复在对textarea进行字数统计时的一个bug">
 <meta name="twitter:description" content="起因一天一位vux使用提交了这么一个bug: x-textarea字数统计异常.
@@ -92,7 +92,6 @@
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
-  console.log('installed')
   </script>
 </head>
 
@@ -754,6 +753,19 @@
 
   
   
-
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 </body>
 </html>

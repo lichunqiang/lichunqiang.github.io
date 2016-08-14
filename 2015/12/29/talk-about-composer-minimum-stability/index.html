@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light's Blog">
 <meta property="og:description" content="Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 minimum-stability 最低稳定性版本的包将不会被安装。
 例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：&amp;quot;vendor/library&amp;quot;: &amp;quot;*&amp;quot;, 乍看上去并没有什么不妥, 但是当我们执行 composer install 或者 composer update">
-<meta property="og:updated_time" content="2016-08-14T02:28:51.514Z">
+<meta property="og:updated_time" content="2016-08-14T03:56:47.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="讲讲Composer配置项minimumn-stability">
 <meta name="twitter:description" content="Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 minimum-stability 最低稳定性版本的包将不会被安装。
@@ -86,7 +86,6 @@
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
-  console.log('installed')
   </script>
 </head>
 
@@ -760,6 +759,19 @@
 
   
   
-
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 </body>
 </html>

@@ -63,7 +63,7 @@
 <meta property="og:description" content="现在需求是：如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录
 我们可以通过配置  yii\web\User::$authTimeout来达到效果，上代码：
 1234&amp;apos;user&amp;apos; =&amp;gt; [    &amp;apos;identityClass&amp;apos; =&amp;gt; &amp;apos;app\models\User&amp;apos;,    &amp;apos">
-<meta property="og:updated_time" content="2016-08-14T02:28:51.514Z">
+<meta property="og:updated_time" content="2016-08-14T03:56:47.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="怎么控制用户一定时间未操作自动登出">
 <meta name="twitter:description" content="现在需求是：如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录
@@ -89,7 +89,6 @@
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
-  console.log('installed')
   </script>
 </head>
 
@@ -746,6 +745,19 @@
 
   
   
-
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 </body>
 </html>

@@ -85,7 +85,7 @@ before_install:
   - git config --global user.name &amp;">
 <meta property="og:image" content="http://7xq6zf.com1.z0.glb.clouddn.com/travis-setting.png">
 <meta property="og:image" content="http://7xq6zf.com1.z0.glb.clouddn.com/generate-github-token.png">
-<meta property="og:updated_time" content="2016-08-14T02:28:51.514Z">
+<meta property="og:updated_time" content="2016-08-14T03:56:47.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="配置travis来自动发布hexo博客">
 <meta name="twitter:description" content="首先在travis将你的项目加入到travis。
@@ -122,7 +122,6 @@ before_install:
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(hm, s);
   })();
-  console.log('installed')
   </script>
 </head>
 
@@ -820,6 +819,19 @@ script:
 
   
   
-
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
 </body>
 </html>
