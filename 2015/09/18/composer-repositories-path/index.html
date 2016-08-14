@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next   use-motion ">
+<html class="theme-next ">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -21,18 +21,14 @@
 
 
 
-  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
 
 
 
 
-  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
+<link href="//font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
 
-
-<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+<link href="//main.css?v=" rel="stylesheet" type="text/css" />
 
 
   <meta name="keywords" content="PHP," />
@@ -45,8 +41,6 @@
 
 
 
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
 
 
 
@@ -69,7 +63,7 @@
 来处理。
 以下目录结构为例：
 123456- apps\_ my-app   		-- 当前项目开发目录  \_ composer.json- packages			-- 本地共有库, 存放正在和已经开">
-<meta property="og:updated_time" content="2016-08-13T02:46:47.463Z">
+<meta property="og:updated_time" content="2016-08-14T02:11:26.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Composer之path">
 <meta name="twitter:description" content="本文讲讲用composer来进行本地开发包,和本地公用包的使用.
@@ -83,9 +77,9 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: 'Mist',
-    sidebar: 'hide',
-    motion: true
+    scheme: '',
+    sidebar: '',
+    motion: 
   };
 </script>
 
@@ -145,19 +139,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
-            
             首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
-            
-            关于
           </a>
         </li>
       
@@ -165,9 +147,15 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
-              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
-            
             归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
           </a>
         </li>
       
@@ -175,9 +163,15 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
             
-              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
-            
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
           </a>
         </li>
       
@@ -347,25 +341,6 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/09/18/composer-repositories-path/"
-     data-title="Composer之path"
-     data-content=""
-     data-url="http://blog.lzuer.net/2015/09/18/composer-repositories-path/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
     </div>
     <div class="donate">
       <img src="/images/qr.png">
@@ -409,19 +384,10 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" src="https://avatars3.githubusercontent.com/u/2433916?v=3&s=460" alt="light" itemprop="image"/>
+          <img class="site-author-image" src="//default_avatar.jpg" alt="light" itemprop="image"/>
           <p class="site-author-name" itemprop="name">light</p>
         </div>
         <p class="site-description motion-element" itemprop="description"></p>
@@ -434,10 +400,10 @@
           </div>
 
           <div class="site-state-item site-state-categories">
-            
+            <a href="/categories">
               <span class="site-state-item-count">45</span>
               <span class="site-state-item-name">分类</span>
-              
+              </a>
           </div>
 
           <div class="site-state-item site-state-tags">
@@ -464,23 +430,17 @@
               <span class="links-of-author-item">
                 <a href="https://github.com/lichunqiang" target="_blank">
                   
-                    <i class="fa fa-github"></i> GitHub
-                  
                 </a>
               </span>
             
               <span class="links-of-author-item">
                 <a href="http://weibo.com/chunqiang" target="_blank">
                   
-                    <i class="fa fa-weibo"></i> Weibo
-                  
                 </a>
               </span>
             
               <span class="links-of-author-item">
                 <a href="http://www.zhihu.com/people/chunqiang" target="_blank">
-                  
-                    <i class="fa fa-globe"></i> ZhiHu
                   
                 </a>
               </span>
@@ -497,23 +457,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc-indicator-top post-toc-indicator">
-            <i class="fa fa-angle-double-up"></i>
-          </div>
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li></ol></div>
-            
-          </div>
-          <div class="post-toc-indicator-bottom post-toc-indicator">
-            <i class="fa fa-angle-double-down"></i>
-          </div>
-        </section>
       
 
     </div>
@@ -542,7 +485,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
+    NexT
   </a>
 </div>
 
@@ -554,7 +497,7 @@
     <div class="back-to-top"></div>
   </div>
 
-  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+  <script type="text/javascript" src="//jquery/index.js?v=2.1.3"></script>
 
   
   
@@ -579,30 +522,25 @@
     })();
   </script>
     
-     
-
 
     
   
 
   
-  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
-  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+  <script type="text/javascript" src="//helpers.js?v="></script>
+  <script type="text/javascript" src="//velocity/velocity.min.js"></script>
+<script type="text/javascript" src="//velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="//motion.js?v=" id="motion.global"></script>
 
 
-  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
-  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
-<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
-
-<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
-
-
-  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  <script type="text/javascript" src="//fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="//jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
 
   
   
-<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+<script type="text/javascript" src="//bootstrap.scrollspy.js?v=" id="bootstrap.scrollspy.custom"></script>
 
 
 <script type="text/javascript" id="sidebar.toc.highlight">
@@ -763,7 +701,7 @@
 
 
 
-  <script type="text/javascript" src="/js/bootstrap.js"></script>
+  <script type="text/javascript" src="//bootstrap.js"></script>
 
   
   
