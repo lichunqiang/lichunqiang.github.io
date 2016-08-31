@@ -1,0 +1,804 @@
+<!doctype html>
+<html class="theme-next   use-motion ">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.4.5.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MySQL," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Light's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+
+
+
+
+<meta name="description" content="开启binlog在 /etc/my.conf 中打开 log-bin=/your/dir, 重启Mysql服务
+
+根据不同的安装, MySQL的配置文件的位置可能不同, 视具体情况而定.
+
+配置哪些数据库需要记录binlog:
+1234binlog-ignore-db=mysqlbinlog-ignore-db=information_schemabinlog-ignore-db=performa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL开启binlog, 配置主从记录">
+<meta property="og:url" content="http://blog.lzuer.net/2016/08/31/mysql-binlog-and-master-slave-configuration/index.html">
+<meta property="og:site_name" content="Light's Blog">
+<meta property="og:description" content="开启binlog在 /etc/my.conf 中打开 log-bin=/your/dir, 重启Mysql服务
+
+根据不同的安装, MySQL的配置文件的位置可能不同, 视具体情况而定.
+
+配置哪些数据库需要记录binlog:
+1234binlog-ignore-db=mysqlbinlog-ignore-db=information_schemabinlog-ignore-db=performa">
+<meta property="og:updated_time" content="2016-08-31T12:33:00.015Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL开启binlog, 配置主从记录">
+<meta name="twitter:description" content="开启binlog在 /etc/my.conf 中打开 log-bin=/your/dir, 重启Mysql服务
+
+根据不同的安装, MySQL的配置文件的位置可能不同, 视具体情况而定.
+
+配置哪些数据库需要记录binlog:
+1234binlog-ignore-db=mysqlbinlog-ignore-db=information_schemabinlog-ignore-db=performa">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide',
+    motion: true
+  };
+</script>
+
+  <title> MySQL开启binlog, 配置主从记录 | Light's Blog </title>
+  <script>
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?83df2a66b96e5d334f43aca08ff2d52d";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Light's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content">
+          
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MySQL开启binlog, 配置主从记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-08-31T20:50:22+00:00" content="2016-08-31">
+              2016-08-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/31/mysql-binlog-and-master-slave-configuration/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/31/mysql-binlog-and-master-slave-configuration/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="开启binlog"><a href="#开启binlog" class="headerlink" title="开启binlog"></a>开启binlog</h2><p>在 <code>/etc/my.conf</code> 中打开 <code>log-bin=/your/dir</code>, 重启Mysql服务</p>
+<blockquote>
+<p>根据不同的安装, MySQL的配置文件的位置可能不同, 视具体情况而定.</p>
+</blockquote>
+<p>配置哪些数据库需要记录binlog:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">binlog-ignore-db=mysql</div><div class="line">binlog-ignore-db=information_schema</div><div class="line">binlog-ignore-db=performance_schema</div><div class="line">binlog-do-db=kit</div></pre></td></tr></table></figure>
+<p><code>binlog-ignore-db</code>配置哪些数据不需要记录binlog, <code>binlog-do-db</code> 配置哪些数据需要记录binlog.</p>
+<h2 id="查看binlog状态"><a href="#查看binlog状态" class="headerlink" title="查看binlog状态"></a>查看binlog状态</h2><h3 id="查看binlog的名称"><a href="#查看binlog的名称" class="headerlink" title="查看binlog的名称"></a>查看binlog的名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show binary logs;</div><div class="line">+---------------+-----------+</div><div class="line">| Log_name      | File_size |</div><div class="line">+---------------+-----------+</div><div class="line">| binlog.000001 |       616 |</div><div class="line">+---------------+-----------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h3 id="查看二进制日志的记录"><a href="#查看二进制日志的记录" class="headerlink" title="查看二进制日志的记录"></a>查看二进制日志的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show binlog events;</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">| Log_name      | Pos | Event_type  | Server_id | End_log_pos | Info                                                                                                |</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">| binlog.000001 |   4 | Format_desc |         1 |         120 | Server ver: 5.6.30-log, Binlog ver: 4                                                               |</div><div class="line">| binlog.000001 | 120 | Query       |         1 |         197 | BEGIN                                                                                               |</div><div class="line">| binlog.000001 | 197 | Query       |         1 |         317 | use `kit`; UPDATE `user` SET `username`=&apos;xxxx&apos; WHERE `id`=5                                         |</div><div class="line">| binlog.000001 | 317 | Xid         |         1 |         348 | COMMIT /* xid=72 */                                                                                 |</div><div class="line">| binlog.000001 | 348 | Query       |         1 |         425 | BEGIN                                                                                               |</div><div class="line">| binlog.000001 | 425 | Query       |         1 |         585 | use `kit`; INSERT INTO `user_profile` (`user_id`, `sex`, `last_login_ip`) VALUES (5, 1, 3232238081) |</div><div class="line">| binlog.000001 | 585 | Xid         |         1 |         616 | COMMIT /* xid=77 */                                                                                 |</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">7 rows in set (0.01 sec)</div></pre></td></tr></table></figure>
+<h3 id="导出二进制文件"><a href="#导出二进制文件" class="headerlink" title="导出二进制文件"></a>导出二进制文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqlbinlog --start-position=4 --stop-position=585 binlog.000001 &gt; /home/out.txt</div></pre></td></tr></table></figure>
+<p>或者全部导出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqlbinlog binlog.000001 &gt; /home/out.txt</div></pre></td></tr></table></figure>
+<p>导出的文件名可以通过上面的<code>show binary logs;</code> 来查看需要导出的binlog文件, position 可以根据 <code>show binlog events</code>中的<strong>Pos</strong>字段来确定.</p>
+<h2 id="配置主从"><a href="#配置主从" class="headerlink" title="配置主从"></a>配置主从</h2><h3 id="查看主库状态"><a href="#查看主库状态" class="headerlink" title="查看主库状态"></a>查看主库状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show master status;</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">| File          | Position | Binlog_Do_DB | Binlog_Ignore_DB                            | Executed_Gtid_Set |</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">| binlog.000003 |      120 | kit          | mysql,information_schema,performance_schema |                   |</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h2 id="主从配置"><a href="#主从配置" class="headerlink" title="主从配置"></a>主从配置</h2><h3 id="配置主库"><a href="#配置主库" class="headerlink" title="配置主库"></a>配置主库</h3><p>修改MySQL配置文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log-bin=binlog //必须开启binlog</div><div class="line">server-id=1 // 必须, 服务器唯一ID, 默认是1,一般取IP最后一段</div></pre></td></tr></table></figure>
+<p>在主服务器上建立帐户并授权slave:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql &gt; grant replication slave on *.* to slave01@192.168.10.12 identified by &apos;123qwe&apos;;</div></pre></td></tr></table></figure>
+<p>重启MySQL.然后查看主库状态.</p>
+<h3 id="配置从库"><a href="#配置从库" class="headerlink" title="配置从库"></a>配置从库</h3><p>修改MySQL配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log-bin=binlog //不是必须</div><div class="line">server-id=2 //必须, 需要唯一</div></pre></td></tr></table></figure>
+<p>重启MySQL.</p>
+<p>配置Slave:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; change master to master_host=&apos;192.168.10.11&apos;,master_user=&apos;slave01&apos;,master_password=&apos;123qwe&apos;;</div><div class="line">mysql&gt; start slave;</div></pre></td></tr></table></figure>
+<p>查看从库状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">mysql&gt;show slave status;</div><div class="line">*************************** 1. row ***************************</div><div class="line">               Slave_IO_State: Waiting for master to send event</div><div class="line">                  Master_Host: 192.168.10.11</div><div class="line">                  Master_User: slave01</div><div class="line">                  Master_Port: 3306</div><div class="line">                Connect_Retry: 60</div><div class="line">              Master_Log_File: binlog.000006</div><div class="line">          Read_Master_Log_Pos: 1155</div><div class="line">               Relay_Log_File: mysqld-relay-bin.000009</div><div class="line">                Relay_Log_Pos: 1315</div><div class="line">        Relay_Master_Log_File: binlog.000006</div><div class="line">             Slave_IO_Running: Yes</div><div class="line">            Slave_SQL_Running: Yes</div><div class="line">							...</div></pre></td></tr></table></figure>
+<p>之前需要将主库的数据导到从库.</p>
+<p>遇到的问题：</p>
+<p>在从库执行 <code>show slave staus</code> 后发现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Last_IO_Error: Fatal error: The slave I/O thread stops because master and slave have equal MySQL server UUIDs;  these UUIDs must be different for replication to work.</div></pre></td></tr></table></figure>
+<p>在网上找到的原因和解决方案是：</p>
+<p>这个错误是由于主从使用了相同的UUID「在主从的server_id确保是各不相同的情况下」.</p>
+<p>首先分别在主从机器上查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@master ~]# cat /var/lib/mysql/auto.cnf</div><div class="line">[auto]</div><div class="line">server-uuid=3636a3ee-21b8-11e6-aebc-080027e27e5e</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@slave ~]# cat /var/lib/mysql/auto.cnf</div><div class="line">[auto]</div><div class="line">server-uuid=3636a3ee-21b8-11e6-aebc-080027e27e5e</div></pre></td></tr></table></figure>
+<p>发现是相同的，可以通过以下方法解决：</p>
+<p>在从库机器上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@slave ~]# mv /var/lib/mysql/auto.cnf /var/lib/mysql/auto.cnf.back</div><div class="line">[root@slave ~]# service mysqld restart</div></pre></td></tr></table></figure>
+<p>通过重启MySQL来重新生成uuid. 最后问题解决.</p>
+<p>另外，我们需要在从库上配置授权访问，保证其他服务器可以访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; grant all on *.* to vagrant@&apos;%&apos; identified by &apos;vagrant&apos; with grant option;</div></pre></td></tr></table></figure>
+<p><code>%</code>标示任何IP地址都可以进行访问, 当然也可以指定服务器IP, 保证自己的服务器能够访问, 而其他IP不能访问。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag">#MySQL</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/12/count-words-in-textarea/" rel="next" title="修复在对textarea进行字数统计时的一个bug">
+                <i class="fa fa-chevron-left"></i> 修复在对textarea进行字数统计时的一个bug
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/08/31/mysql-binlog-and-master-slave-configuration/"
+     data-title="MySQL开启binlog, 配置主从记录"
+     data-content=""
+     data-url="http://blog.lzuer.net/2016/08/31/mysql-binlog-and-master-slave-configuration/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+    <div class="donate">
+      <img src="/images/qr.png">
+      <img src="/images/alipay.png">
+      <p>如果这篇文章对您有帮助，不妨微信小额赞助我一下，让我有动力继续写出高质量的教程。</p>
+    </div>
+  </div>
+
+
+        </div>
+
+        
+
+
+        
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/31/mysql-binlog-and-master-slave-configuration/"
+           data-title="MySQL开启binlog, 配置主从记录" data-url="http://blog.lzuer.net/2016/08/31/mysql-binlog-and-master-slave-configuration/">
+      </div>
+    
+  </div>
+
+
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars3.githubusercontent.com/u/2433916?v=3&s=460" alt="light" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">light</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/lichunqiang" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chunqiang" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/chunqiang" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> ZhiHu
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开启binlog"><span class="nav-number">1.</span> <span class="nav-text">开启binlog</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看binlog状态"><span class="nav-number">2.</span> <span class="nav-text">查看binlog状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看binlog的名称"><span class="nav-number">2.1.</span> <span class="nav-text">查看binlog的名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看二进制日志的记录"><span class="nav-number">2.2.</span> <span class="nav-text">查看二进制日志的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出二进制文件"><span class="nav-number">2.3.</span> <span class="nav-text">导出二进制文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置主从"><span class="nav-number">3.</span> <span class="nav-text">配置主从</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看主库状态"><span class="nav-number">3.1.</span> <span class="nav-text">查看主库状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从配置"><span class="nav-number">4.</span> <span class="nav-text">主从配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置主库"><span class="nav-number">4.1.</span> <span class="nav-text">配置主库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置从库"><span class="nav-number">4.2.</span> <span class="nav-text">配置从库</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">light</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+
+  
+    
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lichunqiang"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+    
+     
+
+
+    
+  
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+<script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+<script type="text/javascript" src="/js/motion.js?v=0.4.5.2" id="motion.global"></script>
+
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    motionMiddleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+  
+  
+
+  
+  
+  <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</body>
+</html>

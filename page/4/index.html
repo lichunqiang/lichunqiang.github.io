@@ -218,6 +218,128 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/07/yii2-validators-boolean/" itemprop="url">
+                  Yii2中的Validators之BooleanValidator
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-05-07T23:01:16+00:00" content="2015-05-07">
+              2015-05-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Yii2/Yii2-validator/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2-validator</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/07/yii2-validators-boolean/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/07/yii2-validators-boolean/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>顾名思义，从命名上来看，给人的感觉是进行布尔类型判断的。</p>
+<p>但其实我们可以用它来做一些更有意思的比较。</p>
+<p>比较常规的用法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionSearch</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	$model = <span class="keyword">new</span> DynamicModel([<span class="string">'status'</span>]);</div><div class="line"></div><div class="line">	$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>);</div><div class="line">	$model-&gt;status = <span class="number">1</span>;</div><div class="line">	$model-&gt;validate(); <span class="comment">// true, status 设置为 0 也会验证为true</span></div><div class="line"></div><div class="line">	$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>, [<span class="string">'strict'</span> =&gt; <span class="keyword">true</span>]);</div><div class="line">	$model-&gt;status = <span class="number">1</span>;</div><div class="line">	$model-&gt;validate(); <span class="comment">// false</span></div><div class="line">	$model-&gt;status = <span class="string">'1'</span>;</div><div class="line">	$model-&gt;validate(); <span class="comment">// true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里列举了两个验证场景：1是非严格比较， 2是严格比较。</p>
+<p>在 BooleanValidator 中有两个属性分别代表比较的值，其默认为 <code>trueValue = &#39;1&#39;</code> 和 <code>falseValue = &#39;0&#39;</code>,</p>
+<p>在验证的时候 BooleanValidator 分别对对相应的属性值进行比较，当有一个「trueValue或falseValue」分别在严格比较和非严格比较的情况下和属性值相等时则验证通过。</p>
+<p>由此，我们可以通过设置 trueValue 和 falseValue 来进行更多的比较，例如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//此场景我们需要验证用户的输入为 yes 或者 no</span></div><div class="line"></div><div class="line">$model = <span class="keyword">new</span> DynamicModel([<span class="string">'action'</span>]);</div><div class="line">$model-&gt;load(Yii::$app-&gt;getRequest()-&gt;post(), <span class="string">''</span>);</div><div class="line">$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>, [<span class="string">'strict'</span> =&gt; <span class="keyword">true</span>, <span class="string">'trueValue'</span> =&gt; <span class="string">'yes'</span>, <span class="string">'falseValue'</span> =&gt; <span class="string">'no'</span>]);</div><div class="line"><span class="keyword">if</span> ($model-&gt;validate()) &#123;</div><div class="line">	<span class="comment">//validate pass</span></div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">	<span class="comment">//validate error</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/05/06/yii2-dynamicmodel/" itemprop="url">
                   yii2之DynamicModel
                 </a>
@@ -1360,120 +1482,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/work-with-github/" itemprop="url">
-                  如何在Github上贡献开源项目代码
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:13:54+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/github/" itemprop="url" rel="index">
-                    <span itemprop="name">github</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/work-with-github/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/work-with-github/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h5 id="首先Fork项目"><a href="#首先Fork项目" class="headerlink" title="首先Fork项目"></a>首先Fork项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git <span class="built_in">clone</span> xxxx</div><div class="line">$ git branch fix-error</div><div class="line">$ git checkout branch</div></pre></td></tr></table></figure>
-<p>将项目代码clone到本地，<strong>(然后创建修改分支，修改分支在本branch进行)</strong></p>
-<h5 id="添加上游远程仓库"><a href="#添加上游远程仓库" class="headerlink" title="添加上游远程仓库"></a>添加上游远程仓库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git remote add  upstream git@github.com:xx.git</div></pre></td></tr></table></figure>
-<blockquote>
-<p>更新原作者代码</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git fetch upstream</div><div class="line">$ git merge upstream/master</div></pre></td></tr></table></figure>
-<h5 id="将本地修改branch提交"><a href="#将本地修改branch提交" class="headerlink" title="将本地修改branch提交"></a>将本地修改branch提交</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git add --all</div><div class="line">$ git commit -m <span class="string">'some text'</span></div><div class="line">$ git push origin fix-error</div></pre></td></tr></table></figure>
-<p>删除分支</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git branch <span class="_">-d</span> fix-error</div></pre></td></tr></table></figure>
-<h2 id="GIT-操作集锦"><a href="#GIT-操作集锦" class="headerlink" title="GIT 操作集锦"></a>GIT 操作集锦</h2><h4 id="git删除远程分支"><a href="#git删除远程分支" class="headerlink" title="git删除远程分支"></a>git删除远程分支</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git push origin :branch-name</div></pre></td></tr></table></figure>
-<p>冒号前面的空格不能少，原理是把一个空分支push到server上，相当于删除该分支。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1520,21 +1528,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-count">56</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">46</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

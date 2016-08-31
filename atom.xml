@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.lzuer.net/"/>
-  <updated>2016-08-14T03:56:47.570Z</updated>
+  <updated>2016-08-31T12:33:00.015Z</updated>
   <id>http://blog.lzuer.net/</id>
   
   <author>
@@ -16,11 +16,75 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>MySQL开启binlog, 配置主从记录</title>
+    <link href="http://blog.lzuer.net/2016/08/31/mysql-binlog-and-master-slave-configuration/"/>
+    <id>http://blog.lzuer.net/2016/08/31/mysql-binlog-and-master-slave-configuration/</id>
+    <published>2016-08-31T20:50:22.000Z</published>
+    <updated>2016-08-31T12:33:00.015Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="开启binlog"><a href="#开启binlog" class="headerlink" title="开启binlog"></a>开启binlog</h2><p>在 <code>/etc/my.conf</code> 中打开 <code>log-bin=/your/dir</code>, 重启Mysql服务</p>
+<blockquote>
+<p>根据不同的安装, MySQL的配置文件的位置可能不同, 视具体情况而定.</p>
+</blockquote>
+<p>配置哪些数据库需要记录binlog:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">binlog-ignore-db=mysql</div><div class="line">binlog-ignore-db=information_schema</div><div class="line">binlog-ignore-db=performance_schema</div><div class="line">binlog-do-db=kit</div></pre></td></tr></table></figure>
+<p><code>binlog-ignore-db</code>配置哪些数据不需要记录binlog, <code>binlog-do-db</code> 配置哪些数据需要记录binlog.</p>
+<h2 id="查看binlog状态"><a href="#查看binlog状态" class="headerlink" title="查看binlog状态"></a>查看binlog状态</h2><h3 id="查看binlog的名称"><a href="#查看binlog的名称" class="headerlink" title="查看binlog的名称"></a>查看binlog的名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show binary logs;</div><div class="line">+---------------+-----------+</div><div class="line">| Log_name      | File_size |</div><div class="line">+---------------+-----------+</div><div class="line">| binlog.000001 |       616 |</div><div class="line">+---------------+-----------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h3 id="查看二进制日志的记录"><a href="#查看二进制日志的记录" class="headerlink" title="查看二进制日志的记录"></a>查看二进制日志的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show binlog events;</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">| Log_name      | Pos | Event_type  | Server_id | End_log_pos | Info                                                                                                |</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">| binlog.000001 |   4 | Format_desc |         1 |         120 | Server ver: 5.6.30-log, Binlog ver: 4                                                               |</div><div class="line">| binlog.000001 | 120 | Query       |         1 |         197 | BEGIN                                                                                               |</div><div class="line">| binlog.000001 | 197 | Query       |         1 |         317 | use `kit`; UPDATE `user` SET `username`=&apos;xxxx&apos; WHERE `id`=5                                         |</div><div class="line">| binlog.000001 | 317 | Xid         |         1 |         348 | COMMIT /* xid=72 */                                                                                 |</div><div class="line">| binlog.000001 | 348 | Query       |         1 |         425 | BEGIN                                                                                               |</div><div class="line">| binlog.000001 | 425 | Query       |         1 |         585 | use `kit`; INSERT INTO `user_profile` (`user_id`, `sex`, `last_login_ip`) VALUES (5, 1, 3232238081) |</div><div class="line">| binlog.000001 | 585 | Xid         |         1 |         616 | COMMIT /* xid=77 */                                                                                 |</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">7 rows in set (0.01 sec)</div></pre></td></tr></table></figure>
+<h3 id="导出二进制文件"><a href="#导出二进制文件" class="headerlink" title="导出二进制文件"></a>导出二进制文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqlbinlog --start-position=4 --stop-position=585 binlog.000001 &gt; /home/out.txt</div></pre></td></tr></table></figure>
+<p>或者全部导出:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqlbinlog binlog.000001 &gt; /home/out.txt</div></pre></td></tr></table></figure>
+<p>导出的文件名可以通过上面的<code>show binary logs;</code> 来查看需要导出的binlog文件, position 可以根据 <code>show binlog events</code>中的<strong>Pos</strong>字段来确定.</p>
+<h2 id="配置主从"><a href="#配置主从" class="headerlink" title="配置主从"></a>配置主从</h2><h3 id="查看主库状态"><a href="#查看主库状态" class="headerlink" title="查看主库状态"></a>查看主库状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show master status;</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">| File          | Position | Binlog_Do_DB | Binlog_Ignore_DB                            | Executed_Gtid_Set |</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">| binlog.000003 |      120 | kit          | mysql,information_schema,performance_schema |                   |</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
+<h2 id="主从配置"><a href="#主从配置" class="headerlink" title="主从配置"></a>主从配置</h2><h3 id="配置主库"><a href="#配置主库" class="headerlink" title="配置主库"></a>配置主库</h3><p>修改MySQL配置文件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log-bin=binlog //必须开启binlog</div><div class="line">server-id=1 // 必须, 服务器唯一ID, 默认是1,一般取IP最后一段</div></pre></td></tr></table></figure>
+<p>在主服务器上建立帐户并授权slave:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql &gt; grant replication slave on *.* to slave01@192.168.10.12 identified by &apos;123qwe&apos;;</div></pre></td></tr></table></figure>
+<p>重启MySQL.然后查看主库状态.</p>
+<h3 id="配置从库"><a href="#配置从库" class="headerlink" title="配置从库"></a>配置从库</h3><p>修改MySQL配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log-bin=binlog //不是必须</div><div class="line">server-id=2 //必须, 需要唯一</div></pre></td></tr></table></figure>
+<p>重启MySQL.</p>
+<p>配置Slave:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; change master to master_host=&apos;192.168.10.11&apos;,master_user=&apos;slave01&apos;,master_password=&apos;123qwe&apos;;</div><div class="line">mysql&gt; start slave;</div></pre></td></tr></table></figure>
+<p>查看从库状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">mysql&gt;show slave status;</div><div class="line">*************************** 1. row ***************************</div><div class="line">               Slave_IO_State: Waiting for master to send event</div><div class="line">                  Master_Host: 192.168.10.11</div><div class="line">                  Master_User: slave01</div><div class="line">                  Master_Port: 3306</div><div class="line">                Connect_Retry: 60</div><div class="line">              Master_Log_File: binlog.000006</div><div class="line">          Read_Master_Log_Pos: 1155</div><div class="line">               Relay_Log_File: mysqld-relay-bin.000009</div><div class="line">                Relay_Log_Pos: 1315</div><div class="line">        Relay_Master_Log_File: binlog.000006</div><div class="line">             Slave_IO_Running: Yes</div><div class="line">            Slave_SQL_Running: Yes</div><div class="line">							...</div></pre></td></tr></table></figure>
+<p>之前需要将主库的数据导到从库.</p>
+<p>遇到的问题：</p>
+<p>在从库执行 <code>show slave staus</code> 后发现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Last_IO_Error: Fatal error: The slave I/O thread stops because master and slave have equal MySQL server UUIDs;  these UUIDs must be different for replication to work.</div></pre></td></tr></table></figure>
+<p>在网上找到的原因和解决方案是：</p>
+<p>这个错误是由于主从使用了相同的UUID「在主从的server_id确保是各不相同的情况下」.</p>
+<p>首先分别在主从机器上查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@master ~]# cat /var/lib/mysql/auto.cnf</div><div class="line">[auto]</div><div class="line">server-uuid=3636a3ee-21b8-11e6-aebc-080027e27e5e</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@slave ~]# cat /var/lib/mysql/auto.cnf</div><div class="line">[auto]</div><div class="line">server-uuid=3636a3ee-21b8-11e6-aebc-080027e27e5e</div></pre></td></tr></table></figure>
+<p>发现是相同的，可以通过以下方法解决：</p>
+<p>在从库机器上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@slave ~]# mv /var/lib/mysql/auto.cnf /var/lib/mysql/auto.cnf.back</div><div class="line">[root@slave ~]# service mysqld restart</div></pre></td></tr></table></figure>
+<p>通过重启MySQL来重新生成uuid. 最后问题解决.</p>
+<p>另外，我们需要在从库上配置授权访问，保证其他服务器可以访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; grant all on *.* to vagrant@&apos;%&apos; identified by &apos;vagrant&apos; with grant option;</div></pre></td></tr></table></figure>
+<p><code>%</code>标示任何IP地址都可以进行访问, 当然也可以指定服务器IP, 保证自己的服务器能够访问, 而其他IP不能访问。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;开启binlog&quot;&gt;&lt;a href=&quot;#开启binlog&quot; class=&quot;headerlink&quot; title=&quot;开启binlog&quot;&gt;&lt;/a&gt;开启binlog&lt;/h2&gt;&lt;p&gt;在 &lt;code&gt;/etc/my.conf&lt;/code&gt; 中打开 &lt;code&gt;log-bin=
+    
+    </summary>
+    
+      <category term="MySQL" scheme="http://blog.lzuer.net/categories/MySQL/"/>
+    
+    
+      <category term="MySQL" scheme="http://blog.lzuer.net/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>修复在对textarea进行字数统计时的一个bug</title>
     <link href="http://blog.lzuer.net/2016/08/12/count-words-in-textarea/"/>
     <id>http://blog.lzuer.net/2016/08/12/count-words-in-textarea/</id>
     <published>2016-08-12T20:50:22.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>一天一位<a href="https://github.com/airyland/vux" target="_blank" rel="external">vux</a>使用提交了这么一个bug: <a href="https://github.com/airyland/vux/issues/420" target="_blank" rel="external">x-textarea字数统计异常</a>.</p>
 <p>具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了<code>maxlength</code>属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了.</p>
@@ -57,7 +121,7 @@
     <link href="http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/"/>
     <id>http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/</id>
     <published>2016-07-30T20:50:22.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p>在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$nohup php beanstalkd-consumer.php &amp;</div></pre></td></tr></table></figure>
@@ -107,7 +171,7 @@
     <link href="http://blog.lzuer.net/2016/07/14/deploy-beanstalkd-on-centos7/"/>
     <id>http://blog.lzuer.net/2016/07/14/deploy-beanstalkd-on-centos7/</id>
     <published>2016-07-14T09:26:12.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<ol>
 <li>下载源代码到本地</li>
@@ -155,7 +219,7 @@
     <link href="http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/"/>
     <id>http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/</id>
     <published>2016-07-12T23:57:23.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。</p>
@@ -209,7 +273,7 @@
     <link href="http://blog.lzuer.net/2016/06/23/singleton-and-multiton/"/>
     <id>http://blog.lzuer.net/2016/06/23/singleton-and-multiton/</id>
     <published>2016-06-23T09:26:12.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p>单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。</p>
 <h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">class Singleton</div><div class="line">&#123;</div><div class="line">	/**</div><div class="line">	 * @var static</div><div class="line">	 */</div><div class="line">	private static $instance;</div><div class="line"></div><div class="line">	public static function getInstance()</div><div class="line">	&#123;</div><div class="line">		if (null === static::$instance) &#123;</div><div class="line">			static::$instance = new static();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return static::$instance;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//单例模式不允许被new</div><div class="line">	private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">	//不允许被clone</div><div class="line">	final public function __clone()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, Clone is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//不允许被unserialize</div><div class="line">	final public function __wakeup()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, __wakeup is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -247,7 +311,7 @@
     <link href="http://blog.lzuer.net/2016/06/22/array_merge-vs-+/"/>
     <id>http://blog.lzuer.net/2016/06/22/array_merge-vs-+/</id>
     <published>2016-06-22T21:57:23.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p>首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。</p>
 <p>+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。</p>
@@ -298,7 +362,7 @@
     <link href="http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/"/>
     <id>http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/</id>
     <published>2016-06-07T21:57:23.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<ol>
 <li>Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别</li>
@@ -348,7 +412,7 @@
     <link href="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/"/>
     <id>http://blog.lzuer.net/2016/05/27/install-golang-on-centos/</id>
     <published>2016-05-27T18:57:23.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>首先确定操作系统位数, 可执行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ uname -m</div></pre></td></tr></table></figure>
@@ -398,7 +462,7 @@
     <link href="http://blog.lzuer.net/2016/05/09/validator-on-the-fly/"/>
     <id>http://blog.lzuer.net/2016/05/09/validator-on-the-fly/</id>
     <published>2016-05-09T16:53:42.000Z</published>
-    <updated>2016-08-14T03:56:47.574Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p>首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的<br>时候其中有一条需求就是把用户提交的评分值由原来的允许的<code>1, 2, 3, 4, 5</code> 改成允许输入 <code>0, 2, 4, 6, 8, 10</code></p>
 <p>自定义的<code>validator</code>:</p>
@@ -436,7 +500,7 @@
     <link href="http://blog.lzuer.net/2016/05/07/upload-file-with-php/"/>
     <id>http://blog.lzuer.net/2016/05/07/upload-file-with-php/</id>
     <published>2016-05-07T00:17:39.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <summary type="html">
     
@@ -454,7 +518,7 @@
     <link href="http://blog.lzuer.net/2016/03/03/git-tips-one/"/>
     <id>http://blog.lzuer.net/2016/03/03/git-tips-one/</id>
     <published>2016-03-03T16:53:42.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p>
 <p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p>
@@ -488,7 +552,7 @@
     <link href="http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/"/>
     <id>http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/</id>
     <published>2016-01-26T11:17:39.000Z</published>
-    <updated>2016-08-14T03:56:47.574Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<h2 id="开启xdebug"><a href="#开启xdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p>
 <p>  [xdebug]<br>  xdebug.remote_enable = On<br>  xdebug.remote_handler = dbgp<br>  xdebug.remote_host= localhost<br>  xdebug.remote_port = 9000<br>  xdebug.idekey = PHPSTORM<br>  xdebug.profiler_enable = 1</p>
@@ -544,7 +608,7 @@
     <link href="http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/"/>
     <id>http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/</id>
     <published>2016-01-18T23:59:20.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p>首先在<a href="https://travis-ci.org" target="_blank" rel="external">travis</a>将你的项目加入到travis。</p>
 <p>打开设置，添加token变量。</p>
@@ -605,7 +669,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/16/git-delete-submoudle/"/>
     <id>http://blog.lzuer.net/2016/01/16/git-delete-submoudle/</id>
     <published>2016-01-16T00:16:21.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<ol>
 <li><p>Delete the relevant section from the .gitmodules file.</p>
@@ -647,7 +711,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/"/>
     <id>http://blog.lzuer.net/2016/01/13/redirct-main-url-of-site/</id>
     <published>2016-01-13T16:17:39.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p><code>www.site.com</code> <code>site.com</code> 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，</p>
 <p>因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。</p>
@@ -680,7 +744,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/"/>
     <id>http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/</id>
     <published>2016-01-11T22:22:25.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p>在 <a href="https://www.github.com" target="_blank" rel="external">Github</a> 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 <code>pull request</code>。</p>
 <p>在项目的作者对发起的 <code>pull request</code> 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是，</p>
@@ -741,7 +805,7 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
     <link href="http://blog.lzuer.net/2016/01/11/multiple-platform-git/"/>
     <id>http://blog.lzuer.net/2016/01/11/multiple-platform-git/</id>
     <published>2016-01-11T21:57:21.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p>我们通常会混迹多个git平台, 这时我们需要配置能够在多个平台通用的ssh.</p>
 <h2 id="设置用户名和邮箱"><a href="#设置用户名和邮箱" class="headerlink" title="设置用户名和邮箱"></a>设置用户名和邮箱</h2><pre><code>$git config --global user.name &quot;yourname&quot;
@@ -787,7 +851,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/"/>
     <id>http://blog.lzuer.net/2015/12/29/talk-about-composer-minimum-stability/</id>
     <published>2015-12-29T23:57:23.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p>Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 <code>minimum-stability</code> 最低稳定性版本的包将不会被安装。</p>
 <p>例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：<code>&quot;vendor/library&quot;: &quot;*&quot;</code>, 乍看上去并没有什么不妥, 但是当我们执行 <code>composer install</code> 或者 <code>composer update</code> 去下载包的时候通常会报错。</p>
@@ -833,7 +897,7 @@ $ssh -T git@github.com
     <link href="http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/"/>
     <id>http://blog.lzuer.net/2015/12/20/how-to-delete-one-commit-of-git/</id>
     <published>2015-12-20T20:17:39.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
+    <updated>2016-08-31T12:33:00.015Z</updated>
     
     <content type="html"><![CDATA[<p><strong>注意</strong>: <code>git reset --hard</code>会彻底删除你的变动,你可以在这之前使用 <code>git stash</code> 来保存变动。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard HEAD~1</div></pre></td></tr></table></figure>
@@ -854,52 +918,6 @@ $ssh -T git@github.com
     
     
       <category term="git" scheme="http://blog.lzuer.net/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Composer之path</title>
-    <link href="http://blog.lzuer.net/2015/09/18/composer-repositories-path/"/>
-    <id>http://blog.lzuer.net/2015/09/18/composer-repositories-path/</id>
-    <published>2015-09-18T00:17:39.000Z</published>
-    <updated>2016-08-14T03:56:47.570Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>本文讲讲用composer来进行本地开发包,和本地公用包的使用.</p>
-</blockquote>
-<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>当我们构建一个本地的类库时, 当并不想推送到<a href="https://packagist.org/" target="_blank" rel="external">packagist</a>, 我们可以使用<code>repositories &gt; path</code></p>
-<p>来处理。</p>
-<p>以下目录结构为例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- apps</div><div class="line">\_ my-app   		-- 当前项目开发目录</div><div class="line">  \_ composer.json</div><div class="line">- packages			-- 本地共有库, 存放正在和已经开发好的类库</div><div class="line">\_ my-package       -- 一个叫 my-package 的类库 </div><div class="line">  \_ composer.json</div></pre></td></tr></table></figure>
-<p>现在我们要在 <code>my-app</code> 中依赖 <code>my-package</code>, 那么现在我们可以：</p>
-<ol>
-<li>配置 <code>my-app/composer.json</code></li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	//引入依赖</div><div class="line">	&quot;require&quot;: &#123;</div><div class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</div><div class="line">	&#125;,</div><div class="line">	//配置 repositories</div><div class="line">	&quot;repositories&quot;: [</div><div class="line"></div><div class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</div><div class="line">	]	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ol>
-<li>composer update</li>
-</ol>
-<p>接下来就是在 <code>my-app</code> 目录下执行 <code>composer update</code>, 来使之前的配置生效!</p>
-<p>执行成功后, 我们可以到<code>my-app/vendor</code> 目录下查看, 我们可以看到该类库已经加入到 <code>my-app/vendor</code> 了！</p>
-<p>之后在 <code>my-package</code> 任何改动后我们需要在 <code>my-app</code> 中执行 <code>composer remove myrepositry/package1</code> 来移除,</p>
-<p>然后在require进来.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;本文讲讲用composer来进行本地开发包,和本地公用包的使用.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;当我们
-    
-    </summary>
-    
-      <category term="PHP" scheme="http://blog.lzuer.net/categories/PHP/"/>
-    
-      <category term="Composer" scheme="http://blog.lzuer.net/categories/PHP/Composer/"/>
-    
-    
-      <category term="PHP" scheme="http://blog.lzuer.net/tags/PHP/"/>
     
   </entry>
   
