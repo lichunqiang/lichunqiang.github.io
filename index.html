@@ -218,6 +218,141 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/10/github-pr/" itemprop="url">
+                  如何处理一个pull request
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-10-10T13:50:22+00:00" content="2016-10-10">
+              2016-10-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Git/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/10/github-pr/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/10/github-pr/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>在 <a href="https://github.com" target="_blank" rel="external">Github</a> 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后，</p>
+<p>你不仅需要在线进行code review，而且还要运行起来，确保提交的代码改动不会产生其他影响。</p>
+<p>具体的操作步骤为：</p>
+<ol>
+<li>检出一个单独的分支来查看代码更改</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b pull-100</div></pre></td></tr></table></figure>
+<ol>
+<li>拉取提交用户改动分支代码</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ git pull git://github.com/somebody/project.git master</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意, 上面是在用户提交代码分支为 <code>master</code> 的情况, 如果用户提交的改动分支非 <code>master</code></p>
+<p>那么需要改成对应的分支名</p>
+</blockquote>
+<ol>
+<li>在本地查看代码运行情况, 是否解决了问题</li>
+</ol>
+<p>最后, 对于合并可以在本地进行:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git checkout master</div><div class="line">$ git merge --no-ff pull-100</div><div class="line">$ git push origin master</div></pre></td></tr></table></figure>
+<p>当然, <a href="https://github.com" target="_blank" rel="external">Github</a> 在线处理已经做得足够好, 也可以选择在线进行合并.</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/31/mysql-binlog-and-master-slave-configuration/" itemprop="url">
                   MySQL开启binlog, 配置主从小记
                 </a>
@@ -1389,123 +1524,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/09/validator-on-the-fly/" itemprop="url">
-                  Validator on the fly
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-05-09T16:53:42+00:00" content="2016-05-09">
-              2016-05-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/05/09/validator-on-the-fly/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/09/validator-on-the-fly/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的<br>时候其中有一条需求就是把用户提交的评分值由原来的允许的<code>1, 2, 3, 4, 5</code> 改成允许输入 <code>0, 2, 4, 6, 8, 10</code></p>
-<p>自定义的<code>validator</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//ScoreValidator.php</div><div class="line">class ScoreValidator extends Validator</div><div class="line">&#123;</div><div class="line">    protected function validateValue($value)</div><div class="line">    &#123;</div><div class="line">        if (in_array($value, [1, 2, 3, 4, 5])) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [$this-&gt;message, []];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//User.php</div><div class="line">public function rules()</div><div class="line">&#123;</div><div class="line">    return [</div><div class="line">        ...</div><div class="line">        [&apos;rate&apos;, ScoreValidator::className()],</div><div class="line">        ...</div><div class="line">    ];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>那么应该如何做兼容性，来保证多个版本的接口中都按照规则来赋值呢？我第一个想到的是利用di来解决。</p>
-<p>为什么这么想？可以参考下之前的<a href="http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/">一篇文章</a></p>
-<p>那么我们来具体实施.</p>
-<p>首先，接口版本控制的结构是遵循官方来的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">modules</div><div class="line">--v1</div><div class="line">   -- controllers</div><div class="line">   -- ...</div><div class="line">   -- Module.php</div><div class="line">--v2</div><div class="line">   -- controllers</div><div class="line">   -- ...</div><div class="line">   -- Module.php</div></pre></td></tr></table></figure>
-<p>在这之前我们需要对之前定义的<code>ScoreValidator</code>进行下修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//ScoreValidator.php</div><div class="line">class ScoreValidator extends Validator</div><div class="line">&#123;</div><div class="line">    public $ranges = [0, 2, 4, 6, 8, 10];// 这里直接改成满足现有需求的数据区间</div><div class="line"></div><div class="line">    protected function validateValue($value)</div><div class="line">    &#123;</div><div class="line">        if (in_array($value, $this-&gt;ranges)) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [$this-&gt;message, []];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们希望在v2版本的接口中来实现默认值的修改, 那么可以在原来的<code>v1</code>版本下的<code>Module::init</code>中来配置:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Module extend \yii\base\Module</div><div class="line">&#123;</div><div class="line">    public function init()</div><div class="line">    &#123;</div><div class="line">        parent::init();</div><div class="line"></div><div class="line">        Yii::$container-&gt;set(ScoreValidator::className(), [</div><div class="line">            &apos;ranges&apos; =&gt; [1, 2, 3, 4, 5]</div><div class="line">        ]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样在<code>v1</code>接口下的涉及到<code>ScoreValidator</code>验证的地方就会按照这个规则来进行验证了。同样新的需求也可以兼顾到。</p>
-<p>利用Yii2的容器和依赖注入可以很轻松写意的实现更多，还需要我们不停的探索！</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1552,7 +1570,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-count">57</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

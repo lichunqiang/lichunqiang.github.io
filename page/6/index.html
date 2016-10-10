@@ -218,6 +218,162 @@
             
               
                 
+                <a class="post-title-link" href="/2014/04/22/install-svn-on-centos/" itemprop="url">
+                  centos 配置svn
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-04-22T00:29:39+00:00" content="2014-04-22">
+              2014-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/svn/" itemprop="url" rel="index">
+                    <span itemprop="name">svn</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/linux/svn/centos/" itemprop="url" rel="index">
+                    <span itemprop="name">centos</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/04/22/install-svn-on-centos/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/22/install-svn-on-centos/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <ul>
+<li><p>检查是否安装svn</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$rpm</span> -qa subversion</div></pre></td></tr></table></figure>
+</li>
+<li><p>卸载旧版本的svn</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$yum</span> remove subversion</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装需要的apache模块</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$yum</span> install mod_dav_svn mod_auth_mysql</div><div class="line">//确认是否安装</div><div class="line"><span class="variable">$ls</span> /etc/httpd/modules | grep svn</div><div class="line">	mod_authz_svn.so</div><div class="line">	mod_dav_svn.so</div></pre></td></tr></table></figure>
+<ul>
+<li>验证安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$svnserve</span> --version</div><div class="line">	svnserve，版本 1.6.11 (r934486)</div><div class="line">	编译于 Jun 23 2012，00:44:03</div><div class="line">	版权所有 (C) 2000-2009 CollabNet。</div><div class="line">	Subversion 是开放源代码软件，请参阅 http://subversion.tigris.org/ 站点。</div><div class="line">	此产品包含由 CollabNet(http://www.Collab.Net/) 开发的软件。</div><div class="line"></div><div class="line">	下列版本库后端(FS) 模块可用:</div><div class="line"></div><div class="line">	* fs_base : 模块只能操作BDB版本库。</div><div class="line">	* fs_fs : 模块与文本文件(FSFS)版本库一起工作。</div><div class="line"></div><div class="line">	Cyrus SASL 认证可用。</div></pre></td></tr></table></figure>
+<p>以上的配置参考<a href="http://my.oschina.net/junn/blog/164041" target="_blank" rel="external">CentOS-6.3安装配置SVN</a></p>
+<h3 id="配置apache"><a href="#配置apache" class="headerlink" title="配置apache"></a>配置apache</h3><hr>
+<p>由于我的服务器80端口被nginx占用，所以采用nginx反向代理的办法,apache监听8080端口，<br>配置nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">proxy_pass http://127.0.0.1:8080</div></pre></td></tr></table></figure>
+<h4 id="配置svn用户密码"><a href="#配置svn用户密码" class="headerlink" title="配置svn用户密码"></a>配置svn用户密码</h4><blockquote>
+<p>设置密码</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$sudo htpasswd -c /opt/svn/passwd abc</div></pre></td></tr></table></figure>
+<p>创建用户abc并按照提示设置密码，网页认证的时候使用该用户名和密码登录。后面再添加用户的时候去掉-c选项。</p>
+<p>*初始化版本仓库，导入原始代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ svn import /data/www/code file:///opt/svn/repos1 -m <span class="string">'first init'</span></div><div class="line">$ chown -R apache.apache repos</div></pre></td></tr></table></figure>
+<h4 id="创建svn版本库"><a href="#创建svn版本库" class="headerlink" title="创建svn版本库"></a>创建svn版本库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ svnadmin create /opt/svn/testrepos</div></pre></td></tr></table></figure>
+<blockquote>
+<p>svnadmin在创建版本库时是root身份，需使用<code>chown</code>改变，保证svn对文件目录有权限</p>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/04/22/seajs-note/" itemprop="url">
                   seasj-note
                 </a>
@@ -983,7 +1139,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-count">57</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

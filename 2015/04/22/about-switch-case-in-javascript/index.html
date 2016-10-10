@@ -59,7 +59,7 @@
 <meta property="og:url" content="http://blog.lzuer.net/2015/04/22/about-switch-case-in-javascript/index.html">
 <meta property="og:site_name" content="Light's Blog">
 <meta property="og:description" content="123456789101112var a = &apos;1&apos;; // switch and case use &apos;===&apos;switch(a) &amp;#123;	case 1:		console.log(&apos;this is 1&apos;);		break;	case 2:		console.log(&apos;this is 2&apos;);		break;	default:		console.log(&apos;this is default&apos;);">
-<meta property="og:updated_time" content="2016-09-20T11:41:53.274Z">
+<meta property="og:updated_time" content="2016-10-10T05:44:55.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于switch在js中需要注意的地方">
 <meta name="twitter:description" content="123456789101112var a = &apos;1&apos;; // switch and case use &apos;===&apos;switch(a) &amp;#123;	case 1:		console.log(&apos;this is 1&apos;);		break;	case 2:		console.log(&apos;this is 2&apos;);		break;	default:		console.log(&apos;this is default&apos;);">
@@ -273,7 +273,7 @@
 <h1 id="Extends"><a href="#Extends" class="headerlink" title="Extends"></a>Extends</h1><blockquote>
 <p>switch结构不利于代码重用，往往可以用对象形式重写。</p>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> o = &#123;</div><div class="line">    banana: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;,</div><div class="line">    apple: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;,</div><div class="line">    <span class="keyword">default</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (o[fruit])&#123;</div><div class="line">    o[fruit]();</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    o[<span class="string">'default'</span>]();</div><div class="line">&#125;</div></pre></td></tr></table></figure></span>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> o = &#123;</div><div class="line">    <span class="attr">banana</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;,</div><div class="line">    <span class="attr">apple</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;,</div><div class="line">    <span class="attr">default</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123; <span class="keyword">return</span> &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (o[fruit])&#123;</div><div class="line">    o[fruit]();</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    o[<span class="string">'default'</span>]();</div><div class="line">&#125;</div></pre></td></tr></table></figure></span>
       
     </div>
 
@@ -396,7 +396,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">56</span>
+              <span class="site-state-item-count">57</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
