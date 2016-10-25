@@ -218,6 +218,131 @@
             
               
                 
+                <a class="post-title-link" href="/2015/12/29/talk-about-composer-minimum-stability/" itemprop="url">
+                  讲讲Composer配置项minimumn-stability
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-12-29T23:57:23+00:00" content="2015-12-29">
+              2015-12-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/12/29/talk-about-composer-minimum-stability/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/29/talk-about-composer-minimum-stability/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 <code>minimum-stability</code> 最低稳定性版本的包将不会被安装。</p>
+<p>例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：<code>&quot;vendor/library&quot;: &quot;*&quot;</code>, 乍看上去并没有什么不妥, 但是当我们执行 <code>composer install</code> 或者 <code>composer update</code> 去下载包的时候通常会报错。</p>
+<p>这是为什么呢？</p>
+<p>通常我们的 <code>composer.json</code> 都不会显式的去设定 <code>minimum-stability</code>, 那么 <code>composer</code> 就会把他默认为 <code>stable</code>.</p>
+<p>那么对于一个尚未发布版本的包来说, 明显是不符合的. 所以安装就不会成功.</p>
+<p>所以有两个途径来解决：</p>
+<ol>
+<li>设定 <code>minimum-stability</code> 为 <code>dev</code></li>
+</ol>
+<p>显然这是简单粗暴的, 但是这种方法所面临的问题也很严重. 那就是我们去依赖某些开发版中的包, 这显然是我们所不想看到的.</p>
+<ol>
+<li>指定依赖包的版本, 这也是最佳的解决方案</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require vendor/library=dev-master</div></pre></td></tr></table></figure>
+<p>所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！</p>
+<p>另外我们还需要知道 <code>minimum-stability</code> 所支持的有：</p>
+<ul>
+<li>dev</li>
+<li>alpha</li>
+<li>beta</li>
+<li>RC</li>
+<li>stable</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/12/20/how-to-delete-one-commit-of-git/" itemprop="url">
                   删除一次错误的提交
                 </a>
@@ -1244,139 +1369,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/13/how-to-track-js-errors/" itemprop="url">
-                  怎样收集js报错
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-05-13T22:02:06+00:00" content="2015-05-13">
-              2015-05-13
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/13/how-to-track-js-errors/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/13/how-to-track-js-errors/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>项目上线运行中，由于这样那样奇葩的浏览器的存在，导致我们的js代码存在一定的兼容性问题。那么可否收集到这些问题呢？</p>
-<p>答案是肯定的。我们可以基于 <code>window.onerror</code> 事件来收集并上报前段js代码在实际运行中产生的错误，以帮助我们排查解决。</p>
-<p>在W3C规范里，window.onerror是html5新定义的事件，但实际上，window.onerror从IE6开始就被支持了，而chrome、firefox、safari、opera，目前也都已经支持该事件。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//收集js报错信息并上报</span></div><div class="line"><span class="built_in">window</span>.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">msg, url, line, column, error</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> _e = <span class="built_in">encodeURIComponent</span>,</div><div class="line">	content = <span class="string">'/site/jslog?message='</span> + _e(msg) +</div><div class="line">	  <span class="string">'&amp;url='</span> + _e(url || <span class="built_in">window</span>.location.href) + <span class="string">'&amp;line='</span> + _e(line) +</div><div class="line">	  (error &amp;&amp; error.stack ? <span class="string">'&amp;stack='</span> + _e(error.stack) : <span class="string">''</span>) +</div><div class="line">	  (column ? <span class="string">'&amp;column='</span> + _e(column) : <span class="string">''</span>) +</div><div class="line">	  <span class="string">'&amp;ua='</span> + <span class="built_in">window</span>.navigator.userAgent.replace(<span class="regexp">/[\:,;]/g</span>,<span class="string">"|"</span>);</div><div class="line">	(<span class="keyword">new</span> Image()).src = content;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>服务端:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">actionJslog</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	$response = Yii::$app-&gt;getResponse();</div><div class="line">	<span class="comment">//这是必须的，我们要将header设置为image</span></div><div class="line">    $response-&gt;format = Response::FORMAT_RAW;</div><div class="line">	<span class="comment">//write the log data</span></div><div class="line">	$headers = $response-&gt;getHeaders();</div><div class="line">	$headers-&gt;set(<span class="string">'Content-Type'</span>, <span class="string">'image/png'</span>);</div><div class="line">	<span class="keyword">return</span> $response;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这段代码需要放在head中并且位于所有script之前！</p>
-<p>这样当客户端发生js报错时就会上报到服务器端，在服务器端我只需要将提交过来的信息进行保存就可以了。这样我们就可以根据收集到的信息来解决问题。</p>
-<p>这里有几个点需要注意，一个是日志收集接口暴露在外，最好增加安全措施，比如设置token。</p>
-<p>另外，脚本部署的时机、位置，以及日志过滤等条件，也需要根据具体情况进行设定。</p>
-<p><strong>教训</strong>:</p>
-<p>在代码中我们经常使用 <code>console.log</code> 来打印代码，但这存在问题的，某些浏览器是不支持该方法的！</p>
-<p>这就会产生错误，使代码无法正常运行！有两张方法可以解决：</p>
-<ol>
-<li><p>利用工具来消除所有的打印调试代码</p>
-</li>
-<li><p>提供兼容代码「置于head中所有script之前」</p>
-</li>
-</ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>.console = <span class="built_in">window</span>.console || (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> _c = &#123;&#125;;</div><div class="line">	_c.log = _c.warning = _c.error = _c.info .. = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;;</div><div class="line">	<span class="keyword">return</span> _c;</div><div class="line">&#125;)();</div></pre></td></tr></table></figure>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1423,21 +1415,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">58</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

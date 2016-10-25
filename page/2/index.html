@@ -218,6 +218,135 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/27/install-golang-on-centos/" itemprop="url">
+                  Install Golang on Centos
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-05-27T18:57:23+00:00" content="2016-05-27">
+              2016-05-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Golang/" itemprop="url" rel="index">
+                    <span itemprop="name">Golang</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/27/install-golang-on-centos/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/27/install-golang-on-centos/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>首先确定操作系统位数, 可执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ uname -m</div></pre></td></tr></table></figure>
+<p>如果输出为 <code>x86_64</code> 的话代表64位操作系统，如果为 <code>i386</code> 则为32为系统。</p>
+<p>根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz</div></pre></td></tr></table></figure>
+<p>解压到安装目录, 我把go安装到 <code>/usr/local/go</code> 中，执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ tar zxvf go1.6.2.linux-amd64.tar.gz</div><div class="line">$ mv go /usr/local</div></pre></td></tr></table></figure>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>添加 <code>GOROOT</code> 环境变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOROOT=&quot;/usr/local/go&quot;</div></pre></td></tr></table></figure>
+<p>可以通过执行 <code>env</code> 或者 <code>echo $GOROOT</code> 来确认环境变量是否正常设置.</p>
+<p>设置PATH</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export PATH=$PATH:/usr/local/go/bin</div></pre></td></tr></table></figure>
+<h2 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ go version</div></pre></td></tr></table></figure>
+<p>输出 <code>go version go1.6.2 linux/amd64</code> 表示golang已经成功安装！</p>
+<h2 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h2><p>剩下一步比较重要的就是设置 <code>GOPATH</code>, 详情可查看<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">资料</a></p>
+<p>例如我将GOPATH设置为 <code>/home/go</code>  为我的工作空间：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOPATH=&quot;/home/go&quot;</div></pre></td></tr></table></figure>
+<p><code>/home/go</code>的目录结构为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- go</div><div class="line">  --bin</div><div class="line">  --pkg</div><div class="line">  --src</div></pre></td></tr></table></figure>
+<p>有关目录结构的介绍可以参考：<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md</a></p>
+<p>至此Golang已经成功安装！</p>
+<h2 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h2><p>直接在命令行运行 <code>$ export PATH=$PATH:/usr/local/go</code>， 只会在当前会话有效，登出或者注销系统后，PATH的设置就会失效。</p>
+<p>如果想永久保存设置，则需要修改<code>/etc/profile</code>，在末尾加上(如果之前没有添加过的话):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PATH=$PATH:/usr/local/go</div><div class="line">export PATH</div><div class="line">GOPATH=/home/go</div><div class="line">export GOPATH</div></pre></td></tr></table></figure>
+<p>然后执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$source /etc/profile</div></pre></td></tr></table></figure>
+<p>之后可以通过 <code>echo $PATH</code> 来查看设置是否生效。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/09/validator-on-the-fly/" itemprop="url">
                   Validator on the fly
                 </a>
@@ -1338,131 +1467,6 @@ $ssh -T git@github.com
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/12/29/talk-about-composer-minimum-stability/" itemprop="url">
-                  讲讲Composer配置项minimumn-stability
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-12-29T23:57:23+00:00" content="2015-12-29">
-              2015-12-29
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/12/29/talk-about-composer-minimum-stability/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/29/talk-about-composer-minimum-stability/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 <code>minimum-stability</code> 最低稳定性版本的包将不会被安装。</p>
-<p>例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：<code>&quot;vendor/library&quot;: &quot;*&quot;</code>, 乍看上去并没有什么不妥, 但是当我们执行 <code>composer install</code> 或者 <code>composer update</code> 去下载包的时候通常会报错。</p>
-<p>这是为什么呢？</p>
-<p>通常我们的 <code>composer.json</code> 都不会显式的去设定 <code>minimum-stability</code>, 那么 <code>composer</code> 就会把他默认为 <code>stable</code>.</p>
-<p>那么对于一个尚未发布版本的包来说, 明显是不符合的. 所以安装就不会成功.</p>
-<p>所以有两个途径来解决：</p>
-<ol>
-<li>设定 <code>minimum-stability</code> 为 <code>dev</code></li>
-</ol>
-<p>显然这是简单粗暴的, 但是这种方法所面临的问题也很严重. 那就是我们去依赖某些开发版中的包, 这显然是我们所不想看到的.</p>
-<ol>
-<li>指定依赖包的版本, 这也是最佳的解决方案</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require vendor/library=dev-master</div></pre></td></tr></table></figure>
-<p>所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！</p>
-<p>另外我们还需要知道 <code>minimum-stability</code> 所支持的有：</p>
-<ul>
-<li>dev</li>
-<li>alpha</li>
-<li>beta</li>
-<li>RC</li>
-<li>stable</li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1509,21 +1513,21 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">58</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

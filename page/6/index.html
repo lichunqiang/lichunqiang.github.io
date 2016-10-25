@@ -218,6 +218,213 @@
             
               
                 
+                <a class="post-title-link" href="/2014/07/22/how-to-create-a-npm-package/" itemprop="url">
+                  创建一个简单的NodeJS程序
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-07-22T00:22:27+00:00" content="2014-07-22">
+              2014-07-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NodeJS/" itemprop="url" rel="index">
+                    <span itemprop="name">NodeJS</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/NodeJS/NPM/" itemprop="url" rel="index">
+                    <span itemprop="name">NPM</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/07/22/how-to-create-a-npm-package/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/07/22/how-to-create-a-npm-package/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>创建一个文件夹test，并创建一个新文件uppercaseme.js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// uppercaseme.js</span></div><div class="line"><span class="meta">"use strict"</span></div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> myfile = <span class="string">"myfile.txt"</span>;</div><div class="line"><span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</div><div class="line">    <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</div><div class="line">    fs.writeFileSync(myfile, content.toUpperCase());</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码的目的是读取myfile.txt并转化内容为大写。</p>
+<p><strong>(执行:)</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node uppercaseme</div></pre></td></tr></table></figure>
+<blockquote>
+<p>执行命令行命令时需在同一个目录</p>
+</blockquote>
+<p>在命令行可以查看输出，并得知是否执行成功。</p>
+<h2 id="使用命令行参数"><a href="#使用命令行参数" class="headerlink" title="使用命令行参数"></a>使用命令行参数</h2><p>上一个列子将读取的文件hardcoding了，我们稍作改进,通过命令行读取要执行操作的文件。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//使用process.argv</span></div><div class="line"><span class="number">0</span>: node</div><div class="line"><span class="number">1</span>: &lt;name-of-your-js-file&gt;</div><div class="line">2+....&lt;additional arguments passed&gt;</div></pre></td></tr></table></figure>
+<p>更新代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">"use strict"</span></div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</div><div class="line"><span class="comment">// Read the first additional argument passed to the program</span></div><div class="line"><span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</div><div class="line">    <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</div><div class="line">    fs.writeFileSync(myfile, content.toUpperCase());</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</div><div class="line">&#125;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"ERROR: Pass on a file name/path"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代码做了简单的判断，当我们没有获取到输入的文件名时，抛出错误。</p>
+<p><strong>(执行:)</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node uppercaseme myfile.txt</div></pre></td></tr></table></figure>
+<h2 id="创一个Node模块"><a href="#创一个Node模块" class="headerlink" title="创一个Node模块"></a>创一个Node模块</h2><p>将我们写好的模块发布出来，让更多人使用，发布之后其他人就可以像下面一样使用：</p>
+<ul>
+<li>通过NPM安装</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install uppercase</div></pre></td></tr></table></figure>
+<ul>
+<li>在命令行中使用</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uppercaseme &lt;filename&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>被当作模块在其他模块中使用</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'uppercaseme'</span>);</div></pre></td></tr></table></figure>
+<h4 id="为了做到以上的效果，我们将会创建一个NPM包"><a href="#为了做到以上的效果，我们将会创建一个NPM包" class="headerlink" title="为了做到以上的效果，我们将会创建一个NPM包"></a>为了做到以上的效果，我们将会创建一个NPM包</h4><ol>
+<li>首先我们需要做的是改变目录结构</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">test</div><div class="line">    src</div><div class="line">      -- bin</div><div class="line">        -- uppercaseme</div><div class="line">      -- lib</div><div class="line">        -- uppercaseme.js</div><div class="line">      -- package.json</div><div class="line">      -- README.md</div><div class="line"></div><div class="line">    myfile.txt</div></pre></td></tr></table></figure>
+<p>将我们刚刚写好的uppercaseme.js移动到lib目录。其他文件先留空在接下来进行完善。</p>
+<p><em>(命令行仍然在test文件夹)</em></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node ./src/lib/uppercaseme ./myfile.txt</div></pre></td></tr></table></figure>
+<p>和之前的运行效果相同。</p>
+<ol>
+<li>接下来创建 src/bin/uppercaseme</li>
+</ol>
+<blockquote>
+<p>请注意这个文件没有扩展名</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env node</span></div><div class="line"></div><div class="line"><span class="string">"use strict"</span>;</div><div class="line">var path = require(<span class="string">'path'</span>);</div><div class="line">var fs = require(<span class="string">'fs'</span>);</div><div class="line">var lib = path.join(path.dirname(fs.realpathSync(__filename)), <span class="string">'../lib'</span>);</div><div class="line"></div><div class="line">require(lib + <span class="string">'/uppercaseme.js'</span>).convert();</div></pre></td></tr></table></figure>
+<ol>
+<li>改造文件为Node模块</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">"use strict"</span></div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertThis</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</div><div class="line">        <span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</div><div class="line">            <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</div><div class="line">            fs.writeFileSync(myfile, content.toUpperCase());</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">"Pass on a file name/path"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">exports.convert = convertThis;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>暴露出convert接口</p>
+</blockquote>
+<p>现在在进行测试，将会和之前效果相同</p>
+<pre><code>node ./src/bin/uppercaseme ./myfile.txt
+</code></pre><h2 id="创建NPM包"><a href="#创建NPM包" class="headerlink" title="创建NPM包"></a>创建NPM包</h2><ol>
+<li>创建 src/package.json 和 src/README.md</li>
+</ol>
+<p>package.json:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"author"</span>: <span class="string">"authoer"</span>,</div><div class="line">  <span class="string">"name"</span>: <span class="string">"uppercaseme"</span>,</div><div class="line">  <span class="string">"description"</span>: <span class="string">"Converts files to uppercase"</span>,</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.0.1"</span>,</div><div class="line">  <span class="string">"repository"</span>: &#123;</div><div class="line">    <span class="string">"url"</span>: <span class="string">""</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"main"</span>: <span class="string">"./lib/uppercaseme"</span>,</div><div class="line">  <span class="string">"keywords"</span>: [</div><div class="line">    <span class="string">"upper"</span>,</div><div class="line">    <span class="string">"case"</span>,</div><div class="line">    <span class="string">"file"</span></div><div class="line">  ],</div><div class="line">  <span class="string">"bin"</span>: &#123;</div><div class="line">    <span class="string">"uppercaseme"</span>: <span class="string">"./bin/uppercaseme"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"dependencies"</span>: &#123;&#125;,</div><div class="line">  <span class="string">"engines"</span>: &#123;</div><div class="line">    <span class="string">"node"</span>: <span class="string">"*"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>main是一个模块的ID，也是程序的主要入口。在例子中我们的package被命名为 uppercaseme 。当用户安装之后，并 require(‘uppercaseme’)之后我们的主模块的export object会被返回。</p>
+<p>bin 我们会通过命令行在任何地方运行，安装之后，npm全局安装后会创建 bin/uppercaseme的符号链接，或者 ./node_modules/.bin/ 本地安装</p>
+<p>dependencies 我们package的所需的依赖列表</p>
+</blockquote>
+<ol>
+<li>发布</li>
+</ol>
+<p>在发布之前，必须有一个user。如果没有:</p>
+<pre><code>npm adduser
+</code></pre><p>提供你的用户名和邮件地址，会为你新建一个用户。</p>
+<p>假设你仍然在 test 目录，请执行：</p>
+<pre><code>cd src
+npm publish
+</code></pre><p>提示成功，则表明你已经成功发布一个NPM package</p>
+<h2 id="安装我们的NPM包"><a href="#安装我们的NPM包" class="headerlink" title="安装我们的NPM包"></a>安装我们的NPM包</h2><p>切换到其他目录，并输入命令：</p>
+<pre><code>npm install uppercaseme
+</code></pre><p>这将会获取 uppercaseme 包，并创建一个本地安装。这只是一个本地安装，我们并不能在任何地方使用。<br>这个命令会在目录创建一个 node_modules 目录，我们的 uppercaseme 模块就安装在此。并且在 .bin 中创建了一个链接。</p>
+<p>接下来进行测试：</p>
+<pre><code>echo &apos;my lowercase file&apos; &gt; myfile.txt
+</code></pre><p>使用我们的模块进行转化：</p>
+<pre><code>./node_modules/.bin/uppercaseme myfile.txt
+
+OR
+
+&quot;./node_modules/.bin/uppercaseme&quot; myfile.txt
+</code></pre><p>检查执行之后的文件，是否被成功转化。</p>
+<p>接下来进行全局安装，在这之前先将本地安装卸载：</p>
+<pre><code>npm uninstall uppercaseme
+</code></pre><p>这将会把我们的模块在node_modules中移除。</p>
+<p>现在我们来进行全局安装：</p>
+<pre><code>npm install -g uppercaseme
+</code></pre><p>安装成功后，我们可以在任何目录进行操作：</p>
+<pre><code>uppercaseme myfile.txt
+</code></pre><p><a href="http://www.tuicool.com/articles/F7f22i" target="_blank" rel="external">参考文章</a></p>
+<h3 id="note"><a href="#note" class="headerlink" title="[note]"></a>[note]</h3><p>在package.json所在目录下使用npm install . -g可先在本地安装当前命令行程序，可用于发布前的本地测试。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/04/22/install-svn-on-centos/" itemprop="url">
                   centos 配置svn
                 </a>
@@ -1139,21 +1346,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">58</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
