@@ -57,7 +57,7 @@
 
 安装12$ sudo yum install epel-release -y$ sudo yum install certbot -y
 安装成功之后，可以通过执行 certbot -h 来查看使用帮助.
-申请证书有两种验证方式，一种是standalone_，这种验证方式虽然也可以部署后，但是以后更新证书的时候需要重启 w">
+申请证书有两种验证方式，一种是standalone，这种验证方式虽然也可以部署，但是以后更新证书的时候需要重启 web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开启Https之旅">
 <meta property="og:url" content="http://blog.lzuer.net/2016/10/25/https/index.html">
@@ -66,15 +66,15 @@
 
 安装12$ sudo yum install epel-release -y$ sudo yum install certbot -y
 安装成功之后，可以通过执行 certbot -h 来查看使用帮助.
-申请证书有两种验证方式，一种是standalone_，这种验证方式虽然也可以部署后，但是以后更新证书的时候需要重启 w">
-<meta property="og:updated_time" content="2016-10-25T03:38:31.280Z">
+申请证书有两种验证方式，一种是standalone，这种验证方式虽然也可以部署，但是以后更新证书的时候需要重启 web">
+<meta property="og:updated_time" content="2016-10-25T03:45:16.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开启Https之旅">
 <meta name="twitter:description" content="本文记录了在centos7下使用certbot配置开启https 的过程
 
 安装12$ sudo yum install epel-release -y$ sudo yum install certbot -y
 安装成功之后，可以通过执行 certbot -h 来查看使用帮助.
-申请证书有两种验证方式，一种是standalone_，这种验证方式虽然也可以部署后，但是以后更新证书的时候需要重启 w">
+申请证书有两种验证方式，一种是standalone，这种验证方式虽然也可以部署，但是以后更新证书的时候需要重启 web">
 
 
 
@@ -297,13 +297,13 @@
 </blockquote>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo yum install epel-release -y</div><div class="line">$ sudo yum install certbot -y</div></pre></td></tr></table></figure>
 <p>安装成功之后，可以通过执行 <code>certbot -h</code> 来查看使用帮助.</p>
-<p>申请证书有两种验证方式，一种是<strong>standalone_</strong>，这种验证方式虽然也可以部署后，但是以后更新证书的时候需要重启 web 服务器。</p>
-<p>我们可以采用了第二种<strong>webroot</strong>方式，就是在网站根目录下生成一个文件，通过访问该文件来验证，不需要重启 web 服务器。</p>
+<p>申请证书有两种验证方式，一种是<strong>standalone</strong>，这种验证方式虽然也可以部署，但是以后更新证书的时候需要重启 web 服务器。</p>
+<p>我们可以采用第二种<strong>webroot</strong>方式，就是在网站根目录下生成一个文件，通过访问该文件来验证，不需要重启 web 服务器。</p>
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ certbot certonly --webroot -w /home/wwwroot/yoursite/web <span class="_">-d</span> www.lzuer.net <span class="_">-d</span> lzuer.net</div></pre></td></tr></table></figure>
 <p>如果希望为多个域名生成共同的证书，可以继续在面输入：<code>-w /home/wwwroot/othersite/web -d admin.lzuer.net</code></p>
 <p>按照提示操作，当看到下面输出后，表示证书已成功生成：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">IMPORTANT NOTES:</div><div class="line"> - Congratulations! Your certificate and chain have been saved at</div><div class="line">   /etc/letsencrypt/live/your.domain.com/fullchain.pem. Your cert</div><div class="line">   will expire on 20XX-09-23. To obtain a new or tweaked version of</div><div class="line">   this certificate in the future, simply run certbot again. To</div><div class="line">   non-interactively renew *all* of your certificates, run &quot;certbot</div><div class="line">   renew&quot;</div><div class="line"> - If you like Certbot, please consider supporting our work by:</div><div class="line"></div><div class="line">   Donating to ISRG / Let&apos;s Encrypt:   https://letsencrypt.org/donate</div><div class="line">   Donating to EFF:                    https://eff.org/donate-le</div></pre></td></tr></table></figure>
-<h2 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h2><p>nginx支持在同一个<strong>server</strong>支持80和443端口，这样可以实现你的网站同时兼容<strong>http</strong>和<strong>https</strong>两种模式:</p>
+<h2 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h2><p>nginx支持在同一个<strong>server</strong>配置支持80和443端口，这样可以实现你的网站同时兼容<strong>http</strong>和<strong>https</strong>两种模式:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">listen  80;</div><div class="line">listen 443 ssl;</div><div class="line">server_name  lzuer.net www.lzuer.net;</div><div class="line">root  /home/wwwroot/yoursite/web;</div><div class="line">index index.php;</div><div class="line">charset utf-8;</div><div class="line"></div><div class="line"></div><div class="line">ssl on;</div><div class="line">ssl_certificate /etc/letsencrypt/live/b.w.lzuer.net/fullchain.pem;</div><div class="line">ssl_certificate_key /etc/letsencrypt/live/b.w.lzuer.net/privkey.pem;</div><div class="line">ssl_trusted_certificate /etc/letsencrypt/live/b.w.lzuer.net/chain.pem;</div><div class="line">ssl_session_timeout 5m;</div><div class="line">ssl_protocols TLSv1;</div><div class="line">ssl_ciphers  HIGH:!aNULL:!MD5;</div><div class="line">ssl_prefer_server_ciphers   on;</div><div class="line">//...</div></pre></td></tr></table></figure>
 <p>保存后重启<strong>nginx</strong>.</p>
 <blockquote>
@@ -313,7 +313,7 @@
 <blockquote>
 <p>注意, 如果发现无法访问, 可以检查下<strong>443</strong>这个端口是否开启，如果没有则需要开启 <code>iptables -I INPUT -p tcp --dport 443 -j ACCEPT</code></p>
 </blockquote>
-<p>如果希望你网站支持<strong>https</strong>访问，那么可以如下配置：</p>
+<p>如果希望你的网站仅支持<strong>https</strong>访问，那么可以如下配置：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">  listen 80;</div><div class="line">  server_name b.w.lzuer.net;</div><div class="line">  return 301 https://b.w.lzuer.net$request_uri;</div><div class="line">&#125;</div><div class="line">server &#123;</div><div class="line">  listen 443 ssl;</div><div class="line">  server_name  b.w.lzuer.net;</div><div class="line">  root  /home/wwwroot/yoursite/web;</div><div class="line">  index index.php;</div><div class="line">  charset utf-8;</div><div class="line"></div><div class="line"></div><div class="line">  ssl on;</div><div class="line">  ssl_certificate /etc/letsencrypt/live/b.w.lzuer.net/fullchain.pem;</div><div class="line">  ssl_certificate_key /etc/letsencrypt/live/b.w.lzuer.net/privkey.pem;</div><div class="line">  ssl_trusted_certificate /etc/letsencrypt/live/b.w.lzuer.net/chain.pem;</div><div class="line">  ssl_session_timeout 5m;</div><div class="line">  ssl_protocols TLSv1;</div><div class="line">  ssl_ciphers  HIGH:!aNULL:!MD5;</div><div class="line">  ssl_prefer_server_ciphers   on;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="定时更新"><a href="#定时更新" class="headerlink" title="定时更新"></a>定时更新</h2><p>Let’s Encrypt 只有3个月的有效期，所以我们需要定时去更新证书。</p>
 <p>可以通过运行：<code>certbot renew --dry-run</code> 来测试自动生成是否能够正常运行。</p>
