@@ -218,6 +218,152 @@
             
               
                 
+                <a class="post-title-link" href="/2016/11/19/upgrade-to-https-keng/" itemprop="url">
+                  升级Https中遇到的一个小坑
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-11-19T13:50:22+00:00" content="2016-11-19">
+              2016-11-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nginx/https/" itemprop="url" rel="index">
+                    <span itemprop="name">https</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/19/upgrade-to-https-keng/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/19/upgrade-to-https-keng/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>在全站升级Https的过程中需要对websocket服务进行https化。</p>
+<p>之前, 使用workerman提供服务, 并采用暴露端口的方式供系统通过IP形式访问。</p>
+<p>采用Https后, 采用的方案是使用nginx做一层反向代理, 这样可以取消之前websocket暴露外网的端口.</p>
+<h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>为websocket配置特定的后缀, 有nginx进行反向代理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location = /socket.io/ &#123;</div><div class="line">    proxy_pass http://127.0.0.1:2120;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>127.0.0.1:2120</code> 为 workerman 启动的websocket地址.</p>
+<h3 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h3><p><strong>WTF</strong> , 结果并没有按照预期的完全无误. 在控制台中得到如下错误提示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wss://.../socket.io/?EIO=2&amp;transport=websocket&amp;sid=p3af7ZNfvogtq6tAAAG0&apos;</div><div class="line"></div><div class="line">failed: Error during WebSocket handshake: Unexpected response code: 400.</div></pre></td></tr></table></figure>
+<p>然而, 开始并没有去查看导致这个错误的具体原因是什么, 而是直接进行了测试, 测试的结果是</p>
+<p>系统能够正常运行.</p>
+<h2 id="出坑"><a href="#出坑" class="headerlink" title="出坑"></a>出坑</h2><p>当然, 仅仅能够正常运行并不能够证明什么, 事实上, 错误仍然存在. 之后google了一番, 在 socket.io 库的</p>
+<p>issue里找到了解决方案：</p>
+<p><a href="https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072" target="_blank" rel="external">https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072</a></p>
+<p>尝试：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location = /socket.io/ &#123;</div><div class="line">    proxy_pass http://127.0.0.1:2120;</div><div class="line">    proxy_http_version 1.1;</div><div class="line">    proxy_set_header Upgrade $http_upgrade;</div><div class="line">    proxy_set_header Connection &quot;upgrade&quot;;</div><div class="line">    proxy_set_header Host $host;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>再次测试, 错误消失！</p>
+<ol>
+<li><code>proxy_http_version 1.1;</code></li>
+</ol>
+<blockquote>
+<p>The first line tells Nginx to use HTTP/1.1 when communicating to the Node backend, which is required for WebSockets.</p>
+</blockquote>
+<p>告诉nginx使用 <code>HTTP/1.1</code> 协议和后端的websocket服务通信</p>
+<ol>
+<li><code>proxy_set_header Upgrade $http_upgrade</code> &amp; <code>proxy_set_header Connection &quot;upgrade&quot;</code></li>
+</ol>
+<blockquote>
+<p> The next two tell Nginx to respond to the Upgrade request which is initiated over HTTP by the browser when it wants to use a WebSocket.</p>
+</blockquote>
+<p>这两个告诉Nginx应对升级请求发起HTTP上的浏览器当它想要使用一个WebSocket。</p>
+<p>参考: <a href="https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/" target="_blank" rel="external">https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/</a></p>
+<p>–eof–</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/25/https/" itemprop="url">
                   开启Https之旅
                 </a>
@@ -1400,149 +1546,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/07/difference-between-redis-and-memcache/" itemprop="url">
-                  Redis和Memcache的区别
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-06-07T21:57:23+00:00" content="2016-06-07">
-              2016-06-07
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/Memcache/" itemprop="url" rel="index">
-                    <span itemprop="name">Memcache</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/Memcache/NoSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">NoSQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/07/difference-between-redis-and-memcache/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/07/difference-between-redis-and-memcache/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <ol>
-<li>Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别</li>
-<li>Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构</li>
-<li>Redis支持数据备份，即master-slave模式的数据备份</li>
-<li>Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。</li>
-</ol>
-<p>Redis作者对Redis和memcache进行的比对：</p>
-<p>没有必要过多的关心性能，因为二者的性能都已经足够高了。由于Redis使用单核，而memcache可以使用多核，所以在比较上，平均每一个核上Redis在存储小数据时比memcache性能更高。而在100k以上的数据中，memcache性能高于Redis，最终，无论使用哪一个，每秒处理请求的次数都不会成为瓶颈。(比如瓶颈可能会在网卡)</p>
-<p>如果要说内存使用效率，使用简单的key-value存储的话，memcache的内存利用率更高，而如果Redis采用hash结构来做key-value存储，由于其组合式的压缩，其内存利用率会高于memcache。</p>
-<p>如果你对数据持久化和数据同步有所要求，那么推荐你选择Redis，因为这两个特性Memcached都不具备。即使你只是希望在升级或者重启系统后缓存数据不会丢失，选择Redis也是明智的。</p>
-<p>当然，最后还得说到你的具体应用需求。Redis相比Memcached来说，拥有更多的数据结构和并支持更丰富的数据操作，通常在Memcached里， 你需要将数据拿到客户端来进行类似的修改再set回去。这大大增加了网络IO的次数和数据体积。在Redis中，这些复杂的操作通常和一般的 GET/SET一样高效。所以，如果你需要缓存能够支持更复杂的结构和操作，那么Redis会是不错的选择。</p>
-<p>1、 Redis和Memcache都是将数据存放在内存中，都是内存数据库。不过memcache还可用于缓存其他东西，例如图片、视频等等。<br>2、Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，hash等数据结构的存储。<br>3、虚拟内存–Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘<br>4、过期策略–memcache在set时就指定，例如set key1 0 0 8,即永不过期。Redis可以通过例如expire 设定，例如expire name 10<br>5、分布式–设定memcache集群，利用magent做一主多从;redis可以做一主多从。都可以一主一从<br>6、存储数据安全–memcache挂掉后，数据没了；redis可以定期保存到磁盘（持久化）<br>7、灾难恢复–memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复<br>8、Redis支持数据的备份，即master-slave模式的数据备份</p>
-<p>参考：</p>
-<ul>
-<li><a href="https://segmentfault.com/a/1190000004012181" target="_blank" rel="external">https://segmentfault.com/a/1190000004012181</a></li>
-<li><a href="http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis" target="_blank" rel="external">http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis</a></li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1589,14 +1592,14 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">58</span>
+              <span class="site-state-item-count">59</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
