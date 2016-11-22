@@ -67,7 +67,7 @@
 采用Https后, 采用的方案是使用nginx做一层反向代理, 这样可以取消之前websocket暴露外网的端口.
 踩坑配置为websocket配置特定的后缀, 有nginx进行反向代理：
 123location = /socket.i">
-<meta property="og:updated_time" content="2016-11-21T12:30:34.037Z">
+<meta property="og:updated_time" content="2016-11-22T01:55:34.930Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="升级Https中遇到的一个小坑">
 <meta name="twitter:description" content="在全站升级Https的过程中需要对websocket服务进行https化。
@@ -300,8 +300,7 @@
 <p><code>127.0.0.1:2120</code> 为 workerman 启动的websocket地址.</p>
 <h3 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h3><p><strong>WTF</strong> , 结果并没有按照预期的完全无误. 在控制台中得到如下错误提示：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wss://.../socket.io/?EIO=2&amp;transport=websocket&amp;sid=p3af7ZNfvogtq6tAAAG0&apos;</div><div class="line"></div><div class="line">failed: Error during WebSocket handshake: Unexpected response code: 400.</div></pre></td></tr></table></figure>
-<p>然而, 开始并没有去查看导致这个错误的具体原因是什么, 而是直接进行了测试, 测试的结果是</p>
-<p>系统能够正常运行.</p>
+<p>然而, 开始并没有去查看导致这个错误的具体原因是什么, 而是直接进行了测试, 测试的结果是<strong>系统能够正常运行</strong>.</p>
 <h2 id="出坑"><a href="#出坑" class="headerlink" title="出坑"></a>出坑</h2><p>当然, 仅仅能够正常运行并不能够证明什么, 事实上, 错误仍然存在. 之后google了一番, 在 socket.io 库的</p>
 <p>issue里找到了解决方案：</p>
 <p><a href="https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072" target="_blank" rel="external">https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072</a></p>
