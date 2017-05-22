@@ -54,11 +54,11 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Light's Blog">
+<meta property="og:title" content="Light&#39;s Blog">
 <meta property="og:url" content="http://blog.lzuer.net/page/6/index.html">
-<meta property="og:site_name" content="Light's Blog">
+<meta property="og:site_name" content="Light&#39;s Blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Light's Blog">
+<meta name="twitter:title" content="Light&#39;s Blog">
 
 
 
@@ -195,6 +195,165 @@
 
     
     
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/22/database-normal-form/" itemprop="url">
+                  数据常用的三个范式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:02:41+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MySQL/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/database-normal-form/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/database-normal-form/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h3 id="数据库设计所常用的范式："><a href="#数据库设计所常用的范式：" class="headerlink" title="数据库设计所常用的范式："></a>数据库设计所常用的范式：</h3><ul>
+<li>第一范式</li>
+</ul>
+<p>定义：数据库表中的所有字段都是单一属性，不可再分的。(第一范式要求数据库中的表都是二维表)</p>
+<p>正确的：</p>
+<table>
+<thead>
+<tr>
+<th>用户ID</th>
+<th>用户名</th>
+<th>密码</th>
+<th>姓名</th>
+<th>电话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>zhang3</td>
+<td><em>**</em></td>
+<td>张三</td>
+<td>1289998888</td>
+</tr>
+</tbody>
+</table>
+<p>错误的：</p>
+<p>将姓名和电话字段合并成用户信息，下面在分出两列来分别制定姓名和电话.</p>
+<ul>
+<li>第二范式</li>
+</ul>
+<p>定义：首先是 1NF，另外包含两部分内容，一是表必须有一个主键；二是没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。</p>
+<p>考虑一个订单明细表：【OrderDetail】（OrderID，ProductID，UnitPrice，Discount，Quantity，ProductName）。</p>
+<p>因为我们知道在一个订单中可以订购多种产品，所以单单一个 OrderID 是不足以成为主键的，主键应该是（OrderID，ProductID）。显而易见 Discount（折扣），Quantity（数量）完全依赖（取决）于主键（OderID，ProductID），而 UnitPrice，ProductName 只依赖于 ProductID。所以 OrderDetail 表不符合 2NF。不符合 2NF 的设计容易产生冗余数据。</p>
+<p>可以把【OrderDetail】表拆分为【OrderDetail】（OrderID，ProductID，Discount，Quantity）和【Product】（ProductID，UnitPrice，ProductName）来消除原订单表中UnitPrice，ProductName多次重复的情况。</p>
+<ul>
+<li>第三范式</li>
+</ul>
+<p>定义：首先是 2NF，另外非主键列必须直接依赖于主键，不能存在传递依赖。即不能存在：非主键列 A 依赖于非主键列 B，非主键列 B 依赖于主键的情况。</p>
+<p>考虑一个订单表【Order】（OrderID，OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity）主键是（OrderID）。</p>
+<p>其中 OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity 等非主键列都完全依赖于主键（OrderID），所以符合 2NF。</p>
+<p>不过问题是 CustomerName，CustomerAddr，CustomerCity 直接依赖的是 CustomerID（非主键列），而不是直接依赖于主键，它是通过传递才依赖于主键，所以不符合 3NF。</p>
+<p>通过拆分【Order】为【Order】（OrderID，OrderDate，CustomerID）和【Customer】（CustomerID，CustomerName，CustomerAddr，CustomerCity）从而达到 3NF。</p>
+<blockquote>
+<p>第二范式（2NF）和第三范式（3NF）的概念很容易混淆，区分它们的关键点在于，2NF：非主键列是否完全依赖于主键，还是依赖于主键的一部分；3NF：非主键列是直接依赖于主键，还是直接依赖于非主键列。</p>
+</blockquote>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -1573,142 +1732,6 @@ OR
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/02/21/daliy_note_one/" itemprop="url">
-                  今日笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2013-02-21T23:55:11+00:00" content="2013-02-21">
-              2013-02-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/daliy/" itemprop="url" rel="index">
-                    <span itemprop="name">daliy</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/02/21/daliy_note_one/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/02/21/daliy_note_one/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p><strong>PHP获取当前类名、函数名、方法名</strong></p>
-<ul>
-<li><strong>CLASS</strong>获取当前类名</li>
-<li><strong>FUNCTION</strong> 获取当前函数名</li>
-<li><strong>METHOD</strong> 获取当前方法名</li>
-</ul>
-<p><em>(返回区分大小写)</em></p>
-<h3 id="关于PHP中的函数"><a href="#关于PHP中的函数" class="headerlink" title="关于PHP中的函数"></a>关于PHP中的函数</h3><ul>
-<li><p>函数名是大小写无关的</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">echo</span> <span class="string">'test'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">test();<span class="comment">// print test</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Say</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">echo</span> <span class="string">'say something'</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">$t = <span class="keyword">new</span> Test;</div><div class="line">$t-&gt;say(); <span class="comment">//print say something</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>函数无需在调用之前被定义，但有两个特例</p>
-<ul>
-<li>当一个函数是有条件被定义时，其定义必须在调用之前先处理。</li>
-<li>函数中的函数</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>PHP 中的所有函数和类都具有全局作用域，可以定义在一个函数之内而在之外调用，反之亦然。</p>
-</blockquote>
-<p>关于函数中的函数例子：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">()</span></span></div><div class="line">	&#123;</div><div class="line">		<span class="keyword">echo</span> <span class="string">'I will exist until foo() is called!'</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/* 先在还不能调用bar()，因为还不存在 */</span></div><div class="line">foo();</div><div class="line"></div><div class="line"><span class="comment">/*因为foo()函数的执行使bar()变为已定义函数*/</span></div><div class="line">bar();</div></pre></td></tr></table></figure></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1755,7 +1778,7 @@ OR
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">61</span>
+              <span class="site-state-item-count">62</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1838,7 +1861,7 @@ OR
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

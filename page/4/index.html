@@ -54,11 +54,11 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Light's Blog">
+<meta property="og:title" content="Light&#39;s Blog">
 <meta property="og:url" content="http://blog.lzuer.net/page/4/index.html">
-<meta property="og:site_name" content="Light's Blog">
+<meta property="og:site_name" content="Light&#39;s Blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Light's Blog">
+<meta name="twitter:title" content="Light&#39;s Blog">
 
 
 
@@ -195,6 +195,136 @@
 
     
     
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/06/15/the-difference-between-on-and-where/" itemprop="url">
+                  在关联表查询的时候是在ON添加条件和在where添加添加条件异同
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-06-15T22:07:27+00:00" content="2015-06-15">
+              2015-06-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/06/15/the-difference-between-on-and-where/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/15/the-difference-between-on-and-where/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。</p>
+<p>在使用left jion时，on和where条件的区别如下：</p>
+<ol>
+<li><p>on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。 </p>
+</li>
+<li><p>where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部过滤掉。</p>
+</li>
+</ol>
+<p><strong>假设有两张表：</strong></p>
+<p>表1 tab1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">id size </div><div class="line">1 10 </div><div class="line">2 20 </div><div class="line">3 30</div></pre></td></tr></table></figure>
+<p>表2 tab2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">size name </div><div class="line">10 AAA </div><div class="line">20 BBB </div><div class="line">20 CCC</div></pre></td></tr></table></figure>
+<p>两条SQL:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. select * form tab1 left join tab2 on (tab1.size = tab2.size) where tab2.name=’AAA’</div><div class="line"></div><div class="line">2. select * form tab1 left join tab2 on (tab1.size = tab2.size and tab2.name=’AAA’)</div></pre></td></tr></table></figure>
+<p>第一条SQL的过程：</p>
+<p>1、中间表 on条件:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">tab1.size = tab2.size  </div><div class="line">tab1.id    tab1.size    tab2.size     tab2.name </div><div class="line">1             10          10              AAA </div><div class="line">2             20          20              BBB  </div><div class="line">2             20          20              CCC </div><div class="line">3             30         (null)          (null) </div><div class="line">2</div><div class="line"></div><div class="line">再对中间表过滤where 条件：</div><div class="line"></div><div class="line">tab2.name=’AAA’</div><div class="line">tab1.id       tab1.size        tab2.size     tab2.name </div><div class="line">1                10                10             AAA</div></pre></td></tr></table></figure>
+<p>第二条SQL的过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1、中间表 on条件:   </div><div class="line">tab1.size = tab2.size and tab2.name=’AAA’</div><div class="line"> (条件不为真也会返回左表中的记录)  </div><div class="line">tab1.id      tab1.size       tab2.size      tab2.name </div><div class="line">1             10                10             AAA </div><div class="line">2             20                (null)        (null) </div><div class="line">3             30                (null)        (null)</div></pre></td></tr></table></figure>
+<p>其实以上结果的关键原因就是left join,right join,full join的特殊性，不管on上的条件是否为真都会返回left或right表中的记录，full则具有left和right的特性的并集。而inner jion没这个特殊性，则条件放在on中和where中，返回的结果集是相同的。</p>
+<p><strong>参考</strong></p>
+<ul>
+<li><p><a href="http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause" target="_blank" rel="external">http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause</a></p>
+</li>
+<li><p><a href="http://dba-china.com/topic/default/view/71" target="_blank" rel="external">http://dba-china.com/topic/default/view/71</a></p>
+</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -1281,127 +1411,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/node-export-vs-exports/" itemprop="url">
-                  export vs exports
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:27:01+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/NodeJS/" itemprop="url" rel="index">
-                    <span itemprop="name">NodeJS</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/NodeJS/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/node-export-vs-exports/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/node-export-vs-exports/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>参考文章：<a href="https://cnodejs.org/topic/5231a630101e574521e45ef8" target="_blank" rel="external">https://cnodejs.org/topic/5231a630101e574521e45ef8</a></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们只需知道三点即可知道 exports 和 module.exports 的区别了：</p>
-<ul>
-<li>exports 是指向的 module.exports 的引用</li>
-<li>module.exports 初始值为一个空对象 {}，所以 exports 初始值也是 {}</li>
-<li>require() 返回的是 module.exports 而不是 exports</li>
-</ul>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1448,7 +1457,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">61</span>
+              <span class="site-state-item-count">62</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1531,7 +1540,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

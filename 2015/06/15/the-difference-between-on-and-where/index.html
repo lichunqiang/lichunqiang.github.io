@@ -53,31 +53,17 @@
 
 
 
-<meta name="description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。
-在使用left jion时，on和where条件的区别如下：
-
-on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。 
-
-where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
+<meta name="description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。 在使用left jion时，on和where条件的区别如下：  on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。   where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在关联表查询的时候是在ON添加条件和在where添加添加条件异同">
 <meta property="og:url" content="http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/index.html">
-<meta property="og:site_name" content="Light's Blog">
-<meta property="og:description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。
-在使用left jion时，on和where条件的区别如下：
-
-on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。 
-
-where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
-<meta property="og:updated_time" content="2016-12-02T03:03:59.964Z">
+<meta property="og:site_name" content="Light&#39;s Blog">
+<meta property="og:description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。 在使用left jion时，on和where条件的区别如下：  on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。   where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
+<meta property="og:updated_time" content="2017-05-22T12:33:22.347Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在关联表查询的时候是在ON添加条件和在where添加添加条件异同">
-<meta name="twitter:description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。
-在使用left jion时，on和where条件的区别如下：
-
-on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。 
-
-where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
+<meta name="twitter:description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。 在使用left jion时，on和where条件的区别如下：  on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。   where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
 
 
 
@@ -434,7 +420,7 @@ where条件是在临时表生成好后，再对临时表进行过滤的条件。
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">61</span>
+              <span class="site-state-item-count">62</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -534,7 +520,7 @@ where条件是在临时表生成好后，再对临时表进行过滤的条件。
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

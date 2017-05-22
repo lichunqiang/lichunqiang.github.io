@@ -54,11 +54,11 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Light's Blog">
+<meta property="og:title" content="Light&#39;s Blog">
 <meta property="og:url" content="http://blog.lzuer.net/index.html">
-<meta property="og:site_name" content="Light's Blog">
+<meta property="og:site_name" content="Light&#39;s Blog">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Light's Blog">
+<meta name="twitter:title" content="Light&#39;s Blog">
 
 
 
@@ -195,6 +195,130 @@
 
     
     
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/05/22/wrk-benchmarking/" itemprop="url">
+                  未命名
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2017-05-22T12:33:22+00:00" content="2017-05-22">
+              2017-05-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/05/22/wrk-benchmarking/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/22/wrk-benchmarking/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="使用-wrk-来测试接口性能"><a href="#使用-wrk-来测试接口性能" class="headerlink" title="使用 wrk 来测试接口性能"></a>使用 wrk 来测试接口性能</h2><h2 id="什么是wrk"><a href="#什么是wrk" class="headerlink" title="什么是wrk"></a>什么是wrk</h2><p>wrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。</p>
+<h2 id="为什么是wrk"><a href="#为什么是wrk" class="headerlink" title="为什么是wrk"></a>为什么是wrk</h2><p>相比于Apache ab功能更为强大，可以使用lua脚本来支持更为复杂的测试场景，例如PUT请求等。</p>
+<p>在对于Restful架构的API接口来说，测试起来更加便捷。</p>
+<h2 id="获取和安装"><a href="#获取和安装" class="headerlink" title="获取和安装"></a>获取和安装</h2><p>源码地址: <a href="https://github.com/wg/wrk" target="_blank" rel="external">https://github.com/wg/wrk</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ git <span class="built_in">clone</span> https://github.com/wg/wrk.git</div><div class="line">$ <span class="built_in">cd</span> wrk</div><div class="line">$ make all</div><div class="line">$ cp wrk /usr/bin/wrk</div><div class="line">$ wrk -h</div></pre></td></tr></table></figure>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 2 -c 50 -d 1 --latency http://bj.58.com</div></pre></td></tr></table></figure>
+<p>使用两个线程保持50个连接请求1秒钟，并打印延迟统计信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Running 1s test @ http://bj.58.com</div><div class="line">  2 threads and 50 connections</div><div class="line">  Thread Stats   Avg      Stdev     Max   +/- Stdev</div><div class="line">    Latency   148.87ms  180.61ms 927.67ms   85.14%</div><div class="line">    Req/Sec   192.47     99.38   400.00     63.16%</div><div class="line">  Latency Distribution</div><div class="line">     50%   65.21ms</div><div class="line">     75%  204.23ms</div><div class="line">     90%  355.24ms</div><div class="line">     99%  835.83ms</div><div class="line">  367 requests in 1.01s, 37.14MB read</div><div class="line">Requests/sec:    364.46</div><div class="line">Transfer/sec:     36.88MB</div></pre></td></tr></table></figure>
+<p>主要关注的点有：</p>
+<ul>
+<li><p><code>Latency</code> 请求处理时延，上面测试结果平均延时时间为148.87ms</p>
+</li>
+<li><p><code>Requests/sec</code> 每秒处理的请求数(QPS)</p>
+</li>
+</ul>
+<p>上面的结果可以看到(Latency Distribution): 50%的请求延时在65.21ms</p>
+<blockquote>
+<p>当然，上面的请求时间只用了1s，理论上请求的时间越长得结果更加准确</p>
+</blockquote>
+<h3 id="使用进阶"><a href="#使用进阶" class="headerlink" title="使用进阶"></a>使用进阶</h3><p>模拟POST请求</p>
+<p>新建 <code>post.lua</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wrk.method = &quot;POST&quot;</div><div class="line">wrk.body = &quot;foo=bar&amp;baz=qux&quot;</div><div class="line">wrk.headers[&quot;Content-Type&quot;] = &quot;application/x-www-form-urlencode&quot;</div><div class="line">wrk.headers[&quot;User-Agent&quot;] = &quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&quot;</div></pre></td></tr></table></figure>
+<p>请求:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 4 -c 100 <span class="_">-d</span> 30s --timeout 10 --script=post.lua --latency http://127.0.0.1/post.php</div></pre></td></tr></table></figure>
+<p>通过在脚本中记录日志的方式可以看到<code>$_POST</code>数据和<code>$_SERVER</code>中的字段为lua脚本中设置的值.</p>
+<h3 id="更为复杂的场景"><a href="#更为复杂的场景" class="headerlink" title="更为复杂的场景"></a>更为复杂的场景</h3><p>wrk提供了几个hook函数，可以用lua来编写一些更为复杂场景下的测试需求。</p>
+<ul>
+<li><p><a href="https://github.com/wg/wrk/blob/master/SCRIPTING" target="_blank" rel="external">https://github.com/wg/wrk/blob/master/SCRIPTING</a></p>
+</li>
+<li><p><a href="https://github.com/wg/wrk/tree/master/scripts" target="_blank" rel="external">https://github.com/wg/wrk/tree/master/scripts</a></p>
+</li>
+</ul>
+<p>参考资料：</p>
+<ul>
+<li><a href="https://github.com/wg/wrk" target="_blank" rel="external">https://github.com/wg/wrk</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04</a></li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
 
     
       
@@ -1419,131 +1543,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/23/singleton-and-multiton/" itemprop="url">
-                  设计模式之单例和多例
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-06-23T09:26:12+00:00" content="2016-06-23">
-              2016-06-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/23/singleton-and-multiton/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/23/singleton-and-multiton/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。</p>
-<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">class Singleton</div><div class="line">&#123;</div><div class="line">	/**</div><div class="line">	 * @var static</div><div class="line">	 */</div><div class="line">	private static $instance;</div><div class="line"></div><div class="line">	public static function getInstance()</div><div class="line">	&#123;</div><div class="line">		if (null === static::$instance) &#123;</div><div class="line">			static::$instance = new static();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return static::$instance;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//单例模式不允许被new</div><div class="line">	private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">	//不允许被clone</div><div class="line">	final public function __clone()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, Clone is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//不允许被unserialize</div><div class="line">	final public function __wakeup()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, __wakeup is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="多例"><a href="#多例" class="headerlink" title="多例"></a>多例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class Multiton</div><div class="line">&#123;</div><div class="line">	const INSTANCE_1 = &apos;1&apos;;</div><div class="line"></div><div class="line">	const INSTANCE_2 = &apos;2&apos;;</div><div class="line"></div><div class="line">	private static $instances = [];</div><div class="line"></div><div class="line">	private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">	private function __clone()&#123;&#125;</div><div class="line"></div><div class="line">	private function __wakeup()&#123;&#125;</div><div class="line"></div><div class="line">	public static function getInstance($instanceName)</div><div class="line">	&#123;</div><div class="line">		if (!array_key_exists($instanceName, self::$instances)) &#123;</div><div class="line">			self::$instances[$instanceName] = new self();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return self::$instances[$instanceName];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>单例模式的主要优点：</p>
-<pre><code>* 提供了对唯一实例的受控访问
-* 由于在系统中只存在一个对象，因此可以节约资源，对于一些需要频繁创建和销毁的对象可以提高系统性能
-* 允许可变数目的实例
-</code></pre><p>主要缺点：</p>
-<pre><code>* 单例模式没有抽象层，因此扩展很麻烦
-* 职责过重，一定程度上违背了“单一职责原则”
-* 滥用会带来一些负面问题
-</code></pre>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1590,7 +1589,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">61</span>
+              <span class="site-state-item-count">62</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1673,7 +1672,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>
