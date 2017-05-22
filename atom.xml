@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.lzuer.net/"/>
-  <updated>2017-05-22T12:33:22.347Z</updated>
+  <updated>2017-05-22T12:37:03.089Z</updated>
   <id>http://blog.lzuer.net/</id>
   
   <author>
@@ -16,13 +16,13 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>使用 wrk 来测试接口性能</title>
     <link href="http://blog.lzuer.net/2017/05/22/wrk-benchmarking/"/>
     <id>http://blog.lzuer.net/2017/05/22/wrk-benchmarking/</id>
-    <published>2017-05-22T12:33:22.347Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <published>2017-05-22T20:17:39.000Z</published>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="使用-wrk-来测试接口性能"><a href="#使用-wrk-来测试接口性能" class="headerlink" title="使用 wrk 来测试接口性能"></a>使用 wrk 来测试接口性能</h2><h2 id="什么是wrk"><a href="#什么是wrk" class="headerlink" title="什么是wrk"></a>什么是wrk</h2><p>wrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。</p>
+    <content type="html"><![CDATA[<h2 id="什么是wrk"><a href="#什么是wrk" class="headerlink" title="什么是wrk"></a>什么是wrk</h2><p>wrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。</p>
 <h2 id="为什么是wrk"><a href="#为什么是wrk" class="headerlink" title="为什么是wrk"></a>为什么是wrk</h2><p>相比于Apache ab功能更为强大，可以使用lua脚本来支持更为复杂的测试场景，例如PUT请求等。</p>
 <p>在对于Restful架构的API接口来说，测试起来更加便捷。</p>
 <h2 id="获取和安装"><a href="#获取和安装" class="headerlink" title="获取和安装"></a>获取和安装</h2><p>源码地址: <a href="https://github.com/wg/wrk" target="_blank" rel="external">https://github.com/wg/wrk</a></p>
@@ -63,10 +63,19 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;使用-wrk-来测试接口性能&quot;&gt;&lt;a href=&quot;#使用-wrk-来测试接口性能&quot; class=&quot;headerlink&quot; title=&quot;使用 wrk 来测试接口性能&quot;&gt;&lt;/a&gt;使用 wrk 来测试接口性能&lt;/h2&gt;&lt;h2 id=&quot;什么是wrk&quot;&gt;&lt;a href=&quot;
+      &lt;h2 id=&quot;什么是wrk&quot;&gt;&lt;a href=&quot;#什么是wrk&quot; class=&quot;headerlink&quot; title=&quot;什么是wrk&quot;&gt;&lt;/a&gt;什么是wrk&lt;/h2&gt;&lt;p&gt;wrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。&lt;/p&gt;
+&lt;h2 id=&quot;为什
     
     </summary>
     
+      <category term="wrk" scheme="http://blog.lzuer.net/categories/wrk/"/>
+    
+      <category term="benchmarking" scheme="http://blog.lzuer.net/categories/wrk/benchmarking/"/>
+    
+    
+      <category term="wrk" scheme="http://blog.lzuer.net/tags/wrk/"/>
+    
+      <category term="benchmarking" scheme="http://blog.lzuer.net/tags/benchmarking/"/>
     
   </entry>
   
@@ -75,7 +84,7 @@
     <link href="http://blog.lzuer.net/2016/11/25/vagrant-disk-is-full/"/>
     <id>http://blog.lzuer.net/2016/11/25/vagrant-disk-is-full/</id>
     <published>2016-11-25T10:50:22.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<p>在使用 vagrant 开发过程中, 突然遇到磁盘被沾满, 导致数据库无法写入.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">文件系统                 容量  已用  可用 已用% 挂载点</div><div class="line">/dev/mapper/centos-root   39G   39G  136K  100% /</div><div class="line">devtmpfs                 911M     0  911M    0% /dev</div><div class="line">tmpfs                    921M     0  921M    0% /dev/shm</div><div class="line">tmpfs                    921M  8.4M  912M    1% /run</div><div class="line">tmpfs                    921M     0  921M    0% /sys/fs/cgroup</div><div class="line">/dev/sda1                497M  125M  373M   25% /boot</div><div class="line">tmpfs                    185M     0  185M    0% /run/user/1000</div></pre></td></tr></table></figure>
@@ -115,7 +124,7 @@
     <link href="http://blog.lzuer.net/2016/11/19/upgrade-to-https-keng/"/>
     <id>http://blog.lzuer.net/2016/11/19/upgrade-to-https-keng/</id>
     <published>2016-11-19T13:50:22.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<p>在全站升级Https的过程中需要对websocket服务进行https化。</p>
 <p>之前, 使用workerman提供服务, 并采用暴露端口的方式供系统通过IP形式访问。</p>
@@ -174,7 +183,7 @@
     <link href="http://blog.lzuer.net/2016/10/25/https/"/>
     <id>http://blog.lzuer.net/2016/10/25/https/</id>
     <published>2016-10-25T12:17:39.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>本文记录了在centos7下使用<a href="https://certbot.eff.org/" target="_blank" rel="external">certbot</a>配置开启https 的过程</p>
@@ -236,7 +245,7 @@
     <link href="http://blog.lzuer.net/2016/10/10/github-pr/"/>
     <id>http://blog.lzuer.net/2016/10/10/github-pr/</id>
     <published>2016-10-10T13:50:22.000Z</published>
-    <updated>2017-05-22T12:33:22.343Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<p>在 <a href="https://github.com" target="_blank" rel="external">Github</a> 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后，</p>
 <p>你不仅需要在线进行code review，而且还要运行起来，确保提交的代码改动不会产生其他影响。</p>
@@ -284,7 +293,7 @@
     <link href="http://blog.lzuer.net/2016/08/31/mysql-binlog-and-master-slave-configuration/"/>
     <id>http://blog.lzuer.net/2016/08/31/mysql-binlog-and-master-slave-configuration/</id>
     <published>2016-08-31T20:50:22.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<h2 id="开启binlog"><a href="#开启binlog" class="headerlink" title="开启binlog"></a>开启binlog</h2><p>在 <code>/etc/my.conf</code> 中打开 <code>log-bin=/your/dir</code>, 重启Mysql服务</p>
 <blockquote>
@@ -355,7 +364,7 @@
     <link href="http://blog.lzuer.net/2016/08/12/count-words-in-textarea/"/>
     <id>http://blog.lzuer.net/2016/08/12/count-words-in-textarea/</id>
     <published>2016-08-12T20:50:22.000Z</published>
-    <updated>2017-05-22T12:33:22.343Z</updated>
+    <updated>2017-05-22T12:37:03.085Z</updated>
     
     <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>一天一位<a href="https://github.com/airyland/vux" target="_blank" rel="external">vux</a>使用提交了这么一个bug: <a href="https://github.com/airyland/vux/issues/420" target="_blank" rel="external">x-textarea字数统计异常</a>.</p>
 <p>具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了<code>maxlength</code>属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了.</p>
@@ -392,7 +401,7 @@
     <link href="http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/"/>
     <id>http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/</id>
     <published>2016-07-30T20:50:22.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<p>在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$nohup php beanstalkd-consumer.php &amp;</div></pre></td></tr></table></figure>
@@ -442,7 +451,7 @@
     <link href="http://blog.lzuer.net/2016/07/14/deploy-beanstalkd-on-centos7/"/>
     <id>http://blog.lzuer.net/2016/07/14/deploy-beanstalkd-on-centos7/</id>
     <published>2016-07-14T09:26:12.000Z</published>
-    <updated>2017-05-22T12:33:22.343Z</updated>
+    <updated>2017-05-22T12:37:03.085Z</updated>
     
     <content type="html"><![CDATA[<ol>
 <li>下载源代码到本地</li>
@@ -491,7 +500,7 @@
     <link href="http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/"/>
     <id>http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/</id>
     <published>2016-07-12T23:57:23.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<blockquote>
 <p>在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。</p>
@@ -545,7 +554,7 @@
     <link href="http://blog.lzuer.net/2016/06/23/singleton-and-multiton/"/>
     <id>http://blog.lzuer.net/2016/06/23/singleton-and-multiton/</id>
     <published>2016-06-23T09:26:12.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<p>单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。</p>
 <h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">class Singleton</div><div class="line">&#123;</div><div class="line">	/**</div><div class="line">	 * @var static</div><div class="line">	 */</div><div class="line">	private static $instance;</div><div class="line"></div><div class="line">	public static function getInstance()</div><div class="line">	&#123;</div><div class="line">		if (null === static::$instance) &#123;</div><div class="line">			static::$instance = new static();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return static::$instance;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//单例模式不允许被new</div><div class="line">	private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">	//不允许被clone</div><div class="line">	final public function __clone()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, Clone is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//不允许被unserialize</div><div class="line">	final public function __wakeup()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, __wakeup is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -583,7 +592,7 @@
     <link href="http://blog.lzuer.net/2016/06/22/array_merge-vs-+/"/>
     <id>http://blog.lzuer.net/2016/06/22/array_merge-vs-+/</id>
     <published>2016-06-22T21:57:23.000Z</published>
-    <updated>2017-05-22T12:33:22.343Z</updated>
+    <updated>2017-05-22T12:37:03.085Z</updated>
     
     <content type="html"><![CDATA[<p>首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。</p>
 <p>+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。</p>
@@ -634,7 +643,7 @@
     <link href="http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/"/>
     <id>http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/</id>
     <published>2016-06-07T21:57:23.000Z</published>
-    <updated>2017-05-22T12:33:22.343Z</updated>
+    <updated>2017-05-22T12:37:03.085Z</updated>
     
     <content type="html"><![CDATA[<ol>
 <li>Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别</li>
@@ -684,7 +693,7 @@
     <link href="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/"/>
     <id>http://blog.lzuer.net/2016/05/27/install-golang-on-centos/</id>
     <published>2016-05-27T18:57:23.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>首先确定操作系统位数, 可执行：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ uname -m</div></pre></td></tr></table></figure>
@@ -734,7 +743,7 @@
     <link href="http://blog.lzuer.net/2016/05/09/validator-on-the-fly/"/>
     <id>http://blog.lzuer.net/2016/05/09/validator-on-the-fly/</id>
     <published>2016-05-09T16:53:42.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<p>首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的<br>时候其中有一条需求就是把用户提交的评分值由原来的允许的<code>1, 2, 3, 4, 5</code> 改成允许输入 <code>0, 2, 4, 6, 8, 10</code></p>
 <p>自定义的<code>validator</code>:</p>
@@ -772,7 +781,7 @@
     <link href="http://blog.lzuer.net/2016/05/07/upload-file-with-php/"/>
     <id>http://blog.lzuer.net/2016/05/07/upload-file-with-php/</id>
     <published>2016-05-07T00:17:39.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <summary type="html">
     
@@ -790,7 +799,7 @@
     <link href="http://blog.lzuer.net/2016/03/03/git-tips-one/"/>
     <id>http://blog.lzuer.net/2016/03/03/git-tips-one/</id>
     <published>2016-03-03T16:53:42.000Z</published>
-    <updated>2017-05-22T12:33:22.343Z</updated>
+    <updated>2017-05-22T12:37:03.085Z</updated>
     
     <content type="html"><![CDATA[<h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p>
 <p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p>
@@ -824,7 +833,7 @@
     <link href="http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/"/>
     <id>http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/</id>
     <published>2016-01-26T11:17:39.000Z</published>
-    <updated>2017-05-22T12:33:22.347Z</updated>
+    <updated>2017-05-22T12:37:03.089Z</updated>
     
     <content type="html"><![CDATA[<h2 id="开启xdebug"><a href="#开启xdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p>
 <p>  [xdebug]<br>  xdebug.remote_enable = On<br>  xdebug.remote_handler = dbgp<br>  xdebug.remote_host= localhost<br>  xdebug.remote_port = 9000<br>  xdebug.idekey = PHPSTORM<br>  xdebug.profiler_enable = 1</p>
@@ -880,7 +889,7 @@
     <link href="http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/"/>
     <id>http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/</id>
     <published>2016-01-18T23:59:20.000Z</published>
-    <updated>2017-05-22T12:33:22.343Z</updated>
+    <updated>2017-05-22T12:37:03.085Z</updated>
     
     <content type="html"><![CDATA[<p>首先在<a href="https://travis-ci.org" target="_blank" rel="external">travis</a>将你的项目加入到travis。</p>
 <p>打开设置，添加token变量。</p>
@@ -941,7 +950,7 @@ script:
     <link href="http://blog.lzuer.net/2016/01/16/git-delete-submoudle/"/>
     <id>http://blog.lzuer.net/2016/01/16/git-delete-submoudle/</id>
     <published>2016-01-16T00:16:21.000Z</published>
-    <updated>2017-05-22T12:33:22.343Z</updated>
+    <updated>2017-05-22T12:37:03.085Z</updated>
     
     <content type="html"><![CDATA[<ol>
 <li><p>Delete the relevant section from the .gitmodules file.</p>
