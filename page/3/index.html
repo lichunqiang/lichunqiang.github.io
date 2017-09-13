@@ -219,6 +219,124 @@
             
               
                 
+                <a class="post-title-link" href="/2016/01/16/git-delete-submoudle/" itemprop="url">
+                  删除submodule
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-16T00:16:21+00:00" content="2016-01-16">
+              2016-01-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/16/git-delete-submoudle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/16/git-delete-submoudle/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <ol>
+<li><p>Delete the relevant section from the .gitmodules file.</p>
+</li>
+<li><p>Stage the .gitmodules changes git add .gitmodules</p>
+</li>
+<li><p>Delete the relevant section from .git/config.</p>
+</li>
+<li><p>Run git rm –cached path_to_submodule (no trailing slash).</p>
+</li>
+<li><p>Run rm -rf .git/modules/path_to_submodule</p>
+</li>
+<li><p>Commit git commit -m “Removed submodule <name>“</name></p>
+</li>
+<li><p>Delete the now untracked submodule files <code>rm -rf path_to_submodule</code></p>
+</li>
+</ol>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/01/13/redirct-main-url-of-site/" itemprop="url">
                   nginx重定向小例
                 </a>
@@ -1298,122 +1416,6 @@ $ssh -T git@github.com
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/06/26/upgrade-php-version/" itemprop="url">
-                  更新升级PHP版本
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-06-26T22:44:42+00:00" content="2015-06-26">
-              2015-06-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/26/upgrade-php-version/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/26/upgrade-php-version/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>现版本：5.5.21</p>
-<p>更新版本： 5.6.10</p>
-<h3 id="查看原来安装的配置参数"><a href="#查看原来安装的配置参数" class="headerlink" title="查看原来安装的配置参数"></a>查看原来安装的配置参数</h3><p>执行<code>php -v | grep config</code></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>根据之前的安装配置执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/php5/ --with-libxml-dir --<span class="built_in">enable</span>-cli --<span class="built_in">enable</span>-fpm --with-mysqli --with-gettext --<span class="built_in">enable</span>-mbstring --with-mcrypt --with-openssl --<span class="built_in">disable</span>-debug --<span class="built_in">enable</span>-opcache --with-pdo-mysql --with-mysql</div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
-<h3 id="剩余工作"><a href="#剩余工作" class="headerlink" title="剩余工作"></a>剩余工作</h3><p>安装成功后, 并不意味着升级工作完成了。当我们运行 <code>php -v</code> 时会有错误抛出, 那是因为两个版本的扩展编译标示前后不一致，所以我们接下的来的工作就是重新编译扩展。</p>
-<p>在 <code>path/to/php5/lib/php/extensions</code> 目录下有两个文件夹: <code>no-debug-non-zts-20121212/</code> (之前版本扩展安装目录) 和 <code>no-debug-non-zts-20131226/</code> (新版本扩展安装目录), 由于新升级的PHP的标示是 <code>20131226</code> , 所以对应的扩展编译也要对应上。</p>
-<p>例如, 我之前的扩展源文件目录 <code>/usr/local/src</code>, 我们并不是直接在之前安装的扩展目录中直接配置编译安装就可以了, 我们需要删除原来解压出来的文件, 重新解压扩展源文件, 进行扩展安装:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//例如重新编译安装 Imagick</div><div class="line">$ rm -rf imagick-3.1.1</div><div class="line">$ tar -zxvf imagick-3.1.1.tar</div><div class="line">$ <span class="built_in">cd</span> imgick-3.1.1</div><div class="line">$ path/to/php5/bin/phpize</div><div class="line">&amp; ./configure --with-php-config=/path/to/php5/bin/php-config</div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
-<p>接下来最后就是修改 <code>php.ini</code> 中的 <code>extension_dir</code> 为新的目录.</p>
-<blockquote>
-<p>将php加入环境变量: <code>export PATH=$PATH:/usr/local/php5/bin</code></p>
-</blockquote>
-<p>完.</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1460,21 +1462,21 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-count">63</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">53</span>
+              <span class="site-state-item-count">57</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

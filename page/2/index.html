@@ -219,6 +219,134 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/12/php-scope-resolution-operator/" itemprop="url">
+                  聊聊PHP中的范围解析操作符
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-07-12T23:57:23+00:00" content="2016-07-12">
+              2016-07-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/12/php-scope-resolution-operator/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/12/php-scope-resolution-operator/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <blockquote>
+<p>在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。</p>
+</blockquote>
+<p>这是手册中，对于范围解析符的概论。</p>
+<p>在日常工作中，我们经常会用在例如：</p>
+<ol>
+<li>调用类常量: <code>SomeCls::THE_CONST</code>，和<code>public</code>的静态变量 <code>SomeCls::$VAR</code></li>
+<li>调用静态方法: <code>SomeCls::staticMethod()</code></li>
+</ol>
+<p>当然，在于类的内部，我们可以使用 <code>self</code>，<code>parent</code> 和 <code>static</code> 关键字来进行访问。</p>
+<p>这里，我要强调的是一种比较常见但是通常我们会忽略的一种用法。</p>
+<p>我们经常会看到这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Child extends Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()</div><div class="line">	&#123;</div><div class="line">		parent::__construct();</div><div class="line">		//some other logic</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们都知道，在 <code>Child</code> 的构造方法中 <code>parent::__construct()</code> 是主动调用父类的构造方法。</p>
+<p>但是，为什么会需要我们主动去调用呢？</p>
+<blockquote>
+<p>当一个子类覆盖父类的方法时，PHP不会调用父类已被覆盖的方法。是否调用父类的方法取决于子类。<br>这种机制也作用于构造函数和析构函数，重载以及魔术方法</p>
+</blockquote>
+<p>所以，当见到诸如 <code>parent::__construct</code>，<code>parent::__get</code> … 等调用时我们就知道其中的原由了。</p>
+<p>为什么会写这篇文章？因为有一天, 我因为看到下面的代码而蒙逼了…当我知道上面的原理后才明白过来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class BasePage</div><div class="line">&#123;</div><div class="line">	protected function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		//...</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Page extends BasePage</div><div class="line">&#123;</div><div class="line">	public function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		$key = $key + $value;</div><div class="line">		parent::renderValue($key, $value);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以文档熟烂于心才是硬道理！</p>
+<p>参考资料：</p>
+<ul>
+<li><a href="http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php" target="_blank" rel="external">http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php</a></li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/23/singleton-and-multiton/" itemprop="url">
                   设计模式之单例和多例
                 </a>
@@ -1346,124 +1474,6 @@ script:
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/16/git-delete-submoudle/" itemprop="url">
-                  删除submodule
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-16T00:16:21+00:00" content="2016-01-16">
-              2016-01-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/16/git-delete-submoudle/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/16/git-delete-submoudle/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <ol>
-<li><p>Delete the relevant section from the .gitmodules file.</p>
-</li>
-<li><p>Stage the .gitmodules changes git add .gitmodules</p>
-</li>
-<li><p>Delete the relevant section from .git/config.</p>
-</li>
-<li><p>Run git rm –cached path_to_submodule (no trailing slash).</p>
-</li>
-<li><p>Run rm -rf .git/modules/path_to_submodule</p>
-</li>
-<li><p>Commit git commit -m “Removed submodule <name>“</name></p>
-</li>
-<li><p>Delete the now untracked submodule files <code>rm -rf path_to_submodule</code></p>
-</li>
-</ol>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1510,21 +1520,21 @@ script:
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-count">63</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">53</span>
+              <span class="site-state-item-count">57</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">35</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
