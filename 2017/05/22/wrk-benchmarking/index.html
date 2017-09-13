@@ -60,7 +60,8 @@
 <meta property="og:url" content="http://blog.lzuer.net/2017/05/22/wrk-benchmarking/index.html">
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="什么是wrkwrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。 为什么是wrk相比于Apache ab功能更为强大，可以使用lua脚本来支持更为复杂的测试场景，例如PUT请求等。 在对于Restful架构的API接口来说，测试起来更加便捷。 获取和安装源码地址: https://github.com/wg/wrk 123456$ git clone https://gi">
-<meta property="og:updated_time" content="2017-05-22T12:37:03.089Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-13T02:21:22.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 wrk 来测试接口性能">
 <meta name="twitter:description" content="什么是wrkwrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。 为什么是wrk相比于Apache ab功能更为强大，可以使用lua脚本来支持更为复杂的测试场景，例如PUT请求等。 在对于Restful架构的API接口来说，测试起来更加便捷。 获取和安装源码地址: https://github.com/wg/wrk 123456$ git clone https://gi">
@@ -304,7 +305,7 @@
 <p>新建 <code>post.lua</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wrk.method = &quot;POST&quot;</div><div class="line">wrk.body = &quot;foo=bar&amp;baz=qux&quot;</div><div class="line">wrk.headers[&quot;Content-Type&quot;] = &quot;application/x-www-form-urlencode&quot;</div><div class="line">wrk.headers[&quot;User-Agent&quot;] = &quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&quot;</div></pre></td></tr></table></figure>
 <p>请求:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 4 -c 100 <span class="_">-d</span> 30s --timeout 10 --script=post.lua --latency http://127.0.0.1/post.php</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 4 -c 100 -d 30s --timeout 10 --script=post.lua --latency http://127.0.0.1/post.php</div></pre></td></tr></table></figure>
 <p>通过在脚本中记录日志的方式可以看到<code>$_POST</code>数据和<code>$_SERVER</code>中的字段为lua脚本中设置的值.</p>
 <h3 id="更为复杂的场景"><a href="#更为复杂的场景" class="headerlink" title="更为复杂的场景"></a>更为复杂的场景</h3><p>wrk提供了几个hook函数，可以用lua来编写一些更为复杂场景下的测试需求。</p>
 <ul>

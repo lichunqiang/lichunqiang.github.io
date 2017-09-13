@@ -2,10 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Light&#39;s Blog</title>
   
+  
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.lzuer.net/"/>
-  <updated>2017-05-22T12:37:03.089Z</updated>
+  <updated>2017-09-13T02:21:22.826Z</updated>
   <id>http://blog.lzuer.net/</id>
   
   <author>
@@ -20,51 +21,17 @@
     <link href="http://blog.lzuer.net/2017/05/22/wrk-benchmarking/"/>
     <id>http://blog.lzuer.net/2017/05/22/wrk-benchmarking/</id>
     <published>2017-05-22T20:17:39.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="什么是wrk"><a href="#什么是wrk" class="headerlink" title="什么是wrk"></a>什么是wrk</h2><p>wrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。</p>
-<h2 id="为什么是wrk"><a href="#为什么是wrk" class="headerlink" title="为什么是wrk"></a>为什么是wrk</h2><p>相比于Apache ab功能更为强大，可以使用lua脚本来支持更为复杂的测试场景，例如PUT请求等。</p>
-<p>在对于Restful架构的API接口来说，测试起来更加便捷。</p>
-<h2 id="获取和安装"><a href="#获取和安装" class="headerlink" title="获取和安装"></a>获取和安装</h2><p>源码地址: <a href="https://github.com/wg/wrk" target="_blank" rel="external">https://github.com/wg/wrk</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ git <span class="built_in">clone</span> https://github.com/wg/wrk.git</div><div class="line">$ <span class="built_in">cd</span> wrk</div><div class="line">$ make all</div><div class="line">$ cp wrk /usr/bin/wrk</div><div class="line">$ wrk -h</div></pre></td></tr></table></figure>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 2 -c 50 -d 1 --latency http://bj.58.com</div></pre></td></tr></table></figure>
-<p>使用两个线程保持50个连接请求1秒钟，并打印延迟统计信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Running 1s test @ http://bj.58.com</div><div class="line">  2 threads and 50 connections</div><div class="line">  Thread Stats   Avg      Stdev     Max   +/- Stdev</div><div class="line">    Latency   148.87ms  180.61ms 927.67ms   85.14%</div><div class="line">    Req/Sec   192.47     99.38   400.00     63.16%</div><div class="line">  Latency Distribution</div><div class="line">     50%   65.21ms</div><div class="line">     75%  204.23ms</div><div class="line">     90%  355.24ms</div><div class="line">     99%  835.83ms</div><div class="line">  367 requests in 1.01s, 37.14MB read</div><div class="line">Requests/sec:    364.46</div><div class="line">Transfer/sec:     36.88MB</div></pre></td></tr></table></figure>
-<p>主要关注的点有：</p>
-<ul>
-<li><p><code>Latency</code> 请求处理时延，上面测试结果平均延时时间为148.87ms</p>
-</li>
-<li><p><code>Requests/sec</code> 每秒处理的请求数(QPS)</p>
-</li>
-</ul>
-<p>上面的结果可以看到(Latency Distribution): 50%的请求延时在65.21ms</p>
-<blockquote>
-<p>当然，上面的请求时间只用了1s，理论上请求的时间越长得结果更加准确</p>
-</blockquote>
-<h3 id="使用进阶"><a href="#使用进阶" class="headerlink" title="使用进阶"></a>使用进阶</h3><p>模拟POST请求</p>
-<p>新建 <code>post.lua</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wrk.method = &quot;POST&quot;</div><div class="line">wrk.body = &quot;foo=bar&amp;baz=qux&quot;</div><div class="line">wrk.headers[&quot;Content-Type&quot;] = &quot;application/x-www-form-urlencode&quot;</div><div class="line">wrk.headers[&quot;User-Agent&quot;] = &quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&quot;</div></pre></td></tr></table></figure>
-<p>请求:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 4 -c 100 <span class="_">-d</span> 30s --timeout 10 --script=post.lua --latency http://127.0.0.1/post.php</div></pre></td></tr></table></figure>
-<p>通过在脚本中记录日志的方式可以看到<code>$_POST</code>数据和<code>$_SERVER</code>中的字段为lua脚本中设置的值.</p>
-<h3 id="更为复杂的场景"><a href="#更为复杂的场景" class="headerlink" title="更为复杂的场景"></a>更为复杂的场景</h3><p>wrk提供了几个hook函数，可以用lua来编写一些更为复杂场景下的测试需求。</p>
-<ul>
-<li><p><a href="https://github.com/wg/wrk/blob/master/SCRIPTING" target="_blank" rel="external">https://github.com/wg/wrk/blob/master/SCRIPTING</a></p>
-</li>
-<li><p><a href="https://github.com/wg/wrk/tree/master/scripts" target="_blank" rel="external">https://github.com/wg/wrk/tree/master/scripts</a></p>
-</li>
-</ul>
-<p>参考资料：</p>
-<ul>
-<li><a href="https://github.com/wg/wrk" target="_blank" rel="external">https://github.com/wg/wrk</a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04</a></li>
-</ul>
-]]></content>
+    <content type="html"><![CDATA[<h2 id="什么是wrk"><a href="#什么是wrk" class="headerlink" title="什么是wrk"></a>什么是wrk</h2><p>wrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。</p><h2 id="为什么是wrk"><a href="#为什么是wrk" class="headerlink" title="为什么是wrk"></a>为什么是wrk</h2><p>相比于Apache ab功能更为强大，可以使用lua脚本来支持更为复杂的测试场景，例如PUT请求等。</p><p>在对于Restful架构的API接口来说，测试起来更加便捷。</p><h2 id="获取和安装"><a href="#获取和安装" class="headerlink" title="获取和安装"></a>获取和安装</h2><p>源码地址: <a href="https://github.com/wg/wrk" target="_blank" rel="external">https://github.com/wg/wrk</a></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ git <span class="built_in">clone</span> https://github.com/wg/wrk.git</div><div class="line">$ <span class="built_in">cd</span> wrk</div><div class="line">$ make all</div><div class="line">$ cp wrk /usr/bin/wrk</div><div class="line">$ wrk -h</div></pre></td></tr></table></figure><h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 2 -c 50 -d 1 --latency http://bj.58.com</div></pre></td></tr></table></figure><p>使用两个线程保持50个连接请求1秒钟，并打印延迟统计信息：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Running 1s test @ http://bj.58.com</div><div class="line">  2 threads and 50 connections</div><div class="line">  Thread Stats   Avg      Stdev     Max   +/- Stdev</div><div class="line">    Latency   148.87ms  180.61ms 927.67ms   85.14%</div><div class="line">    Req/Sec   192.47     99.38   400.00     63.16%</div><div class="line">  Latency Distribution</div><div class="line">     50%   65.21ms</div><div class="line">     75%  204.23ms</div><div class="line">     90%  355.24ms</div><div class="line">     99%  835.83ms</div><div class="line">  367 requests in 1.01s, 37.14MB read</div><div class="line">Requests/sec:    364.46</div><div class="line">Transfer/sec:     36.88MB</div></pre></td></tr></table></figure><p>主要关注的点有：</p><ul><li><p><code>Latency</code> 请求处理时延，上面测试结果平均延时时间为148.87ms</p></li><li><p><code>Requests/sec</code> 每秒处理的请求数(QPS)</p></li></ul><p>上面的结果可以看到(Latency Distribution): 50%的请求延时在65.21ms</p><blockquote><p>当然，上面的请求时间只用了1s，理论上请求的时间越长得结果更加准确</p></blockquote><h3 id="使用进阶"><a href="#使用进阶" class="headerlink" title="使用进阶"></a>使用进阶</h3><p>模拟POST请求</p><p>新建 <code>post.lua</code></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wrk.method = &quot;POST&quot;</div><div class="line">wrk.body = &quot;foo=bar&amp;baz=qux&quot;</div><div class="line">wrk.headers[&quot;Content-Type&quot;] = &quot;application/x-www-form-urlencode&quot;</div><div class="line">wrk.headers[&quot;User-Agent&quot;] = &quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&quot;</div></pre></td></tr></table></figure><p>请求:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 4 -c 100 -d 30s --timeout 10 --script=post.lua --latency http://127.0.0.1/post.php</div></pre></td></tr></table></figure><p>通过在脚本中记录日志的方式可以看到<code>$_POST</code>数据和<code>$_SERVER</code>中的字段为lua脚本中设置的值.</p><h3 id="更为复杂的场景"><a href="#更为复杂的场景" class="headerlink" title="更为复杂的场景"></a>更为复杂的场景</h3><p>wrk提供了几个hook函数，可以用lua来编写一些更为复杂场景下的测试需求。</p><ul><li><p><a href="https://github.com/wg/wrk/blob/master/SCRIPTING" target="_blank" rel="external">https://github.com/wg/wrk/blob/master/SCRIPTING</a></p></li><li><p><a href="https://github.com/wg/wrk/tree/master/scripts" target="_blank" rel="external">https://github.com/wg/wrk/tree/master/scripts</a></p></li></ul><p>参考资料：</p><ul><li><a href="https://github.com/wg/wrk" target="_blank" rel="external">https://github.com/wg/wrk</a></li><li><a href="https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04</a></li></ul>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;什么是wrk&quot;&gt;&lt;a href=&quot;#什么是wrk&quot; class=&quot;headerlink&quot; title=&quot;什么是wrk&quot;&gt;&lt;/a&gt;什么是wrk&lt;/h2&gt;&lt;p&gt;wrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。&lt;/p&gt;
+      
+      
+        &lt;h2 id=&quot;什么是wrk&quot;&gt;&lt;a href=&quot;#什么是wrk&quot; class=&quot;headerlink&quot; title=&quot;什么是wrk&quot;&gt;&lt;/a&gt;什么是wrk&lt;/h2&gt;&lt;p&gt;wrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。&lt;/p&gt;
 &lt;h2 id=&quot;为什
+      
     
     </summary>
     
@@ -84,27 +51,17 @@
     <link href="http://blog.lzuer.net/2016/11/25/vagrant-disk-is-full/"/>
     <id>http://blog.lzuer.net/2016/11/25/vagrant-disk-is-full/</id>
     <published>2016-11-25T10:50:22.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<p>在使用 vagrant 开发过程中, 突然遇到磁盘被沾满, 导致数据库无法写入.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">文件系统                 容量  已用  可用 已用% 挂载点</div><div class="line">/dev/mapper/centos-root   39G   39G  136K  100% /</div><div class="line">devtmpfs                 911M     0  911M    0% /dev</div><div class="line">tmpfs                    921M     0  921M    0% /dev/shm</div><div class="line">tmpfs                    921M  8.4M  912M    1% /run</div><div class="line">tmpfs                    921M     0  921M    0% /sys/fs/cgroup</div><div class="line">/dev/sda1                497M  125M  373M   25% /boot</div><div class="line">tmpfs                    185M     0  185M    0% /run/user/1000</div></pre></td></tr></table></figure>
-<p>有足足的<strong>39G</strong>为啥就满了呢?</p>
-<p>通过 <code>sudo du -h -d 1</code> 在home查看发现:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">32G     ./tmp</div><div class="line">3.6G    ./var</div><div class="line">2.3G    ./usr</div><div class="line">1.9G    ./home</div></pre></td></tr></table></figure>
-<p><code>/tmp</code> 文件足足占了32G了, 可想而知磁盘空间沾满的罪魁祸首在这儿.</p>
-<p>进入文件查看, 里面大部分是 <code>cachegrind.out.*</code> 文件, 有的单个文件就达到了26个G.</p>
-<p>经过查询, 才知道这些文件是Xdebug产生的文件. 好吧, 既然知道了这些文件的产生以及用途, 删掉就好了!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo find /tmp/  -name &apos;cachegrind*&apos; -exec rm &apos;&#123;&#125;&apos; \;</div></pre></td></tr></table></figure>
-<p>再来看下磁盘占用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">文件系统                 容量  已用  可用 已用% 挂载点</div><div class="line">/dev/mapper/centos-root   39G  6.9G   32G   18% /</div><div class="line">devtmpfs                 911M     0  911M    0% /dev</div><div class="line">tmpfs                    921M     0  921M    0% /dev/shm</div><div class="line">tmpfs                    921M  8.4M  912M    1% /run</div><div class="line">tmpfs                    921M     0  921M    0% /sys/fs/cgroup</div><div class="line">/dev/sda1                497M  125M  373M   25% /boot</div><div class="line">tmpfs                    185M     0  185M    0% /run/user/1000</div></pre></td></tr></table></figure>
-<p>最后可以将清理命令加入crontab来定时执行清理.</p>
-<p>–EOF–</p>
-]]></content>
+    <content type="html"><![CDATA[<p>在使用 vagrant 开发过程中, 突然遇到磁盘被沾满, 导致数据库无法写入.</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">文件系统                 容量  已用  可用 已用% 挂载点</div><div class="line">/dev/mapper/centos-root   39G   39G  136K  100% /</div><div class="line">devtmpfs                 911M     0  911M    0% /dev</div><div class="line">tmpfs                    921M     0  921M    0% /dev/shm</div><div class="line">tmpfs                    921M  8.4M  912M    1% /run</div><div class="line">tmpfs                    921M     0  921M    0% /sys/fs/cgroup</div><div class="line">/dev/sda1                497M  125M  373M   25% /boot</div><div class="line">tmpfs                    185M     0  185M    0% /run/user/1000</div></pre></td></tr></table></figure><p>有足足的<strong>39G</strong>为啥就满了呢?</p><p>通过 <code>sudo du -h -d 1</code> 在home查看发现:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">32G     ./tmp</div><div class="line">3.6G    ./var</div><div class="line">2.3G    ./usr</div><div class="line">1.9G    ./home</div></pre></td></tr></table></figure><p><code>/tmp</code> 文件足足占了32G了, 可想而知磁盘空间沾满的罪魁祸首在这儿.</p><p>进入文件查看, 里面大部分是 <code>cachegrind.out.*</code> 文件, 有的单个文件就达到了26个G.</p><p>经过查询, 才知道这些文件是Xdebug产生的文件. 好吧, 既然知道了这些文件的产生以及用途, 删掉就好了!</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo find /tmp/  -name &apos;cachegrind*&apos; -exec rm &apos;&#123;&#125;&apos; \;</div></pre></td></tr></table></figure><p>再来看下磁盘占用：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">文件系统                 容量  已用  可用 已用% 挂载点</div><div class="line">/dev/mapper/centos-root   39G  6.9G   32G   18% /</div><div class="line">devtmpfs                 911M     0  911M    0% /dev</div><div class="line">tmpfs                    921M     0  921M    0% /dev/shm</div><div class="line">tmpfs                    921M  8.4M  912M    1% /run</div><div class="line">tmpfs                    921M     0  921M    0% /sys/fs/cgroup</div><div class="line">/dev/sda1                497M  125M  373M   25% /boot</div><div class="line">tmpfs                    185M     0  185M    0% /run/user/1000</div></pre></td></tr></table></figure><p>最后可以将清理命令加入crontab来定时执行清理.</p><p>–EOF–</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;在使用 vagrant 开发过程中, 突然遇到磁盘被沾满, 导致数据库无法写入.&lt;/p&gt;
+      
+      
+        &lt;p&gt;在使用 vagrant 开发过程中, 突然遇到磁盘被沾满, 导致数据库无法写入.&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;
+      
     
     </summary>
     
@@ -124,46 +81,18 @@
     <link href="http://blog.lzuer.net/2016/11/19/upgrade-to-https-keng/"/>
     <id>http://blog.lzuer.net/2016/11/19/upgrade-to-https-keng/</id>
     <published>2016-11-19T13:50:22.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<p>在全站升级Https的过程中需要对websocket服务进行https化。</p>
-<p>之前, 使用workerman提供服务, 并采用暴露端口的方式供系统通过IP形式访问。</p>
-<p>采用Https后, 采用的方案是使用nginx做一层反向代理, 这样可以取消之前websocket暴露外网的端口.</p>
-<h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>为websocket配置特定的后缀, 有nginx进行反向代理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location = /socket.io/ &#123;</div><div class="line">    proxy_pass http://127.0.0.1:2120;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>127.0.0.1:2120</code> 为 workerman 启动的websocket地址.</p>
-<h3 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h3><p><strong>WTF</strong> , 结果并没有按照预期的完全无误. 在控制台中得到如下错误提示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wss://.../socket.io/?EIO=2&amp;transport=websocket&amp;sid=p3af7ZNfvogtq6tAAAG0&apos;</div><div class="line"></div><div class="line">failed: Error during WebSocket handshake: Unexpected response code: 400.</div></pre></td></tr></table></figure>
-<p>然而, 开始并没有去查看导致这个错误的具体原因是什么, 而是直接进行了测试, 测试的结果是<strong>系统能够正常运行</strong>.</p>
-<h2 id="出坑"><a href="#出坑" class="headerlink" title="出坑"></a>出坑</h2><p>当然, 仅仅能够正常运行并不能够证明什么, 事实上, 错误仍然存在. 之后google了一番, 在 socket.io 库的</p>
-<p>issue里找到了解决方案：</p>
-<p><a href="https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072" target="_blank" rel="external">https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072</a></p>
-<p>尝试：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location = /socket.io/ &#123;</div><div class="line">    proxy_pass http://127.0.0.1:2120;</div><div class="line">    proxy_http_version 1.1;</div><div class="line">    proxy_set_header Upgrade $http_upgrade;</div><div class="line">    proxy_set_header Connection &quot;upgrade&quot;;</div><div class="line">    proxy_set_header Host $host;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>再次测试, 错误消失！</p>
-<ol>
-<li><code>proxy_http_version 1.1;</code></li>
-</ol>
-<blockquote>
-<p>The first line tells Nginx to use HTTP/1.1 when communicating to the Node backend, which is required for WebSockets.</p>
-</blockquote>
-<p>告诉nginx使用 <code>HTTP/1.1</code> 协议和后端的websocket服务通信</p>
-<ol>
-<li><code>proxy_set_header Upgrade $http_upgrade</code> &amp; <code>proxy_set_header Connection &quot;upgrade&quot;</code></li>
-</ol>
-<blockquote>
-<p> The next two tell Nginx to respond to the Upgrade request which is initiated over HTTP by the browser when it wants to use a WebSocket.</p>
-</blockquote>
-<p>这两个告诉Nginx应对升级请求发起HTTP上的浏览器当它想要使用一个WebSocket。</p>
-<p>参考: <a href="https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/" target="_blank" rel="external">https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/</a></p>
-<p>–eof–</p>
-]]></content>
+    <content type="html"><![CDATA[<p>在全站升级Https的过程中需要对websocket服务进行https化。</p><p>之前, 使用workerman提供服务, 并采用暴露端口的方式供系统通过IP形式访问。</p><p>采用Https后, 采用的方案是使用nginx做一层反向代理, 这样可以取消之前websocket暴露外网的端口.</p><h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>为websocket配置特定的后缀, 有nginx进行反向代理：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location = /socket.io/ &#123;</div><div class="line">    proxy_pass http://127.0.0.1:2120;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p><code>127.0.0.1:2120</code> 为 workerman 启动的websocket地址.</p><h3 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h3><p><strong>WTF</strong> , 结果并没有按照预期的完全无误. 在控制台中得到如下错误提示：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wss://.../socket.io/?EIO=2&amp;transport=websocket&amp;sid=p3af7ZNfvogtq6tAAAG0&apos;</div><div class="line"></div><div class="line">failed: Error during WebSocket handshake: Unexpected response code: 400.</div></pre></td></tr></table></figure><p>然而, 开始并没有去查看导致这个错误的具体原因是什么, 而是直接进行了测试, 测试的结果是<strong>系统能够正常运行</strong>.</p><h2 id="出坑"><a href="#出坑" class="headerlink" title="出坑"></a>出坑</h2><p>当然, 仅仅能够正常运行并不能够证明什么, 事实上, 错误仍然存在. 之后google了一番, 在 socket.io 库的</p><p>issue里找到了解决方案：</p><p><a href="https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072" target="_blank" rel="external">https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072</a></p><p>尝试：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location = /socket.io/ &#123;</div><div class="line">    proxy_pass http://127.0.0.1:2120;</div><div class="line">    proxy_http_version 1.1;</div><div class="line">    proxy_set_header Upgrade $http_upgrade;</div><div class="line">    proxy_set_header Connection &quot;upgrade&quot;;</div><div class="line">    proxy_set_header Host $host;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>再次测试, 错误消失！</p><ol><li><code>proxy_http_version 1.1;</code></li></ol><blockquote><p>The first line tells Nginx to use HTTP/1.1 when communicating to the Node backend, which is required for WebSockets.</p></blockquote><p>告诉nginx使用 <code>HTTP/1.1</code> 协议和后端的websocket服务通信</p><ol><li><code>proxy_set_header Upgrade $http_upgrade</code> &amp; <code>proxy_set_header Connection &quot;upgrade&quot;</code></li></ol><blockquote><p> The next two tell Nginx to respond to the Upgrade request which is initiated over HTTP by the browser when it wants to use a WebSocket.</p></blockquote><p>这两个告诉Nginx应对升级请求发起HTTP上的浏览器当它想要使用一个WebSocket。</p><p>参考: <a href="https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/" target="_blank" rel="external">https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/</a></p><p>–eof–</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;在全站升级Https的过程中需要对websocket服务进行https化。&lt;/p&gt;
+      
+      
+        &lt;p&gt;在全站升级Https的过程中需要对websocket服务进行https化。&lt;/p&gt;
 &lt;p&gt;之前, 使用workerman提供服务, 并采用暴露端口的方式供系统通过IP形式访问。&lt;/p&gt;
 &lt;p&gt;采用Https后, 采用的方案是使用nginx做一层反向代理, 这样可以取消之前w
+      
     
     </summary>
     
@@ -183,49 +112,18 @@
     <link href="http://blog.lzuer.net/2016/10/25/https/"/>
     <id>http://blog.lzuer.net/2016/10/25/https/</id>
     <published>2016-10-25T12:17:39.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<blockquote>
-<p>本文记录了在centos7下使用<a href="https://certbot.eff.org/" target="_blank" rel="external">certbot</a>配置开启https 的过程</p>
-</blockquote>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo yum install epel-release -y</div><div class="line">$ sudo yum install certbot -y</div></pre></td></tr></table></figure>
-<p>安装成功之后，可以通过执行 <code>certbot -h</code> 来查看使用帮助.</p>
-<p>申请证书有两种验证方式，一种是<strong>standalone</strong>，这种验证方式虽然也可以部署，但是以后更新证书的时候需要重启 web 服务器。</p>
-<p>我们可以采用第二种<strong>webroot</strong>方式，就是在网站根目录下生成一个文件，通过访问该文件来验证，不需要重启 web 服务器。</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ certbot certonly --webroot -w /home/wwwroot/yoursite/web <span class="_">-d</span> www.lzuer.net <span class="_">-d</span> lzuer.net</div></pre></td></tr></table></figure>
-<p>如果希望为多个域名生成共同的证书，可以继续在面输入：<code>-w /home/wwwroot/othersite/web -d admin.lzuer.net</code></p>
-<p>按照提示操作，当看到下面输出后，表示证书已成功生成：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">IMPORTANT NOTES:</div><div class="line"> - Congratulations! Your certificate and chain have been saved at</div><div class="line">   /etc/letsencrypt/live/your.domain.com/fullchain.pem. Your cert</div><div class="line">   will expire on 20XX-09-23. To obtain a new or tweaked version of</div><div class="line">   this certificate in the future, simply run certbot again. To</div><div class="line">   non-interactively renew *all* of your certificates, run &quot;certbot</div><div class="line">   renew&quot;</div><div class="line"> - If you like Certbot, please consider supporting our work by:</div><div class="line"></div><div class="line">   Donating to ISRG / Let&apos;s Encrypt:   https://letsencrypt.org/donate</div><div class="line">   Donating to EFF:                    https://eff.org/donate-le</div></pre></td></tr></table></figure>
-<h2 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h2><p>nginx支持在同一个<strong>server</strong>配置支持80和443端口，这样可以实现你的网站同时兼容<strong>http</strong>和<strong>https</strong>两种模式:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">listen  80;</div><div class="line">listen 443 ssl;</div><div class="line">server_name  lzuer.net www.lzuer.net;</div><div class="line">root  /home/wwwroot/yoursite/web;</div><div class="line">index index.php;</div><div class="line">charset utf-8;</div><div class="line"></div><div class="line"></div><div class="line">ssl on;</div><div class="line">ssl_certificate /etc/letsencrypt/live/b.w.lzuer.net/fullchain.pem;</div><div class="line">ssl_certificate_key /etc/letsencrypt/live/b.w.lzuer.net/privkey.pem;</div><div class="line">ssl_trusted_certificate /etc/letsencrypt/live/b.w.lzuer.net/chain.pem;</div><div class="line">ssl_session_timeout 5m;</div><div class="line">ssl_protocols TLSv1;</div><div class="line">ssl_ciphers  HIGH:!aNULL:!MD5;</div><div class="line">ssl_prefer_server_ciphers   on;</div><div class="line">//...</div></pre></td></tr></table></figure>
-<p>保存后重启<strong>nginx</strong>.</p>
-<blockquote>
-<p>注意, 启用https需要在安装<strong>nginx</strong>的时候开启<strong>ssl module</strong>，可以通过 <code>nginx -V</code> 来查看，如果没有开启需要重新编译并开启</p>
-</blockquote>
-<p>测试下，访问<strong>https</strong>开头的网址是否能正常访问，如果能正常访问，表示配置已经生效。</p>
-<blockquote>
-<p>注意, 如果发现无法访问, 可以检查下<strong>443</strong>这个端口是否开启，如果没有则需要开启 <code>iptables -I INPUT -p tcp --dport 443 -j ACCEPT</code></p>
-</blockquote>
-<p>如果希望你的网站仅支持<strong>https</strong>访问，那么可以如下配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">  listen 80;</div><div class="line">  server_name b.w.lzuer.net;</div><div class="line">  return 301 https://b.w.lzuer.net$request_uri;</div><div class="line">&#125;</div><div class="line">server &#123;</div><div class="line">  listen 443 ssl;</div><div class="line">  server_name  b.w.lzuer.net;</div><div class="line">  root  /home/wwwroot/yoursite/web;</div><div class="line">  index index.php;</div><div class="line">  charset utf-8;</div><div class="line"></div><div class="line"></div><div class="line">  ssl on;</div><div class="line">  ssl_certificate /etc/letsencrypt/live/b.w.lzuer.net/fullchain.pem;</div><div class="line">  ssl_certificate_key /etc/letsencrypt/live/b.w.lzuer.net/privkey.pem;</div><div class="line">  ssl_trusted_certificate /etc/letsencrypt/live/b.w.lzuer.net/chain.pem;</div><div class="line">  ssl_session_timeout 5m;</div><div class="line">  ssl_protocols TLSv1;</div><div class="line">  ssl_ciphers  HIGH:!aNULL:!MD5;</div><div class="line">  ssl_prefer_server_ciphers   on;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="定时更新"><a href="#定时更新" class="headerlink" title="定时更新"></a>定时更新</h2><p>Let’s Encrypt 只有3个月的有效期，所以我们需要定时去更新证书。</p>
-<p>可以通过运行：<code>certbot renew --dry-run</code> 来测试自动生成是否能够正常运行。</p>
-<p>如果通过，可以正常运行，可以加入<strong>cron</strong>来定时执行:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">0 0 1 * * certbot renew --quiet</div></pre></td></tr></table></figure>
-<p><a href="https://certbot.eff.org" target="_blank" rel="external">https://certbot.eff.org</a> 上建议是每天不定时执行两次，来保证网站能够正常访问。</p>
-<p>具体由于证书在没有过期之前是不会进行更新的，所以每天不定时更新两次亦可以。</p>
-<p>参考：</p>
-<ul>
-<li><a href="http://nginx.org/en/docs/http/configuring_https_servers.html" target="_blank" rel="external">http://nginx.org/en/docs/http/configuring_https_servers.html</a></li>
-<li><a href="https://hersface.com/page/https.html" target="_blank" rel="external">https://hersface.com/page/https.html</a></li>
-</ul>
-]]></content>
+    <content type="html"><![CDATA[<blockquote><p>本文记录了在centos7下使用<a href="https://certbot.eff.org/" target="_blank" rel="external">certbot</a>配置开启https 的过程</p></blockquote><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sudo yum install epel-release -y</div><div class="line">$ sudo yum install certbot -y</div></pre></td></tr></table></figure><p>安装成功之后，可以通过执行 <code>certbot -h</code> 来查看使用帮助.</p><p>申请证书有两种验证方式，一种是<strong>standalone</strong>，这种验证方式虽然也可以部署，但是以后更新证书的时候需要重启 web 服务器。</p><p>我们可以采用第二种<strong>webroot</strong>方式，就是在网站根目录下生成一个文件，通过访问该文件来验证，不需要重启 web 服务器。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ certbot certonly --webroot -w /home/wwwroot/yoursite/web -d www.lzuer.net -d lzuer.net</div></pre></td></tr></table></figure><p>如果希望为多个域名生成共同的证书，可以继续在面输入：<code>-w /home/wwwroot/othersite/web -d admin.lzuer.net</code></p><p>按照提示操作，当看到下面输出后，表示证书已成功生成：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">IMPORTANT NOTES:</div><div class="line"> - Congratulations! Your certificate and chain have been saved at</div><div class="line">   /etc/letsencrypt/live/your.domain.com/fullchain.pem. Your cert</div><div class="line">   will expire on 20XX-09-23. To obtain a new or tweaked version of</div><div class="line">   this certificate in the future, simply run certbot again. To</div><div class="line">   non-interactively renew *all* of your certificates, run &quot;certbot</div><div class="line">   renew&quot;</div><div class="line"> - If you like Certbot, please consider supporting our work by:</div><div class="line"></div><div class="line">   Donating to ISRG / Let&apos;s Encrypt:   https://letsencrypt.org/donate</div><div class="line">   Donating to EFF:                    https://eff.org/donate-le</div></pre></td></tr></table></figure><h2 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h2><p>nginx支持在同一个<strong>server</strong>配置支持80和443端口，这样可以实现你的网站同时兼容<strong>http</strong>和<strong>https</strong>两种模式:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">listen  80;</div><div class="line">listen 443 ssl;</div><div class="line">server_name  lzuer.net www.lzuer.net;</div><div class="line">root  /home/wwwroot/yoursite/web;</div><div class="line">index index.php;</div><div class="line">charset utf-8;</div><div class="line"></div><div class="line"></div><div class="line">ssl on;</div><div class="line">ssl_certificate /etc/letsencrypt/live/b.w.lzuer.net/fullchain.pem;</div><div class="line">ssl_certificate_key /etc/letsencrypt/live/b.w.lzuer.net/privkey.pem;</div><div class="line">ssl_trusted_certificate /etc/letsencrypt/live/b.w.lzuer.net/chain.pem;</div><div class="line">ssl_session_timeout 5m;</div><div class="line">ssl_protocols TLSv1;</div><div class="line">ssl_ciphers  HIGH:!aNULL:!MD5;</div><div class="line">ssl_prefer_server_ciphers   on;</div><div class="line">//...</div></pre></td></tr></table></figure><p>保存后重启<strong>nginx</strong>.</p><blockquote><p>注意, 启用https需要在安装<strong>nginx</strong>的时候开启<strong>ssl module</strong>，可以通过 <code>nginx -V</code> 来查看，如果没有开启需要重新编译并开启</p></blockquote><p>测试下，访问<strong>https</strong>开头的网址是否能正常访问，如果能正常访问，表示配置已经生效。</p><blockquote><p>注意, 如果发现无法访问, 可以检查下<strong>443</strong>这个端口是否开启，如果没有则需要开启 <code>iptables -I INPUT -p tcp --dport 443 -j ACCEPT</code></p></blockquote><p>如果希望你的网站仅支持<strong>https</strong>访问，那么可以如下配置：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">  listen 80;</div><div class="line">  server_name b.w.lzuer.net;</div><div class="line">  return 301 https://b.w.lzuer.net$request_uri;</div><div class="line">&#125;</div><div class="line">server &#123;</div><div class="line">  listen 443 ssl;</div><div class="line">  server_name  b.w.lzuer.net;</div><div class="line">  root  /home/wwwroot/yoursite/web;</div><div class="line">  index index.php;</div><div class="line">  charset utf-8;</div><div class="line"></div><div class="line"></div><div class="line">  ssl on;</div><div class="line">  ssl_certificate /etc/letsencrypt/live/b.w.lzuer.net/fullchain.pem;</div><div class="line">  ssl_certificate_key /etc/letsencrypt/live/b.w.lzuer.net/privkey.pem;</div><div class="line">  ssl_trusted_certificate /etc/letsencrypt/live/b.w.lzuer.net/chain.pem;</div><div class="line">  ssl_session_timeout 5m;</div><div class="line">  ssl_protocols TLSv1;</div><div class="line">  ssl_ciphers  HIGH:!aNULL:!MD5;</div><div class="line">  ssl_prefer_server_ciphers   on;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="定时更新"><a href="#定时更新" class="headerlink" title="定时更新"></a>定时更新</h2><p>Let’s Encrypt 只有3个月的有效期，所以我们需要定时去更新证书。</p><p>可以通过运行：<code>certbot renew --dry-run</code> 来测试自动生成是否能够正常运行。</p><p>如果通过，可以正常运行，可以加入<strong>cron</strong>来定时执行:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">0 0 1 * * certbot renew --quiet</div></pre></td></tr></table></figure><p><a href="https://certbot.eff.org" target="_blank" rel="external">https://certbot.eff.org</a> 上建议是每天不定时执行两次，来保证网站能够正常访问。</p><p>具体由于证书在没有过期之前是不会进行更新的，所以每天不定时更新两次亦可以。</p><p>参考：</p><ul><li><a href="http://nginx.org/en/docs/http/configuring_https_servers.html" target="_blank" rel="external">http://nginx.org/en/docs/http/configuring_https_servers.html</a></li><li><a href="https://hersface.com/page/https.html" target="_blank" rel="external">https://hersface.com/page/https.html</a></li></ul>]]></content>
     
     <summary type="html">
     
-      &lt;blockquote&gt;
+      
+      
+        &lt;blockquote&gt;
 &lt;p&gt;本文记录了在centos7下使用&lt;a href=&quot;https://certbot.eff.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;certbot&lt;/a&gt;配置开启https 的过程&lt;/p&gt;
 &lt;/blockquote&gt;
+      
     
     </summary>
     
@@ -245,35 +143,17 @@
     <link href="http://blog.lzuer.net/2016/10/10/github-pr/"/>
     <id>http://blog.lzuer.net/2016/10/10/github-pr/</id>
     <published>2016-10-10T13:50:22.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<p>在 <a href="https://github.com" target="_blank" rel="external">Github</a> 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后，</p>
-<p>你不仅需要在线进行code review，而且还要运行起来，确保提交的代码改动不会产生其他影响。</p>
-<p>具体的操作步骤为：</p>
-<ol>
-<li>检出一个单独的分支来查看代码更改</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b pull-100</div></pre></td></tr></table></figure>
-<ol>
-<li>拉取提交用户改动分支代码</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ git pull git://github.com/somebody/project.git master</div></pre></td></tr></table></figure>
-<blockquote>
-<p>注意, 上面是在用户提交代码分支为 <code>master</code> 的情况, 如果用户提交的改动分支非 <code>master</code></p>
-<p>那么需要改成对应的分支名</p>
-</blockquote>
-<ol>
-<li>在本地查看代码运行情况, 是否解决了问题</li>
-</ol>
-<p>最后, 对于合并可以在本地进行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git checkout master</div><div class="line">$ git merge --no-ff pull-100</div><div class="line">$ git push origin master</div></pre></td></tr></table></figure>
-<p>当然, <a href="https://github.com" target="_blank" rel="external">Github</a> 在线处理已经做得足够好, 也可以选择在线进行合并.</p>
-]]></content>
+    <content type="html"><![CDATA[<p>在 <a href="https://github.com" target="_blank" rel="external">Github</a> 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后，</p><p>你不仅需要在线进行code review，而且还要运行起来，确保提交的代码改动不会产生其他影响。</p><p>具体的操作步骤为：</p><ol><li>检出一个单独的分支来查看代码更改</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b pull-100</div></pre></td></tr></table></figure><ol><li>拉取提交用户改动分支代码</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ git pull git://github.com/somebody/project.git master</div></pre></td></tr></table></figure><blockquote><p>注意, 上面是在用户提交代码分支为 <code>master</code> 的情况, 如果用户提交的改动分支非 <code>master</code></p><p>那么需要改成对应的分支名</p></blockquote><ol><li>在本地查看代码运行情况, 是否解决了问题</li></ol><p>最后, 对于合并可以在本地进行:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git checkout master</div><div class="line">$ git merge --no-ff pull-100</div><div class="line">$ git push origin master</div></pre></td></tr></table></figure><p>当然, <a href="https://github.com" target="_blank" rel="external">Github</a> 在线处理已经做得足够好, 也可以选择在线进行合并.</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;在 &lt;a href=&quot;https://github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后，&lt;/p&gt;
+      
+      
+        &lt;p&gt;在 &lt;a href=&quot;https://github.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt; 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后，&lt;/p&gt;
 &lt;p&gt;你不仅需要在线进行code revi
+      
     
     </summary>
     
@@ -293,62 +173,16 @@
     <link href="http://blog.lzuer.net/2016/08/31/mysql-binlog-and-master-slave-configuration/"/>
     <id>http://blog.lzuer.net/2016/08/31/mysql-binlog-and-master-slave-configuration/</id>
     <published>2016-08-31T20:50:22.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="开启binlog"><a href="#开启binlog" class="headerlink" title="开启binlog"></a>开启binlog</h2><p>在 <code>/etc/my.conf</code> 中打开 <code>log-bin=/your/dir</code>, 重启Mysql服务</p>
-<blockquote>
-<p>根据不同的安装, MySQL的配置文件的位置可能不同, 视具体情况而定.</p>
-</blockquote>
-<p>配置哪些数据库需要记录binlog:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">binlog-ignore-db=mysql</div><div class="line">binlog-ignore-db=information_schema</div><div class="line">binlog-ignore-db=performance_schema</div><div class="line">binlog-do-db=kit</div></pre></td></tr></table></figure>
-<ul>
-<li><code>binlog-ignore-db</code>配置哪些数据不需要记录binlog</li>
-<li><code>binlog-do-db</code> 配置哪些数据需要记录binlog</li>
-</ul>
-<h2 id="查看binlog状态"><a href="#查看binlog状态" class="headerlink" title="查看binlog状态"></a>查看binlog状态</h2><h3 id="查看binlog的名称"><a href="#查看binlog的名称" class="headerlink" title="查看binlog的名称"></a>查看binlog的名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show binary logs;</div><div class="line">+---------------+-----------+</div><div class="line">| Log_name      | File_size |</div><div class="line">+---------------+-----------+</div><div class="line">| binlog.000001 |       616 |</div><div class="line">+---------------+-----------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
-<h3 id="查看二进制日志的记录"><a href="#查看二进制日志的记录" class="headerlink" title="查看二进制日志的记录"></a>查看二进制日志的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show binlog events;</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">| Log_name      | Pos | Event_type  | Server_id | End_log_pos | Info                                                                                                |</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">| binlog.000001 |   4 | Format_desc |         1 |         120 | Server ver: 5.6.30-log, Binlog ver: 4                                                               |</div><div class="line">| binlog.000001 | 120 | Query       |         1 |         197 | BEGIN                                                                                               |</div><div class="line">| binlog.000001 | 197 | Query       |         1 |         317 | use `kit`; UPDATE `user` SET `username`=&apos;xxxx&apos; WHERE `id`=5                                         |</div><div class="line">| binlog.000001 | 317 | Xid         |         1 |         348 | COMMIT /* xid=72 */                                                                                 |</div><div class="line">| binlog.000001 | 348 | Query       |         1 |         425 | BEGIN                                                                                               |</div><div class="line">| binlog.000001 | 425 | Query       |         1 |         585 | use `kit`; INSERT INTO `user_profile` (`user_id`, `sex`, `last_login_ip`) VALUES (5, 1, 3232238081) |</div><div class="line">| binlog.000001 | 585 | Xid         |         1 |         616 | COMMIT /* xid=77 */                                                                                 |</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">7 rows in set (0.01 sec)</div></pre></td></tr></table></figure>
-<h3 id="导出二进制文件"><a href="#导出二进制文件" class="headerlink" title="导出二进制文件"></a>导出二进制文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqlbinlog --start-position=4 --stop-position=585 binlog.000001 &gt; /home/out.txt</div></pre></td></tr></table></figure>
-<p>或者全部导出:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqlbinlog binlog.000001 &gt; /home/out.txt</div></pre></td></tr></table></figure>
-<p>导出的文件名可以通过上面的<code>show binary logs;</code> 来查看需要导出的binlog文件</p>
-<p>position 可以根据 <code>show binlog events</code>中的<strong>Pos</strong>字段来确定.</p>
-<h2 id="配置主从"><a href="#配置主从" class="headerlink" title="配置主从"></a>配置主从</h2><h3 id="查看主库状态"><a href="#查看主库状态" class="headerlink" title="查看主库状态"></a>查看主库状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show master status;</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">| File          | Position | Binlog_Do_DB | Binlog_Ignore_DB                            | Executed_Gtid_Set |</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">| binlog.000003 |      120 | kit          | mysql,information_schema,performance_schema |                   |</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure>
-<h2 id="主从配置"><a href="#主从配置" class="headerlink" title="主从配置"></a>主从配置</h2><h3 id="配置主库"><a href="#配置主库" class="headerlink" title="配置主库"></a>配置主库</h3><p>修改Master服务器MySQL配置文件:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log-bin=binlog //必须开启binlog</div><div class="line">server-id=1 // 必须, 服务器唯一ID, 默认是1,一般取IP最后一段</div></pre></td></tr></table></figure>
-<p>在Master服务器上建立帐户并授权slave:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql &gt; grant replication slave on *.* to slave01@192.168.10.12 identified by &apos;123qwe&apos;;</div></pre></td></tr></table></figure>
-<p>重启MySQL.然后查看主库状态.</p>
-<h3 id="配置从库"><a href="#配置从库" class="headerlink" title="配置从库"></a>配置从库</h3><p>修改Slave服务器MySQL配置文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log-bin=binlog //不是必须</div><div class="line">server-id=2 //必须, 需要唯一,一般取IP最后一段</div></pre></td></tr></table></figure>
-<p>重启MySQL.</p>
-<p>配置Slave:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; change master to master_host=&apos;192.168.10.11&apos;,master_user=&apos;slave01&apos;,master_password=&apos;123qwe&apos;;</div><div class="line">mysql&gt; start slave;</div></pre></td></tr></table></figure>
-<ul>
-<li><code>master_host</code> 配置为Master服务器的IP地址</li>
-<li><code>master_user</code> 和 <code>master_password</code> 分别为在Master服务器上进行授权的账号和密码</li>
-</ul>
-<p>查看从库状态：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">mysql&gt;show slave status;</div><div class="line">*************************** 1. row ***************************</div><div class="line">               Slave_IO_State: Waiting for master to send event</div><div class="line">                  Master_Host: 192.168.10.11</div><div class="line">                  Master_User: slave01</div><div class="line">                  Master_Port: 3306</div><div class="line">                Connect_Retry: 60</div><div class="line">              Master_Log_File: binlog.000006</div><div class="line">          Read_Master_Log_Pos: 1155</div><div class="line">               Relay_Log_File: mysqld-relay-bin.000009</div><div class="line">                Relay_Log_Pos: 1315</div><div class="line">        Relay_Master_Log_File: binlog.000006</div><div class="line">             Slave_IO_Running: Yes</div><div class="line">            Slave_SQL_Running: Yes</div><div class="line">							...</div></pre></td></tr></table></figure>
-<p>之前需要将主库的数据导到从库.</p>
-<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>在从库执行 <code>show slave staus</code> 后发现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Last_IO_Error: Fatal error: The slave I/O thread stops because master and slave have equal MySQL server UUIDs;  these UUIDs must be different for replication to work.</div></pre></td></tr></table></figure>
-<p>在网上找到的原因和解决方案是：</p>
-<p>这个错误是由于主从使用了相同的UUID「在主从的server_id确保是各不相同的情况下」.</p>
-<p>首先分别在主从机器上查看：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@master ~]# cat /var/lib/mysql/auto.cnf</div><div class="line">[auto]</div><div class="line">server-uuid=3636a3ee-21b8-11e6-aebc-080027e27e5e</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@slave ~]# cat /var/lib/mysql/auto.cnf</div><div class="line">[auto]</div><div class="line">server-uuid=3636a3ee-21b8-11e6-aebc-080027e27e5e</div></pre></td></tr></table></figure>
-<p>发现是相同的，可以通过以下方法解决：</p>
-<p>在从库机器上：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@slave ~]# mv /var/lib/mysql/auto.cnf /var/lib/mysql/auto.cnf.back</div><div class="line">[root@slave ~]# service mysqld restart</div></pre></td></tr></table></figure>
-<p>通过重启MySQL来重新生成uuid. 最后问题解决.</p>
-<p>另外，我们需要在从库上配置授权访问，保证其他服务器可以访问：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; grant all on *.* to vagrant@&apos;%&apos; identified by &apos;vagrant&apos; with grant option;</div></pre></td></tr></table></figure>
-<p><code>%</code>标示任何IP地址都可以进行访问, 当然也可以指定服务器IP, 保证自己的服务器能够访问, 而其他IP不能访问。</p>
-]]></content>
+    <content type="html"><![CDATA[<h2 id="开启binlog"><a href="#开启binlog" class="headerlink" title="开启binlog"></a>开启binlog</h2><p>在 <code>/etc/my.conf</code> 中打开 <code>log-bin=/your/dir</code>, 重启Mysql服务</p><blockquote><p>根据不同的安装, MySQL的配置文件的位置可能不同, 视具体情况而定.</p></blockquote><p>配置哪些数据库需要记录binlog:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">binlog-ignore-db=mysql</div><div class="line">binlog-ignore-db=information_schema</div><div class="line">binlog-ignore-db=performance_schema</div><div class="line">binlog-do-db=kit</div></pre></td></tr></table></figure><ul><li><code>binlog-ignore-db</code>配置哪些数据不需要记录binlog</li><li><code>binlog-do-db</code> 配置哪些数据需要记录binlog</li></ul><h2 id="查看binlog状态"><a href="#查看binlog状态" class="headerlink" title="查看binlog状态"></a>查看binlog状态</h2><h3 id="查看binlog的名称"><a href="#查看binlog的名称" class="headerlink" title="查看binlog的名称"></a>查看binlog的名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show binary logs;</div><div class="line">+---------------+-----------+</div><div class="line">| Log_name      | File_size |</div><div class="line">+---------------+-----------+</div><div class="line">| binlog.000001 |       616 |</div><div class="line">+---------------+-----------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure><h3 id="查看二进制日志的记录"><a href="#查看二进制日志的记录" class="headerlink" title="查看二进制日志的记录"></a>查看二进制日志的记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show binlog events;</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">| Log_name      | Pos | Event_type  | Server_id | End_log_pos | Info                                                                                                |</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">| binlog.000001 |   4 | Format_desc |         1 |         120 | Server ver: 5.6.30-log, Binlog ver: 4                                                               |</div><div class="line">| binlog.000001 | 120 | Query       |         1 |         197 | BEGIN                                                                                               |</div><div class="line">| binlog.000001 | 197 | Query       |         1 |         317 | use `kit`; UPDATE `user` SET `username`=&apos;xxxx&apos; WHERE `id`=5                                         |</div><div class="line">| binlog.000001 | 317 | Xid         |         1 |         348 | COMMIT /* xid=72 */                                                                                 |</div><div class="line">| binlog.000001 | 348 | Query       |         1 |         425 | BEGIN                                                                                               |</div><div class="line">| binlog.000001 | 425 | Query       |         1 |         585 | use `kit`; INSERT INTO `user_profile` (`user_id`, `sex`, `last_login_ip`) VALUES (5, 1, 3232238081) |</div><div class="line">| binlog.000001 | 585 | Xid         |         1 |         616 | COMMIT /* xid=77 */                                                                                 |</div><div class="line">+---------------+-----+-------------+-----------+-------------+-----------------------------------------------------------------------------------------------------+</div><div class="line">7 rows in set (0.01 sec)</div></pre></td></tr></table></figure><h3 id="导出二进制文件"><a href="#导出二进制文件" class="headerlink" title="导出二进制文件"></a>导出二进制文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqlbinlog --start-position=4 --stop-position=585 binlog.000001 &gt; /home/out.txt</div></pre></td></tr></table></figure><p>或者全部导出:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqlbinlog binlog.000001 &gt; /home/out.txt</div></pre></td></tr></table></figure><p>导出的文件名可以通过上面的<code>show binary logs;</code> 来查看需要导出的binlog文件</p><p>position 可以根据 <code>show binlog events</code>中的<strong>Pos</strong>字段来确定.</p><h2 id="配置主从"><a href="#配置主从" class="headerlink" title="配置主从"></a>配置主从</h2><h3 id="查看主库状态"><a href="#查看主库状态" class="headerlink" title="查看主库状态"></a>查看主库状态</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show master status;</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">| File          | Position | Binlog_Do_DB | Binlog_Ignore_DB                            | Executed_Gtid_Set |</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">| binlog.000003 |      120 | kit          | mysql,information_schema,performance_schema |                   |</div><div class="line">+---------------+----------+--------------+---------------------------------------------+-------------------+</div><div class="line">1 row in set (0.00 sec)</div></pre></td></tr></table></figure><h2 id="主从配置"><a href="#主从配置" class="headerlink" title="主从配置"></a>主从配置</h2><h3 id="配置主库"><a href="#配置主库" class="headerlink" title="配置主库"></a>配置主库</h3><p>修改Master服务器MySQL配置文件:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log-bin=binlog //必须开启binlog</div><div class="line">server-id=1 // 必须, 服务器唯一ID, 默认是1,一般取IP最后一段</div></pre></td></tr></table></figure><p>在Master服务器上建立帐户并授权slave:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql &gt; grant replication slave on *.* to slave01@192.168.10.12 identified by &apos;123qwe&apos;;</div></pre></td></tr></table></figure><p>重启MySQL.然后查看主库状态.</p><h3 id="配置从库"><a href="#配置从库" class="headerlink" title="配置从库"></a>配置从库</h3><p>修改Slave服务器MySQL配置文件：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">log-bin=binlog //不是必须</div><div class="line">server-id=2 //必须, 需要唯一,一般取IP最后一段</div></pre></td></tr></table></figure><p>重启MySQL.</p><p>配置Slave:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt; change master to master_host=&apos;192.168.10.11&apos;,master_user=&apos;slave01&apos;,master_password=&apos;123qwe&apos;;</div><div class="line">mysql&gt; start slave;</div></pre></td></tr></table></figure><ul><li><code>master_host</code> 配置为Master服务器的IP地址</li><li><code>master_user</code> 和 <code>master_password</code> 分别为在Master服务器上进行授权的账号和密码</li></ul><p>查看从库状态：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">mysql&gt;show slave status;</div><div class="line">*************************** 1. row ***************************</div><div class="line">               Slave_IO_State: Waiting for master to send event</div><div class="line">                  Master_Host: 192.168.10.11</div><div class="line">                  Master_User: slave01</div><div class="line">                  Master_Port: 3306</div><div class="line">                Connect_Retry: 60</div><div class="line">              Master_Log_File: binlog.000006</div><div class="line">          Read_Master_Log_Pos: 1155</div><div class="line">               Relay_Log_File: mysqld-relay-bin.000009</div><div class="line">                Relay_Log_Pos: 1315</div><div class="line">        Relay_Master_Log_File: binlog.000006</div><div class="line">             Slave_IO_Running: Yes</div><div class="line">            Slave_SQL_Running: Yes</div><div class="line">...</div></pre></td></tr></table></figure><p>之前需要将主库的数据导到从库.</p><h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>在从库执行 <code>show slave staus</code> 后发现：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Last_IO_Error: Fatal error: The slave I/O thread stops because master and slave have equal MySQL server UUIDs;  these UUIDs must be different for replication to work.</div></pre></td></tr></table></figure><p>在网上找到的原因和解决方案是：</p><p>这个错误是由于主从使用了相同的UUID「在主从的server_id确保是各不相同的情况下」.</p><p>首先分别在主从机器上查看：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@master ~]# cat /var/lib/mysql/auto.cnf</div><div class="line">[auto]</div><div class="line">server-uuid=3636a3ee-21b8-11e6-aebc-080027e27e5e</div></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@slave ~]# cat /var/lib/mysql/auto.cnf</div><div class="line">[auto]</div><div class="line">server-uuid=3636a3ee-21b8-11e6-aebc-080027e27e5e</div></pre></td></tr></table></figure><p>发现是相同的，可以通过以下方法解决：</p><p>在从库机器上：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@slave ~]# mv /var/lib/mysql/auto.cnf /var/lib/mysql/auto.cnf.back</div><div class="line">[root@slave ~]# service mysqld restart</div></pre></td></tr></table></figure><p>通过重启MySQL来重新生成uuid. 最后问题解决.</p><p>另外，我们需要在从库上配置授权访问，保证其他服务器可以访问：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; grant all on *.* to vagrant@&apos;%&apos; identified by &apos;vagrant&apos; with grant option;</div></pre></td></tr></table></figure><p><code>%</code>标示任何IP地址都可以进行访问, 当然也可以指定服务器IP, 保证自己的服务器能够访问, 而其他IP不能访问。</p>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;开启binlog&quot;&gt;&lt;a href=&quot;#开启binlog&quot; class=&quot;headerlink&quot; title=&quot;开启binlog&quot;&gt;&lt;/a&gt;开启binlog&lt;/h2&gt;&lt;p&gt;在 &lt;code&gt;/etc/my.conf&lt;/code&gt; 中打开 &lt;code&gt;log-bin=
+      
+      
+        &lt;h2 id=&quot;开启binlog&quot;&gt;&lt;a href=&quot;#开启binlog&quot; class=&quot;headerlink&quot; title=&quot;开启binlog&quot;&gt;&lt;/a&gt;开启binlog&lt;/h2&gt;&lt;p&gt;在 &lt;code&gt;/etc/my.conf&lt;/code&gt; 中打开 &lt;code&gt;log-bin=
+      
     
     </summary>
     
@@ -364,28 +198,16 @@
     <link href="http://blog.lzuer.net/2016/08/12/count-words-in-textarea/"/>
     <id>http://blog.lzuer.net/2016/08/12/count-words-in-textarea/</id>
     <published>2016-08-12T20:50:22.000Z</published>
-    <updated>2017-05-22T12:37:03.085Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>一天一位<a href="https://github.com/airyland/vux" target="_blank" rel="external">vux</a>使用提交了这么一个bug: <a href="https://github.com/airyland/vux/issues/420" target="_blank" rel="external">x-textarea字数统计异常</a>.</p>
-<p>具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了<code>maxlength</code>属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了.</p>
-<p>首先我们来看一下字数统计功能是怎么做的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">count() &#123;</div><div class="line">	return this.value.length</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>代码中使用了字符串 <code>length</code> 来做字数统计, 但是为什么当有回车时, 这样会导致数字统计异常呢? 是不是只有在textarea中的表现是这样的呢?</p>
-<h2 id="验证问题"><a href="#验证问题" class="headerlink" title="验证问题"></a>验证问题</h2><p>首先, 我验证了在input中的表现, 结果是统计表现正常.</p>
-<h2 id="发现问题原因"><a href="#发现问题原因" class="headerlink" title="发现问题原因"></a>发现问题原因</h2><p>为什么会这样? 在遨游了「全世界」之后找到了答案：</p>
-<p><a href="http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm" target="_blank" rel="external">http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm</a></p>
-<blockquote>
-<p>Textarea values might have the character combos “\n\r” in the text box, but once they are pulled into Javascript, “\n\r” becomes JUST “\n”.</p>
-</blockquote>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>导致问题的原因已经找出来了，那么接下来就是解决问题.</p>
-<p>上面我们知道, 在输入一个回车后都会导致少统计一个数字, 那么我们可以在进行统计的时候做下处理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">count () &#123;</div><div class="line">	let len = this.value.replace(&apos;\n&apos;, &apos;aa&apos;).length</div><div class="line">	return len &gt; this.max ? this.max : len</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>是不是很tricky? 但是却是能解决问题的!</p>
-]]></content>
+    <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>一天一位<a href="https://github.com/airyland/vux" target="_blank" rel="external">vux</a>使用提交了这么一个bug: <a href="https://github.com/airyland/vux/issues/420" target="_blank" rel="external">x-textarea字数统计异常</a>.</p><p>具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了<code>maxlength</code>属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了.</p><p>首先我们来看一下字数统计功能是怎么做的：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">count() &#123;</div><div class="line">return this.value.length</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>代码中使用了字符串 <code>length</code> 来做字数统计, 但是为什么当有回车时, 这样会导致数字统计异常呢? 是不是只有在textarea中的表现是这样的呢?</p><h2 id="验证问题"><a href="#验证问题" class="headerlink" title="验证问题"></a>验证问题</h2><p>首先, 我验证了在input中的表现, 结果是统计表现正常.</p><h2 id="发现问题原因"><a href="#发现问题原因" class="headerlink" title="发现问题原因"></a>发现问题原因</h2><p>为什么会这样? 在遨游了「全世界」之后找到了答案：</p><p><a href="http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm" target="_blank" rel="external">http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm</a></p><blockquote><p>Textarea values might have the character combos “\n\r” in the text box, but once they are pulled into Javascript, “\n\r” becomes JUST “\n”.</p></blockquote><h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>导致问题的原因已经找出来了，那么接下来就是解决问题.</p><p>上面我们知道, 在输入一个回车后都会导致少统计一个数字, 那么我们可以在进行统计的时候做下处理：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">count () &#123;</div><div class="line">let len = this.value.replace(&apos;\n&apos;, &apos;aa&apos;).length</div><div class="line">return len &gt; this.max ? this.max : len</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>是不是很tricky? 但是却是能解决问题的!</p>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;一天一位&lt;a href=&quot;https://github.com/airyland/vux&quot; target=&quot;_blank&quot; rel=&quot;ext
+      
+      
+        &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;一天一位&lt;a href=&quot;https://github.com/airyland/vux&quot; target=&quot;_blank&quot; rel=&quot;ext
+      
     
     </summary>
     
@@ -401,37 +223,17 @@
     <link href="http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/"/>
     <id>http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/</id>
     <published>2016-07-30T20:50:22.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<p>在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$nohup php beanstalkd-consumer.php &amp;</div></pre></td></tr></table></figure>
-<p>使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，<br>这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。</p>
-<p><a href="http://supervisord.org" target="_blank" rel="external">supervisor</a>就是这样一个工具，可以让我们很轻松愉快的对它们进行统一管理，而且省去了我们担心的某个任务会因为特殊的原因自己偷偷的挂掉。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>这里我直接使用 <code>yum</code> 进行安装：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ yum install -y supervisor</div></pre></td></tr></table></figure>
-<p>安装成功后，会有两个可执行程序：</p>
-<ul>
-<li><strong>supervisord</strong>    – supervisor 服务守护进程</li>
-<li><strong>supervisorctl</strong> – supervisor 服务控制程序.例如: <code>status/start/stop/restart program</code></li>
-</ul>
-<p><strong>supervisord</strong>启动时可以通过 <code>-c /some/path/supervisor.conf</code> 来指定加载的配置文件。当然如果没有指定配置文件的位置 <code>supervisord</code> 会按照内部的寻找方式来加载配置文件</p>
-<p>因为我是用<code>yum</code>来安装的，所以在 <code>/etc/supervisor.conf</code> 已经存在了默认的配置文件，<code>supervisord</code> 会默认加载。</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>最重要的就是对<code>supervisor</code>的行为方式进行配置，通过修改<code>/etc/supervisord.conf</code>来管理.</p>
-<p>例如，我们加入上面提到的消费进程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[program:beanstalkd_comsumer]</div><div class="line">command=/usr/local/php/bin/php /path/to/beanstalkd-consumer.php //此项指定要执行的命令</div></pre></td></tr></table></figure>
-<p>默认的，<code>supervisor</code>就自动管理进程挂掉自动重启等，我们来看下比较全的配置信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">;[program:theprogramname]</div><div class="line">;command=/bin/cat              ; the program (relative uses PATH, can take args)</div><div class="line">;process_name=%(program_name)s ; process_name expr (default %(program_name)s)</div><div class="line">;numprocs=1                    ; number of processes copies to start (def 1)</div><div class="line">;directory=/tmp                ; directory to cwd to before exec (def no cwd)</div><div class="line">;umask=022                     ; umask for process (default None)</div><div class="line">;priority=999                  ; the relative start priority (default 999)</div><div class="line">;autostart=true                ; start at supervisord start (default: true)</div><div class="line">;autorestart=true              ; retstart at unexpected quit (default: true)</div><div class="line">;startsecs=10                  ; number of secs prog must stay running (def. 1)</div><div class="line">;startretries=3                ; max # of serial start failures (default 3)</div><div class="line">;exitcodes=0,2                 ; &apos;expected&apos; exit codes for process (default 0,2)</div><div class="line">;stopsignal=QUIT               ; signal used to kill process (default TERM)</div><div class="line">;stopwaitsecs=10               ; max num secs to wait b4 SIGKILL (default 10)</div><div class="line">;user=chrism                   ; setuid to this UNIX account to run the program</div><div class="line">;redirect_stderr=true          ; redirect proc stderr to stdout (default false)</div><div class="line">;stdout_logfile=/a/path        ; stdout log path, NONE for none; default AUTO</div><div class="line">;stdout_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</div><div class="line">;stdout_logfile_backups=10     ; # of stdout logfile backups (default 10)</div><div class="line">;stdout_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</div><div class="line">;stdout_events_enabled=false   ; emit events on stdout writes (default false)</div><div class="line">;stderr_logfile=/a/path        ; stderr log path, NONE for none; default AUTO</div><div class="line">;stderr_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</div><div class="line">;stderr_logfile_backups=10     ; # of stderr logfile backups (default 10)</div><div class="line">;stderr_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</div><div class="line">;stderr_events_enabled=false   ; emit events on stderr writes (default false)</div><div class="line">;environment=A=1,B=2           ; process environment additions (def no adds)</div><div class="line">;serverurl=AUTO                ; override serverurl computation (childutils)</div></pre></td></tr></table></figure>
-<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>启动<code>supervisord</code>来启动和管理所有的进程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ /usr/bin/supervisord</div></pre></td></tr></table></figure>
-<p>启动之后我们可以通过<code>supervisor</code>的另外一个工具来查看所有配置的进程状态:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$supervisorctl status</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">beanstalkd_comsumer           RUNNING   pid 26995, uptime 4:09:54</div></pre></td></tr></table></figure>
-]]></content>
+    <content type="html"><![CDATA[<p>在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$nohup php beanstalkd-consumer.php &amp;</div></pre></td></tr></table></figure><p>使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，<br>这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。</p><p><a href="http://supervisord.org" target="_blank" rel="external">supervisor</a>就是这样一个工具，可以让我们很轻松愉快的对它们进行统一管理，而且省去了我们担心的某个任务会因为特殊的原因自己偷偷的挂掉。</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>这里我直接使用 <code>yum</code> 进行安装：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ yum install -y supervisor</div></pre></td></tr></table></figure><p>安装成功后，会有两个可执行程序：</p><ul><li><strong>supervisord</strong>    – supervisor 服务守护进程</li><li><strong>supervisorctl</strong> – supervisor 服务控制程序.例如: <code>status/start/stop/restart program</code></li></ul><p><strong>supervisord</strong>启动时可以通过 <code>-c /some/path/supervisor.conf</code> 来指定加载的配置文件。当然如果没有指定配置文件的位置 <code>supervisord</code> 会按照内部的寻找方式来加载配置文件</p><p>因为我是用<code>yum</code>来安装的，所以在 <code>/etc/supervisor.conf</code> 已经存在了默认的配置文件，<code>supervisord</code> 会默认加载。</p><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>最重要的就是对<code>supervisor</code>的行为方式进行配置，通过修改<code>/etc/supervisord.conf</code>来管理.</p><p>例如，我们加入上面提到的消费进程：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[program:beanstalkd_comsumer]</div><div class="line">command=/usr/local/php/bin/php /path/to/beanstalkd-consumer.php //此项指定要执行的命令</div></pre></td></tr></table></figure><p>默认的，<code>supervisor</code>就自动管理进程挂掉自动重启等，我们来看下比较全的配置信息：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">;[program:theprogramname]</div><div class="line">;command=/bin/cat              ; the program (relative uses PATH, can take args)</div><div class="line">;process_name=%(program_name)s ; process_name expr (default %(program_name)s)</div><div class="line">;numprocs=1                    ; number of processes copies to start (def 1)</div><div class="line">;directory=/tmp                ; directory to cwd to before exec (def no cwd)</div><div class="line">;umask=022                     ; umask for process (default None)</div><div class="line">;priority=999                  ; the relative start priority (default 999)</div><div class="line">;autostart=true                ; start at supervisord start (default: true)</div><div class="line">;autorestart=true              ; retstart at unexpected quit (default: true)</div><div class="line">;startsecs=10                  ; number of secs prog must stay running (def. 1)</div><div class="line">;startretries=3                ; max # of serial start failures (default 3)</div><div class="line">;exitcodes=0,2                 ; &apos;expected&apos; exit codes for process (default 0,2)</div><div class="line">;stopsignal=QUIT               ; signal used to kill process (default TERM)</div><div class="line">;stopwaitsecs=10               ; max num secs to wait b4 SIGKILL (default 10)</div><div class="line">;user=chrism                   ; setuid to this UNIX account to run the program</div><div class="line">;redirect_stderr=true          ; redirect proc stderr to stdout (default false)</div><div class="line">;stdout_logfile=/a/path        ; stdout log path, NONE for none; default AUTO</div><div class="line">;stdout_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</div><div class="line">;stdout_logfile_backups=10     ; # of stdout logfile backups (default 10)</div><div class="line">;stdout_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</div><div class="line">;stdout_events_enabled=false   ; emit events on stdout writes (default false)</div><div class="line">;stderr_logfile=/a/path        ; stderr log path, NONE for none; default AUTO</div><div class="line">;stderr_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</div><div class="line">;stderr_logfile_backups=10     ; # of stderr logfile backups (default 10)</div><div class="line">;stderr_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</div><div class="line">;stderr_events_enabled=false   ; emit events on stderr writes (default false)</div><div class="line">;environment=A=1,B=2           ; process environment additions (def no adds)</div><div class="line">;serverurl=AUTO                ; override serverurl computation (childutils)</div></pre></td></tr></table></figure><h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>启动<code>supervisord</code>来启动和管理所有的进程：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ /usr/bin/supervisord</div></pre></td></tr></table></figure><p>启动之后我们可以通过<code>supervisor</code>的另外一个工具来查看所有配置的进程状态:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$supervisorctl status</div></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">beanstalkd_comsumer           RUNNING   pid 26995, uptime 4:09:54</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:&lt;/p&gt;
+      
+      
+        &lt;p&gt;在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line
+      
     
     </summary>
     
@@ -451,36 +253,19 @@
     <link href="http://blog.lzuer.net/2016/07/14/deploy-beanstalkd-on-centos7/"/>
     <id>http://blog.lzuer.net/2016/07/14/deploy-beanstalkd-on-centos7/</id>
     <published>2016-07-14T09:26:12.000Z</published>
-    <updated>2017-05-22T12:37:03.085Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<ol>
-<li>下载源代码到本地</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wget https://github.com/kr/beanstalkd/archive/v1.10.tar.gz</div></pre></td></tr></table></figure>
-<ol>
-<li>解压安装</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ tar zxvf v1.10.tar.gz &amp;&amp; rm -rf v1.10.tar.gz</div><div class="line">$ mv beanstalkd-1.10/ /usr/local/beanstalkd</div><div class="line">$ cd /usr/local/beanstalkd</div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
-<ol>
-<li>加入服务以及开机启动</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cp /usr/local/beanstalkd/adm/systemd/beanstalkd.service /usr/lib/systemd/system</div><div class="line">$ systemctl enable beanstalkd.service</div><div class="line">$ systemctl start beanstalkd.service</div></pre></td></tr></table></figure>
-<ol>
-<li>手动启动并开启binlog</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mkdir -p /data/beanstalkd</div><div class="line">$ /usr/bin/beanstalkd -b /data/beanstalkd -u root &amp;</div></pre></td></tr></table></figure>
-<p>参考资料:</p>
-<ul>
-<li><a href="https://segmentfault.com/a/1190000002784775" target="_blank" rel="external">https://segmentfault.com/a/1190000002784775</a></li>
-</ul>
-]]></content>
+    <content type="html"><![CDATA[<ol><li>下载源代码到本地</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wget https://github.com/kr/beanstalkd/archive/v1.10.tar.gz</div></pre></td></tr></table></figure><ol><li>解压安装</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ tar zxvf v1.10.tar.gz &amp;&amp; rm -rf v1.10.tar.gz</div><div class="line">$ mv beanstalkd-1.10/ /usr/local/beanstalkd</div><div class="line">$ cd /usr/local/beanstalkd</div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure><ol><li>加入服务以及开机启动</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cp /usr/local/beanstalkd/adm/systemd/beanstalkd.service /usr/lib/systemd/system</div><div class="line">$ systemctl enable beanstalkd.service</div><div class="line">$ systemctl start beanstalkd.service</div></pre></td></tr></table></figure><ol><li>手动启动并开启binlog</li></ol><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ mkdir -p /data/beanstalkd</div><div class="line">$ /usr/bin/beanstalkd -b /data/beanstalkd -u root &amp;</div></pre></td></tr></table></figure><p>参考资料:</p><ul><li><a href="https://segmentfault.com/a/1190000002784775" target="_blank" rel="external">https://segmentfault.com/a/1190000002784775</a></li></ul>]]></content>
     
     <summary type="html">
     
-      &lt;ol&gt;
+      
+      
+        &lt;ol&gt;
 &lt;li&gt;下载源代码到本地&lt;/li&gt;
 &lt;/ol&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td clas
+      
     
     </summary>
     
@@ -500,45 +285,22 @@
     <link href="http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/"/>
     <id>http://blog.lzuer.net/2016/07/12/php-scope-resolution-operator/</id>
     <published>2016-07-12T23:57:23.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<blockquote>
-<p>在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。</p>
-</blockquote>
-<p>这是手册中，对于范围解析符的概论。</p>
-<p>在日常工作中，我们经常会用在例如：</p>
-<ol>
-<li>调用类常量: <code>SomeCls::THE_CONST</code>，和<code>public</code>的静态变量 <code>SomeCls::$VAR</code></li>
-<li>调用静态方法: <code>SomeCls::staticMethod()</code></li>
-</ol>
-<p>当然，在于类的内部，我们可以使用 <code>self</code>，<code>parent</code> 和 <code>static</code> 关键字来进行访问。</p>
-<p>这里，我要强调的是一种比较常见但是通常我们会忽略的一种用法。</p>
-<p>我们经常会看到这样的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Child extends Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()</div><div class="line">	&#123;</div><div class="line">		parent::__construct();</div><div class="line">		//some other logic</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们都知道，在 <code>Child</code> 的构造方法中 <code>parent::__construct()</code> 是主动调用父类的构造方法。</p>
-<p>但是，为什么会需要我们主动去调用呢？</p>
-<blockquote>
-<p>当一个子类覆盖父类的方法时，PHP不会调用父类已被覆盖的方法。是否调用父类的方法取决于子类。<br>这种机制也作用于构造函数和析构函数，重载以及魔术方法</p>
-</blockquote>
-<p>所以，当见到诸如 <code>parent::__construct</code>，<code>parent::__get</code> … 等调用时我们就知道其中的原由了。</p>
-<p>为什么会写这篇文章？因为有一天, 我因为看到下面的代码而蒙逼了…当我知道上面的原理后才明白过来。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class BasePage</div><div class="line">&#123;</div><div class="line">	protected function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		//...</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Page extends BasePage</div><div class="line">&#123;</div><div class="line">	public function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		$key = $key + $value;</div><div class="line">		parent::renderValue($key, $value);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>所以文档熟烂于心才是硬道理！</p>
-<p>参考资料：</p>
-<ul>
-<li><a href="http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php" target="_blank" rel="external">http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php</a></li>
-</ul>
-]]></content>
+    <content type="html"><![CDATA[<blockquote><p>在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。</p></blockquote><p>这是手册中，对于范围解析符的概论。</p><p>在日常工作中，我们经常会用在例如：</p><ol><li>调用类常量: <code>SomeCls::THE_CONST</code>，和<code>public</code>的静态变量 <code>SomeCls::$VAR</code></li><li>调用静态方法: <code>SomeCls::staticMethod()</code></li></ol><p>当然，在于类的内部，我们可以使用 <code>self</code>，<code>parent</code> 和 <code>static</code> 关键字来进行访问。</p><p>这里，我要强调的是一种比较常见但是通常我们会忽略的一种用法。</p><p>我们经常会看到这样的代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Parent</div><div class="line">&#123;</div><div class="line">public function __construct()&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Child extends Parent</div><div class="line">&#123;</div><div class="line">public function __construct()</div><div class="line">&#123;</div><div class="line">parent::__construct();</div><div class="line">//some other logic</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>我们都知道，在 <code>Child</code> 的构造方法中 <code>parent::__construct()</code> 是主动调用父类的构造方法。</p><p>但是，为什么会需要我们主动去调用呢？</p><blockquote><p>当一个子类覆盖父类的方法时，PHP不会调用父类已被覆盖的方法。是否调用父类的方法取决于子类。<br>这种机制也作用于构造函数和析构函数，重载以及魔术方法</p></blockquote><p>所以，当见到诸如 <code>parent::__construct</code>，<code>parent::__get</code> … 等调用时我们就知道其中的原由了。</p><p>为什么会写这篇文章？因为有一天, 我因为看到下面的代码而蒙逼了…当我知道上面的原理后才明白过来。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class BasePage</div><div class="line">&#123;</div><div class="line">protected function renderValue($key, $value)</div><div class="line">&#123;</div><div class="line">//...</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Page extends BasePage</div><div class="line">&#123;</div><div class="line">public function renderValue($key, $value)</div><div class="line">&#123;</div><div class="line">$key = $key + $value;</div><div class="line">parent::renderValue($key, $value);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>所以文档熟烂于心才是硬道理！</p><p>参考资料：</p><ul><li><a href="http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php" target="_blank" rel="external">http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php</a></li></ul>]]></content>
     
     <summary type="html">
     
-      &lt;blockquote&gt;
+      
+      
+        &lt;blockquote&gt;
 &lt;p&gt;在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;这是手册中，对于范围解析符的概论。&lt;/p&gt;
 &lt;p&gt;在日常工作中，我们经常会用在例如：&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;调用
+      
     
     </summary>
     
@@ -554,25 +316,17 @@
     <link href="http://blog.lzuer.net/2016/06/23/singleton-and-multiton/"/>
     <id>http://blog.lzuer.net/2016/06/23/singleton-and-multiton/</id>
     <published>2016-06-23T09:26:12.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<p>单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。</p>
-<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">class Singleton</div><div class="line">&#123;</div><div class="line">	/**</div><div class="line">	 * @var static</div><div class="line">	 */</div><div class="line">	private static $instance;</div><div class="line"></div><div class="line">	public static function getInstance()</div><div class="line">	&#123;</div><div class="line">		if (null === static::$instance) &#123;</div><div class="line">			static::$instance = new static();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return static::$instance;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//单例模式不允许被new</div><div class="line">	private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">	//不允许被clone</div><div class="line">	final public function __clone()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, Clone is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	//不允许被unserialize</div><div class="line">	final public function __wakeup()</div><div class="line">	&#123;</div><div class="line">		throw new \Exception(&apos;This is singleton, __wakeup is forbidden.&apos;);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="多例"><a href="#多例" class="headerlink" title="多例"></a>多例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class Multiton</div><div class="line">&#123;</div><div class="line">	const INSTANCE_1 = &apos;1&apos;;</div><div class="line"></div><div class="line">	const INSTANCE_2 = &apos;2&apos;;</div><div class="line"></div><div class="line">	private static $instances = [];</div><div class="line"></div><div class="line">	private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">	private function __clone()&#123;&#125;</div><div class="line"></div><div class="line">	private function __wakeup()&#123;&#125;</div><div class="line"></div><div class="line">	public static function getInstance($instanceName)</div><div class="line">	&#123;</div><div class="line">		if (!array_key_exists($instanceName, self::$instances)) &#123;</div><div class="line">			self::$instances[$instanceName] = new self();</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		return self::$instances[$instanceName];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>单例模式的主要优点：</p>
-<pre><code>* 提供了对唯一实例的受控访问
-* 由于在系统中只存在一个对象，因此可以节约资源，对于一些需要频繁创建和销毁的对象可以提高系统性能
-* 允许可变数目的实例
-</code></pre><p>主要缺点：</p>
-<pre><code>* 单例模式没有抽象层，因此扩展很麻烦
-* 职责过重，一定程度上违背了“单一职责原则”
-* 滥用会带来一些负面问题
-</code></pre>]]></content>
+    <content type="html"><![CDATA[<p>单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。</p><h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">class Singleton</div><div class="line">&#123;</div><div class="line">/**</div><div class="line"> * @var static</div><div class="line"> */</div><div class="line">private static $instance;</div><div class="line"></div><div class="line">public static function getInstance()</div><div class="line">&#123;</div><div class="line">if (null === static::$instance) &#123;</div><div class="line">static::$instance = new static();</div><div class="line">&#125;</div><div class="line"></div><div class="line">return static::$instance;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//单例模式不允许被new</div><div class="line">private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">//不允许被clone</div><div class="line">final public function __clone()</div><div class="line">&#123;</div><div class="line">throw new \Exception(&apos;This is singleton, Clone is forbidden.&apos;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//不允许被unserialize</div><div class="line">final public function __wakeup()</div><div class="line">&#123;</div><div class="line">throw new \Exception(&apos;This is singleton, __wakeup is forbidden.&apos;);</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="多例"><a href="#多例" class="headerlink" title="多例"></a>多例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class Multiton</div><div class="line">&#123;</div><div class="line">const INSTANCE_1 = &apos;1&apos;;</div><div class="line"></div><div class="line">const INSTANCE_2 = &apos;2&apos;;</div><div class="line"></div><div class="line">private static $instances = [];</div><div class="line"></div><div class="line">private function __construct()&#123;&#125;</div><div class="line"></div><div class="line">private function __clone()&#123;&#125;</div><div class="line"></div><div class="line">private function __wakeup()&#123;&#125;</div><div class="line"></div><div class="line">public static function getInstance($instanceName)</div><div class="line">&#123;</div><div class="line">if (!array_key_exists($instanceName, self::$instances)) &#123;</div><div class="line">self::$instances[$instanceName] = new self();</div><div class="line">&#125;</div><div class="line"></div><div class="line">return self::$instances[$instanceName];</div><div class="line">&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>单例模式的主要优点：</p><pre><code>* 提供了对唯一实例的受控访问* 由于在系统中只存在一个对象，因此可以节约资源，对于一些需要频繁创建和销毁的对象可以提高系统性能* 允许可变数目的实例</code></pre><p>主要缺点：</p><pre><code>* 单例模式没有抽象层，因此扩展很麻烦* 职责过重，一定程度上违背了“单一职责原则”* 滥用会带来一些负面问题</code></pre>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。&lt;/p&gt;
+      
+      
+        &lt;p&gt;单例模式和多例模式都禁止外界将其实例化，通过静态工厂方法向外界提供循环使用的自身实例。&lt;/p&gt;
 &lt;h2 id=&quot;单例模式&quot;&gt;&lt;a href=&quot;#单例模式&quot; class=&quot;headerlink&quot; title=&quot;单例模式&quot;&gt;&lt;/a&gt;单例模式&lt;/h2&gt;&lt;figure class=
+      
     
     </summary>
     
@@ -592,42 +346,19 @@
     <link href="http://blog.lzuer.net/2016/06/22/array_merge-vs-+/"/>
     <id>http://blog.lzuer.net/2016/06/22/array_merge-vs-+/</id>
     <published>2016-06-22T21:57:23.000Z</published>
-    <updated>2017-05-22T12:37:03.085Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<p>首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。</p>
-<p>+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。</p>
-<p>举个栗子： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
-<p>将会输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">array(3) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(5) &quot;apple&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>那么如果存在数字键值，又会有是什么表现方式呢？稍微改动下上一个栗子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
-<p>将会输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(5) &quot;apple&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [0]=&gt;</div><div class="line">  int(1)</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看到和字符串表现一致。</p>
-<p>再来测试下上面的代码， array_merge 的表现是怎样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</div><div class="line"></div><div class="line">$c = array_merge($a, $b);</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
-<p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">array(3) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(6) &quot;orange&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>那么正如文档中所说的，将会对相同的键值进行覆盖！那么对于数字键值是不是也是同样的处理呢？再看：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">array(5) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(6) &quot;orange&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [0]=&gt;</div><div class="line">  int(1)</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">  [1]=&gt;</div><div class="line">  int(2)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看到，并没有进行覆盖!由此可以得出结论，当两个数组中含有数值健的时候，会进行附加，并且键值会从0开始重建索引键值。</p>
-<p>参看资料：</p>
-<ul>
-<li><a href="http://stackoverflow.com/questions/7059721/array-merge-versus" target="_blank" rel="external">http://stackoverflow.com/questions/7059721/array-merge-versus</a></li>
-<li><a href="http://php.net/manual/en/language.operators.array.php" target="_blank" rel="external">http://php.net/manual/en/language.operators.array.php</a></li>
-<li><a href="http://php.net/manual/en/function.array-merge.php" target="_blank" rel="external">http://php.net/manual/en/function.array-merge.php</a></li>
-</ul>
-]]></content>
+    <content type="html"><![CDATA[<p>首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。</p><p>+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。</p><p>举个栗子： </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure><p>将会输出：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">array(3) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(5) &quot;apple&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>那么如果存在数字键值，又会有是什么表现方式呢？稍微改动下上一个栗子：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure><p>将会输出：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(5) &quot;apple&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [0]=&gt;</div><div class="line">  int(1)</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>可以看到和字符串表现一致。</p><p>再来测试下上面的代码， array_merge 的表现是怎样的：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</div><div class="line"></div><div class="line">$c = array_merge($a, $b);</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure><p>输出结果为：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">array(3) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(6) &quot;orange&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>那么正如文档中所说的，将会对相同的键值进行覆盖！那么对于数字键值是不是也是同样的处理呢？再看：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure><p>输出结果：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">array(5) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(6) &quot;orange&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [0]=&gt;</div><div class="line">  int(1)</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">  [1]=&gt;</div><div class="line">  int(2)</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>可以看到，并没有进行覆盖!由此可以得出结论，当两个数组中含有数值健的时候，会进行附加，并且键值会从0开始重建索引键值。</p><p>参看资料：</p><ul><li><a href="http://stackoverflow.com/questions/7059721/array-merge-versus" target="_blank" rel="external">http://stackoverflow.com/questions/7059721/array-merge-versus</a></li><li><a href="http://php.net/manual/en/language.operators.array.php" target="_blank" rel="external">http://php.net/manual/en/language.operators.array.php</a></li><li><a href="http://php.net/manual/en/function.array-merge.php" target="_blank" rel="external">http://php.net/manual/en/function.array-merge.php</a></li></ul>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。&lt;/p&gt;
+      
+      
+        &lt;p&gt;首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。&lt;/p&gt;
 &lt;p&gt;+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。&lt;/p&gt;
 &lt;p&gt;举个栗子： &lt;/p&gt;
 &lt;figur
+      
     
     </summary>
     
@@ -643,33 +374,19 @@
     <link href="http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/"/>
     <id>http://blog.lzuer.net/2016/06/07/difference-between-redis-and-memcache/</id>
     <published>2016-06-07T21:57:23.000Z</published>
-    <updated>2017-05-22T12:37:03.085Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<ol>
-<li>Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别</li>
-<li>Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构</li>
-<li>Redis支持数据备份，即master-slave模式的数据备份</li>
-<li>Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。</li>
-</ol>
-<p>Redis作者对Redis和memcache进行的比对：</p>
-<p>没有必要过多的关心性能，因为二者的性能都已经足够高了。由于Redis使用单核，而memcache可以使用多核，所以在比较上，平均每一个核上Redis在存储小数据时比memcache性能更高。而在100k以上的数据中，memcache性能高于Redis，最终，无论使用哪一个，每秒处理请求的次数都不会成为瓶颈。(比如瓶颈可能会在网卡)</p>
-<p>如果要说内存使用效率，使用简单的key-value存储的话，memcache的内存利用率更高，而如果Redis采用hash结构来做key-value存储，由于其组合式的压缩，其内存利用率会高于memcache。</p>
-<p>如果你对数据持久化和数据同步有所要求，那么推荐你选择Redis，因为这两个特性Memcached都不具备。即使你只是希望在升级或者重启系统后缓存数据不会丢失，选择Redis也是明智的。</p>
-<p>当然，最后还得说到你的具体应用需求。Redis相比Memcached来说，拥有更多的数据结构和并支持更丰富的数据操作，通常在Memcached里， 你需要将数据拿到客户端来进行类似的修改再set回去。这大大增加了网络IO的次数和数据体积。在Redis中，这些复杂的操作通常和一般的 GET/SET一样高效。所以，如果你需要缓存能够支持更复杂的结构和操作，那么Redis会是不错的选择。</p>
-<p>1、 Redis和Memcache都是将数据存放在内存中，都是内存数据库。不过memcache还可用于缓存其他东西，例如图片、视频等等。<br>2、Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，hash等数据结构的存储。<br>3、虚拟内存–Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘<br>4、过期策略–memcache在set时就指定，例如set key1 0 0 8,即永不过期。Redis可以通过例如expire 设定，例如expire name 10<br>5、分布式–设定memcache集群，利用magent做一主多从;redis可以做一主多从。都可以一主一从<br>6、存储数据安全–memcache挂掉后，数据没了；redis可以定期保存到磁盘（持久化）<br>7、灾难恢复–memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复<br>8、Redis支持数据的备份，即master-slave模式的数据备份</p>
-<p>参考：</p>
-<ul>
-<li><a href="https://segmentfault.com/a/1190000004012181" target="_blank" rel="external">https://segmentfault.com/a/1190000004012181</a></li>
-<li><a href="http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis" target="_blank" rel="external">http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis</a></li>
-</ul>
-]]></content>
+    <content type="html"><![CDATA[<ol><li>Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别</li><li>Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构</li><li>Redis支持数据备份，即master-slave模式的数据备份</li><li>Redis支持数据的持久化，可以将内存中的数据保存到磁盘上，服务器重启的时候可以再次加载。</li></ol><p>Redis作者对Redis和memcache进行的比对：</p><p>没有必要过多的关心性能，因为二者的性能都已经足够高了。由于Redis使用单核，而memcache可以使用多核，所以在比较上，平均每一个核上Redis在存储小数据时比memcache性能更高。而在100k以上的数据中，memcache性能高于Redis，最终，无论使用哪一个，每秒处理请求的次数都不会成为瓶颈。(比如瓶颈可能会在网卡)</p><p>如果要说内存使用效率，使用简单的key-value存储的话，memcache的内存利用率更高，而如果Redis采用hash结构来做key-value存储，由于其组合式的压缩，其内存利用率会高于memcache。</p><p>如果你对数据持久化和数据同步有所要求，那么推荐你选择Redis，因为这两个特性Memcached都不具备。即使你只是希望在升级或者重启系统后缓存数据不会丢失，选择Redis也是明智的。</p><p>当然，最后还得说到你的具体应用需求。Redis相比Memcached来说，拥有更多的数据结构和并支持更丰富的数据操作，通常在Memcached里， 你需要将数据拿到客户端来进行类似的修改再set回去。这大大增加了网络IO的次数和数据体积。在Redis中，这些复杂的操作通常和一般的 GET/SET一样高效。所以，如果你需要缓存能够支持更复杂的结构和操作，那么Redis会是不错的选择。</p><p>1、 Redis和Memcache都是将数据存放在内存中，都是内存数据库。不过memcache还可用于缓存其他东西，例如图片、视频等等。<br>2、Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，hash等数据结构的存储。<br>3、虚拟内存–Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘<br>4、过期策略–memcache在set时就指定，例如set key1 0 0 8,即永不过期。Redis可以通过例如expire 设定，例如expire name 10<br>5、分布式–设定memcache集群，利用magent做一主多从;redis可以做一主多从。都可以一主一从<br>6、存储数据安全–memcache挂掉后，数据没了；redis可以定期保存到磁盘（持久化）<br>7、灾难恢复–memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复<br>8、Redis支持数据的备份，即master-slave模式的数据备份</p><p>参考：</p><ul><li><a href="https://segmentfault.com/a/1190000004012181" target="_blank" rel="external">https://segmentfault.com/a/1190000004012181</a></li><li><a href="http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis" target="_blank" rel="external">http://stackoverflow.com/questions/19424193/difference-between-memcache-memcached-and-redis</a></li></ul>]]></content>
     
     <summary type="html">
     
-      &lt;ol&gt;
+      
+      
+        &lt;ol&gt;
 &lt;li&gt;Redis中，并不是所有的数据都一直存在内存中，这是和memcache的最大区别&lt;/li&gt;
 &lt;li&gt;Redis不仅仅支持简单的k/v类型的数据，同时还提供list, set, hash等数据结构&lt;/li&gt;
 &lt;li&gt;Redis支持数据备份，即master-slav
+      
     
     </summary>
     
@@ -693,41 +410,17 @@
     <link href="http://blog.lzuer.net/2016/05/27/install-golang-on-centos/"/>
     <id>http://blog.lzuer.net/2016/05/27/install-golang-on-centos/</id>
     <published>2016-05-27T18:57:23.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>首先确定操作系统位数, 可执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ uname -m</div></pre></td></tr></table></figure>
-<p>如果输出为 <code>x86_64</code> 的话代表64位操作系统，如果为 <code>i386</code> 则为32为系统。</p>
-<p>根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz</div></pre></td></tr></table></figure>
-<p>解压到安装目录, 我把go安装到 <code>/usr/local/go</code> 中，执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ tar zxvf go1.6.2.linux-amd64.tar.gz</div><div class="line">$ mv go /usr/local</div></pre></td></tr></table></figure>
-<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>添加 <code>GOROOT</code> 环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOROOT=&quot;/usr/local/go&quot;</div></pre></td></tr></table></figure>
-<p>可以通过执行 <code>env</code> 或者 <code>echo $GOROOT</code> 来确认环境变量是否正常设置.</p>
-<p>设置PATH</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export PATH=$PATH:/usr/local/go/bin</div></pre></td></tr></table></figure>
-<h2 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ go version</div></pre></td></tr></table></figure>
-<p>输出 <code>go version go1.6.2 linux/amd64</code> 表示golang已经成功安装！</p>
-<h2 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h2><p>剩下一步比较重要的就是设置 <code>GOPATH</code>, 详情可查看<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">资料</a></p>
-<p>例如我将GOPATH设置为 <code>/home/go</code>  为我的工作空间：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOPATH=&quot;/home/go&quot;</div></pre></td></tr></table></figure>
-<p><code>/home/go</code>的目录结构为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- go</div><div class="line">  --bin</div><div class="line">  --pkg</div><div class="line">  --src</div></pre></td></tr></table></figure>
-<p>有关目录结构的介绍可以参考：<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md</a></p>
-<p>至此Golang已经成功安装！</p>
-<h2 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h2><p>直接在命令行运行 <code>$ export PATH=$PATH:/usr/local/go</code>， 只会在当前会话有效，登出或者注销系统后，PATH的设置就会失效。</p>
-<p>如果想永久保存设置，则需要修改<code>/etc/profile</code>，在末尾加上(如果之前没有添加过的话):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PATH=$PATH:/usr/local/go</div><div class="line">export PATH</div><div class="line">GOPATH=/home/go</div><div class="line">export GOPATH</div></pre></td></tr></table></figure>
-<p>然后执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$source /etc/profile</div></pre></td></tr></table></figure>
-<p>之后可以通过 <code>echo $PATH</code> 来查看设置是否生效。</p>
-]]></content>
+    <content type="html"><![CDATA[<h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>首先确定操作系统位数, 可执行：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ uname -m</div></pre></td></tr></table></figure><p>如果输出为 <code>x86_64</code> 的话代表64位操作系统，如果为 <code>i386</code> 则为32为系统。</p><p>根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz</div></pre></td></tr></table></figure><p>解压到安装目录, 我把go安装到 <code>/usr/local/go</code> 中，执行：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ tar zxvf go1.6.2.linux-amd64.tar.gz</div><div class="line">$ mv go /usr/local</div></pre></td></tr></table></figure><h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>添加 <code>GOROOT</code> 环境变量</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOROOT=&quot;/usr/local/go&quot;</div></pre></td></tr></table></figure><p>可以通过执行 <code>env</code> 或者 <code>echo $GOROOT</code> 来确认环境变量是否正常设置.</p><p>设置PATH</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export PATH=$PATH:/usr/local/go/bin</div></pre></td></tr></table></figure><h2 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ go version</div></pre></td></tr></table></figure><p>输出 <code>go version go1.6.2 linux/amd64</code> 表示golang已经成功安装！</p><h2 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h2><p>剩下一步比较重要的就是设置 <code>GOPATH</code>, 详情可查看<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">资料</a></p><p>例如我将GOPATH设置为 <code>/home/go</code>  为我的工作空间：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ export GOPATH=&quot;/home/go&quot;</div></pre></td></tr></table></figure><p><code>/home/go</code>的目录结构为：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-- go</div><div class="line">  --bin</div><div class="line">  --pkg</div><div class="line">  --src</div></pre></td></tr></table></figure><p>有关目录结构的介绍可以参考：<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="external">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md</a></p><p>至此Golang已经成功安装！</p><h2 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h2><p>直接在命令行运行 <code>$ export PATH=$PATH:/usr/local/go</code>， 只会在当前会话有效，登出或者注销系统后，PATH的设置就会失效。</p><p>如果想永久保存设置，则需要修改<code>/etc/profile</code>，在末尾加上(如果之前没有添加过的话):</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PATH=$PATH:/usr/local/go</div><div class="line">export PATH</div><div class="line">GOPATH=/home/go</div><div class="line">export GOPATH</div></pre></td></tr></table></figure><p>然后执行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$source /etc/profile</div></pre></td></tr></table></figure><p>之后可以通过 <code>echo $PATH</code> 来查看设置是否生效。</p>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Download&quot;&gt;&lt;a href=&quot;#Download&quot; class=&quot;headerlink&quot; title=&quot;Download&quot;&gt;&lt;/a&gt;Download&lt;/h2&gt;&lt;p&gt;首先确定操作系统位数, 可执行：&lt;/p&gt;
+      
+      
+        &lt;h2 id=&quot;Download&quot;&gt;&lt;a href=&quot;#Download&quot; class=&quot;headerlink&quot; title=&quot;Download&quot;&gt;&lt;/a&gt;Download&lt;/h2&gt;&lt;p&gt;首先确定操作系统位数, 可执行：&lt;/p&gt;
 &lt;figure class=&quot;highlight 
+      
     
     </summary>
     
@@ -743,29 +436,17 @@
     <link href="http://blog.lzuer.net/2016/05/09/validator-on-the-fly/"/>
     <id>http://blog.lzuer.net/2016/05/09/validator-on-the-fly/</id>
     <published>2016-05-09T16:53:42.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<p>首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的<br>时候其中有一条需求就是把用户提交的评分值由原来的允许的<code>1, 2, 3, 4, 5</code> 改成允许输入 <code>0, 2, 4, 6, 8, 10</code></p>
-<p>自定义的<code>validator</code>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//ScoreValidator.php</div><div class="line">class ScoreValidator extends Validator</div><div class="line">&#123;</div><div class="line">    protected function validateValue($value)</div><div class="line">    &#123;</div><div class="line">        if (in_array($value, [1, 2, 3, 4, 5])) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [$this-&gt;message, []];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//User.php</div><div class="line">public function rules()</div><div class="line">&#123;</div><div class="line">    return [</div><div class="line">        ...</div><div class="line">        [&apos;rate&apos;, ScoreValidator::className()],</div><div class="line">        ...</div><div class="line">    ];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>那么应该如何做兼容性，来保证多个版本的接口中都按照规则来赋值呢？我第一个想到的是利用di来解决。</p>
-<p>为什么这么想？可以参考下之前的<a href="http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/">一篇文章</a></p>
-<p>那么我们来具体实施.</p>
-<p>首先，接口版本控制的结构是遵循官方来的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">modules</div><div class="line">--v1</div><div class="line">   -- controllers</div><div class="line">   -- ...</div><div class="line">   -- Module.php</div><div class="line">--v2</div><div class="line">   -- controllers</div><div class="line">   -- ...</div><div class="line">   -- Module.php</div></pre></td></tr></table></figure>
-<p>在这之前我们需要对之前定义的<code>ScoreValidator</code>进行下修改：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//ScoreValidator.php</div><div class="line">class ScoreValidator extends Validator</div><div class="line">&#123;</div><div class="line">    public $ranges = [0, 2, 4, 6, 8, 10];// 这里直接改成满足现有需求的数据区间</div><div class="line"></div><div class="line">    protected function validateValue($value)</div><div class="line">    &#123;</div><div class="line">        if (in_array($value, $this-&gt;ranges)) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [$this-&gt;message, []];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们希望在v2版本的接口中来实现默认值的修改, 那么可以在原来的<code>v1</code>版本下的<code>Module::init</code>中来配置:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Module extend \yii\base\Module</div><div class="line">&#123;</div><div class="line">    public function init()</div><div class="line">    &#123;</div><div class="line">        parent::init();</div><div class="line"></div><div class="line">        Yii::$container-&gt;set(ScoreValidator::className(), [</div><div class="line">            &apos;ranges&apos; =&gt; [1, 2, 3, 4, 5]</div><div class="line">        ]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样在<code>v1</code>接口下的涉及到<code>ScoreValidator</code>验证的地方就会按照这个规则来进行验证了。同样新的需求也可以兼顾到。</p>
-<p>利用Yii2的容器和依赖注入可以很轻松写意的实现更多，还需要我们不停的探索！</p>
-]]></content>
+    <content type="html"><![CDATA[<p>首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的<br>时候其中有一条需求就是把用户提交的评分值由原来的允许的<code>1, 2, 3, 4, 5</code> 改成允许输入 <code>0, 2, 4, 6, 8, 10</code></p><p>自定义的<code>validator</code>:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">//ScoreValidator.php</div><div class="line">class ScoreValidator extends Validator</div><div class="line">&#123;</div><div class="line">    protected function validateValue($value)</div><div class="line">    &#123;</div><div class="line">        if (in_array($value, [1, 2, 3, 4, 5])) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [$this-&gt;message, []];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//User.php</div><div class="line">public function rules()</div><div class="line">&#123;</div><div class="line">    return [</div><div class="line">        ...</div><div class="line">        [&apos;rate&apos;, ScoreValidator::className()],</div><div class="line">        ...</div><div class="line">    ];</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>那么应该如何做兼容性，来保证多个版本的接口中都按照规则来赋值呢？我第一个想到的是利用di来解决。</p><p>为什么这么想？可以参考下之前的<a href="http://blog.lzuer.net/2015/05/19/one-using-of-yii2-container/">一篇文章</a></p><p>那么我们来具体实施.</p><p>首先，接口版本控制的结构是遵循官方来的：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">modules</div><div class="line">--v1</div><div class="line">   -- controllers</div><div class="line">   -- ...</div><div class="line">   -- Module.php</div><div class="line">--v2</div><div class="line">   -- controllers</div><div class="line">   -- ...</div><div class="line">   -- Module.php</div></pre></td></tr></table></figure><p>在这之前我们需要对之前定义的<code>ScoreValidator</code>进行下修改：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//ScoreValidator.php</div><div class="line">class ScoreValidator extends Validator</div><div class="line">&#123;</div><div class="line">    public $ranges = [0, 2, 4, 6, 8, 10];// 这里直接改成满足现有需求的数据区间</div><div class="line"></div><div class="line">    protected function validateValue($value)</div><div class="line">    &#123;</div><div class="line">        if (in_array($value, $this-&gt;ranges)) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return [$this-&gt;message, []];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>我们希望在v2版本的接口中来实现默认值的修改, 那么可以在原来的<code>v1</code>版本下的<code>Module::init</code>中来配置:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class Module extend \yii\base\Module</div><div class="line">&#123;</div><div class="line">    public function init()</div><div class="line">    &#123;</div><div class="line">        parent::init();</div><div class="line"></div><div class="line">        Yii::$container-&gt;set(ScoreValidator::className(), [</div><div class="line">            &apos;ranges&apos; =&gt; [1, 2, 3, 4, 5]</div><div class="line">        ]);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>这样在<code>v1</code>接口下的涉及到<code>ScoreValidator</code>验证的地方就会按照这个规则来进行验证了。同样新的需求也可以兼顾到。</p><p>利用Yii2的容器和依赖注入可以很轻松写意的实现更多，还需要我们不停的探索！</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的&lt;br&gt;时候其中有一条需求就是把用户提交的评分值由原来的允许的&lt;code&gt;1, 2, 3, 4, 5&lt;/code&gt; 改成允许输入 &lt;code&gt;0, 2, 4, 6, 8, 10&lt;/code&gt;&lt;/p&gt;
+      
+      
+        &lt;p&gt;首先从一个现实的需求中说起，在接口业务中有多个版本，突然在开发第三个版本的&lt;br&gt;时候其中有一条需求就是把用户提交的评分值由原来的允许的&lt;code&gt;1, 2, 3, 4, 5&lt;/code&gt; 改成允许输入 &lt;code&gt;0, 2, 4, 6, 8, 10&lt;/code&gt;&lt;/p&gt;
 
+      
     
     </summary>
     
@@ -781,7 +462,7 @@
     <link href="http://blog.lzuer.net/2016/05/07/upload-file-with-php/"/>
     <id>http://blog.lzuer.net/2016/05/07/upload-file-with-php/</id>
     <published>2016-05-07T00:17:39.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
     <summary type="html">
     
@@ -799,25 +480,17 @@
     <link href="http://blog.lzuer.net/2016/03/03/git-tips-one/"/>
     <id>http://blog.lzuer.net/2016/03/03/git-tips-one/</id>
     <published>2016-03-03T16:53:42.000Z</published>
-    <updated>2017-05-22T12:37:03.085Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p>
-<p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p>
-<p>所以在本地某个仓库可以设置用户名和邮箱：</p>
-<p>  git config user.name “light”<br>  git config user.email “light@qq.com”</p>
-<p><strong>为常用命令设置快捷别名</strong></p>
-<p>  git config alias.st status<br>  git config alias.ci commit</p>
-<blockquote>
-<p>同样可以使用<code>-g</code> 来进行全局配置</p>
-</blockquote>
-<p>使用：</p>
-<p>  $ git st<br>  $ git ci</p>
-]]></content>
+    <content type="html"><![CDATA[<h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p><p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p><p>所以在本地某个仓库可以设置用户名和邮箱：</p><p>  git config user.name “light”<br>  git config user.email “light@qq.com”</p><p><strong>为常用命令设置快捷别名</strong></p><p>  git config alias.st status<br>  git config alias.ci commit</p><blockquote><p>同样可以使用<code>-g</code> 来进行全局配置</p></blockquote><p>使用：</p><p>  $ git st<br>  $ git ci</p>]]></content>
     
     <summary type="html">
     
-      &lt;h1 id=&quot;git-tip-one&quot;&gt;&lt;a href=&quot;#git-tip-one&quot; class=&quot;headerlink&quot; title=&quot;git tip one&quot;&gt;&lt;/a&gt;git tip one&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;git config&lt;/strong&gt;&lt;/p&gt;
+      
+      
+        &lt;h1 id=&quot;git-tip-one&quot;&gt;&lt;a href=&quot;#git-tip-one&quot; class=&quot;headerlink&quot; title=&quot;git tip one&quot;&gt;&lt;/a&gt;git tip one&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;git config&lt;/strong&gt;&lt;/p&gt;
 &lt;p
+      
     
     </summary>
     
@@ -833,43 +506,16 @@
     <link href="http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/"/>
     <id>http://blog.lzuer.net/2016/01/26/xdebug-phpstorm/</id>
     <published>2016-01-26T11:17:39.000Z</published>
-    <updated>2017-05-22T12:37:03.089Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="开启xdebug"><a href="#开启xdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p>
-<p>  [xdebug]<br>  xdebug.remote_enable = On<br>  xdebug.remote_handler = dbgp<br>  xdebug.remote_host= localhost<br>  xdebug.remote_port = 9000<br>  xdebug.idekey = PHPSTORM<br>  xdebug.profiler_enable = 1</p>
-<p>重启服务之后在<code>phpinfo</code>中查看是否已经开启<code>xdebug</code>.</p>
-<h2 id="配置phpstorm"><a href="#配置phpstorm" class="headerlink" title="配置phpstorm"></a>配置phpstorm</h2><ol>
-<li><p>配置xdebug端口号</p>
-<p>在 File &gt; Settings &gt; Langauges&amp;Frameworks 中找到 <code>PHP</code> 选择<code>Debug</code>选项卡,找到<code>xdebug</code>配置项，确认端口号是上面设置的<code>9000</code></p>
-</li>
-<li><p>配置DBGp Proxy</p>
-<p> 点击<code>DBGp Proxy</code>选项卡，在里面设置:</p>
-<p>   IDE Key: PHPSTORM<br>   Host:   localhost<br>   Port:   9000</p>
-</li>
-<li><p>添加 servers</p>
-<p>找到 <code>Servers</code>选项卡,点击添加按钮添加一个配置信息。例如想调试部署好的虚拟地址：<code>www.app.local</code>,那么你需要在<code>Host</code>中填上该地址。<br>注意<code>Port</code>需要和你实际配置的端口要一直。另外保证<code>Debugger</code>为<code>Xdebug</code></p>
-</li>
-</ol>
-<p>  这里主要记录下如何配合浏览器插件<code>Xdebug helper</code>来进行调试</p>
-<h2 id="安装浏览器插件Xdebug-helper"><a href="#安装浏览器插件Xdebug-helper" class="headerlink" title="安装浏览器插件Xdebug helper"></a>安装浏览器插件<code>Xdebug helper</code></h2><p>  安装成功之后，在选线卡将你配置的domain进行添加。</p>
-<h2 id="在postman中使用xdebug"><a href="#在postman中使用xdebug" class="headerlink" title="在postman中使用xdebug"></a>在postman中使用xdebug</h2><ol>
-<li><p>Configure your xdebug (by editing php.ini) to attempt to debug every php script (xdebug.remote_autostart = 1)</p>
-</li>
-<li><p>Add xdebug session start parameter to the actual URL (XDEBUG_SESSION_START= – <a href="http://xdebug.org/docs/remote" target="_blank" rel="external">http://xdebug.org/docs/remote</a> ), for example: ?XDEBUG_SESSION_START=PHPSTORM</p>
-</li>
-<li><p>Pass xdebug cookie as one of the headers (the one which is set by bookmarklet or browser extension, for example)</p>
-<p>参考文章:</p>
-<ul>
-<li><a href="http://my.oschina.net/u/248080/blog/351455" target="_blank" rel="external">http://my.oschina.net/u/248080/blog/351455</a></li>
-<li><a href="http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman" target="_blank" rel="external">http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman</a></li>
-</ul>
-</li>
-</ol>
-]]></content>
+    <content type="html"><![CDATA[<h2 id="开启xdebug"><a href="#开启xdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p><p>  [xdebug]<br>  xdebug.remote_enable = On<br>  xdebug.remote_handler = dbgp<br>  xdebug.remote_host= localhost<br>  xdebug.remote_port = 9000<br>  xdebug.idekey = PHPSTORM<br>  xdebug.profiler_enable = 1</p><p>重启服务之后在<code>phpinfo</code>中查看是否已经开启<code>xdebug</code>.</p><h2 id="配置phpstorm"><a href="#配置phpstorm" class="headerlink" title="配置phpstorm"></a>配置phpstorm</h2><ol><li><p>配置xdebug端口号</p><p>在 File &gt; Settings &gt; Langauges&amp;Frameworks 中找到 <code>PHP</code> 选择<code>Debug</code>选项卡,找到<code>xdebug</code>配置项，确认端口号是上面设置的<code>9000</code></p></li><li><p>配置DBGp Proxy</p><p> 点击<code>DBGp Proxy</code>选项卡，在里面设置:</p><p>   IDE Key: PHPSTORM<br>   Host:   localhost<br>   Port:   9000</p></li><li><p>添加 servers</p><p>找到 <code>Servers</code>选项卡,点击添加按钮添加一个配置信息。例如想调试部署好的虚拟地址：<code>www.app.local</code>,那么你需要在<code>Host</code>中填上该地址。<br>注意<code>Port</code>需要和你实际配置的端口要一直。另外保证<code>Debugger</code>为<code>Xdebug</code></p></li></ol><p>  这里主要记录下如何配合浏览器插件<code>Xdebug helper</code>来进行调试</p><h2 id="安装浏览器插件Xdebug-helper"><a href="#安装浏览器插件Xdebug-helper" class="headerlink" title="安装浏览器插件Xdebug helper"></a>安装浏览器插件<code>Xdebug helper</code></h2><p>  安装成功之后，在选线卡将你配置的domain进行添加。</p><h2 id="在postman中使用xdebug"><a href="#在postman中使用xdebug" class="headerlink" title="在postman中使用xdebug"></a>在postman中使用xdebug</h2><ol><li><p>Configure your xdebug (by editing php.ini) to attempt to debug every php script (xdebug.remote_autostart = 1)</p></li><li><p>Add xdebug session start parameter to the actual URL (XDEBUG_SESSION_START= – <a href="http://xdebug.org/docs/remote" target="_blank" rel="external">http://xdebug.org/docs/remote</a> ), for example: ?XDEBUG_SESSION_START=PHPSTORM</p></li><li><p>Pass xdebug cookie as one of the headers (the one which is set by bookmarklet or browser extension, for example)</p><p>参考文章:</p><ul><li><a href="http://my.oschina.net/u/248080/blog/351455" target="_blank" rel="external">http://my.oschina.net/u/248080/blog/351455</a></li><li><a href="http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman" target="_blank" rel="external">http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman</a></li></ul></li></ol>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;开启xdebug&quot;&gt;&lt;a href=&quot;#开启xdebug&quot; class=&quot;headerlink&quot; title=&quot;开启xdebug&quot;&gt;&lt;/a&gt;开启xdebug&lt;/h2&gt;&lt;p&gt;在&lt;code&gt;php.ini&lt;/code&gt;中配置&lt;code&gt;xdebug&lt;/code&gt;如下：
+      
+      
+        &lt;h2 id=&quot;开启xdebug&quot;&gt;&lt;a href=&quot;#开启xdebug&quot; class=&quot;headerlink&quot; title=&quot;开启xdebug&quot;&gt;&lt;/a&gt;开启xdebug&lt;/h2&gt;&lt;p&gt;在&lt;code&gt;php.ini&lt;/code&gt;中配置&lt;code&gt;xdebug&lt;/code&gt;如下：
+      
     
     </summary>
     
@@ -889,48 +535,18 @@
     <link href="http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/"/>
     <id>http://blog.lzuer.net/2016/01/18/auto-deploy-hexo-blog-using-travis/</id>
     <published>2016-01-18T23:59:20.000Z</published>
-    <updated>2017-05-22T12:37:03.085Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<p>首先在<a href="https://travis-ci.org" target="_blank" rel="external">travis</a>将你的项目加入到travis。</p>
-<p>打开设置，添加token变量。</p>
-<p><img src="http://7xq6zf.com1.z0.glb.clouddn.com/travis-setting.png" alt="add-token"></p>
-<p>在这之前我们需要在<a href="https://github.com/settings/tokens" target="_blank" rel="external">github</a>, 生成一个token。</p>
-<p><img src="http://7xq6zf.com1.z0.glb.clouddn.com/generate-github-token.png" alt="generate-token"></p>
-<p>在项目的 <code>.travis.yml</code> 中可以进行如下配置：</p>
-<pre><code>language: node_js
-sudo: false
-node_js:
-  - 5.3.0
-
-before_install:
-  - git config --global user.name &quot;lichunqiang&quot;
-  - git config --global user.email &quot;light-li@hotmail.com&quot;
-  - git config --global push.default simple
-
-install:
-  - npm install hexo-cli -g
-
-script:
-  - git clone https://${token}@github.com/lichunqiang/lichunqiang.github.io.git .deploy_git -v
-  - git --version
-  - git remote add -f b https://${token}@github.com/lichunqiang/b.git
-  - git fetch b
-  - npm install
-
-  - hexo g
-  - cp -r public/* .deploy_git/
-  - cd .deploy_git
-  - git add -A
-  - git commit -am &quot;Auto deploy from Travis-CI.&quot;
-  - git push --force -q
-</code></pre><p>这样就等着 <code>travis</code> 构建完成之后，我们就可以看到文件就会自动发布了。</p>
-]]></content>
+    <content type="html"><![CDATA[<p>首先在<a href="https://travis-ci.org" target="_blank" rel="external">travis</a>将你的项目加入到travis。</p><p>打开设置，添加token变量。</p><p><img src="http://7xq6zf.com1.z0.glb.clouddn.com/travis-setting.png" alt="add-token"></p><p>在这之前我们需要在<a href="https://github.com/settings/tokens" target="_blank" rel="external">github</a>, 生成一个token。</p><p><img src="http://7xq6zf.com1.z0.glb.clouddn.com/generate-github-token.png" alt="generate-token"></p><p>在项目的 <code>.travis.yml</code> 中可以进行如下配置：</p><pre><code>language: node_jssudo: falsenode_js:  - 5.3.0before_install:  - git config --global user.name &quot;lichunqiang&quot;  - git config --global user.email &quot;light-li@hotmail.com&quot;  - git config --global push.default simpleinstall:  - npm install hexo-cli -gscript:  - git clone https://${token}@github.com/lichunqiang/lichunqiang.github.io.git .deploy_git -v  - git --version  - git remote add -f b https://${token}@github.com/lichunqiang/b.git  - git fetch b  - npm install  - hexo g  - cp -r public/* .deploy_git/  - cd .deploy_git  - git add -A  - git commit -am &quot;Auto deploy from Travis-CI.&quot;  - git push --force -q</code></pre><p>这样就等着 <code>travis</code> 构建完成之后，我们就可以看到文件就会自动发布了。</p>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;首先在&lt;a href=&quot;https://travis-ci.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;travis&lt;/a&gt;将你的项目加入到travis。&lt;/p&gt;
+      
+      
+        &lt;p&gt;首先在&lt;a href=&quot;https://travis-ci.org&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;travis&lt;/a&gt;将你的项目加入到travis。&lt;/p&gt;
 &lt;p&gt;打开设置，添加token变量。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http:
+      
     
     </summary>
     
@@ -950,33 +566,20 @@ script:
     <link href="http://blog.lzuer.net/2016/01/16/git-delete-submoudle/"/>
     <id>http://blog.lzuer.net/2016/01/16/git-delete-submoudle/</id>
     <published>2016-01-16T00:16:21.000Z</published>
-    <updated>2017-05-22T12:37:03.085Z</updated>
+    <updated>2017-09-13T02:21:22.826Z</updated>
     
-    <content type="html"><![CDATA[<ol>
-<li><p>Delete the relevant section from the .gitmodules file.</p>
-</li>
-<li><p>Stage the .gitmodules changes git add .gitmodules</p>
-</li>
-<li><p>Delete the relevant section from .git/config.</p>
-</li>
-<li><p>Run git rm –cached path_to_submodule (no trailing slash).</p>
-</li>
-<li><p>Run rm -rf .git/modules/path_to_submodule</p>
-</li>
-<li><p>Commit git commit -m “Removed submodule <name>“</name></p>
-</li>
-<li><p>Delete the now untracked submodule files <code>rm -rf path_to_submodule</code></p>
-</li>
-</ol>
-]]></content>
+    <content type="html"><![CDATA[<ol><li><p>Delete the relevant section from the .gitmodules file.</p></li><li><p>Stage the .gitmodules changes git add .gitmodules</p></li><li><p>Delete the relevant section from .git/config.</p></li><li><p>Run git rm –cached path_to_submodule (no trailing slash).</p></li><li><p>Run rm -rf .git/modules/path_to_submodule</p></li><li><p>Commit git commit -m “Removed submodule <name>“</name></p></li><li><p>Delete the now untracked submodule files <code>rm -rf path_to_submodule</code></p></li></ol>]]></content>
     
     <summary type="html">
     
-      &lt;ol&gt;
+      
+      
+        &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;Delete the relevant section from the .gitmodules file.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Stage the .gitmodules changes git add .gitmodules&lt;/p&gt;
 &lt;/
+      
     
     </summary>
     

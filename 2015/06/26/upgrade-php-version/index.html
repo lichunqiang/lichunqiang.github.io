@@ -60,7 +60,8 @@
 <meta property="og:url" content="http://blog.lzuer.net/2015/06/26/upgrade-php-version/index.html">
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="现版本：5.5.21 更新版本： 5.6.10 查看原来安装的配置参数执行php -v | grep config 安装根据之前的安装配置执行: 12$ ./configure --prefix=/usr/local/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbs">
-<meta property="og:updated_time" content="2017-05-22T12:37:03.089Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-13T02:21:22.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="更新升级PHP版本">
 <meta name="twitter:description" content="现版本：5.5.21 更新版本： 5.6.10 查看原来安装的配置参数执行php -v | grep config 安装根据之前的安装配置执行: 12$ ./configure --prefix=/usr/local/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbs">
@@ -273,7 +274,7 @@
 <p>更新版本： 5.6.10</p>
 <h3 id="查看原来安装的配置参数"><a href="#查看原来安装的配置参数" class="headerlink" title="查看原来安装的配置参数"></a>查看原来安装的配置参数</h3><p>执行<code>php -v | grep config</code></p>
 <h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>根据之前的安装配置执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/php5/ --with-libxml-dir --enable-cli --enable-fpm --with-mysqli --with-gettext --enable-mbstring --with-mcrypt --with-openssl --disable-debug --enable-opcache --with-pdo-mysql --with-mysql</div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/php5/ --with-libxml-dir --<span class="built_in">enable</span>-cli --<span class="built_in">enable</span>-fpm --with-mysqli --with-gettext --<span class="built_in">enable</span>-mbstring --with-mcrypt --with-openssl --<span class="built_in">disable</span>-debug --<span class="built_in">enable</span>-opcache --with-pdo-mysql --with-mysql</div><div class="line">$ make &amp;&amp; make install</div></pre></td></tr></table></figure>
 <h3 id="剩余工作"><a href="#剩余工作" class="headerlink" title="剩余工作"></a>剩余工作</h3><p>安装成功后, 并不意味着升级工作完成了。当我们运行 <code>php -v</code> 时会有错误抛出, 那是因为两个版本的扩展编译标示前后不一致，所以我们接下的来的工作就是重新编译扩展。</p>
 <p>在 <code>path/to/php5/lib/php/extensions</code> 目录下有两个文件夹: <code>no-debug-non-zts-20121212/</code> (之前版本扩展安装目录) 和 <code>no-debug-non-zts-20131226/</code> (新版本扩展安装目录), 由于新升级的PHP的标示是 <code>20131226</code> , 所以对应的扩展编译也要对应上。</p>
 <p>例如, 我之前的扩展源文件目录 <code>/usr/local/src</code>, 我们并不是直接在之前安装的扩展目录中直接配置编译安装就可以了, 我们需要删除原来解压出来的文件, 重新解压扩展源文件, 进行扩展安装:</p>
