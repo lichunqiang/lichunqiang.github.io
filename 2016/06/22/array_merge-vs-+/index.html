@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。 +号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。 举个栗子：  1234567$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;ap">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.794Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="array_merge 和 + 之间的区别">
 <meta name="twitter:description" content="首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。 +号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。 举个栗子：  1234567$a = [&amp;apos;a&amp;apos; =&amp;gt; &amp;apos;apple&amp;apos;, &amp;apos;b&amp;apos; =&amp;gt; &amp;apos;banana&amp;ap">
@@ -273,28 +273,28 @@
         <span itemprop="articleBody"><p>首先，两种方法都能够实现两个或者多个数组之间的合并。但是，两个方法还是有差别的。</p>
 <p>+号操作符返回的是右边的数组附加到左边的结果数组。如果存在一个键值都存在两个数组中，那么左边的将会使用，不会被右边的数据给覆盖。</p>
 <p>举个栗子： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</span><br><span class="line"></span><br><span class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</span><br><span class="line"></span><br><span class="line">$c = $a + $b;</span><br><span class="line"></span><br><span class="line">var_dump($c);</span><br></pre></td></tr></table></figure>
 <p>将会输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">array(3) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(5) &quot;apple&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">array(3) &#123;</span><br><span class="line">  [&quot;a&quot;]=&gt;</span><br><span class="line">  string(5) &quot;apple&quot;</span><br><span class="line">  [&quot;b&quot;]=&gt;</span><br><span class="line">  string(6) &quot;banana&quot;</span><br><span class="line">  [&quot;c&quot;]=&gt;</span><br><span class="line">  string(6) &quot;cherry&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>那么如果存在数字键值，又会有是什么表现方式呢？稍微改动下上一个栗子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</span><br><span class="line"></span><br><span class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</span><br><span class="line"></span><br><span class="line">$c = $a + $b;</span><br><span class="line"></span><br><span class="line">var_dump($c);</span><br></pre></td></tr></table></figure>
 <p>将会输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">array(4) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(5) &quot;apple&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [0]=&gt;</div><div class="line">  int(1)</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">array(4) &#123;</span><br><span class="line">  [&quot;a&quot;]=&gt;</span><br><span class="line">  string(5) &quot;apple&quot;</span><br><span class="line">  [&quot;b&quot;]=&gt;</span><br><span class="line">  string(6) &quot;banana&quot;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  int(1)</span><br><span class="line">  [&quot;c&quot;]=&gt;</span><br><span class="line">  string(6) &quot;cherry&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到和字符串表现一致。</p>
 <p>再来测试下上面的代码， array_merge 的表现是怎样的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</div><div class="line"></div><div class="line">$c = array_merge($a, $b);</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;];</span><br><span class="line"></span><br><span class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;];</span><br><span class="line"></span><br><span class="line">$c = array_merge($a, $b);</span><br><span class="line"></span><br><span class="line">var_dump($c);</span><br></pre></td></tr></table></figure>
 <p>输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">array(3) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(6) &quot;orange&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">array(3) &#123;</span><br><span class="line">  [&quot;a&quot;]=&gt;</span><br><span class="line">  string(6) &quot;orange&quot;</span><br><span class="line">  [&quot;b&quot;]=&gt;</span><br><span class="line">  string(6) &quot;banana&quot;</span><br><span class="line">  [&quot;c&quot;]=&gt;</span><br><span class="line">  string(6) &quot;cherry&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>那么正如文档中所说的，将会对相同的键值进行覆盖！那么对于数字键值是不是也是同样的处理呢？再看：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</div><div class="line"></div><div class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</div><div class="line"></div><div class="line">$c = $a + $b;</div><div class="line"></div><div class="line">var_dump($c);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a = [&apos;a&apos; =&gt; &apos;apple&apos;, &apos;b&apos; =&gt; &apos;banana&apos;, 1];</span><br><span class="line"></span><br><span class="line">$b = [&apos;a&apos; =&gt; &apos;orange&apos;, &apos;c&apos; =&gt; &apos;cherry&apos;, 2];</span><br><span class="line"></span><br><span class="line">$c = $a + $b;</span><br><span class="line"></span><br><span class="line">var_dump($c);</span><br></pre></td></tr></table></figure>
 <p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">array(5) &#123;</div><div class="line">  [&quot;a&quot;]=&gt;</div><div class="line">  string(6) &quot;orange&quot;</div><div class="line">  [&quot;b&quot;]=&gt;</div><div class="line">  string(6) &quot;banana&quot;</div><div class="line">  [0]=&gt;</div><div class="line">  int(1)</div><div class="line">  [&quot;c&quot;]=&gt;</div><div class="line">  string(6) &quot;cherry&quot;</div><div class="line">  [1]=&gt;</div><div class="line">  int(2)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">array(5) &#123;</span><br><span class="line">  [&quot;a&quot;]=&gt;</span><br><span class="line">  string(6) &quot;orange&quot;</span><br><span class="line">  [&quot;b&quot;]=&gt;</span><br><span class="line">  string(6) &quot;banana&quot;</span><br><span class="line">  [0]=&gt;</span><br><span class="line">  int(1)</span><br><span class="line">  [&quot;c&quot;]=&gt;</span><br><span class="line">  string(6) &quot;cherry&quot;</span><br><span class="line">  [1]=&gt;</span><br><span class="line">  int(2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到，并没有进行覆盖!由此可以得出结论，当两个数组中含有数值健的时候，会进行附加，并且键值会从0开始重建索引键值。</p>
 <p>参看资料：</p>
 <ul>
-<li><a href="http://stackoverflow.com/questions/7059721/array-merge-versus" target="_blank" rel="external">http://stackoverflow.com/questions/7059721/array-merge-versus</a></li>
-<li><a href="http://php.net/manual/en/language.operators.array.php" target="_blank" rel="external">http://php.net/manual/en/language.operators.array.php</a></li>
-<li><a href="http://php.net/manual/en/function.array-merge.php" target="_blank" rel="external">http://php.net/manual/en/function.array-merge.php</a></li>
+<li><a href="http://stackoverflow.com/questions/7059721/array-merge-versus" target="_blank" rel="noopener">http://stackoverflow.com/questions/7059721/array-merge-versus</a></li>
+<li><a href="http://php.net/manual/en/language.operators.array.php" target="_blank" rel="noopener">http://php.net/manual/en/language.operators.array.php</a></li>
+<li><a href="http://php.net/manual/en/function.array-merge.php" target="_blank" rel="noopener">http://php.net/manual/en/function.array-merge.php</a></li>
 </ul>
 </span>
       
@@ -419,21 +419,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -519,7 +519,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

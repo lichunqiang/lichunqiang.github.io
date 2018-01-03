@@ -219,6 +219,621 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/22/hello-git/" itemprop="url">
+                  Markdown的语法集锦
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:11:11+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/hello-git/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/hello-git/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="Markdown-语法说明-简体中文版"><a href="#Markdown-语法说明-简体中文版" class="headerlink" title="Markdown 语法说明 (简体中文版)"></a>Markdown 语法说明 (简体中文版)</h1><ul>
+<li><a href="#overview">概述</a><ul>
+<li><a href="#philosophy">宗旨</a></li>
+<li><a href="#html">兼容 HTML</a></li>
+<li><a href="#autoescape">特殊字符自动转换</a></li>
+</ul>
+</li>
+<li><a href="#block">区块元素</a><ul>
+<li><a href="#p">段落和换行</a></li>
+<li><a href="#header">标题</a></li>
+<li><a href="#blockquote">区块引用</a></li>
+<li><a href="#list">列表</a></li>
+<li><a href="#precode">代码区块</a></li>
+<li><a href="#hr">分隔线</a></li>
+</ul>
+</li>
+<li><a href="#span">区段元素</a><ul>
+<li><a href="#link">链接</a></li>
+<li><a href="#em">强调</a></li>
+<li><a href="#code">代码</a></li>
+<li><a href="#img">图片</a></li>
+</ul>
+</li>
+<li><a href="#misc">其它</a><ul>
+<li><a href="#backslash">反斜杠</a></li>
+<li><a href="#autolink">自动链接</a></li>
+</ul>
+</li>
+<li><a href="#acknowledgement">感谢</a></li>
+<li><a href="#editor">Markdown 免费编辑器</a></li>
+</ul>
+<hr>
+<h2 id="overview">概述</h2>
+
+<h3 id="philosophy">宗旨</h3>
+
+<p>Markdown 的目标是实现「易读易写」。</p>
+<p>可读性，无论如何，都是最重要的。一份使用 Markdown 格式撰写的文件应该可以直接以纯文本发布，并且看起来不会像是由许多标签或是格式指令所构成。Markdown 语法受到一些既有 text-to-HTML 格式的影响，包括 <a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="noopener">Setext</a>、<a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="noopener">atx</a>、<a href="http://textism.com/tools/textile/" target="_blank" rel="noopener">Textile</a>、<a href="http://docutils.sourceforge.net/rst.html" target="_blank" rel="noopener">reStructuredText</a>、<a href="http://www.triptico.com/software/grutatxt.html" target="_blank" rel="noopener">Grutatext</a> 和 <a href="http://ettext.taint.org/doc/" target="_blank" rel="noopener">EtText</a>，而最大灵感来源其实是纯文本电子邮件的格式。</p>
+<p>总之， Markdown 的语法全由一些符号所组成，这些符号经过精挑细选，其作用一目了然。比如：在文字两旁加上星号，看起来就像*强调*。Markdown 的列表看起来，嗯，就是列表。Markdown 的区块引用看起来就真的像是引用一段文字，就像你曾在电子邮件中见过的那样。</p>
+<h3 id="html">兼容 HTML</h3>
+
+<p>Markdown 语法的目标是：成为一种适用于网络的<em>书写</em>语言。</p>
+<p>Markdown 不是想要取代 HTML，甚至也没有要和它相近，它的语法种类很少，只对应 HTML 标记的一小部分。Markdown 的构想<em>不是</em>要使得 HTML 文档更容易书写。在我看来， HTML 已经很容易写了。Markdown 的理念是，能让文档更容易读、写和随意改。HTML 是一种<em>发布</em>的格式，Markdown 是一种<em>书写</em>的格式。就这样，Markdown 的格式语法只涵盖纯文本可以涵盖的范围。</p>
+<p>不在 Markdown 涵盖范围之内的标签，都可以直接在文档里面用 HTML 撰写。不需要额外标注这是 HTML 或是 Markdown；只要直接加标签就可以了。</p>
+<p>要制约的只有一些 HTML 区块元素――比如 <code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;pre&gt;</code>、<code>&lt;p&gt;</code> 等标签，必须在前后加上空行与其它内容区隔开，还要求它们的开始标签与结尾标签不能用制表符或空格来缩进。Markdown 的生成器有足够智能，不会在 HTML 区块标签外加上不必要的 <code>&lt;p&gt;</code> 标签。</p>
+<p>例子如下，在 Markdown 文件里加上一段 HTML 表格：</p>
+<pre><code>这是一个普通段落。
+
+&lt;table&gt;
+    &lt;tr&gt;
+        &lt;td&gt;Foo&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+
+这是另一个普通段落。
+</code></pre><p>请注意，在 HTML 区块标签间的 Markdown 格式语法将不会被处理。比如，你在 HTML 区块内使用 Markdown 样式的<code>*强调*</code>会没有效果。</p>
+<p>HTML 的区段（行内）标签如 <code>&lt;span&gt;</code>、<code>&lt;cite&gt;</code>、<code>&lt;del&gt;</code> 可以在 Markdown 的段落、列表或是标题里随意使用。依照个人习惯，甚至可以不用 Markdown 格式，而直接采用 HTML 标签来格式化。举例说明：如果比较喜欢 HTML 的 <code>&lt;a&gt;</code> 或 <code>&lt;img&gt;</code> 标签，可以直接使用这些标签，而不用 Markdown 提供的链接或是图像标签语法。</p>
+<p>和处在 HTML 区块标签间不同，Markdown 语法在 HTML 区段标签间是有效的。</p>
+<h3 id="autoescape">特殊字符自动转换</h3>
+
+<p>在 HTML 文件中，有两个字符需要特殊处理： <code>&lt;</code> 和 <code>&amp;</code> 。 <code>&lt;</code> 符号用于起始标签，<code>&amp;</code> 符号则用于标记 HTML 实体，如果你只是想要显示这些字符的原型，你必须要使用实体的形式，像是 <code>&amp;lt;</code> 和 <code>&amp;amp;</code>。</p>
+<p><code>&amp;</code> 字符尤其让网络文档编写者受折磨，如果你要打「<code>AT&amp;T</code>」 ，你必须要写成「<code>AT&amp;amp;T</code>」。而网址中的 <code>&amp;</code> 字符也要转换。比如你要链接到：</p>
+<pre><code>http://images.google.com/images?num=30&amp;q=larry+bird
+</code></pre><p>你必须要把网址转换写为：</p>
+<pre><code>http://images.google.com/images?num=30&amp;amp;q=larry+bird
+</code></pre><p>才能放到链接标签的 <code>href</code> 属性里。不用说也知道这很容易忽略，这也可能是 HTML 标准检验所检查到的错误中，数量最多的。</p>
+<p>Markdown 让你可以自然地书写字符，需要转换的由它来处理好了。如果你使用的 <code>&amp;</code> 字符是 HTML 字符实体的一部分，它会保留原状，否则它会被转换成 <code>&amp;amp</code>;。</p>
+<p>所以你如果要在文档中插入一个版权符号 <code>©</code>，你可以这样写：</p>
+<pre><code>&amp;copy;
+</code></pre><p>Markdown 会保留它不动。而若你写：</p>
+<pre><code>AT&amp;T
+</code></pre><p>Markdown 就会将它转为：</p>
+<pre><code>AT&amp;amp;T
+</code></pre><p>类似的状况也会发生在 <code>&lt;</code> 符号上，因为 Markdown 允许 <a href="#html">兼容 HTML</a> ，如果你是把 <code>&lt;</code> 符号作为 HTML 标签的定界符使用，那 Markdown 也不会对它做任何转换，但是如果你写：</p>
+<pre><code>4 &lt; 5
+</code></pre><p>Markdown 将会把它转换为：</p>
+<pre><code>4 &amp;lt; 5
+</code></pre><p>不过需要注意的是，code 范围内，不论是行内还是区块， <code>&lt;</code> 和 <code>&amp;</code> 两个符号都<em>一定</em>会被转换成 HTML 实体，这项特性让你可以很容易地用 Markdown 写 HTML code （和 HTML 相对而言， HTML 语法中，你要把所有的 <code>&lt;</code> 和 <code>&amp;</code> 都转换为 HTML 实体，才能在 HTML 文件里面写出 HTML code。）</p>
+<hr>
+<h2 id="block">区块元素</h2>
+
+
+<h3 id="p">段落和换行</h3>
+
+<p>一个 Markdown 段落是由一个或多个连续的文本行组成，它的前后要有一个以上的空行（空行的定义是显示上看起来像是空的，便会被视为空行。比方说，若某一行只包含空格和制表符，则该行也会被视为空行）。普通段落不该用空格或制表符来缩进。</p>
+<p>「由一个或多个连续的文本行组成」这句话其实暗示了 Markdown 允许段落内的强迫换行（插入换行符），这个特性和其他大部分的 text-to-HTML 格式不一样（包括 Movable Type 的「Convert Line Breaks」选项），其它的格式会把每个换行符都转成 <code>&lt;br /&gt;</code> 标签。</p>
+<p>如果你<em>确实</em>想要依赖 Markdown 来插入 <code>&lt;br /&gt;</code> 标签的话，在插入处先按入两个以上的空格然后回车。</p>
+<p>的确，需要多费点事（多加空格）来产生 <code>&lt;br /&gt;</code> ，但是简单地「每个换行都转换为 <code>&lt;br /&gt;</code>」的方法在 Markdown 中并不适合， Markdown 中 email 式的 <a href="#blockquote">区块引用</a> 和多段落的 <a href="#list">列表</a> 在使用换行来排版的时候，不但更好用，还更方便阅读。</p>
+<h3 id="header">标题</h3>
+
+<p>Markdown 支持两种标题的语法，类 <a href="http://docutils.sourceforge.net/mirror/setext.html" target="_blank" rel="noopener">Setext</a> 和类 <a href="http://www.aaronsw.com/2002/atx/" target="_blank" rel="noopener">atx</a> 形式。</p>
+<p>类 Setext 形式是用底线的形式，利用 <code>=</code> （最高阶标题）和 <code>-</code> （第二阶标题），例如：</p>
+<pre><code>This is an H1
+=============
+
+This is an H2
+-------------
+</code></pre><p>任何数量的 <code>=</code> 和 <code>-</code> 都可以有效果。</p>
+<p>类 Atx 形式则是在行首插入 1 到 6 个 <code>#</code> ，对应到标题 1 到 6 阶，例如：</p>
+<pre><code># 这是 H1
+
+## 这是 H2
+
+###### 这是 H6
+</code></pre><p>你可以选择性地「闭合」类 atx 样式的标题，这纯粹只是美观用的，若是觉得这样看起来比较舒适，你就可以在行尾加上 <code>#</code>，而行尾的 <code>#</code> 数量也不用和开头一样（行首的井字符数量决定标题的阶数）：</p>
+<pre><code># 这是 H1 #
+
+## 这是 H2 ##
+
+### 这是 H3 ######
+</code></pre><h3 id="blockquote">区块引用 Blockquotes</h3>
+
+<p>Markdown 标记区块引用是使用类似 email 中用 <code>&gt;</code> 的引用方式。如果你还熟悉在 email 信件中的引言部分，你就知道怎么在 Markdown 文件中建立一个区块引用，那会看起来像是你自己先断好行，然后在每行的最前面加上 <code>&gt;</code> ：</p>
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+&gt; consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+&gt; Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+&gt;
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+&gt; id sem consectetuer libero luctus adipiscing.
+</code></pre><p>Markdown 也允许你偷懒只在整个段落的第一行最前面加上 <code>&gt;</code> ：</p>
+<pre><code>&gt; This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+&gt; Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+id sem consectetuer libero luctus adipiscing.
+</code></pre><p>区块引用可以嵌套（例如：引用内的引用），只要根据层次加上不同数量的 <code>&gt;</code> ：</p>
+<pre><code>&gt; This is the first level of quoting.
+&gt;
+&gt; &gt; This is nested blockquote.
+&gt;
+&gt; Back to the first level.
+</code></pre><p>引用的区块内也可以使用其他的 Markdown 语法，包括标题、列表、代码区块等：</p>
+<pre><code>&gt; ## 这是一个标题。
+&gt;
+&gt; 1.   这是第一行列表项。
+&gt; 2.   这是第二行列表项。
+&gt;
+&gt; 给出一些例子代码：
+&gt;
+&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);
+</code></pre><p>任何像样的文本编辑器都能轻松地建立 email 型的引用。例如在 BBEdit 中，你可以选取文字后然后从选单中选择<em>增加引用阶层</em>。</p>
+<h3 id="list">列表</h3>
+
+<p>Markdown 支持有序列表和无序列表。</p>
+<p>无序列表使用星号、加号或是减号作为列表标记：</p>
+<pre><code>*   Red
+*   Green
+*   Blue
+</code></pre><p>等同于：</p>
+<pre><code>+   Red
++   Green
++   Blue
+</code></pre><p>也等同于：</p>
+<pre><code>-   Red
+-   Green
+-   Blue
+</code></pre><p>有序列表则使用数字接着一个英文句点：</p>
+<pre><code>1.  Bird
+2.  McHale
+3.  Parish
+</code></pre><p>很重要的一点是，你在列表标记上使用的数字并不会影响输出的 HTML 结果，上面的列表所产生的 HTML 标记为：</p>
+<pre><code>&lt;ol&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;McHale&lt;/li&gt;
+&lt;li&gt;Parish&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre><p>如果你的列表标记写成：</p>
+<pre><code>1.  Bird
+1.  McHale
+1.  Parish
+</code></pre><p>或甚至是：</p>
+<pre><code>3. Bird
+1. McHale
+8. Parish
+</code></pre><p>你都会得到完全相同的 HTML 输出。重点在于，你可以让 Markdown 文件的列表数字和输出的结果相同，或是你懒一点，你可以完全不用在意数字的正确性。</p>
+<p>如果你使用懒惰的写法，建议第一个项目最好还是从 1. 开始，因为 Markdown 未来可能会支持有序列表的 start 属性。</p>
+<p>列表项目标记通常是放在最左边，但是其实也可以缩进，最多 3 个空格，项目标记后面则一定要接着至少一个空格或制表符。</p>
+<p>要让列表看起来更漂亮，你可以把内容用固定的缩进整理好：</p>
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+    Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+    viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+    Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre><p>但是如果你懒，那也行：</p>
+<pre><code>*   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+viverra nec, fringilla in, laoreet vitae, risus.
+*   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre><p>如果列表项目间用空行分开，在输出 HTML 时 Markdown 就会将项目内容用 <code>&lt;p&gt;</code><br>标签包起来，举例来说：</p>
+<pre><code>*   Bird
+*   Magic
+</code></pre><p>会被转换为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;Bird&lt;/li&gt;
+&lt;li&gt;Magic&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>但是这个：</p>
+<pre><code>*   Bird
+
+*   Magic
+</code></pre><p>会被转换为：</p>
+<pre><code>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Bird&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Magic&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre><p>列表项目可以包含多个段落，每个项目下的段落都必须缩进 4 个空格或是 1 个制表符：</p>
+<pre><code>1.  This is a list item with two paragraphs. Lorem ipsum dolor
+    sit amet, consectetuer adipiscing elit. Aliquam hendrerit
+    mi posuere lectus.
+
+    Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+    vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
+    sit amet velit.
+
+2.  Suspendisse id sem consectetuer libero luctus adipiscing.
+</code></pre><p>如果你每行都有缩进，看起来会看好很多，当然，再次地，如果你很懒惰，Markdown 也允许：</p>
+<pre><code>*   This is a list item with two paragraphs.
+
+    This is the second paragraph in the list item. You&apos;re
+only required to indent the first line. Lorem ipsum dolor
+sit amet, consectetuer adipiscing elit.
+
+*   Another item in the same list.
+</code></pre><p>如果要在列表项目内放进引用，那 <code>&gt;</code> 就需要缩进：</p>
+<pre><code>*   A list item with a blockquote:
+
+    &gt; This is a blockquote
+    &gt; inside a list item.
+</code></pre><p>如果要放代码区块的话，该区块就需要缩进<em>两次</em>，也就是 8 个空格或是 2 个制表符：</p>
+<pre><code>*   一列表项包含一个列表区块：
+
+        &lt;代码写在这&gt;
+</code></pre><p>当然，项目列表很可能会不小心产生，像是下面这样的写法：</p>
+<pre><code>1986. What a great season.
+</code></pre><p>换句话说，也就是在行首出现<em>数字-句点-空白</em>，要避免这样的状况，你可以在句点前面加上反斜杠。</p>
+<pre><code>1986\. What a great season.
+</code></pre><h3 id="precode">代码区块</h3>
+
+<p>和程序相关的写作或是标签语言原始码通常会有已经排版好的代码区块，通常这些区块我们并不希望它以一般段落文件的方式去排版，而是照原来的样子显示，Markdown 会用 <code>&lt;pre&gt;</code> 和 <code>&lt;code&gt;</code> 标签来把代码区块包起来。</p>
+<p>要在 Markdown 中建立代码区块很简单，只要简单地缩进 4 个空格或是 1 个制表符就可以，例如，下面的输入：</p>
+<pre><code>这是一个普通段落：
+
+    这是一个代码区块。
+</code></pre><p>Markdown 会转换成：</p>
+<pre><code>&lt;p&gt;这是一个普通段落：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;这是一个代码区块。
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre><p>这个每行一阶的缩进（4 个空格或是 1 个制表符），都会被移除，例如：</p>
+<pre><code>Here is an example of AppleScript:
+
+    tell application &quot;Foo&quot;
+        beep
+    end tell
+</code></pre><p>会被转换为：</p>
+<pre><code>&lt;p&gt;Here is an example of AppleScript:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;tell application &quot;Foo&quot;
+    beep
+end tell
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre><p>一个代码区块会一直持续到没有缩进的那一行（或是文件结尾）。</p>
+<p>在代码区块里面， <code>&amp;</code> 、 <code>&lt;</code> 和 <code>&gt;</code> 会自动转成 HTML 实体，这样的方式让你非常容易使用 Markdown 插入范例用的 HTML 原始码，只需要复制贴上，再加上缩进就可以了，剩下的 Markdown 都会帮你处理，例如：</p>
+<pre><code>&lt;div class=&quot;footer&quot;&gt;
+    &amp;copy; 2004 Foo Corporation
+&lt;/div&gt;
+</code></pre><p>会被转换为：</p>
+<pre><code>&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&quot;footer&quot;&amp;gt;
+    &amp;amp;copy; 2004 Foo Corporation
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre><p>代码区块中，一般的 Markdown 语法不会被转换，像是星号便只是星号，这表示你可以很容易地以 Markdown 语法撰写 Markdown 语法相关的文件。</p>
+<h3 id="hr">分隔线</h3>
+
+<p>你可以在一行中用三个以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。你也可以在星号或是减号中间插入空格。下面每种写法都可以建立分隔线：</p>
+<pre><code>* * *
+
+***
+
+*****
+
+- - -
+
+---------------------------------------
+</code></pre><hr>
+<h2 id="span">区段元素</h2>
+
+<h3 id="link">链接</h3>
+
+<p>Markdown 支持两种形式的链接语法： <em>行内式</em>和<em>参考式</em>两种形式。</p>
+<p>不管是哪一种，链接文字都是用 [方括号] 来标记。</p>
+<p>要建立一个<em>行内式</em>的链接，只要在方块括号后面紧接着圆括号并插入网址链接即可，如果你还想要加上链接的 title 文字，只要在网址后面，用双引号把 title 文字包起来即可，例如：</p>
+<pre><code>This is [an example](http://example.com/ &quot;Title&quot;) inline link.
+
+[This link](http://example.net/) has no title attribute.
+</code></pre><p>会产生：</p>
+<pre><code>&lt;p&gt;This is &lt;a href=&quot;http://example.com/&quot; title=&quot;Title&quot;&gt;
+an example&lt;/a&gt; inline link.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://example.net/&quot;&gt;This link&lt;/a&gt; has no
+title attribute.&lt;/p&gt;
+</code></pre><p>如果你是要链接到同样主机的资源，你可以使用相对路径：</p>
+<pre><code>See my [About](/about/) page for details.
+</code></pre><p><em>参考式</em>的链接是在链接文字的括号后面再接上另一个方括号，而在第二个方括号里面要填入用以辨识链接的标记：</p>
+<pre><code>This is [an example][id] reference-style link.
+</code></pre><p>你也可以选择性地在两个方括号中间加上一个空格：</p>
+<pre><code>This is [an example] [id] reference-style link.
+</code></pre><p>接着，在文件的任意处，你可以把这个标记的链接内容定义出来：</p>
+<pre><code>[id]: http://example.com/  &quot;Optional Title Here&quot;
+</code></pre><p>链接内容定义的形式为：</p>
+<ul>
+<li>方括号（前面可以选择性地加上至多三个空格来缩进），里面输入链接文字</li>
+<li>接着一个冒号</li>
+<li>接着一个以上的空格或制表符</li>
+<li>接着链接的网址</li>
+<li>选择性地接着 title 内容，可以用单引号、双引号或是括弧包着</li>
+</ul>
+<p>下面这三种链接的定义都是相同：</p>
+<pre><code>[foo]: http://example.com/  &quot;Optional Title Here&quot;
+[foo]: http://example.com/  &apos;Optional Title Here&apos;
+[foo]: http://example.com/  (Optional Title Here)
+</code></pre><p><strong>请注意：</strong>有一个已知的问题是 Markdown.pl 1.0.1 会忽略单引号包起来的链接 title。</p>
+<p>链接网址也可以用方括号包起来：</p>
+<pre><code>[id]: &lt;http://example.com/&gt;  &quot;Optional Title Here&quot;
+</code></pre><p>你也可以把 title 属性放到下一行，也可以加一些缩进，若网址太长的话，这样会比较好看：</p>
+<pre><code>[id]: http://example.com/longish/path/to/resource/here
+    &quot;Optional Title Here&quot;
+</code></pre><p>网址定义只有在产生链接的时候用到，并不会直接出现在文件之中。</p>
+<p>链接辨别标签可以有字母、数字、空白和标点符号，但是并<em>不</em>区分大小写，因此下面两个链接是一样的：</p>
+<pre><code>[link text][a]
+[link text][A]
+</code></pre><p><em>隐式链接标记</em>功能让你可以省略指定链接标记，这种情形下，链接标记会视为等同于链接文字，要用隐式链接标记只要在链接文字后面加上一个空的方括号，如果你要让 “Google” 链接到 google.com，你可以简化成：</p>
+<pre><code>[Google][]
+</code></pre><p>然后定义链接内容：</p>
+<pre><code>[Google]: http://google.com/
+</code></pre><p>由于链接文字可能包含空白，所以这种简化型的标记内也许包含多个单词：</p>
+<pre><code>Visit [Daring Fireball][] for more information.
+</code></pre><p>然后接着定义链接：</p>
+<pre><code>[Daring Fireball]: http://daringfireball.net/
+</code></pre><p>链接的定义可以放在文件中的任何一个地方，我比较偏好直接放在链接出现段落的后面，你也可以把它放在文件最后面，就像是注解一样。</p>
+<p>下面是一个参考式链接的范例：</p>
+<pre><code>I get 10 times more traffic from [Google] [1] than from
+[Yahoo] [2] or [MSN] [3].
+
+  [1]: http://google.com/        &quot;Google&quot;
+  [2]: http://search.yahoo.com/  &quot;Yahoo Search&quot;
+  [3]: http://search.msn.com/    &quot;MSN Search&quot;
+</code></pre><p>如果改成用链接名称的方式写：</p>
+<pre><code>I get 10 times more traffic from [Google][] than from
+[Yahoo][] or [MSN][].
+
+  [google]: http://google.com/        &quot;Google&quot;
+  [yahoo]:  http://search.yahoo.com/  &quot;Yahoo Search&quot;
+  [msn]:    http://search.msn.com/    &quot;MSN Search&quot;
+</code></pre><p>上面两种写法都会产生下面的 HTML。</p>
+<pre><code>&lt;p&gt;I get 10 times more traffic from &lt;a href=&quot;http://google.com/&quot;
+title=&quot;Google&quot;&gt;Google&lt;/a&gt; than from
+&lt;a href=&quot;http://search.yahoo.com/&quot; title=&quot;Yahoo Search&quot;&gt;Yahoo&lt;/a&gt;
+or &lt;a href=&quot;http://search.msn.com/&quot; title=&quot;MSN Search&quot;&gt;MSN&lt;/a&gt;.&lt;/p&gt;
+</code></pre><p>下面是用行内式写的同样一段内容的 Markdown 文件，提供作为比较之用：</p>
+<pre><code>I get 10 times more traffic from [Google](http://google.com/ &quot;Google&quot;)
+than from [Yahoo](http://search.yahoo.com/ &quot;Yahoo Search&quot;) or
+[MSN](http://search.msn.com/ &quot;MSN Search&quot;).
+</code></pre><p>参考式的链接其实重点不在于它比较好写，而是它比较好读，比较一下上面的范例，使用参考式的文章本身只有 81 个字符，但是用行内形式的却会增加到 176 个字元，如果是用纯 HTML 格式来写，会有 234 个字元，在 HTML 格式中，标签比文本还要多。</p>
+<p>使用 Markdown 的参考式链接，可以让文件更像是浏览器最后产生的结果，让你可以把一些标记相关的元数据移到段落文字之外，你就可以增加链接而不让文章的阅读感觉被打断。</p>
+<h3 id="em">强调</h3>
+
+<p>Markdown 使用星号（<code>*</code>）和底线（<code>_</code>）作为标记强调字词的符号，被 <code>*</code> 或 <code>_</code> 包围的字词会被转成用 <code>&lt;em&gt;</code> 标签包围，用两个 <code>*</code> 或 <code>_</code> 包起来的话，则会被转成 <code>&lt;strong&gt;</code>，例如：</p>
+<pre><code>*single asterisks*
+
+_single underscores_
+
+**double asterisks**
+
+__double underscores__
+</code></pre><p>会转成：</p>
+<pre><code>&lt;em&gt;single asterisks&lt;/em&gt;
+
+&lt;em&gt;single underscores&lt;/em&gt;
+
+&lt;strong&gt;double asterisks&lt;/strong&gt;
+
+&lt;strong&gt;double underscores&lt;/strong&gt;
+</code></pre><p>你可以随便用你喜欢的样式，唯一的限制是，你用什么符号开启标签，就要用什么符号结束。</p>
+<p>强调也可以直接插在文字中间：</p>
+<pre><code>un*frigging*believable
+</code></pre><p>但是<strong>如果你的 <code>*</code> 和 <code>_</code> 两边都有空白的话，它们就只会被当成普通的符号</strong>。</p>
+<p>如果要在文字前后直接插入普通的星号或底线，你可以用反斜线：</p>
+<pre><code>\*this text is surrounded by literal asterisks\*
+</code></pre><h3 id="code">代码</h3>
+
+<p>如果要标记一小段行内代码，你可以用反引号把它包起来（<code>`</code>），例如：</p>
+<pre><code>Use the `printf()` function.
+</code></pre><p>会产生：</p>
+<pre><code>&lt;p&gt;Use the &lt;code&gt;printf()&lt;/code&gt; function.&lt;/p&gt;
+</code></pre><p>如果要在代码区段内插入反引号，你可以用多个反引号来开启和结束代码区段：</p>
+<pre><code>``There is a literal backtick (`) here.``
+</code></pre><p>这段语法会产生：</p>
+<pre><code>&lt;p&gt;&lt;code&gt;There is a literal backtick (`) here.&lt;/code&gt;&lt;/p&gt;
+</code></pre><p>代码区段的起始和结束端都可以放入一个空白，起始端后面一个，结束端前面一个，这样你就可以在区段的一开始就插入反引号：</p>
+<pre><code>A single backtick in a code span: `` ` ``
+
+A backtick-delimited string in a code span: `` `foo` ``
+</code></pre><p>会产生：</p>
+<pre><code>&lt;p&gt;A single backtick in a code span: &lt;code&gt;`&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;A backtick-delimited string in a code span: &lt;code&gt;`foo`&lt;/code&gt;&lt;/p&gt;
+</code></pre><p>在代码区段内，<code>&amp;</code> 和方括号<strong>都</strong>会被自动地转成 HTML 实体，这使得插入 HTML 原始码变得很容易，Markdown 会把下面这段：</p>
+<pre><code>Please don&apos;t use any `&lt;blink&gt;` tags.
+</code></pre><p>转为：</p>
+<pre><code>&lt;p&gt;Please don&apos;t use any &lt;code&gt;&amp;lt;blink&amp;gt;&lt;/code&gt; tags.&lt;/p&gt;
+</code></pre><p>你也可以这样写：</p>
+<pre><code>`&amp;#8212;` is the decimal-encoded equivalent of `&amp;mdash;`.
+</code></pre><p>以产生：</p>
+<pre><code>&lt;p&gt;&lt;code&gt;&amp;amp;#8212;&lt;/code&gt; is the decimal-encoded
+equivalent of &lt;code&gt;&amp;amp;mdash;&lt;/code&gt;.&lt;/p&gt;
+</code></pre><h3 id="img">图片</h3>
+
+<p>很明显地，要在纯文字应用中设计一个「自然」的语法来插入图片是有一定难度的。</p>
+<p>Markdown 使用一种和链接很相似的语法来标记图片，同样也允许两种样式： <em>行内式</em>和<em>参考式</em>。</p>
+<p>行内式的图片语法看起来像是：</p>
+<pre><code>![Alt text](/path/to/img.jpg)
+
+![Alt text](/path/to/img.jpg &quot;Optional title&quot;)
+</code></pre><p>详细叙述如下：</p>
+<ul>
+<li>一个惊叹号 <code>!</code></li>
+<li>接着一个方括号，里面放上图片的替代文字</li>
+<li>接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上<br>选择性的 ‘title’ 文字。</li>
+</ul>
+<p>参考式的图片语法则长得像这样：</p>
+<pre><code>![Alt text][id]
+</code></pre><p>「id」是图片参考的名称，图片参考的定义方式则和连结参考一样：</p>
+<pre><code>[id]: url/to/image  &quot;Optional title attribute&quot;
+</code></pre><p>到目前为止， Markdown 还没有办法指定图片的宽高，如果你需要的话，你可以使用普通的 <code>&lt;img&gt;</code> 标签。</p>
+<hr>
+<h2 id="misc">其它</h2>
+
+<h3 id="autolink">自动链接</h3>
+
+<p>Markdown 支持以比较简短的自动链接形式来处理网址和电子邮件信箱，只要是用方括号包起来， Markdown 就会自动把它转成链接。一般网址的链接文字就和链接地址一样，例如：</p>
+<pre><code>&lt;http://example.com/&gt;
+</code></pre><p>Markdown 会转为：</p>
+<pre><code>&lt;a href=&quot;http://example.com/&quot;&gt;http://example.com/&lt;/a&gt;
+</code></pre><p>邮址的自动链接也很类似，只是 Markdown 会先做一个编码转换的过程，把文字字符转成 16 进位码的 HTML 实体，这样的格式可以糊弄一些不好的邮址收集机器人，例如：</p>
+<pre><code>&lt;address@example.com&gt;
+</code></pre><p>Markdown 会转成：</p>
+<pre><code>&lt;a href=&quot;&amp;#x6D;&amp;#x61;i&amp;#x6C;&amp;#x74;&amp;#x6F;:&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;
+&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;
+&amp;#109;&quot;&gt;&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;
+&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;
+</code></pre><p>在浏览器里面，这段字串（其实是 <code>&lt;a href=&quot;mailto:address@example.com&quot;&gt;address@example.com&lt;/a&gt;</code>）会变成一个可以点击的「address@example.com」链接。</p>
+<p>（这种作法虽然可以糊弄不少的机器人，但并不能全部挡下来，不过总比什么都不做好些。不管怎样，公开你的信箱终究会引来广告信件的。）</p>
+<h3 id="backslash">反斜杠</h3>
+
+<p>Markdown 可以利用反斜杠来插入一些在语法中有其它意义的符号，例如：如果你想要用星号加在文字旁边的方式来做出强调效果（但不用 <code>&lt;em&gt;</code> 标签），你可以在星号的前面加上反斜杠：</p>
+<pre><code>\*literal asterisks\*
+</code></pre><p>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号：</p>
+<pre><code>\   反斜线
+`   反引号
+*   星号
+_   底线
+{}  花括号
+[]  方括号
+()  括弧
+#   井字号
++   加号
+-   减号
+.   英文句点
+!   惊叹号
+</code></pre><hr>
+<h2 id="editor">Markdown 免费编辑器</h2>
+
+<p>Windows 平台</p>
+<ul>
+<li><a href="http://markdownpad.com/" target="_blank" rel="noopener">MarkdownPad</a></li>
+<li><a href="http://code52.org/DownmarkerWPF/" target="_blank" rel="noopener">MarkPad</a></li>
+</ul>
+<p>Linux 平台</p>
+<ul>
+<li><a href="http://sourceforge.net/p/retext/home/ReText/" target="_blank" rel="noopener">ReText</a></li>
+</ul>
+<p>Mac 平台</p>
+<ul>
+<li><a href="http://mouapp.com/" target="_blank" rel="noopener">Mou</a></li>
+</ul>
+<p>在线编辑器</p>
+<ul>
+<li><a href="http://markable.in/" target="_blank" rel="noopener">Markable.in</a></li>
+<li><a href="http://dillinger.io/" target="_blank" rel="noopener">Dillinger.io</a></li>
+</ul>
+<p>浏览器插件</p>
+<ul>
+<li><a href="https://chrome.google.com/webstore/detail/oknndfeeopgpibecfjljjfanledpbkog" target="_blank" rel="noopener">MaDe</a> (Chrome)</li>
+</ul>
+<p>高级应用</p>
+<ul>
+<li><a href="http://www.sublimetext.com/2" target="_blank" rel="noopener">Sublime Text 2</a> + <a href="http://ttscoff.github.com/MarkdownEditing/" target="_blank" rel="noopener">MarkdownEditing</a> / <a href="http://lucifr.com/2012/07/12/markdownediting-for-sublime-text-2/" target="_blank" rel="noopener">教程</a></li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/22/setup-android-env/" itemprop="url">
                   配置安卓开发环境
                 </a>
@@ -569,7 +1184,7 @@
 </blockquote>
 <h2 id="定义命名空间"><a href="#定义命名空间" class="headerlink" title="定义命名空间"></a>定义命名空间</h2><p>命名空间通过关键字namespace来声明。如果一个文件中包含命名空间，它必须在其它所有代码之前声明命名空间。</p>
 <p>将全局的非命名空间中的代码和命名空间的代码组合在一起，只能使用大括号的形式。全局代码必须用一个不带名称的namespace语句加上大括号括起来：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">MyPorject</span> &#123;</div><div class="line">  <span class="title">const</span> <span class="title">CONNECT_OK</span> = 1;</div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Connection</span> </span>&#123;&#125;;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">connect</span><span class="params">()</span> </span>&#123;&#125;;</div><div class="line">&#125;</div><div class="line"><span class="keyword">namespace</span> &#123;</div><div class="line">  <span class="title">session_start</span>();</div><div class="line">  $a = <span class="keyword">new</span> MyProject\Connection();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyPorject</span> &#123;</span><br><span class="line">  <span class="title">const</span> <span class="title">CONNECT_OK</span> = 1;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Connection</span> </span>&#123;&#125;;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">connect</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line">  <span class="title">session_start</span>();</span><br><span class="line">  $a = <span class="keyword">new</span> MyProject\Connection();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="使用命名空间"><a href="#使用命名空间" class="headerlink" title="使用命名空间"></a>使用命名空间</h2><ol>
 <li>非限定名称，或不包含前缀的类型名称。</li>
 </ol>
@@ -589,26 +1204,26 @@
 <p>名称中包含命名空间分隔符，并以命名空间分隔符开始的标识符，例如 \Foo\Bar。 namespace\Foo 也是一个完全限定名称.</p>
 <p>注意访问任意全局类、函数或常量，都可以使用完全限定名称，例如 \strlen() 或 \Exception 或 \INI_ALL。</p>
 </blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">Foo</span> \ <span class="title">Bar</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">strlen</span><span class="params">($str)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> $str;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">echo</span> strlen(<span class="string">'test'</span>); <span class="comment">//print test</span></div><div class="line"></div><div class="line"><span class="keyword">echo</span> \strlen(<span class="string">'test'</span>); <span class="comment">//print 4</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Foo</span> \ <span class="title">Bar</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">strlen</span><span class="params">($str)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> strlen(<span class="string">'test'</span>); <span class="comment">//print test</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> \strlen(<span class="string">'test'</span>); <span class="comment">//print 4</span></span><br></pre></td></tr></table></figure>
 <h3 id="命名空间和动态语言特征"><a href="#命名空间和动态语言特征" class="headerlink" title="命名空间和动态语言特征"></a>命名空间和动态语言特征</h3><p>必须使用完全限定名称（包括命名空间前缀的类名称）。注意因为在动态的类名称、函数名称或常量名称中，限定名称和完全限定名称没有区别，因此其前导的反斜杠是不必要的。</p>
 <p>PHP支持两种抽象的访问当前命名空间内部元素的方法， <strong>NAMESPACE</strong> 魔术常量和namespace关键字。</p>
 <p>常量<strong>NAMESPACE</strong>的值是包含当前命名空间名称的字符串。在全局的，不包括在任何命名空间中的代码，它包含一个空的字符串。</p>
 <p>关键字 namespace 可用来显式访问当前命名空间或子命名空间中的元素。它等价于类中的 self 操作符。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="keyword">namespace</span> \ <span class="title">foo</span>(); <span class="comment">// calls function MyProject \ foo()</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> \ <span class="title">foo</span>(); <span class="comment">// calls function MyProject \ foo()</span></span><br></pre></td></tr></table></figure>
 <h3 id="使用命名空间：别名-导入"><a href="#使用命名空间：别名-导入" class="headerlink" title="使用命名空间：别名/导入"></a>使用命名空间：别名/导入</h3><blockquote>
 <p>注意PHP不支持导入函数或常量。</p>
 </blockquote>
 <p>导入的命名空间必须是完全限定的，不会根据当前的命名空间做相对解析，所以前道的反斜杠是不必要的也不允许有反斜杠。</p>
-<h5 id="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"><a href="#导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。" class="headerlink" title="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"></a>导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</div><div class="line"></div><div class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">//实例化 My \ Full \ classname 对象</span></div><div class="line">$a = <span class="string">'Another'</span>;</div><div class="line">$obj2 = <span class="keyword">new</span> $a; <span class="comment">//实例化一个Another对象</span></div></pre></td></tr></table></figure>
+<h5 id="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"><a href="#导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。" class="headerlink" title="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"></a>导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</span><br><span class="line"></span><br><span class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">//实例化 My \ Full \ classname 对象</span></span><br><span class="line">$a = <span class="string">'Another'</span>;</span><br><span class="line">$obj2 = <span class="keyword">new</span> $a; <span class="comment">//实例化一个Another对象</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>另外，导入操作只影响非限定名称和限定名称。完全限定名称由于是确定的，故不受导入的影响</p>
 </blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</div><div class="line"></div><div class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">// My\Full\classname</span></div><div class="line">$obj = <span class="keyword">new</span> \Another; <span class="comment">// instance of class Another</span></div><div class="line">$obj = <span class="keyword">new</span> Another \ thing; <span class="comment">// My\Full\classname\thing;</span></div><div class="line">$obj = <span class="keyword">new</span> \Another\thing; <span class="comment">// Another\thing</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</span><br><span class="line"></span><br><span class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">// My\Full\classname</span></span><br><span class="line">$obj = <span class="keyword">new</span> \Another; <span class="comment">// instance of class Another</span></span><br><span class="line">$obj = <span class="keyword">new</span> Another \ thing; <span class="comment">// My\Full\classname\thing;</span></span><br><span class="line">$obj = <span class="keyword">new</span> \Another\thing; <span class="comment">// Another\thing</span></span><br></pre></td></tr></table></figure>
 <h5 id="后备全局函数-常量"><a href="#后备全局函数-常量" class="headerlink" title="后备全局函数/常量"></a>后备全局函数/常量</h5><p>在命名空间中遇到一个非限定的类、函数和常量名称时，使用不同的优先策略来解析该名称。</p>
 <p>类名称总是解析到当前命名空间中的名称。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</div><div class="line"></div><div class="line">$a = <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">'hi'</span>); <span class="comment">//会报错：Class 'MyProject\Exception' not found.</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">'hi'</span>); <span class="comment">//会报错：Class 'MyProject\Exception' not found.</span></span><br></pre></td></tr></table></figure>
 <p>因此在访问系统内部或不包含在命名空间中的类名称时，必须使用完全限定名称。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">namspace MyProject;</div><div class="line"></div><div class="line">$a = <span class="keyword">new</span> \<span class="keyword">Exception</span>(<span class="string">'hi'</span>);<span class="comment">// success</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">namspace MyProject;</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> \<span class="keyword">Exception</span>(<span class="string">'hi'</span>);<span class="comment">// success</span></span><br></pre></td></tr></table></figure>
 <p>对于函数和常量来说，如果当前命名空间中不存在该函数或常量，PHP 会退而使用全局空间中的函数或常量。</p>
 <h2 id="名称解析规则"><a href="#名称解析规则" class="headerlink" title="名称解析规则"></a>名称解析规则</h2><ol>
 <li><p>对完全限定名称的函数、类和常量的调用在编译时解析.例如 new \A\B 解析为类 A\B.</p>
@@ -741,14 +1356,14 @@
         
           <span itemprop="articleBody">
             
-              <h2 id="如何检查PHP文件是否有语法错误"><a href="#如何检查PHP文件是否有语法错误" class="headerlink" title="如何检查PHP文件是否有语法错误"></a>如何检查PHP文件是否有语法错误</h2><p>了解什么是语法错误：<a href="http://en.wikipedia.org/wiki/Syntax_error" target="_blank" rel="external">http://en.wikipedia.org/wiki/Syntax_error</a></p>
+              <h2 id="如何检查PHP文件是否有语法错误"><a href="#如何检查PHP文件是否有语法错误" class="headerlink" title="如何检查PHP文件是否有语法错误"></a>如何检查PHP文件是否有语法错误</h2><p>了解什么是语法错误：<a href="http://en.wikipedia.org/wiki/Syntax_error" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Syntax_error</a></p>
 <blockquote>
 <p>编译器过程中，如果遇到不合法的语法的代码时会报语法错误。既不符合编程语言的语法规范。</p>
 </blockquote>
 <p>对于编译型语言，语法错误发生在编译的时候。程序将不会编译通过直到所有的语法错误解决。</p>
 <p>对于解释型语言，并不是所有的语法错误能被可靠的发现直到运行的时候。</p>
 <p>使用命令行工具，如下:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ php -l filename.php</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ php -l filename.php</span><br></pre></td></tr></table></figure>
             
           </span>
         
@@ -863,7 +1478,7 @@
           <span itemprop="articleBody">
             
               <blockquote>
-<p>原文<a href="http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/" target="_blank" rel="external">http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/</a></p>
+<p>原文<a href="http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/" target="_blank" rel="noopener">http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/</a></p>
 </blockquote>
 <h2 id="什么是Provider"><a href="#什么是Provider" class="headerlink" title="什么是Provider"></a>什么是Provider</h2><p>AngularJS官方文档定义：</p>
 <blockquote>
@@ -1104,41 +1719,41 @@ app.controller(&apos;ctrl&apos;, function(movie) {
           <span itemprop="articleBody">
             
               <p>创建一个文件夹test，并创建一个新文件uppercaseme.js</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// uppercaseme.js</span></div><div class="line"><span class="meta">"use strict"</span></div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> myfile = <span class="string">"myfile.txt"</span>;</div><div class="line"><span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</div><div class="line">    <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</div><div class="line">    fs.writeFileSync(myfile, content.toUpperCase());</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// uppercaseme.js</span></span><br><span class="line"><span class="meta">"use strict"</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> myfile = <span class="string">"myfile.txt"</span>;</span><br><span class="line"><span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</span><br><span class="line">    <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</span><br><span class="line">    fs.writeFileSync(myfile, content.toUpperCase());</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>代码的目的是读取myfile.txt并转化内容为大写。</p>
 <p><strong>(执行:)</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node uppercaseme</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node uppercaseme</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>执行命令行命令时需在同一个目录</p>
 </blockquote>
 <p>在命令行可以查看输出，并得知是否执行成功。</p>
 <h2 id="使用命令行参数"><a href="#使用命令行参数" class="headerlink" title="使用命令行参数"></a>使用命令行参数</h2><p>上一个列子将读取的文件hardcoding了，我们稍作改进,通过命令行读取要执行操作的文件。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//使用process.argv</span></div><div class="line"><span class="number">0</span>: node</div><div class="line"><span class="number">1</span>: &lt;name-of-your-js-file&gt;</div><div class="line">2+....&lt;additional arguments passed&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用process.argv</span></span><br><span class="line"><span class="number">0</span>: node</span><br><span class="line"><span class="number">1</span>: &lt;name-of-your-js-file&gt;</span><br><span class="line">2+....&lt;additional arguments passed&gt;</span><br></pre></td></tr></table></figure>
 <p>更新代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">"use strict"</span></div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</div><div class="line"><span class="comment">// Read the first additional argument passed to the program</span></div><div class="line"><span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</div><div class="line"></div><div class="line"><span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</div><div class="line">    <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</div><div class="line">    fs.writeFileSync(myfile, content.toUpperCase());</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</div><div class="line">&#125;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">"ERROR: Pass on a file name/path"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</span><br><span class="line"><span class="comment">// Read the first additional argument passed to the program</span></span><br><span class="line"><span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</span><br><span class="line">    <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</span><br><span class="line">    fs.writeFileSync(myfile, content.toUpperCase());</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</span><br><span class="line">&#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"ERROR: Pass on a file name/path"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>代码做了简单的判断，当我们没有获取到输入的文件名时，抛出错误。</p>
 <p><strong>(执行:)</strong></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node uppercaseme myfile.txt</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node uppercaseme myfile.txt</span><br></pre></td></tr></table></figure>
 <h2 id="创一个Node模块"><a href="#创一个Node模块" class="headerlink" title="创一个Node模块"></a>创一个Node模块</h2><p>将我们写好的模块发布出来，让更多人使用，发布之后其他人就可以像下面一样使用：</p>
 <ul>
 <li>通过NPM安装</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install uppercase</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install uppercase</span><br></pre></td></tr></table></figure>
 <ul>
 <li>在命令行中使用</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uppercaseme &lt;filename&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uppercaseme &lt;filename&gt;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>被当作模块在其他模块中使用</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">require</span>(<span class="string">'uppercaseme'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'uppercaseme'</span>);</span><br></pre></td></tr></table></figure>
 <h4 id="为了做到以上的效果，我们将会创建一个NPM包"><a href="#为了做到以上的效果，我们将会创建一个NPM包" class="headerlink" title="为了做到以上的效果，我们将会创建一个NPM包"></a>为了做到以上的效果，我们将会创建一个NPM包</h4><ol>
 <li>首先我们需要做的是改变目录结构</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">test</div><div class="line">    src</div><div class="line">      -- bin</div><div class="line">        -- uppercaseme</div><div class="line">      -- lib</div><div class="line">        -- uppercaseme.js</div><div class="line">      -- package.json</div><div class="line">      -- README.md</div><div class="line"></div><div class="line">    myfile.txt</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">test</span><br><span class="line">    src</span><br><span class="line">      -- bin</span><br><span class="line">        -- uppercaseme</span><br><span class="line">      -- lib</span><br><span class="line">        -- uppercaseme.js</span><br><span class="line">      -- package.json</span><br><span class="line">      -- README.md</span><br><span class="line"></span><br><span class="line">    myfile.txt</span><br></pre></td></tr></table></figure>
 <p>将我们刚刚写好的uppercaseme.js移动到lib目录。其他文件先留空在接下来进行完善。</p>
 <p><em>(命令行仍然在test文件夹)</em></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">node ./src/lib/uppercaseme ./myfile.txt</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./src/lib/uppercaseme ./myfile.txt</span><br></pre></td></tr></table></figure>
 <p>和之前的运行效果相同。</p>
 <ol>
 <li>接下来创建 src/bin/uppercaseme</li>
@@ -1146,11 +1761,11 @@ app.controller(&apos;ctrl&apos;, function(movie) {
 <blockquote>
 <p>请注意这个文件没有扩展名</p>
 </blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env node</span></div><div class="line"></div><div class="line"><span class="string">"use strict"</span>;</div><div class="line">var path = require(<span class="string">'path'</span>);</div><div class="line">var fs = require(<span class="string">'fs'</span>);</div><div class="line">var lib = path.join(path.dirname(fs.realpathSync(__filename)), <span class="string">'../lib'</span>);</div><div class="line"></div><div class="line">require(lib + <span class="string">'/uppercaseme.js'</span>).convert();</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="string">"use strict"</span>;</span><br><span class="line">var path = require(<span class="string">'path'</span>);</span><br><span class="line">var fs = require(<span class="string">'fs'</span>);</span><br><span class="line">var lib = path.join(path.dirname(fs.realpathSync(__filename)), <span class="string">'../lib'</span>);</span><br><span class="line"></span><br><span class="line">require(lib + <span class="string">'/uppercaseme.js'</span>).convert();</span><br></pre></td></tr></table></figure>
 <ol>
 <li>改造文件为Node模块</li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="meta">"use strict"</span></div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertThis</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</div><div class="line">        <span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</div><div class="line">            <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</div><div class="line">            fs.writeFileSync(myfile, content.toUpperCase());</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">"Pass on a file name/path"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">exports.convert = convertThis;</div></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertThis</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</span><br><span class="line">            <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</span><br><span class="line">            fs.writeFileSync(myfile, content.toUpperCase());</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Pass on a file name/path"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">exports.convert = convertThis;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>暴露出convert接口</p>
 </blockquote>
@@ -1159,7 +1774,7 @@ app.controller(&apos;ctrl&apos;, function(movie) {
 </code></pre><h2 id="创建NPM包"><a href="#创建NPM包" class="headerlink" title="创建NPM包"></a>创建NPM包</h2><ol>
 <li>创建 src/package.json 和 src/README.md</li>
 </ol>
-<p>package.json:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"author"</span>: <span class="string">"authoer"</span>,</div><div class="line">  <span class="string">"name"</span>: <span class="string">"uppercaseme"</span>,</div><div class="line">  <span class="string">"description"</span>: <span class="string">"Converts files to uppercase"</span>,</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.0.1"</span>,</div><div class="line">  <span class="string">"repository"</span>: &#123;</div><div class="line">    <span class="string">"url"</span>: <span class="string">""</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"main"</span>: <span class="string">"./lib/uppercaseme"</span>,</div><div class="line">  <span class="string">"keywords"</span>: [</div><div class="line">    <span class="string">"upper"</span>,</div><div class="line">    <span class="string">"case"</span>,</div><div class="line">    <span class="string">"file"</span></div><div class="line">  ],</div><div class="line">  <span class="string">"bin"</span>: &#123;</div><div class="line">    <span class="string">"uppercaseme"</span>: <span class="string">"./bin/uppercaseme"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"dependencies"</span>: &#123;&#125;,</div><div class="line">  <span class="string">"engines"</span>: &#123;</div><div class="line">    <span class="string">"node"</span>: <span class="string">"*"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>package.json:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"author"</span>: <span class="string">"authoer"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"uppercaseme"</span>,</span><br><span class="line">  <span class="string">"description"</span>: <span class="string">"Converts files to uppercase"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="string">"repository"</span>: &#123;</span><br><span class="line">    <span class="string">"url"</span>: <span class="string">""</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"main"</span>: <span class="string">"./lib/uppercaseme"</span>,</span><br><span class="line">  <span class="string">"keywords"</span>: [</span><br><span class="line">    <span class="string">"upper"</span>,</span><br><span class="line">    <span class="string">"case"</span>,</span><br><span class="line">    <span class="string">"file"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="string">"bin"</span>: &#123;</span><br><span class="line">    <span class="string">"uppercaseme"</span>: <span class="string">"./bin/uppercaseme"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">"engines"</span>: &#123;</span><br><span class="line">    <span class="string">"node"</span>: <span class="string">"*"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>main是一个模块的ID，也是程序的主要入口。在例子中我们的package被命名为 uppercaseme 。当用户安装之后，并 require(‘uppercaseme’)之后我们的主模块的export object会被返回。</p>
 <p>bin 我们会通过命令行在任何地方运行，安装之后，npm全局安装后会创建 bin/uppercaseme的符号链接，或者 ./node_modules/.bin/ 本地安装</p>
@@ -1194,7 +1809,7 @@ OR
 <pre><code>npm install -g uppercaseme
 </code></pre><p>安装成功后，我们可以在任何目录进行操作：</p>
 <pre><code>uppercaseme myfile.txt
-</code></pre><p><a href="http://www.tuicool.com/articles/F7f22i" target="_blank" rel="external">参考文章</a></p>
+</code></pre><p><a href="http://www.tuicool.com/articles/F7f22i" target="_blank" rel="noopener">参考文章</a></p>
 <h3 id="note"><a href="#note" class="headerlink" title="[note]"></a>[note]</h3><p>在package.json所在目录下使用npm install . -g可先在本地安装当前命令行程序，可用于发布前的本地测试。</p>
 
             
@@ -1324,31 +1939,31 @@ OR
             
               <ul>
 <li><p>检查是否安装svn</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$rpm</span> -qa subversion</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$rpm</span> -qa subversion</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>卸载旧版本的svn</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$yum</span> remove subversion</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$yum</span> remove subversion</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>安装需要的apache模块</p>
 </li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$yum</span> install mod_dav_svn mod_auth_mysql</div><div class="line">//确认是否安装</div><div class="line"><span class="variable">$ls</span> /etc/httpd/modules | grep svn</div><div class="line">	mod_authz_svn.so</div><div class="line">	mod_dav_svn.so</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$yum</span> install mod_dav_svn mod_auth_mysql</span><br><span class="line">//确认是否安装</span><br><span class="line"><span class="variable">$ls</span> /etc/httpd/modules | grep svn</span><br><span class="line">	mod_authz_svn.so</span><br><span class="line">	mod_dav_svn.so</span><br></pre></td></tr></table></figure>
 <ul>
 <li>验证安装</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$svnserve</span> --version</div><div class="line">	svnserve，版本 1.6.11 (r934486)</div><div class="line">	编译于 Jun 23 2012，00:44:03</div><div class="line">	版权所有 (C) 2000-2009 CollabNet。</div><div class="line">	Subversion 是开放源代码软件，请参阅 http://subversion.tigris.org/ 站点。</div><div class="line">	此产品包含由 CollabNet(http://www.Collab.Net/) 开发的软件。</div><div class="line"></div><div class="line">	下列版本库后端(FS) 模块可用:</div><div class="line"></div><div class="line">	* fs_base : 模块只能操作BDB版本库。</div><div class="line">	* fs_fs : 模块与文本文件(FSFS)版本库一起工作。</div><div class="line"></div><div class="line">	Cyrus SASL 认证可用。</div></pre></td></tr></table></figure>
-<p>以上的配置参考<a href="http://my.oschina.net/junn/blog/164041" target="_blank" rel="external">CentOS-6.3安装配置SVN</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$svnserve</span> --version</span><br><span class="line">	svnserve，版本 1.6.11 (r934486)</span><br><span class="line">	编译于 Jun 23 2012，00:44:03</span><br><span class="line">	版权所有 (C) 2000-2009 CollabNet。</span><br><span class="line">	Subversion 是开放源代码软件，请参阅 http://subversion.tigris.org/ 站点。</span><br><span class="line">	此产品包含由 CollabNet(http://www.Collab.Net/) 开发的软件。</span><br><span class="line"></span><br><span class="line">	下列版本库后端(FS) 模块可用:</span><br><span class="line"></span><br><span class="line">	* fs_base : 模块只能操作BDB版本库。</span><br><span class="line">	* fs_fs : 模块与文本文件(FSFS)版本库一起工作。</span><br><span class="line"></span><br><span class="line">	Cyrus SASL 认证可用。</span><br></pre></td></tr></table></figure>
+<p>以上的配置参考<a href="http://my.oschina.net/junn/blog/164041" target="_blank" rel="noopener">CentOS-6.3安装配置SVN</a></p>
 <h3 id="配置apache"><a href="#配置apache" class="headerlink" title="配置apache"></a>配置apache</h3><hr>
 <p>由于我的服务器80端口被nginx占用，所以采用nginx反向代理的办法,apache监听8080端口，<br>配置nginx</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">proxy_pass http://127.0.0.1:8080</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">proxy_pass http://127.0.0.1:8080</span><br></pre></td></tr></table></figure>
 <h4 id="配置svn用户密码"><a href="#配置svn用户密码" class="headerlink" title="配置svn用户密码"></a>配置svn用户密码</h4><blockquote>
 <p>设置密码</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$sudo htpasswd -c /opt/svn/passwd abc</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sudo htpasswd -c /opt/svn/passwd abc</span><br></pre></td></tr></table></figure>
 <p>创建用户abc并按照提示设置密码，网页认证的时候使用该用户名和密码登录。后面再添加用户的时候去掉-c选项。</p>
 <p>*初始化版本仓库，导入原始代码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ svn import /data/www/code file:///opt/svn/repos1 -m <span class="string">'first init'</span></div><div class="line">$ chown -R apache.apache repos</div></pre></td></tr></table></figure>
-<h4 id="创建svn版本库"><a href="#创建svn版本库" class="headerlink" title="创建svn版本库"></a>创建svn版本库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ svnadmin create /opt/svn/testrepos</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ svn import /data/www/code file:///opt/svn/repos1 -m <span class="string">'first init'</span></span><br><span class="line">$ chown -R apache.apache repos</span><br></pre></td></tr></table></figure>
+<h4 id="创建svn版本库"><a href="#创建svn版本库" class="headerlink" title="创建svn版本库"></a>创建svn版本库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ svnadmin create /opt/svn/testrepos</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>svnadmin在创建版本库时是root身份，需使用<code>chown</code>改变，保证svn对文件目录有权限</p>
 </blockquote>
@@ -1466,8 +2081,8 @@ OR
         
           <span itemprop="articleBody">
             
-              <p><a href="https://speakerdeck.com/lifesinger/seajs" target="_blank" rel="external">玉伯的一份ppt</a></p>
-<p><strong>在这份Seajs的PPT中，玉伯介绍到了Seajs的实现</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*a.js*/</span></div><div class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>);</div><div class="line">    <span class="keyword">var</span> c = <span class="built_in">require</span>(<span class="string">'./c'</span>);</div><div class="line">    <span class="comment">//other code</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">/*main.js*/</span></div><div class="line">seajs.use(./a);</div></pre></td></tr></table></figure></p>
+              <p><a href="https://speakerdeck.com/lifesinger/seajs" target="_blank" rel="noopener">玉伯的一份ppt</a></p>
+<p><strong>在这份Seajs的PPT中，玉伯介绍到了Seajs的实现</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*a.js*/</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>);</span><br><span class="line">    <span class="keyword">var</span> c = <span class="built_in">require</span>(<span class="string">'./c'</span>);</span><br><span class="line">    <span class="comment">//other code</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*main.js*/</span></span><br><span class="line">seajs.use(./a);</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>Step1:      解析 ‘./a’</li>
 <li>Step2.1:  下载a</li>
@@ -1486,7 +2101,7 @@ OR
 <ul>
 <li>将上一步得到的路径通过 insert script 、xhr、web workder…等方式插入</li>
 </ul>
-<p><strong><a href="https://speakerdeck.com/lifesinger/seajs" target="_blank" rel="external">More See PPT</a></strong></p>
+<p><strong><a href="https://speakerdeck.com/lifesinger/seajs" target="_blank" rel="noopener">More See PPT</a></strong></p>
 
             
           </span>
@@ -1589,136 +2204,19 @@ OR
         
           <span itemprop="articleBody">
             
-              <h4 id="首先查看之前编译安装nginx的配置"><a href="#首先查看之前编译安装nginx的配置" class="headerlink" title="首先查看之前编译安装nginx的配置"></a>首先查看之前编译安装nginx的配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nginx -V</div></pre></td></tr></table></figure>
+              <h4 id="首先查看之前编译安装nginx的配置"><a href="#首先查看之前编译安装nginx的配置" class="headerlink" title="首先查看之前编译安装nginx的配置"></a>首先查看之前编译安装nginx的配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nginx -V</span><br></pre></td></tr></table></figure>
 <p>会列出配置的参数：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">configure arguments: --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure arguments: --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module</span><br></pre></td></tr></table></figure>
 <h4 id="重新编译增加模块"><a href="#重新编译增加模块" class="headerlink" title="重新编译增加模块"></a>重新编译增加模块</h4><blockquote>
 <p>这个过程不会替换现有的nginx的东西，既可以在不停止服务的前提下进行替换</p>
 </blockquote>
 <p>首先找到原来安装nginx的目录(如果已经删除，则重新现在nginx源程序)</p>
 <p>进入该目录，然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</div><div class="line"></div><div class="line">$ make</div><div class="line"></div><div class="line">$ make install</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line"></span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
 <p>保险做法：</p>
 <p>不执行make install, 将执行make之后objs目录下的nginx替换现有的。(不要忘记对之前的进行备份)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</div><div class="line"></div><div class="line">$ make</div><div class="line"></div><div class="line">$ service nginx stop</div><div class="line"></div><div class="line">$ cp /etc/nginx/sbin/nginx /etc/nginx/sbin/nginx.bak</div><div class="line"></div><div class="line">$ cp objs/nginx /etc/nginx/sbin/</div><div class="line"></div><div class="line">$ service nginx start</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line"></span><br><span class="line">$ service nginx stop</span><br><span class="line"></span><br><span class="line">$ cp /etc/nginx/sbin/nginx /etc/nginx/sbin/nginx.bak</span><br><span class="line"></span><br><span class="line">$ cp objs/nginx /etc/nginx/sbin/</span><br><span class="line"></span><br><span class="line">$ service nginx start</span><br></pre></td></tr></table></figure>
 <h4 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h4>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2013/11/21/useful-mysql-command/" itemprop="url">
-                  经常使用到的Mysql命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2013-11-21T23:57:23+00:00" content="2013-11-21">
-              2013-11-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2013/11/21/useful-mysql-command/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/21/useful-mysql-command/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h4 id="create-database-with-utf-8"><a href="#create-database-with-utf-8" class="headerlink" title="create database with utf-8"></a>create database with utf-8</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;</div></pre></td></tr></table></figure>
-<h4 id="当没有权限访问服务器的mysql的解决办法："><a href="#当没有权限访问服务器的mysql的解决办法：" class="headerlink" title="当没有权限访问服务器的mysql的解决办法："></a>当没有权限访问服务器的mysql的解决办法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GRANT ALL PRIVILEGES ON *.* TO root@&apos;%&apos; IDENTIFIED BY &apos;root-password&apos; WITH GRANT OPTION;</div></pre></td></tr></table></figure>
-<h4 id="mysql乱码："><a href="#mysql乱码：" class="headerlink" title="mysql乱码："></a>mysql乱码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vi /etc/my.cnf</div></pre></td></tr></table></figure>
-<p>添加：<br>[client]<br>default-character-set=utf8<br>重启mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ service mysqld restart</div></pre></td></tr></table></figure></p>
-<h4 id="mysql数据库数据导入与导出"><a href="#mysql数据库数据导入与导出" class="headerlink" title="mysql数据库数据导入与导出"></a>mysql数据库数据导入与导出</h4><p>1、导出数据库为dbname的表结构（其中用戶名为root,密码为dbpasswd,生成的脚本名为db.sql）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd -d dbname &gt;db.sql;</div></pre></td></tr></table></figure></p>
-<p>2、导出数据库为dbname某张表(test)结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd -d dbname test&gt;db.sql;</div></pre></td></tr></table></figure></p>
-<p>3、导出数据库为dbname所有表结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd  dbname &gt;db.sql;</div></pre></td></tr></table></figure></p>
-<p>4、导出数据库为dbname某张表(test)结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd dbname test&gt;db.sql;</div></pre></td></tr></table></figure></p>
-<p>5、忽略某张或者多张表导出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd dbname --ignore-table=dbname.table1 --ignore-table=dbname.table2 &gt; db.sql</div></pre></td></tr></table></figure>
-<h4 id="修改表名，列名"><a href="#修改表名，列名" class="headerlink" title="修改表名，列名"></a>修改表名，列名</h4><ul>
-<li>添加列：alter table 表名 add column 列名 varchar(30);</li>
-<li>删除列：alter table 表名 drop column 列名;</li>
-<li>修改列名：alter table 表名 change 旧列名 新列名;</li>
-</ul>
-
             
           </span>
         
@@ -1785,21 +2283,21 @@ OR
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -1868,7 +2366,7 @@ OR
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="接口可以指定某些类必须实现哪些方法，但不需要定义这些方法的具体内容， 所以定义的所有方法都是空的  需要注意的点要实现一个接口，使用implements操作符。类中必须实现接口中定义的所有方法，类可以实现多个接口，用逗号来分割多个接口名称。  接口中所有的方法都必须是公有的，这是接口的特性  实现多个接口时，接口中的方法不能有重名  接口也可以通过extends操作符实现继承  类要实现接口，必">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.794Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解php的接口">
 <meta name="twitter:description" content="接口可以指定某些类必须实现哪些方法，但不需要定义这些方法的具体内容， 所以定义的所有方法都是空的  需要注意的点要实现一个接口，使用implements操作符。类中必须实现接口中定义的所有方法，类可以实现多个接口，用逗号来分割多个接口名称。  接口中所有的方法都必须是公有的，这是接口的特性  实现多个接口时，接口中的方法不能有重名  接口也可以通过extends操作符实现继承  类要实现接口，必">
@@ -284,7 +284,7 @@
 <li><p>类要实现接口，必须使用和接口中所定义的方法完全一致的方式。</p>
 </li>
 <li><p>接口中也可以定义常量，不能被子类或子接口所覆盖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">//声明一个&apos;iTemplate&apos;接口</div><div class="line">interface iTemplate</div><div class="line">&#123;</div><div class="line">  public function setVariable ($name, $var);</div><div class="line">  public function getHtml ($template);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//实现接口</div><div class="line">class Template implement iTemplate</div><div class="line">&#123;</div><div class="line">  private $vars = array();</div><div class="line"></div><div class="line">  public function setVariable($name, $var)</div><div class="line">  &#123;</div><div class="line">    $this-&gt;vars[$name] = $var;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public function getHtml($template)</div><div class="line">  &#123;</div><div class="line">    foreach($this-&gt;vars as $name =&gt; $value)</div><div class="line">    &#123;</div><div class="line">      $template = str_repleace(&apos;&#123;&apos; . $name . &apos;&#125;&apos;, $value, $template);</div><div class="line">    &#125;</div><div class="line">    return $template;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">//声明一个&apos;iTemplate&apos;接口</span><br><span class="line">interface iTemplate</span><br><span class="line">&#123;</span><br><span class="line">  public function setVariable ($name, $var);</span><br><span class="line">  public function getHtml ($template);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//实现接口</span><br><span class="line">class Template implement iTemplate</span><br><span class="line">&#123;</span><br><span class="line">  private $vars = array();</span><br><span class="line"></span><br><span class="line">  public function setVariable($name, $var)</span><br><span class="line">  &#123;</span><br><span class="line">    $this-&gt;vars[$name] = $var;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public function getHtml($template)</span><br><span class="line">  &#123;</span><br><span class="line">    foreach($this-&gt;vars as $name =&gt; $value)</span><br><span class="line">    &#123;</span><br><span class="line">      $template = str_repleace(&apos;&#123;&apos; . $name . &apos;&#125;&apos;, $value, $template);</span><br><span class="line">    &#125;</span><br><span class="line">    return $template;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 </span>
       
@@ -405,21 +405,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -505,7 +505,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

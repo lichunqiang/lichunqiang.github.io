@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="create database with utf-81CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; 当没有权限访问服务器的mysql的解决办法：1GRANT ALL PRIVILEGES ON *.* TO root@&amp;apos;%&amp;apos; IDENTIFIED BY &amp;a">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.798Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="经常使用到的Mysql命令">
 <meta name="twitter:description" content="create database with utf-81CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci; 当没有权限访问服务器的mysql的解决办法：1GRANT ALL PRIVILEGES ON *.* TO root@&amp;apos;%&amp;apos; IDENTIFIED BY &amp;a">
@@ -270,16 +270,17 @@
       
 
       
-        <span itemprop="articleBody"><h4 id="create-database-with-utf-8"><a href="#create-database-with-utf-8" class="headerlink" title="create database with utf-8"></a>create database with utf-8</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;</div></pre></td></tr></table></figure>
-<h4 id="当没有权限访问服务器的mysql的解决办法："><a href="#当没有权限访问服务器的mysql的解决办法：" class="headerlink" title="当没有权限访问服务器的mysql的解决办法："></a>当没有权限访问服务器的mysql的解决办法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GRANT ALL PRIVILEGES ON *.* TO root@&apos;%&apos; IDENTIFIED BY &apos;root-password&apos; WITH GRANT OPTION;</div></pre></td></tr></table></figure>
-<h4 id="mysql乱码："><a href="#mysql乱码：" class="headerlink" title="mysql乱码："></a>mysql乱码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ vi /etc/my.cnf</div></pre></td></tr></table></figure>
-<p>添加：<br>[client]<br>default-character-set=utf8<br>重启mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ service mysqld restart</div></pre></td></tr></table></figure></p>
-<h4 id="mysql数据库数据导入与导出"><a href="#mysql数据库数据导入与导出" class="headerlink" title="mysql数据库数据导入与导出"></a>mysql数据库数据导入与导出</h4><p>1、导出数据库为dbname的表结构（其中用戶名为root,密码为dbpasswd,生成的脚本名为db.sql）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd -d dbname &gt;db.sql;</div></pre></td></tr></table></figure></p>
-<p>2、导出数据库为dbname某张表(test)结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd -d dbname test&gt;db.sql;</div></pre></td></tr></table></figure></p>
-<p>3、导出数据库为dbname所有表结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd  dbname &gt;db.sql;</div></pre></td></tr></table></figure></p>
-<p>4、导出数据库为dbname某张表(test)结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd dbname test&gt;db.sql;</div></pre></td></tr></table></figure></p>
+        <span itemprop="articleBody"><h4 id="create-database-with-utf-8"><a href="#create-database-with-utf-8" class="headerlink" title="create database with utf-8"></a>create database with utf-8</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;</span><br></pre></td></tr></table></figure>
+<h4 id="当没有权限访问服务器的mysql的解决办法："><a href="#当没有权限访问服务器的mysql的解决办法：" class="headerlink" title="当没有权限访问服务器的mysql的解决办法："></a>当没有权限访问服务器的mysql的解决办法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO root@&apos;%&apos; IDENTIFIED BY &apos;root-password&apos; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<h4 id="mysql乱码："><a href="#mysql乱码：" class="headerlink" title="mysql乱码："></a>mysql乱码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/my.cnf</span><br></pre></td></tr></table></figure>
+<p>添加：<br>[client]</p>
+<p>default-character-set=utf8<br>重启mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service mysqld restart</span><br></pre></td></tr></table></figure></p>
+<h4 id="mysql数据库数据导入与导出"><a href="#mysql数据库数据导入与导出" class="headerlink" title="mysql数据库数据导入与导出"></a>mysql数据库数据导入与导出</h4><p>1、导出数据库为dbname的表结构（其中用戶名为root,密码为dbpasswd,生成的脚本名为db.sql）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd -d dbname &gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>2、导出数据库为dbname某张表(test)结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd -d dbname test&gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>3、导出数据库为dbname所有表结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd  dbname &gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>4、导出数据库为dbname某张表(test)结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd dbname test&gt;db.sql;</span><br></pre></td></tr></table></figure></p>
 <p>5、忽略某张或者多张表导出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ mysqldump -uroot -pdbpasswd dbname --ignore-table=dbname.table1 --ignore-table=dbname.table2 &gt; db.sql</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd dbname --ignore-table=dbname.table1 --ignore-table=dbname.table2 &gt; db.sql</span><br></pre></td></tr></table></figure>
 <h4 id="修改表名，列名"><a href="#修改表名，列名" class="headerlink" title="修改表名，列名"></a>修改表名，列名</h4><ul>
 <li>添加列：alter table 表名 add column 列名 varchar(30);</li>
 <li>删除列：alter table 表名 drop column 列名;</li>
@@ -408,21 +409,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -508,7 +509,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

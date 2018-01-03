@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="PHP获取当前类名、函数名、方法名  CLASS获取当前类名 FUNCTION 获取当前函数名 METHOD 获取当前方法名  (返回区分大小写) 关于PHP中的函数 函数名是大小写无关的 123456789101112131415function Test() &amp;#123;	echo &apos;test&apos;;&amp;#125;test();// print testclass Test&amp;#123;	public">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.794Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="今日笔记">
 <meta name="twitter:description" content="PHP获取当前类名、函数名、方法名  CLASS获取当前类名 FUNCTION 获取当前函数名 METHOD 获取当前方法名  (返回区分大小写) 关于PHP中的函数 函数名是大小写无关的 123456789101112131415function Test() &amp;#123;	echo &apos;test&apos;;&amp;#125;test();// print testclass Test&amp;#123;	public">
@@ -291,7 +291,7 @@
 <p><em>(返回区分大小写)</em></p>
 <h3 id="关于PHP中的函数"><a href="#关于PHP中的函数" class="headerlink" title="关于PHP中的函数"></a>关于PHP中的函数</h3><ul>
 <li><p>函数名是大小写无关的</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">echo</span> <span class="string">'test'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">test();<span class="comment">// print test</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Say</span><span class="params">()</span></span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">echo</span> <span class="string">'say something'</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">$t = <span class="keyword">new</span> Test;</div><div class="line">$t-&gt;say(); <span class="comment">//print say something</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">'test'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();<span class="comment">// print test</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Say</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'say something'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">$t = <span class="keyword">new</span> Test;</span><br><span class="line">$t-&gt;say(); <span class="comment">//print say something</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>函数无需在调用之前被定义，但有两个特例</p>
 <ul>
@@ -303,7 +303,7 @@
 <blockquote>
 <p>PHP 中的所有函数和类都具有全局作用域，可以定义在一个函数之内而在之外调用，反之亦然。</p>
 </blockquote>
-<p>关于函数中的函数例子：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">()</span></span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">echo</span> <span class="string">'I will exist until foo() is called!'</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/* 先在还不能调用bar()，因为还不存在 */</span></div><div class="line">foo();</div><div class="line"></div><div class="line"><span class="comment">/*因为foo()函数的执行使bar()变为已定义函数*/</span></div><div class="line">bar();</div></pre></td></tr></table></figure></p>
+<p>关于函数中的函数例子：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'I will exist until foo() is called!'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 先在还不能调用bar()，因为还不存在 */</span></span><br><span class="line">foo();</span><br><span class="line"></span><br><span class="line"><span class="comment">/*因为foo()函数的执行使bar()变为已定义函数*/</span></span><br><span class="line">bar();</span><br></pre></td></tr></table></figure></p>
 </span>
       
     </div>
@@ -427,21 +427,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -527,7 +527,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

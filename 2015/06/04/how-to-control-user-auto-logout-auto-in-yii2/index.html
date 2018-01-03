@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="现在需求是：如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录 我们可以通过配置  yii\web\User::$authTimeout来达到效果，上代码： 1234&amp;apos;user&amp;apos; =&amp;gt; [    &amp;apos;identityClass&amp;apos; =&amp;gt; &amp;apos;app\models\User&amp;apos;,    &amp;apos">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.794Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="怎么控制用户一定时间未操作自动登出">
 <meta name="twitter:description" content="现在需求是：如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录 我们可以通过配置  yii\web\User::$authTimeout来达到效果，上代码： 1234&amp;apos;user&amp;apos; =&amp;gt; [    &amp;apos;identityClass&amp;apos; =&amp;gt; &amp;apos;app\models\User&amp;apos;,    &amp;apos">
@@ -272,9 +272,9 @@
       
         <span itemprop="articleBody"><p>现在需求是：<strong>如果用户已经登录，但是超过一定时间未操作「比如5分钟」，当用户再次进行操作时则需要重新登录</strong></p>
 <p>我们可以通过配置  <code>yii\web\User::$authTimeout</code>来达到效果，上代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;user&apos; =&gt; [</div><div class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</div><div class="line">    &apos;authTimeout&apos; =&gt; 5 //为了测试，设置5秒</div><div class="line">],</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&apos;user&apos; =&gt; [</span><br><span class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</span><br><span class="line">    &apos;authTimeout&apos; =&gt; 5 //为了测试，设置5秒</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
 <p>还有一个更设定是可以让用户登入多长时间后，不管有没有操作，超过这个设定的时间后都会登出，上代码:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&apos;user&apos; =&gt; [</div><div class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</div><div class="line">    &apos;absoluteAuthTimeout&apos; =&gt; 20 //这里为了测试，设置为20秒，登入后不停刷新模拟用户操作，结果可看到，虽然在不断操作，但是过了设置的时间还是会自动登出</div><div class="line">],</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&apos;user&apos; =&gt; [</span><br><span class="line">    &apos;identityClass&apos; =&gt; &apos;app\models\User&apos;,</span><br><span class="line">    &apos;absoluteAuthTimeout&apos; =&gt; 20 //这里为了测试，设置为20秒，登入后不停刷新模拟用户操作，结果可看到，虽然在不断操作，但是过了设置的时间还是会自动登出</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
 <p><em>需要注意的是如果设置 <code>enableAutoLogin = true</code> 的话，以上两个设置是不会生效的。</em></p>
 </span>
       
@@ -399,21 +399,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -499,7 +499,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

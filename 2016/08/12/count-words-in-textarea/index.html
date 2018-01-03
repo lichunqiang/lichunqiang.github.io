@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="起因一天一位vux使用提交了这么一个bug: x-textarea字数统计异常. 具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了maxlength属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了. 首先我们来看一下字数统计功能是怎么做的： 123count() &amp;#123;	return thi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.794Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="修复在对textarea进行字数统计时的一个bug">
 <meta name="twitter:description" content="起因一天一位vux使用提交了这么一个bug: x-textarea字数统计异常. 具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了maxlength属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了. 首先我们来看一下字数统计功能是怎么做的： 123count() &amp;#123;	return thi">
@@ -270,20 +270,20 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>一天一位<a href="https://github.com/airyland/vux" target="_blank" rel="external">vux</a>使用提交了这么一个bug: <a href="https://github.com/airyland/vux/issues/420" target="_blank" rel="external">x-textarea字数统计异常</a>.</p>
+        <span itemprop="articleBody"><h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>一天一位<a href="https://github.com/airyland/vux" target="_blank" rel="noopener">vux</a>使用提交了这么一个bug: <a href="https://github.com/airyland/vux/issues/420" target="_blank" rel="noopener">x-textarea字数统计异常</a>.</p>
 <p>具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了<code>maxlength</code>属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了.</p>
 <p>首先我们来看一下字数统计功能是怎么做的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">count() &#123;</div><div class="line">	return this.value.length</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">count() &#123;</span><br><span class="line">	return this.value.length</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>代码中使用了字符串 <code>length</code> 来做字数统计, 但是为什么当有回车时, 这样会导致数字统计异常呢? 是不是只有在textarea中的表现是这样的呢?</p>
 <h2 id="验证问题"><a href="#验证问题" class="headerlink" title="验证问题"></a>验证问题</h2><p>首先, 我验证了在input中的表现, 结果是统计表现正常.</p>
 <h2 id="发现问题原因"><a href="#发现问题原因" class="headerlink" title="发现问题原因"></a>发现问题原因</h2><p>为什么会这样? 在遨游了「全世界」之后找到了答案：</p>
-<p><a href="http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm" target="_blank" rel="external">http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm</a></p>
+<p><a href="http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm" target="_blank" rel="noopener">http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm</a></p>
 <blockquote>
 <p>Textarea values might have the character combos “\n\r” in the text box, but once they are pulled into Javascript, “\n\r” becomes JUST “\n”.</p>
 </blockquote>
 <h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>导致问题的原因已经找出来了，那么接下来就是解决问题.</p>
 <p>上面我们知道, 在输入一个回车后都会导致少统计一个数字, 那么我们可以在进行统计的时候做下处理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">count () &#123;</div><div class="line">	let len = this.value.replace(&apos;\n&apos;, &apos;aa&apos;).length</div><div class="line">	return len &gt; this.max ? this.max : len</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">count () &#123;</span><br><span class="line">	let len = this.value.replace(&apos;\n&apos;, &apos;aa&apos;).length</span><br><span class="line">	return len &gt; this.max ? this.max : len</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>是不是很tricky? 但是却是能解决问题的!</p>
 </span>
       
@@ -408,21 +408,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -508,7 +508,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

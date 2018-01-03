@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。  这是手册中，对于范围解析符的概论。 在日常工作中，我们经常会用在例如：  调用类常量: SomeCls::THE_CONST，和public的静态变量 SomeCls::$VAR 调用静态方法: SomeCls::staticMethod()  当然，在于类的内部，我们可以使用 self，parent 和">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.798Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聊聊PHP中的范围解析操作符">
 <meta name="twitter:description" content="在PHP中，范围解析操作符可以用于访问静态成员，类常量，还可以用于覆盖类中的属性和方法。  这是手册中，对于范围解析符的概论。 在日常工作中，我们经常会用在例如：  调用类常量: SomeCls::THE_CONST，和public的静态变量 SomeCls::$VAR 调用静态方法: SomeCls::staticMethod()  当然，在于类的内部，我们可以使用 self，parent 和">
@@ -282,7 +282,7 @@
 <p>当然，在于类的内部，我们可以使用 <code>self</code>，<code>parent</code> 和 <code>static</code> 关键字来进行访问。</p>
 <p>这里，我要强调的是一种比较常见但是通常我们会忽略的一种用法。</p>
 <p>我们经常会看到这样的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()&#123;&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Child extends Parent</div><div class="line">&#123;</div><div class="line">	public function __construct()</div><div class="line">	&#123;</div><div class="line">		parent::__construct();</div><div class="line">		//some other logic</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Parent</span><br><span class="line">&#123;</span><br><span class="line">	public function __construct()&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Child extends Parent</span><br><span class="line">&#123;</span><br><span class="line">	public function __construct()</span><br><span class="line">	&#123;</span><br><span class="line">		parent::__construct();</span><br><span class="line">		//some other logic</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们都知道，在 <code>Child</code> 的构造方法中 <code>parent::__construct()</code> 是主动调用父类的构造方法。</p>
 <p>但是，为什么会需要我们主动去调用呢？</p>
 <blockquote>
@@ -290,11 +290,11 @@
 </blockquote>
 <p>所以，当见到诸如 <code>parent::__construct</code>，<code>parent::__get</code> … 等调用时我们就知道其中的原由了。</p>
 <p>为什么会写这篇文章？因为有一天, 我因为看到下面的代码而蒙逼了…当我知道上面的原理后才明白过来。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class BasePage</div><div class="line">&#123;</div><div class="line">	protected function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		//...</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Page extends BasePage</div><div class="line">&#123;</div><div class="line">	public function renderValue($key, $value)</div><div class="line">	&#123;</div><div class="line">		$key = $key + $value;</div><div class="line">		parent::renderValue($key, $value);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class BasePage</span><br><span class="line">&#123;</span><br><span class="line">	protected function renderValue($key, $value)</span><br><span class="line">	&#123;</span><br><span class="line">		//...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Page extends BasePage</span><br><span class="line">&#123;</span><br><span class="line">	public function renderValue($key, $value)</span><br><span class="line">	&#123;</span><br><span class="line">		$key = $key + $value;</span><br><span class="line">		parent::renderValue($key, $value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>所以文档熟烂于心才是硬道理！</p>
 <p>参考资料：</p>
 <ul>
-<li><a href="http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php" target="_blank" rel="external">http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php</a></li>
+<li><a href="http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php" target="_blank" rel="noopener">http://php.net/manual/en/language.oop5.paamayim-nekudotayim.php</a></li>
 </ul>
 </span>
       
@@ -419,21 +419,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -519,7 +519,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

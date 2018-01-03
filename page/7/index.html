@@ -219,6 +219,124 @@
             
               
                 
+                <a class="post-title-link" href="/2013/11/21/useful-mysql-command/" itemprop="url">
+                  经常使用到的Mysql命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2013-11-21T23:57:23+00:00" content="2013-11-21">
+              2013-11-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2013/11/21/useful-mysql-command/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2013/11/21/useful-mysql-command/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h4 id="create-database-with-utf-8"><a href="#create-database-with-utf-8" class="headerlink" title="create database with utf-8"></a>create database with utf-8</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE `database_name` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;</span><br></pre></td></tr></table></figure>
+<h4 id="当没有权限访问服务器的mysql的解决办法："><a href="#当没有权限访问服务器的mysql的解决办法：" class="headerlink" title="当没有权限访问服务器的mysql的解决办法："></a>当没有权限访问服务器的mysql的解决办法：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL PRIVILEGES ON *.* TO root@&apos;%&apos; IDENTIFIED BY &apos;root-password&apos; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<h4 id="mysql乱码："><a href="#mysql乱码：" class="headerlink" title="mysql乱码："></a>mysql乱码：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/my.cnf</span><br></pre></td></tr></table></figure>
+<p>添加：<br>[client]</p>
+<p>default-character-set=utf8<br>重启mysql<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service mysqld restart</span><br></pre></td></tr></table></figure></p>
+<h4 id="mysql数据库数据导入与导出"><a href="#mysql数据库数据导入与导出" class="headerlink" title="mysql数据库数据导入与导出"></a>mysql数据库数据导入与导出</h4><p>1、导出数据库为dbname的表结构（其中用戶名为root,密码为dbpasswd,生成的脚本名为db.sql）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd -d dbname &gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>2、导出数据库为dbname某张表(test)结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd -d dbname test&gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>3、导出数据库为dbname所有表结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd  dbname &gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>4、导出数据库为dbname某张表(test)结构及表数据（不加-d）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd dbname test&gt;db.sql;</span><br></pre></td></tr></table></figure></p>
+<p>5、忽略某张或者多张表导出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mysqldump -uroot -pdbpasswd dbname --ignore-table=dbname.table1 --ignore-table=dbname.table2 &gt; db.sql</span><br></pre></td></tr></table></figure>
+<h4 id="修改表名，列名"><a href="#修改表名，列名" class="headerlink" title="修改表名，列名"></a>修改表名，列名</h4><ul>
+<li>添加列：alter table 表名 add column 列名 varchar(30);</li>
+<li>删除列：alter table 表名 drop column 列名;</li>
+<li>修改列名：alter table 表名 change 旧列名 新列名;</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2013/04/22/apache-multiple-server-setting/" itemprop="url">
                   Apache如何配置支持多域名
                 </a>
@@ -291,12 +409,12 @@
         
           <span itemprop="articleBody">
             
-              <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>现在需要支持这种方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">light.ifenqi.com =&gt; www.ifenqi.com/site/user?name=light</div></pre></td></tr></table></figure></p>
-<h3 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h3><p>设置vhosts如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;VirtualHost *:80&gt;    </div><div class="line">    DocumentRoot &quot;D:\project\ifenqi\frontend\web&quot;    </div><div class="line">    ServerName www.ifenqi.com    </div><div class="line">    ServerAlias *.ifenqi.com    </div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure></p>
+              <h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>现在需要支持这种方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">light.ifenqi.com =&gt; www.ifenqi.com/site/user?name=light</span><br></pre></td></tr></table></figure></p>
+<h3 id="解决步骤"><a href="#解决步骤" class="headerlink" title="解决步骤"></a>解决步骤</h3><p>设置vhosts如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;    </span><br><span class="line">    DocumentRoot &quot;D:\project\ifenqi\frontend\web&quot;    </span><br><span class="line">    ServerName www.ifenqi.com    </span><br><span class="line">    ServerAlias *.ifenqi.com    </span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>注意：这项要配置在所有的地下，否则访问manager.ifenqi.com的话也会被解析到上面的服务器目录</p>
 </blockquote>
-<p>接下来就是按照yii的urlManager，来添加规则了，详见<a href="https://github.com/yiisoft/yii2/blob/master/docs/guide/runtime-routing.md#rules-with-server-names-" target="_blank" rel="external">runtime-routing</a></p>
+<p>接下来就是按照yii的urlManager，来添加规则了，详见<a href="https://github.com/yiisoft/yii2/blob/master/docs/guide/runtime-routing.md#rules-with-server-names-" target="_blank" rel="noopener">runtime-routing</a></p>
 
             
           </span>
@@ -420,7 +538,7 @@
 <p><em>(返回区分大小写)</em></p>
 <h3 id="关于PHP中的函数"><a href="#关于PHP中的函数" class="headerlink" title="关于PHP中的函数"></a>关于PHP中的函数</h3><ul>
 <li><p>函数名是大小写无关的</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">echo</span> <span class="string">'test'</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">test();<span class="comment">// print test</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Say</span><span class="params">()</span></span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">echo</span> <span class="string">'say something'</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">$t = <span class="keyword">new</span> Test;</div><div class="line">$t-&gt;say(); <span class="comment">//print say something</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">'test'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">test();<span class="comment">// print test</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">Say</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'say something'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">$t = <span class="keyword">new</span> Test;</span><br><span class="line">$t-&gt;say(); <span class="comment">//print say something</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>函数无需在调用之前被定义，但有两个特例</p>
 <ul>
@@ -432,7 +550,7 @@
 <blockquote>
 <p>PHP 中的所有函数和类都具有全局作用域，可以定义在一个函数之内而在之外调用，反之亦然。</p>
 </blockquote>
-<p>关于函数中的函数例子：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">()</span></span></div><div class="line"><span class="function">	</span>&#123;</div><div class="line">		<span class="keyword">echo</span> <span class="string">'I will exist until foo() is called!'</span>;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/* 先在还不能调用bar()，因为还不存在 */</span></div><div class="line">foo();</div><div class="line"></div><div class="line"><span class="comment">/*因为foo()函数的执行使bar()变为已定义函数*/</span></div><div class="line">bar();</div></pre></td></tr></table></figure></p>
+<p>关于函数中的函数例子：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">echo</span> <span class="string">'I will exist until foo() is called!'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 先在还不能调用bar()，因为还不存在 */</span></span><br><span class="line">foo();</span><br><span class="line"></span><br><span class="line"><span class="comment">/*因为foo()函数的执行使bar()变为已定义函数*/</span></span><br><span class="line">bar();</span><br></pre></td></tr></table></figure></p>
 
             
           </span>
@@ -549,7 +667,7 @@
 <li><p>类要实现接口，必须使用和接口中所定义的方法完全一致的方式。</p>
 </li>
 <li><p>接口中也可以定义常量，不能被子类或子接口所覆盖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">//声明一个&apos;iTemplate&apos;接口</div><div class="line">interface iTemplate</div><div class="line">&#123;</div><div class="line">  public function setVariable ($name, $var);</div><div class="line">  public function getHtml ($template);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//实现接口</div><div class="line">class Template implement iTemplate</div><div class="line">&#123;</div><div class="line">  private $vars = array();</div><div class="line"></div><div class="line">  public function setVariable($name, $var)</div><div class="line">  &#123;</div><div class="line">    $this-&gt;vars[$name] = $var;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  public function getHtml($template)</div><div class="line">  &#123;</div><div class="line">    foreach($this-&gt;vars as $name =&gt; $value)</div><div class="line">    &#123;</div><div class="line">      $template = str_repleace(&apos;&#123;&apos; . $name . &apos;&#125;&apos;, $value, $template);</div><div class="line">    &#125;</div><div class="line">    return $template;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">//声明一个&apos;iTemplate&apos;接口</span><br><span class="line">interface iTemplate</span><br><span class="line">&#123;</span><br><span class="line">  public function setVariable ($name, $var);</span><br><span class="line">  public function getHtml ($template);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//实现接口</span><br><span class="line">class Template implement iTemplate</span><br><span class="line">&#123;</span><br><span class="line">  private $vars = array();</span><br><span class="line"></span><br><span class="line">  public function setVariable($name, $var)</span><br><span class="line">  &#123;</span><br><span class="line">    $this-&gt;vars[$name] = $var;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public function getHtml($template)</span><br><span class="line">  &#123;</span><br><span class="line">    foreach($this-&gt;vars as $name =&gt; $value)</span><br><span class="line">    &#123;</span><br><span class="line">      $template = str_repleace(&apos;&#123;&apos; . $name . &apos;&#125;&apos;, $value, $template);</span><br><span class="line">    &#125;</span><br><span class="line">    return $template;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 
             
@@ -618,21 +736,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -701,7 +819,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

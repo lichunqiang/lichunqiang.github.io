@@ -219,6 +219,153 @@
             
               
                 
+                <a class="post-title-link" href="/2016/01/18/auto-deploy-hexo-blog-using-travis/" itemprop="url">
+                  配置travis来自动发布hexo博客
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-18T23:59:20+00:00" content="2016-01-18">
+              2016-01-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/hexo/travis/" itemprop="url" rel="index">
+                    <span itemprop="name">travis</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/18/auto-deploy-hexo-blog-using-travis/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/18/auto-deploy-hexo-blog-using-travis/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>首先在<a href="https://travis-ci.org" target="_blank" rel="noopener">travis</a>将你的项目加入到travis。</p>
+<p>打开设置，添加token变量。</p>
+<p><img src="http://7xq6zf.com1.z0.glb.clouddn.com/travis-setting.png" alt="add-token"></p>
+<p>在这之前我们需要在<a href="https://github.com/settings/tokens" target="_blank" rel="noopener">github</a>, 生成一个token。</p>
+<p><img src="http://7xq6zf.com1.z0.glb.clouddn.com/generate-github-token.png" alt="generate-token"></p>
+<p>在项目的 <code>.travis.yml</code> 中可以进行如下配置：</p>
+<pre><code>language: node_js
+sudo: false
+node_js:
+  - 5.3.0
+
+before_install:
+  - git config --global user.name &quot;lichunqiang&quot;
+  - git config --global user.email &quot;light-li@hotmail.com&quot;
+  - git config --global push.default simple
+
+install:
+  - npm install hexo-cli -g
+
+script:
+  - git clone https://${token}@github.com/lichunqiang/lichunqiang.github.io.git .deploy_git -v
+  - git --version
+  - git remote add -f b https://${token}@github.com/lichunqiang/b.git
+  - git fetch b
+  - npm install
+
+  - hexo g
+  - cp -r public/* .deploy_git/
+  - cd .deploy_git
+  - git add -A
+  - git commit -am &quot;Auto deploy from Travis-CI.&quot;
+  - git push --force -q
+</code></pre><p>这样就等着 <code>travis</code> 构建完成之后，我们就可以看到文件就会自动发布了。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/01/16/git-delete-submoudle/" itemprop="url">
                   删除submodule
                 </a>
@@ -413,7 +560,7 @@
 <p>因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。</p>
 <p>配置nginx如下：</p>
 <p>  server_name site.com www.site.com</p>
-<p>  if ($host = ‘site.com’) {<br>    rewrite ^/(.*)$ <a href="http://www.site.com/$1" target="_blank" rel="external">http://www.site.com/$1</a> permanent;<br>  }</p>
+<p>  if ($host = ‘site.com’) {<br>    rewrite ^/(.*)$ <a href="http://www.site.com/$1" target="_blank" rel="noopener">http://www.site.com/$1</a> permanent;<br>  }</p>
 
             
           </span>
@@ -528,10 +675,10 @@
         
           <span itemprop="articleBody">
             
-              <p>在 <a href="https://www.github.com" target="_blank" rel="external">Github</a> 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 <code>pull request</code>。</p>
+              <p>在 <a href="https://www.github.com" target="_blank" rel="noopener">Github</a> 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 <code>pull request</code>。</p>
 <p>在项目的作者对发起的 <code>pull request</code> 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是，</p>
-<p>这一切在 <a href="https://www.github.com" target="_blank" rel="external">Github</a> 上被方便的给自动完成了，也就说，当我们在对 <code>patch</code> 分支 <code>push</code> 修改代码时，</p>
-<p><a href="https://www.github.com" target="_blank" rel="external">Github</a> 自动会将修改关联到上次已经发起的 <code>pull request</code>。</p>
+<p>这一切在 <a href="https://www.github.com" target="_blank" rel="noopener">Github</a> 上被方便的给自动完成了，也就说，当我们在对 <code>patch</code> 分支 <code>push</code> 修改代码时，</p>
+<p><a href="https://www.github.com" target="_blank" rel="noopener">Github</a> 自动会将修改关联到上次已经发起的 <code>pull request</code>。</p>
 <p>当这一切都<strong>ready</strong>之后，我们需要精简提交信息变成一条，例如： <code>Issue #100: bugfix for fatal error</code>.</p>
 <pre><code>commit 6e9cd88424b5f313f7245c7a43e11063648f2dcd
 Author: lichunqiang &lt;light-li@hotmail.com&gt;
@@ -810,7 +957,7 @@ $ssh -T git@github.com
 <ol>
 <li>指定依赖包的版本, 这也是最佳的解决方案</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">composer require vendor/library=dev-master</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require vendor/library=dev-master</span><br></pre></td></tr></table></figure>
 <p>所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！</p>
 <p>另外我们还需要知道 <code>minimum-stability</code> 所支持的有：</p>
 <ul>
@@ -923,12 +1070,12 @@ $ssh -T git@github.com
           <span itemprop="articleBody">
             
               <p><strong>注意</strong>: <code>git reset --hard</code>会彻底删除你的变动,你可以在这之前使用 <code>git stash</code> 来保存变动。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard HEAD~1</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~1</span><br></pre></td></tr></table></figure>
 <p><code>HEAD~1</code>代表当前提交之前的一次提交.</p>
 <p>或者使用 <code>git log</code> 找到你想revert的commit_id：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git reset --hard &lt;sha1-commit-id&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard &lt;sha1-commit-id&gt;</span><br></pre></td></tr></table></figure>
 <p>如果你已经提交到了远程仓库, 可以通过以下命令来抹掉提交：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin HEAD --force</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin HEAD --force</span><br></pre></td></tr></table></figure>
             
           </span>
         
@@ -1045,15 +1192,15 @@ $ssh -T git@github.com
               <blockquote>
 <p>本文讲讲用composer来进行本地开发包,和本地公用包的使用.</p>
 </blockquote>
-<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>当我们构建一个本地的类库时, 当并不想推送到<a href="https://packagist.org/" target="_blank" rel="external">packagist</a>, 我们可以使用<code>repositories &gt; path</code></p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>当我们构建一个本地的类库时, 当并不想推送到<a href="https://packagist.org/" target="_blank" rel="noopener">packagist</a>, 我们可以使用<code>repositories &gt; path</code></p>
 <p>来处理。</p>
 <p>以下目录结构为例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- apps</div><div class="line">\_ my-app   		-- 当前项目开发目录</div><div class="line">  \_ composer.json</div><div class="line">- packages			-- 本地共有库, 存放正在和已经开发好的类库</div><div class="line">\_ my-package       -- 一个叫 my-package 的类库 </div><div class="line">  \_ composer.json</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- apps</span><br><span class="line">\_ my-app   		-- 当前项目开发目录</span><br><span class="line">  \_ composer.json</span><br><span class="line">- packages			-- 本地共有库, 存放正在和已经开发好的类库</span><br><span class="line">\_ my-package       -- 一个叫 my-package 的类库 </span><br><span class="line">  \_ composer.json</span><br></pre></td></tr></table></figure>
 <p>现在我们要在 <code>my-app</code> 中依赖 <code>my-package</code>, 那么现在我们可以：</p>
 <ol>
 <li>配置 <code>my-app/composer.json</code></li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	//引入依赖</div><div class="line">	&quot;require&quot;: &#123;</div><div class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</div><div class="line">	&#125;,</div><div class="line">	//配置 repositories</div><div class="line">	&quot;repositories&quot;: [</div><div class="line"></div><div class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</div><div class="line">	]	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	//引入依赖</span><br><span class="line">	&quot;require&quot;: &#123;</span><br><span class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	//配置 repositories</span><br><span class="line">	&quot;repositories&quot;: [</span><br><span class="line"></span><br><span class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</span><br><span class="line">	]	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>composer update</li>
 </ol>
@@ -1175,11 +1322,11 @@ $ssh -T git@github.com
         
           <span itemprop="articleBody">
             
-              <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></div><div class="line"><span class="class"></span>&#123;</div><div class="line">    <span class="keyword">private</span> $prefix = <span class="string">'Hello '</span>;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">($name)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">        <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;prefix, $name, PHP_EOL;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+              <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> $prefix = <span class="string">'Hello '</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">($name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;prefix, $name, PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>第一种方式：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</div><div class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</div><div class="line">$method-&gt;setAccessible(<span class="keyword">true</span>);</div><div class="line">$method-&gt;invoke(<span class="keyword">new</span> Test(), <span class="string">'Light'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">$method-&gt;setAccessible(<span class="keyword">true</span>);</span><br><span class="line">$method-&gt;invoke(<span class="keyword">new</span> Test(), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
 <p>第二种方式:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</div><div class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</div><div class="line">call_user_func($method-&gt;getClosure(<span class="keyword">new</span> Test()), <span class="string">'Light'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">call_user_func($method-&gt;getClosure(<span class="keyword">new</span> Test()), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
 
             
           </span>
@@ -1283,119 +1430,10 @@ $ssh -T git@github.com
           <span itemprop="articleBody">
             
               <h3 id="关于Hashids"><a href="#关于Hashids" class="headerlink" title="关于Hashids"></a>关于Hashids</h3><p>Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。</p>
-<p>详细： <a href="http://hashids.org/php/" target="_blank" rel="external">http://hashids.org/php/</a></p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$hashids = Yii::createObject([</div><div class="line">    <span class="string">'class'</span> =&gt; <span class="string">'light\hashids\Hashids'</span></div><div class="line">]);</div><div class="line"></div><div class="line">$id = $hashids-&gt;encode(<span class="number">100123123</span>);</div><div class="line">$origin = $hashids-&gt;decode($id);</div><div class="line">var_dump($id, $origin);</div></pre></td></tr></table></figure>
-<p><a href="https://packagist.org/packages/light/hashids" target="_blank" rel="external">详细</a></p>
+<p>详细： <a href="http://hashids.org/php/" target="_blank" rel="noopener">http://hashids.org/php/</a></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$hashids = Yii::createObject([</span><br><span class="line">    <span class="string">'class'</span> =&gt; <span class="string">'light\hashids\Hashids'</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">$id = $hashids-&gt;encode(<span class="number">100123123</span>);</span><br><span class="line">$origin = $hashids-&gt;decode($id);</span><br><span class="line">var_dump($id, $origin);</span><br></pre></td></tr></table></figure>
+<p><a href="https://packagist.org/packages/light/hashids" target="_blank" rel="noopener">详细</a></p>
 
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/07/08/reg-the-at-user/" itemprop="url">
-                  微博@匹配用户正则实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-07-08T17:50:15+00:00" content="2015-07-08">
-              2015-07-08
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/08/reg-the-at-user/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/08/reg-the-at-user/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>这个支持最长20个字的名字，只要不是空格的都当有效，取出来之后再验证是否有效用户名</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/@[^\s]&#123;<span class="number">1</span>,<span class="number">20</span>&#125;/</div></pre></td></tr></table></figure>
-<p>如果不限长度</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/@[^\s]+/</div></pre></td></tr></table></figure>
-<p>如果用户名只可能是英文下划线和数字</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/@[a-z0<span class="number">-9</span>_]+/i</div></pre></td></tr></table></figure>
-<p>如果还有可能是中文</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/@[a-z0<span class="number">-9</span>_\u4E00-\u9FA5]+/i/</div></pre></td></tr></table></figure>
             
           </span>
         
@@ -1462,21 +1500,21 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -1545,7 +1583,7 @@ $ssh -T git@github.com
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

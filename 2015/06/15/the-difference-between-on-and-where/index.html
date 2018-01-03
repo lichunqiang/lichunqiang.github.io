@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。 在使用left jion时，on和where条件的区别如下：  on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。   where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.798Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在关联表查询的时候是在ON添加条件和在where添加添加条件异同">
 <meta name="twitter:description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。 在使用left jion时，on和where条件的区别如下：  on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。   where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
@@ -280,22 +280,22 @@
 </ol>
 <p><strong>假设有两张表：</strong></p>
 <p>表1 tab1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">id size </div><div class="line">1 10 </div><div class="line">2 20 </div><div class="line">3 30</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">id size </span><br><span class="line">1 10 </span><br><span class="line">2 20 </span><br><span class="line">3 30</span><br></pre></td></tr></table></figure>
 <p>表2 tab2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">size name </div><div class="line">10 AAA </div><div class="line">20 BBB </div><div class="line">20 CCC</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">size name </span><br><span class="line">10 AAA </span><br><span class="line">20 BBB </span><br><span class="line">20 CCC</span><br></pre></td></tr></table></figure>
 <p>两条SQL:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1. select * form tab1 left join tab2 on (tab1.size = tab2.size) where tab2.name=’AAA’</div><div class="line"></div><div class="line">2. select * form tab1 left join tab2 on (tab1.size = tab2.size and tab2.name=’AAA’)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. select * form tab1 left join tab2 on (tab1.size = tab2.size) where tab2.name=’AAA’</span><br><span class="line"></span><br><span class="line">2. select * form tab1 left join tab2 on (tab1.size = tab2.size and tab2.name=’AAA’)</span><br></pre></td></tr></table></figure>
 <p>第一条SQL的过程：</p>
 <p>1、中间表 on条件:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">tab1.size = tab2.size  </div><div class="line">tab1.id    tab1.size    tab2.size     tab2.name </div><div class="line">1             10          10              AAA </div><div class="line">2             20          20              BBB  </div><div class="line">2             20          20              CCC </div><div class="line">3             30         (null)          (null) </div><div class="line">2</div><div class="line"></div><div class="line">再对中间表过滤where 条件：</div><div class="line"></div><div class="line">tab2.name=’AAA’</div><div class="line">tab1.id       tab1.size        tab2.size     tab2.name </div><div class="line">1                10                10             AAA</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">tab1.size = tab2.size  </span><br><span class="line">tab1.id    tab1.size    tab2.size     tab2.name </span><br><span class="line">1             10          10              AAA </span><br><span class="line">2             20          20              BBB  </span><br><span class="line">2             20          20              CCC </span><br><span class="line">3             30         (null)          (null) </span><br><span class="line">2</span><br><span class="line"></span><br><span class="line">再对中间表过滤where 条件：</span><br><span class="line"></span><br><span class="line">tab2.name=’AAA’</span><br><span class="line">tab1.id       tab1.size        tab2.size     tab2.name </span><br><span class="line">1                10                10             AAA</span><br></pre></td></tr></table></figure>
 <p>第二条SQL的过程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">1、中间表 on条件:   </div><div class="line">tab1.size = tab2.size and tab2.name=’AAA’</div><div class="line"> (条件不为真也会返回左表中的记录)  </div><div class="line">tab1.id      tab1.size       tab2.size      tab2.name </div><div class="line">1             10                10             AAA </div><div class="line">2             20                (null)        (null) </div><div class="line">3             30                (null)        (null)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1、中间表 on条件:   </span><br><span class="line">tab1.size = tab2.size and tab2.name=’AAA’</span><br><span class="line"> (条件不为真也会返回左表中的记录)  </span><br><span class="line">tab1.id      tab1.size       tab2.size      tab2.name </span><br><span class="line">1             10                10             AAA </span><br><span class="line">2             20                (null)        (null) </span><br><span class="line">3             30                (null)        (null)</span><br></pre></td></tr></table></figure>
 <p>其实以上结果的关键原因就是left join,right join,full join的特殊性，不管on上的条件是否为真都会返回left或right表中的记录，full则具有left和right的特性的并集。而inner jion没这个特殊性，则条件放在on中和where中，返回的结果集是相同的。</p>
 <p><strong>参考</strong></p>
 <ul>
-<li><p><a href="http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause" target="_blank" rel="external">http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause</a></p>
+<li><p><a href="http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause" target="_blank" rel="noopener">http://stackoverflow.com/questions/354070/sql-join-where-clause-vs-on-clause</a></p>
 </li>
-<li><p><a href="http://dba-china.com/topic/default/view/71" target="_blank" rel="external">http://dba-china.com/topic/default/view/71</a></p>
+<li><p><a href="http://dba-china.com/topic/default/view/71" target="_blank" rel="noopener">http://dba-china.com/topic/default/view/71</a></p>
 </li>
 </ul>
 </span>
@@ -421,21 +421,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -521,7 +521,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

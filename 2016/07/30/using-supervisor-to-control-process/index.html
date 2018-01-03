@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程: 1$nohup php beanstalkd-consumer.php &amp;amp; 使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。 sup">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.798Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一个进程管理工具-supervisor">
 <meta name="twitter:description" content="在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程: 1$nohup php beanstalkd-consumer.php &amp;amp; 使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。 sup">
@@ -283,11 +283,11 @@
 
       
         <span itemprop="articleBody"><p>在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$nohup php beanstalkd-consumer.php &amp;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$nohup php beanstalkd-consumer.php &amp;</span><br></pre></td></tr></table></figure>
 <p>使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，<br>这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。</p>
-<p><a href="http://supervisord.org" target="_blank" rel="external">supervisor</a>就是这样一个工具，可以让我们很轻松愉快的对它们进行统一管理，而且省去了我们担心的某个任务会因为特殊的原因自己偷偷的挂掉。</p>
+<p><a href="http://supervisord.org" target="_blank" rel="noopener">supervisor</a>就是这样一个工具，可以让我们很轻松愉快的对它们进行统一管理，而且省去了我们担心的某个任务会因为特殊的原因自己偷偷的挂掉。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>这里我直接使用 <code>yum</code> 进行安装：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ yum install -y supervisor</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install -y supervisor</span><br></pre></td></tr></table></figure>
 <p>安装成功后，会有两个可执行程序：</p>
 <ul>
 <li><strong>supervisord</strong>    – supervisor 服务守护进程</li>
@@ -297,14 +297,14 @@
 <p>因为我是用<code>yum</code>来安装的，所以在 <code>/etc/supervisor.conf</code> 已经存在了默认的配置文件，<code>supervisord</code> 会默认加载。</p>
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>最重要的就是对<code>supervisor</code>的行为方式进行配置，通过修改<code>/etc/supervisord.conf</code>来管理.</p>
 <p>例如，我们加入上面提到的消费进程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[program:beanstalkd_comsumer]</div><div class="line">command=/usr/local/php/bin/php /path/to/beanstalkd-consumer.php //此项指定要执行的命令</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[program:beanstalkd_comsumer]</span><br><span class="line">command=/usr/local/php/bin/php /path/to/beanstalkd-consumer.php //此项指定要执行的命令</span><br></pre></td></tr></table></figure>
 <p>默认的，<code>supervisor</code>就自动管理进程挂掉自动重启等，我们来看下比较全的配置信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">;[program:theprogramname]</div><div class="line">;command=/bin/cat              ; the program (relative uses PATH, can take args)</div><div class="line">;process_name=%(program_name)s ; process_name expr (default %(program_name)s)</div><div class="line">;numprocs=1                    ; number of processes copies to start (def 1)</div><div class="line">;directory=/tmp                ; directory to cwd to before exec (def no cwd)</div><div class="line">;umask=022                     ; umask for process (default None)</div><div class="line">;priority=999                  ; the relative start priority (default 999)</div><div class="line">;autostart=true                ; start at supervisord start (default: true)</div><div class="line">;autorestart=true              ; retstart at unexpected quit (default: true)</div><div class="line">;startsecs=10                  ; number of secs prog must stay running (def. 1)</div><div class="line">;startretries=3                ; max # of serial start failures (default 3)</div><div class="line">;exitcodes=0,2                 ; &apos;expected&apos; exit codes for process (default 0,2)</div><div class="line">;stopsignal=QUIT               ; signal used to kill process (default TERM)</div><div class="line">;stopwaitsecs=10               ; max num secs to wait b4 SIGKILL (default 10)</div><div class="line">;user=chrism                   ; setuid to this UNIX account to run the program</div><div class="line">;redirect_stderr=true          ; redirect proc stderr to stdout (default false)</div><div class="line">;stdout_logfile=/a/path        ; stdout log path, NONE for none; default AUTO</div><div class="line">;stdout_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</div><div class="line">;stdout_logfile_backups=10     ; # of stdout logfile backups (default 10)</div><div class="line">;stdout_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</div><div class="line">;stdout_events_enabled=false   ; emit events on stdout writes (default false)</div><div class="line">;stderr_logfile=/a/path        ; stderr log path, NONE for none; default AUTO</div><div class="line">;stderr_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</div><div class="line">;stderr_logfile_backups=10     ; # of stderr logfile backups (default 10)</div><div class="line">;stderr_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</div><div class="line">;stderr_events_enabled=false   ; emit events on stderr writes (default false)</div><div class="line">;environment=A=1,B=2           ; process environment additions (def no adds)</div><div class="line">;serverurl=AUTO                ; override serverurl computation (childutils)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">;[program:theprogramname]</span><br><span class="line">;command=/bin/cat              ; the program (relative uses PATH, can take args)</span><br><span class="line">;process_name=%(program_name)s ; process_name expr (default %(program_name)s)</span><br><span class="line">;numprocs=1                    ; number of processes copies to start (def 1)</span><br><span class="line">;directory=/tmp                ; directory to cwd to before exec (def no cwd)</span><br><span class="line">;umask=022                     ; umask for process (default None)</span><br><span class="line">;priority=999                  ; the relative start priority (default 999)</span><br><span class="line">;autostart=true                ; start at supervisord start (default: true)</span><br><span class="line">;autorestart=true              ; retstart at unexpected quit (default: true)</span><br><span class="line">;startsecs=10                  ; number of secs prog must stay running (def. 1)</span><br><span class="line">;startretries=3                ; max # of serial start failures (default 3)</span><br><span class="line">;exitcodes=0,2                 ; &apos;expected&apos; exit codes for process (default 0,2)</span><br><span class="line">;stopsignal=QUIT               ; signal used to kill process (default TERM)</span><br><span class="line">;stopwaitsecs=10               ; max num secs to wait b4 SIGKILL (default 10)</span><br><span class="line">;user=chrism                   ; setuid to this UNIX account to run the program</span><br><span class="line">;redirect_stderr=true          ; redirect proc stderr to stdout (default false)</span><br><span class="line">;stdout_logfile=/a/path        ; stdout log path, NONE for none; default AUTO</span><br><span class="line">;stdout_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</span><br><span class="line">;stdout_logfile_backups=10     ; # of stdout logfile backups (default 10)</span><br><span class="line">;stdout_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</span><br><span class="line">;stdout_events_enabled=false   ; emit events on stdout writes (default false)</span><br><span class="line">;stderr_logfile=/a/path        ; stderr log path, NONE for none; default AUTO</span><br><span class="line">;stderr_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</span><br><span class="line">;stderr_logfile_backups=10     ; # of stderr logfile backups (default 10)</span><br><span class="line">;stderr_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</span><br><span class="line">;stderr_events_enabled=false   ; emit events on stderr writes (default false)</span><br><span class="line">;environment=A=1,B=2           ; process environment additions (def no adds)</span><br><span class="line">;serverurl=AUTO                ; override serverurl computation (childutils)</span><br></pre></td></tr></table></figure>
 <h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>启动<code>supervisord</code>来启动和管理所有的进程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ /usr/bin/supervisord</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/bin/supervisord</span><br></pre></td></tr></table></figure>
 <p>启动之后我们可以通过<code>supervisor</code>的另外一个工具来查看所有配置的进程状态:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$supervisorctl status</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">beanstalkd_comsumer           RUNNING   pid 26995, uptime 4:09:54</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$supervisorctl status</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beanstalkd_comsumer           RUNNING   pid 26995, uptime 4:09:54</span><br></pre></td></tr></table></figure>
 </span>
       
     </div>
@@ -430,21 +430,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -530,7 +530,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

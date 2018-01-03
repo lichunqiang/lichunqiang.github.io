@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="什么是wrkwrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。 为什么是wrk相比于Apache ab功能更为强大，可以使用lua脚本来支持更为复杂的测试场景，例如PUT请求等。 在对于Restful架构的API接口来说，测试起来更加便捷。 获取和安装源码地址: https://github.com/wg/wrk 123456$ git clone https://gi">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.798Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 wrk 来测试接口性能">
 <meta name="twitter:description" content="什么是wrkwrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。 为什么是wrk相比于Apache ab功能更为强大，可以使用lua脚本来支持更为复杂的测试场景，例如PUT请求等。 在对于Restful架构的API接口来说，测试起来更加便捷。 获取和安装源码地址: https://github.com/wg/wrk 123456$ git clone https://gi">
@@ -285,11 +285,11 @@
         <span itemprop="articleBody"><h2 id="什么是wrk"><a href="#什么是wrk" class="headerlink" title="什么是wrk"></a>什么是wrk</h2><p>wrk是一个用来做HTTP benchmark测试的工具。可以产生显著的压力。</p>
 <h2 id="为什么是wrk"><a href="#为什么是wrk" class="headerlink" title="为什么是wrk"></a>为什么是wrk</h2><p>相比于Apache ab功能更为强大，可以使用lua脚本来支持更为复杂的测试场景，例如PUT请求等。</p>
 <p>在对于Restful架构的API接口来说，测试起来更加便捷。</p>
-<h2 id="获取和安装"><a href="#获取和安装" class="headerlink" title="获取和安装"></a>获取和安装</h2><p>源码地址: <a href="https://github.com/wg/wrk" target="_blank" rel="external">https://github.com/wg/wrk</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ git <span class="built_in">clone</span> https://github.com/wg/wrk.git</div><div class="line">$ <span class="built_in">cd</span> wrk</div><div class="line">$ make all</div><div class="line">$ cp wrk /usr/bin/wrk</div><div class="line">$ wrk -h</div></pre></td></tr></table></figure>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 2 -c 50 -d 1 --latency http://bj.58.com</div></pre></td></tr></table></figure>
+<h2 id="获取和安装"><a href="#获取和安装" class="headerlink" title="获取和安装"></a>获取和安装</h2><p>源码地址: <a href="https://github.com/wg/wrk" target="_blank" rel="noopener">https://github.com/wg/wrk</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/wg/wrk.git</span><br><span class="line">$ <span class="built_in">cd</span> wrk</span><br><span class="line">$ make all</span><br><span class="line">$ cp wrk /usr/bin/wrk</span><br><span class="line">$ wrk -h</span><br></pre></td></tr></table></figure>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wrk -t 2 -c 50 -d 1 --latency http://bj.58.com</span><br></pre></td></tr></table></figure>
 <p>使用两个线程保持50个连接请求1秒钟，并打印延迟统计信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Running 1s test @ http://bj.58.com</div><div class="line">  2 threads and 50 connections</div><div class="line">  Thread Stats   Avg      Stdev     Max   +/- Stdev</div><div class="line">    Latency   148.87ms  180.61ms 927.67ms   85.14%</div><div class="line">    Req/Sec   192.47     99.38   400.00     63.16%</div><div class="line">  Latency Distribution</div><div class="line">     50%   65.21ms</div><div class="line">     75%  204.23ms</div><div class="line">     90%  355.24ms</div><div class="line">     99%  835.83ms</div><div class="line">  367 requests in 1.01s, 37.14MB read</div><div class="line">Requests/sec:    364.46</div><div class="line">Transfer/sec:     36.88MB</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Running 1s test @ http://bj.58.com</span><br><span class="line">  2 threads and 50 connections</span><br><span class="line">  Thread Stats   Avg      Stdev     Max   +/- Stdev</span><br><span class="line">    Latency   148.87ms  180.61ms 927.67ms   85.14%</span><br><span class="line">    Req/Sec   192.47     99.38   400.00     63.16%</span><br><span class="line">  Latency Distribution</span><br><span class="line">     50%   65.21ms</span><br><span class="line">     75%  204.23ms</span><br><span class="line">     90%  355.24ms</span><br><span class="line">     99%  835.83ms</span><br><span class="line">  367 requests in 1.01s, 37.14MB read</span><br><span class="line">Requests/sec:    364.46</span><br><span class="line">Transfer/sec:     36.88MB</span><br></pre></td></tr></table></figure>
 <p>主要关注的点有：</p>
 <ul>
 <li><p><code>Latency</code> 请求处理时延，上面测试结果平均延时时间为148.87ms</p>
@@ -303,21 +303,21 @@
 </blockquote>
 <h3 id="使用进阶"><a href="#使用进阶" class="headerlink" title="使用进阶"></a>使用进阶</h3><p>模拟POST请求</p>
 <p>新建 <code>post.lua</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wrk.method = &quot;POST&quot;</div><div class="line">wrk.body = &quot;foo=bar&amp;baz=qux&quot;</div><div class="line">wrk.headers[&quot;Content-Type&quot;] = &quot;application/x-www-form-urlencode&quot;</div><div class="line">wrk.headers[&quot;User-Agent&quot;] = &quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wrk.method = &quot;POST&quot;</span><br><span class="line">wrk.body = &quot;foo=bar&amp;baz=qux&quot;</span><br><span class="line">wrk.headers[&quot;Content-Type&quot;] = &quot;application/x-www-form-urlencode&quot;</span><br><span class="line">wrk.headers[&quot;User-Agent&quot;] = &quot;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&quot;</span><br></pre></td></tr></table></figure>
 <p>请求:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ wrk -t 4 -c 100 -d 30s --timeout 10 --script=post.lua --latency http://127.0.0.1/post.php</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wrk -t 4 -c 100 -d 30s --timeout 10 --script=post.lua --latency http://127.0.0.1/post.php</span><br></pre></td></tr></table></figure>
 <p>通过在脚本中记录日志的方式可以看到<code>$_POST</code>数据和<code>$_SERVER</code>中的字段为lua脚本中设置的值.</p>
 <h3 id="更为复杂的场景"><a href="#更为复杂的场景" class="headerlink" title="更为复杂的场景"></a>更为复杂的场景</h3><p>wrk提供了几个hook函数，可以用lua来编写一些更为复杂场景下的测试需求。</p>
 <ul>
-<li><p><a href="https://github.com/wg/wrk/blob/master/SCRIPTING" target="_blank" rel="external">https://github.com/wg/wrk/blob/master/SCRIPTING</a></p>
+<li><p><a href="https://github.com/wg/wrk/blob/master/SCRIPTING" target="_blank" rel="noopener">https://github.com/wg/wrk/blob/master/SCRIPTING</a></p>
 </li>
-<li><p><a href="https://github.com/wg/wrk/tree/master/scripts" target="_blank" rel="external">https://github.com/wg/wrk/tree/master/scripts</a></p>
+<li><p><a href="https://github.com/wg/wrk/tree/master/scripts" target="_blank" rel="noopener">https://github.com/wg/wrk/tree/master/scripts</a></p>
 </li>
 </ul>
 <p>参考资料：</p>
 <ul>
-<li><a href="https://github.com/wg/wrk" target="_blank" rel="external">https://github.com/wg/wrk</a></li>
-<li><a href="https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04" target="_blank" rel="external">https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04</a></li>
+<li><a href="https://github.com/wg/wrk" target="_blank" rel="noopener">https://github.com/wg/wrk</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04" target="_blank" rel="noopener">https://www.digitalocean.com/community/tutorials/how-to-benchmark-http-latency-with-wrk-on-ubuntu-14-04</a></li>
 </ul>
 </span>
       
@@ -444,21 +444,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -544,7 +544,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

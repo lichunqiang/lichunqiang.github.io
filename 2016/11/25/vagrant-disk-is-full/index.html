@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="在使用 vagrant 开发过程中, 突然遇到磁盘被沾满, 导致数据库无法写入. 12345678文件系统                 容量  已用  可用 已用% 挂载点/dev/mapper/centos-root   39G   39G  136K  100% /devtmpfs                 911M     0  911M    0% /devtmpfs">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.798Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cachegrind.out Filled My Drive">
 <meta name="twitter:description" content="在使用 vagrant 开发过程中, 突然遇到磁盘被沾满, 导致数据库无法写入. 12345678文件系统                 容量  已用  可用 已用% 挂载点/dev/mapper/centos-root   39G   39G  136K  100% /devtmpfs                 911M     0  911M    0% /devtmpfs">
@@ -283,16 +283,16 @@
 
       
         <span itemprop="articleBody"><p>在使用 vagrant 开发过程中, 突然遇到磁盘被沾满, 导致数据库无法写入.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">文件系统                 容量  已用  可用 已用% 挂载点</div><div class="line">/dev/mapper/centos-root   39G   39G  136K  100% /</div><div class="line">devtmpfs                 911M     0  911M    0% /dev</div><div class="line">tmpfs                    921M     0  921M    0% /dev/shm</div><div class="line">tmpfs                    921M  8.4M  912M    1% /run</div><div class="line">tmpfs                    921M     0  921M    0% /sys/fs/cgroup</div><div class="line">/dev/sda1                497M  125M  373M   25% /boot</div><div class="line">tmpfs                    185M     0  185M    0% /run/user/1000</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">文件系统                 容量  已用  可用 已用% 挂载点</span><br><span class="line">/dev/mapper/centos-root   39G   39G  136K  100% /</span><br><span class="line">devtmpfs                 911M     0  911M    0% /dev</span><br><span class="line">tmpfs                    921M     0  921M    0% /dev/shm</span><br><span class="line">tmpfs                    921M  8.4M  912M    1% /run</span><br><span class="line">tmpfs                    921M     0  921M    0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1                497M  125M  373M   25% /boot</span><br><span class="line">tmpfs                    185M     0  185M    0% /run/user/1000</span><br></pre></td></tr></table></figure>
 <p>有足足的<strong>39G</strong>为啥就满了呢?</p>
 <p>通过 <code>sudo du -h -d 1</code> 在home查看发现:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">32G     ./tmp</div><div class="line">3.6G    ./var</div><div class="line">2.3G    ./usr</div><div class="line">1.9G    ./home</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">32G     ./tmp</span><br><span class="line">3.6G    ./var</span><br><span class="line">2.3G    ./usr</span><br><span class="line">1.9G    ./home</span><br></pre></td></tr></table></figure>
 <p><code>/tmp</code> 文件足足占了32G了, 可想而知磁盘空间沾满的罪魁祸首在这儿.</p>
 <p>进入文件查看, 里面大部分是 <code>cachegrind.out.*</code> 文件, 有的单个文件就达到了26个G.</p>
 <p>经过查询, 才知道这些文件是Xdebug产生的文件. 好吧, 既然知道了这些文件的产生以及用途, 删掉就好了!</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo find /tmp/  -name &apos;cachegrind*&apos; -exec rm &apos;&#123;&#125;&apos; \;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo find /tmp/  -name &apos;cachegrind*&apos; -exec rm &apos;&#123;&#125;&apos; \;</span><br></pre></td></tr></table></figure>
 <p>再来看下磁盘占用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">文件系统                 容量  已用  可用 已用% 挂载点</div><div class="line">/dev/mapper/centos-root   39G  6.9G   32G   18% /</div><div class="line">devtmpfs                 911M     0  911M    0% /dev</div><div class="line">tmpfs                    921M     0  921M    0% /dev/shm</div><div class="line">tmpfs                    921M  8.4M  912M    1% /run</div><div class="line">tmpfs                    921M     0  921M    0% /sys/fs/cgroup</div><div class="line">/dev/sda1                497M  125M  373M   25% /boot</div><div class="line">tmpfs                    185M     0  185M    0% /run/user/1000</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">文件系统                 容量  已用  可用 已用% 挂载点</span><br><span class="line">/dev/mapper/centos-root   39G  6.9G   32G   18% /</span><br><span class="line">devtmpfs                 911M     0  911M    0% /dev</span><br><span class="line">tmpfs                    921M     0  921M    0% /dev/shm</span><br><span class="line">tmpfs                    921M  8.4M  912M    1% /run</span><br><span class="line">tmpfs                    921M     0  921M    0% /sys/fs/cgroup</span><br><span class="line">/dev/sda1                497M  125M  373M   25% /boot</span><br><span class="line">tmpfs                    185M     0  185M    0% /run/user/1000</span><br></pre></td></tr></table></figure>
 <p>最后可以将清理命令加入crontab来定时执行清理.</p>
 <p>–EOF–</p>
 </span>
@@ -420,21 +420,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -520,7 +520,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

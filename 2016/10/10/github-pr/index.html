@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="在 Github 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后， 你不仅需要在线进行code review，而且还要运行起来，确保提交的代码改动不会产生其他影响。 具体的操作步骤为：  检出一个单独的分支来查看代码更改  1$ git checkout -b pull-100  拉取提交用户改动分支代码  12$ git pull git://github.com/s">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.794Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何处理一个pull request">
 <meta name="twitter:description" content="在 Github 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后， 你不仅需要在线进行code review，而且还要运行起来，确保提交的代码改动不会产生其他影响。 具体的操作步骤为：  检出一个单独的分支来查看代码更改  1$ git checkout -b pull-100  拉取提交用户改动分支代码  12$ git pull git://github.com/s">
@@ -282,17 +282,17 @@
       
 
       
-        <span itemprop="articleBody"><p>在 <a href="https://github.com" target="_blank" rel="external">Github</a> 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后，</p>
+        <span itemprop="articleBody"><p>在 <a href="https://github.com" target="_blank" rel="noopener">Github</a> 开源项目后, 总会有人为你添砖加瓦。当有用户为你的代码提交一个patch后，</p>
 <p>你不仅需要在线进行code review，而且还要运行起来，确保提交的代码改动不会产生其他影响。</p>
 <p>具体的操作步骤为：</p>
 <ol>
 <li>检出一个单独的分支来查看代码更改</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ git checkout -b pull-100</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b pull-100</span><br></pre></td></tr></table></figure>
 <ol>
 <li>拉取提交用户改动分支代码</li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ git pull git://github.com/somebody/project.git master</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ git pull git://github.com/somebody/project.git master</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意, 上面是在用户提交代码分支为 <code>master</code> 的情况, 如果用户提交的改动分支非 <code>master</code></p>
 <p>那么需要改成对应的分支名</p>
@@ -301,8 +301,8 @@
 <li>在本地查看代码运行情况, 是否解决了问题</li>
 </ol>
 <p>最后, 对于合并可以在本地进行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git checkout master</div><div class="line">$ git merge --no-ff pull-100</div><div class="line">$ git push origin master</div></pre></td></tr></table></figure>
-<p>当然, <a href="https://github.com" target="_blank" rel="external">Github</a> 在线处理已经做得足够好, 也可以选择在线进行合并.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line">$ git merge --no-ff pull-100</span><br><span class="line">$ git push origin master</span><br></pre></td></tr></table></figure>
+<p>当然, <a href="https://github.com" target="_blank" rel="noopener">Github</a> 在线处理已经做得足够好, 也可以选择在线进行合并.</p>
 </span>
       
     </div>
@@ -428,21 +428,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -528,7 +528,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

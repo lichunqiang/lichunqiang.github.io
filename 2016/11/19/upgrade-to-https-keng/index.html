@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="在全站升级Https的过程中需要对websocket服务进行https化。 之前, 使用workerman提供服务, 并采用暴露端口的方式供系统通过IP形式访问。 采用Https后, 采用的方案是使用nginx做一层反向代理, 这样可以取消之前websocket暴露外网的端口. 踩坑配置为websocket配置特定的后缀, 有nginx进行反向代理： 123location = /socket.i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.798Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="升级Https中遇到的一个小坑">
 <meta name="twitter:description" content="在全站升级Https的过程中需要对websocket服务进行https化。 之前, 使用workerman提供服务, 并采用暴露端口的方式供系统通过IP形式访问。 采用Https后, 采用的方案是使用nginx做一层反向代理, 这样可以取消之前websocket暴露外网的端口. 踩坑配置为websocket配置特定的后缀, 有nginx进行反向代理： 123location = /socket.i">
@@ -286,16 +286,16 @@
 <p>之前, 使用workerman提供服务, 并采用暴露端口的方式供系统通过IP形式访问。</p>
 <p>采用Https后, 采用的方案是使用nginx做一层反向代理, 这样可以取消之前websocket暴露外网的端口.</p>
 <h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>为websocket配置特定的后缀, 有nginx进行反向代理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">location = /socket.io/ &#123;</div><div class="line">    proxy_pass http://127.0.0.1:2120;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location = /socket.io/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:2120;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>127.0.0.1:2120</code> 为 workerman 启动的websocket地址.</p>
 <h3 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h3><p><strong>WTF</strong> , 结果并没有按照预期的完全无误. 在控制台中得到如下错误提示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wss://.../socket.io/?EIO=2&amp;transport=websocket&amp;sid=p3af7ZNfvogtq6tAAAG0&apos;</div><div class="line"></div><div class="line">failed: Error during WebSocket handshake: Unexpected response code: 400.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wss://.../socket.io/?EIO=2&amp;transport=websocket&amp;sid=p3af7ZNfvogtq6tAAAG0&apos;</span><br><span class="line"></span><br><span class="line">failed: Error during WebSocket handshake: Unexpected response code: 400.</span><br></pre></td></tr></table></figure>
 <p>然而, 开始并没有去查看导致这个错误的具体原因是什么, 而是直接进行了测试, 测试的结果是<strong>系统能够正常运行</strong>.</p>
 <h2 id="出坑"><a href="#出坑" class="headerlink" title="出坑"></a>出坑</h2><p>当然, 仅仅能够正常运行并不能够证明什么, 事实上, 错误仍然存在. 之后google了一番, 在 socket.io 库的</p>
 <p>issue里找到了解决方案：</p>
-<p><a href="https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072" target="_blank" rel="external">https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072</a></p>
+<p><a href="https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072" target="_blank" rel="noopener">https://github.com/socketio/socket.io/issues/1942#issuecomment-82352072</a></p>
 <p>尝试：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location = /socket.io/ &#123;</div><div class="line">    proxy_pass http://127.0.0.1:2120;</div><div class="line">    proxy_http_version 1.1;</div><div class="line">    proxy_set_header Upgrade $http_upgrade;</div><div class="line">    proxy_set_header Connection &quot;upgrade&quot;;</div><div class="line">    proxy_set_header Host $host;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location = /socket.io/ &#123;</span><br><span class="line">    proxy_pass http://127.0.0.1:2120;</span><br><span class="line">    proxy_http_version 1.1;</span><br><span class="line">    proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">    proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">    proxy_set_header Host $host;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>再次测试, 错误消失！</p>
 <ol>
 <li><code>proxy_http_version 1.1;</code></li>
@@ -311,7 +311,7 @@
 <p> The next two tell Nginx to respond to the Upgrade request which is initiated over HTTP by the browser when it wants to use a WebSocket.</p>
 </blockquote>
 <p>这两个告诉Nginx应对升级请求发起HTTP上的浏览器当它想要使用一个WebSocket。</p>
-<p>参考: <a href="https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/" target="_blank" rel="external">https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/</a></p>
+<p>参考: <a href="https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/" target="_blank" rel="noopener">https://chrislea.com/2013/02/23/proxying-websockets-with-nginx/</a></p>
 <p>–eof–</p>
 </span>
       
@@ -438,21 +438,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -538,7 +538,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>

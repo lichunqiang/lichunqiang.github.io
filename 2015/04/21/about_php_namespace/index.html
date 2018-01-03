@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="PHP命名空间提供了一种将相关的类、函数和常量组合到一起的途径。PHP 在 5.3.0 以后的版本开始支持命名空间。  定义命名空间命名空间通过关键字namespace来声明。如果一个文件中包含命名空间，它必须在其它所有代码之前声明命名空间。 将全局的非命名空间中的代码和命名空间的代码组合在一起，只能使用大括号的形式。全局代码必须用一个不带名称的namespace语句加上大括号括起来： 1234">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-13T02:27:31.794Z">
+<meta property="og:updated_time" content="2018-01-03T02:39:59.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于php的命名空间">
 <meta name="twitter:description" content="PHP命名空间提供了一种将相关的类、函数和常量组合到一起的途径。PHP 在 5.3.0 以后的版本开始支持命名空间。  定义命名空间命名空间通过关键字namespace来声明。如果一个文件中包含命名空间，它必须在其它所有代码之前声明命名空间。 将全局的非命名空间中的代码和命名空间的代码组合在一起，只能使用大括号的形式。全局代码必须用一个不带名称的namespace语句加上大括号括起来： 1234">
@@ -275,7 +275,7 @@
 </blockquote>
 <h2 id="定义命名空间"><a href="#定义命名空间" class="headerlink" title="定义命名空间"></a>定义命名空间</h2><p>命名空间通过关键字namespace来声明。如果一个文件中包含命名空间，它必须在其它所有代码之前声明命名空间。</p>
 <p>将全局的非命名空间中的代码和命名空间的代码组合在一起，只能使用大括号的形式。全局代码必须用一个不带名称的namespace语句加上大括号括起来：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">MyPorject</span> &#123;</div><div class="line">  <span class="title">const</span> <span class="title">CONNECT_OK</span> = 1;</div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Connection</span> </span>&#123;&#125;;</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">connect</span><span class="params">()</span> </span>&#123;&#125;;</div><div class="line">&#125;</div><div class="line"><span class="keyword">namespace</span> &#123;</div><div class="line">  <span class="title">session_start</span>();</div><div class="line">  $a = <span class="keyword">new</span> MyProject\Connection();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyPorject</span> &#123;</span><br><span class="line">  <span class="title">const</span> <span class="title">CONNECT_OK</span> = 1;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">Connection</span> </span>&#123;&#125;;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">connect</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">namespace</span> &#123;</span><br><span class="line">  <span class="title">session_start</span>();</span><br><span class="line">  $a = <span class="keyword">new</span> MyProject\Connection();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="使用命名空间"><a href="#使用命名空间" class="headerlink" title="使用命名空间"></a>使用命名空间</h2><ol>
 <li>非限定名称，或不包含前缀的类型名称。</li>
 </ol>
@@ -295,26 +295,26 @@
 <p>名称中包含命名空间分隔符，并以命名空间分隔符开始的标识符，例如 \Foo\Bar。 namespace\Foo 也是一个完全限定名称.</p>
 <p>注意访问任意全局类、函数或常量，都可以使用完全限定名称，例如 \strlen() 或 \Exception 或 \INI_ALL。</p>
 </blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">Foo</span> \ <span class="title">Bar</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">strlen</span><span class="params">($str)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> $str;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">echo</span> strlen(<span class="string">'test'</span>); <span class="comment">//print test</span></div><div class="line"></div><div class="line"><span class="keyword">echo</span> \strlen(<span class="string">'test'</span>); <span class="comment">//print 4</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Foo</span> \ <span class="title">Bar</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">strlen</span><span class="params">($str)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> strlen(<span class="string">'test'</span>); <span class="comment">//print test</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> \strlen(<span class="string">'test'</span>); <span class="comment">//print 4</span></span><br></pre></td></tr></table></figure>
 <h3 id="命名空间和动态语言特征"><a href="#命名空间和动态语言特征" class="headerlink" title="命名空间和动态语言特征"></a>命名空间和动态语言特征</h3><p>必须使用完全限定名称（包括命名空间前缀的类名称）。注意因为在动态的类名称、函数名称或常量名称中，限定名称和完全限定名称没有区别，因此其前导的反斜杠是不必要的。</p>
 <p>PHP支持两种抽象的访问当前命名空间内部元素的方法， <strong>NAMESPACE</strong> 魔术常量和namespace关键字。</p>
 <p>常量<strong>NAMESPACE</strong>的值是包含当前命名空间名称的字符串。在全局的，不包括在任何命名空间中的代码，它包含一个空的字符串。</p>
 <p>关键字 namespace 可用来显式访问当前命名空间或子命名空间中的元素。它等价于类中的 self 操作符。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="keyword">namespace</span> \ <span class="title">foo</span>(); <span class="comment">// calls function MyProject \ foo()</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> \ <span class="title">foo</span>(); <span class="comment">// calls function MyProject \ foo()</span></span><br></pre></td></tr></table></figure>
 <h3 id="使用命名空间：别名-导入"><a href="#使用命名空间：别名-导入" class="headerlink" title="使用命名空间：别名/导入"></a>使用命名空间：别名/导入</h3><blockquote>
 <p>注意PHP不支持导入函数或常量。</p>
 </blockquote>
 <p>导入的命名空间必须是完全限定的，不会根据当前的命名空间做相对解析，所以前道的反斜杠是不必要的也不允许有反斜杠。</p>
-<h5 id="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"><a href="#导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。" class="headerlink" title="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"></a>导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</div><div class="line"></div><div class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">//实例化 My \ Full \ classname 对象</span></div><div class="line">$a = <span class="string">'Another'</span>;</div><div class="line">$obj2 = <span class="keyword">new</span> $a; <span class="comment">//实例化一个Another对象</span></div></pre></td></tr></table></figure>
+<h5 id="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"><a href="#导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。" class="headerlink" title="导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。"></a>导入操作是在编译的时候执行的，但动态的类名称、函数名称或常量名则不是。</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</span><br><span class="line"></span><br><span class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">//实例化 My \ Full \ classname 对象</span></span><br><span class="line">$a = <span class="string">'Another'</span>;</span><br><span class="line">$obj2 = <span class="keyword">new</span> $a; <span class="comment">//实例化一个Another对象</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>另外，导入操作只影响非限定名称和限定名称。完全限定名称由于是确定的，故不受导入的影响</p>
 </blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</div><div class="line"></div><div class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">// My\Full\classname</span></div><div class="line">$obj = <span class="keyword">new</span> \Another; <span class="comment">// instance of class Another</span></div><div class="line">$obj = <span class="keyword">new</span> Another \ thing; <span class="comment">// My\Full\classname\thing;</span></div><div class="line">$obj = <span class="keyword">new</span> \Another\thing; <span class="comment">// Another\thing</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">use</span> <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">classname</span> <span class="title">as</span> <span class="title">Another</span>, <span class="title">My</span> \ <span class="title">Full</span> \ <span class="title">NSname</span>;</span><br><span class="line"></span><br><span class="line">$obj = <span class="keyword">new</span> Another; <span class="comment">// My\Full\classname</span></span><br><span class="line">$obj = <span class="keyword">new</span> \Another; <span class="comment">// instance of class Another</span></span><br><span class="line">$obj = <span class="keyword">new</span> Another \ thing; <span class="comment">// My\Full\classname\thing;</span></span><br><span class="line">$obj = <span class="keyword">new</span> \Another\thing; <span class="comment">// Another\thing</span></span><br></pre></td></tr></table></figure>
 <h5 id="后备全局函数-常量"><a href="#后备全局函数-常量" class="headerlink" title="后备全局函数/常量"></a>后备全局函数/常量</h5><p>在命名空间中遇到一个非限定的类、函数和常量名称时，使用不同的优先策略来解析该名称。</p>
 <p>类名称总是解析到当前命名空间中的名称。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</div><div class="line"></div><div class="line">$a = <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">'hi'</span>); <span class="comment">//会报错：Class 'MyProject\Exception' not found.</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">MyProject</span>;</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">'hi'</span>); <span class="comment">//会报错：Class 'MyProject\Exception' not found.</span></span><br></pre></td></tr></table></figure>
 <p>因此在访问系统内部或不包含在命名空间中的类名称时，必须使用完全限定名称。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">namspace MyProject;</div><div class="line"></div><div class="line">$a = <span class="keyword">new</span> \<span class="keyword">Exception</span>(<span class="string">'hi'</span>);<span class="comment">// success</span></div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">namspace MyProject;</span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> \<span class="keyword">Exception</span>(<span class="string">'hi'</span>);<span class="comment">// success</span></span><br></pre></td></tr></table></figure>
 <p>对于函数和常量来说，如果当前命名空间中不存在该函数或常量，PHP 会退而使用全局空间中的函数或常量。</p>
 <h2 id="名称解析规则"><a href="#名称解析规则" class="headerlink" title="名称解析规则"></a>名称解析规则</h2><ol>
 <li><p>对完全限定名称的函数、类和常量的调用在编译时解析.例如 new \A\B 解析为类 A\B.</p>
@@ -468,21 +468,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">63</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">57</span>
+              <span class="site-state-item-count">60</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -568,7 +568,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="icon-next-heart fa fa-heart"></i>
   </span>
