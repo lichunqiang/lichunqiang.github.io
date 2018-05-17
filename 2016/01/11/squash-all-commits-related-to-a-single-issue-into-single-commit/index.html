@@ -52,16 +52,17 @@
 
 
 
+<link rel="canonical" href="https://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/"/>
 
 <meta name="description" content="在 Github 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 pull request。 在项目的作者对发起的 pull request 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是， 这一切在 Github 上被方便的给自动完成了，也就说，当我们在对 patch 分支 push 修改代码时， Github 自动会将修改关联到上次已经发起的 pull">
 <meta name="keywords" content="Git,github">
 <meta property="og:type" content="article">
 <meta property="og:title" content="如果将多个commit精简成一个commit">
-<meta property="og:url" content="http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/index.html">
+<meta property="og:url" content="https://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/index.html">
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="在 Github 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 pull request。 在项目的作者对发起的 pull request 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是， 这一切在 Github 上被方便的给自动完成了，也就说，当我们在对 patch 分支 push 修改代码时， Github 自动会将修改关联到上次已经发起的 pull">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-17T14:19:17.801Z">
+<meta property="og:updated_time" content="2018-05-17T15:35:46.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如果将多个commit精简成一个commit">
 <meta name="twitter:description" content="在 Github 上进行协作或者贡献开源项目代码时, 我们常常会对项目发起 pull request。 在项目的作者对发起的 pull request 进行审核时, 常常需要我们对修改进行进一步的修订, 以满足作者的需求。方便的是， 这一切在 Github 上被方便的给自动完成了，也就说，当我们在对 patch 分支 push 修改代码时， Github 自动会将修改关联到上次已经发起的 pull">
@@ -260,13 +261,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -277,7 +271,9 @@
 
 
     <div class="post-body">
-
+	  
+	  <blockquote class="min2read">本文阅读大概需要 <strong>2</strong> 分钟</blockquote>
+	  
       
       
 
@@ -360,25 +356,6 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/"
-     data-title="如果将多个commit精简成一个commit"
-     data-content=""
-     data-url="http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
     </div>
     <div class="donate">
       <img src="/images/qr.png">
@@ -395,10 +372,6 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
 
         
   <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/"
-           data-title="如果将多个commit精简成一个commit" data-url="http://blog.lzuer.net/2016/01/11/squash-all-commits-related-to-a-single-issue-into-single-commit/">
-      </div>
     
   </div>
 
@@ -574,28 +547,11 @@ Date:   Sun Jan 10 22:57:25 2016 +0800
 
   
     
+    
 
   
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"lichunqiang"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-    
-     
 
 
-    
   
 
   

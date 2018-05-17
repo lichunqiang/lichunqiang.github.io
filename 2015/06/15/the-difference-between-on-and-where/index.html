@@ -52,16 +52,17 @@
 
 
 
+<link rel="canonical" href="https://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/"/>
 
 <meta name="description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。 在使用left jion时，on和where条件的区别如下：  on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。   where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在关联表查询的时候是在ON添加条件和在where添加添加条件异同">
-<meta property="og:url" content="http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/index.html">
+<meta property="og:url" content="https://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/index.html">
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。 在使用left jion时，on和where条件的区别如下：  on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。   where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-17T14:19:17.801Z">
+<meta property="og:updated_time" content="2018-05-17T15:35:46.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在关联表查询的时候是在ON添加条件和在where添加添加条件异同">
 <meta name="twitter:description" content="数据库在通过连接两张或多张表来返回记录时，都会生成一张中间的临时表，然后再将这张临时表返回给用户。 在使用left jion时，on和where条件的区别如下：  on条件是在生成临时表时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录。   where条件是在临时表生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部">
@@ -248,13 +249,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/15/the-difference-between-on-and-where/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/15/the-difference-between-on-and-where/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -265,7 +259,9 @@
 
 
     <div class="post-body">
-
+	  
+	  <blockquote class="min2read">本文阅读大概需要 <strong>2</strong> 分钟</blockquote>
+	  
       
       
 
@@ -340,25 +336,6 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2015/06/15/the-difference-between-on-and-where/"
-     data-title="在关联表查询的时候是在ON添加条件和在where添加添加条件异同"
-     data-content=""
-     data-url="http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
     </div>
     <div class="donate">
       <img src="/images/qr.png">
@@ -375,10 +352,6 @@
 
         
   <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2015/06/15/the-difference-between-on-and-where/"
-           data-title="在关联表查询的时候是在ON添加条件和在where添加添加条件异同" data-url="http://blog.lzuer.net/2015/06/15/the-difference-between-on-and-where/">
-      </div>
     
   </div>
 
@@ -554,28 +527,11 @@
 
   
     
+    
 
   
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"lichunqiang"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-    
-     
 
 
-    
   
 
   

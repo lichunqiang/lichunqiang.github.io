@@ -52,16 +52,17 @@
 
 
 
+<link rel="canonical" href="https://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/"/>
 
 <meta name="description" content="在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程: 1$nohup php beanstalkd-consumer.php &amp;amp; 使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。 sup">
 <meta name="keywords" content="supervisor,进程管理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一个进程管理工具-supervisor">
-<meta property="og:url" content="http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/index.html">
+<meta property="og:url" content="https://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/index.html">
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程: 1$nohup php beanstalkd-consumer.php &amp;amp; 使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。 sup">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-17T14:19:17.801Z">
+<meta property="og:updated_time" content="2018-05-17T15:35:46.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一个进程管理工具-supervisor">
 <meta name="twitter:description" content="在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程: 1$nohup php beanstalkd-consumer.php &amp;amp; 使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。 sup">
@@ -260,13 +261,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/07/30/using-supervisor-to-control-process/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/30/using-supervisor-to-control-process/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -277,7 +271,9 @@
 
 
     <div class="post-body">
-
+	  
+	  <blockquote class="min2read">本文阅读大概需要 <strong>4</strong> 分钟</blockquote>
+	  
       
       
 
@@ -349,25 +345,6 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/07/30/using-supervisor-to-control-process/"
-     data-title="一个进程管理工具-supervisor"
-     data-content=""
-     data-url="http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/">
-  <div class="ds-share-inline">
-    <ul  class="ds-share-icons-16">
-
-      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
-      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
-      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
-      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
-      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-
-    </ul>
-    <div class="ds-share-icons-more">
-    </div>
-  </div>
-</div>
-      
     </div>
     <div class="donate">
       <img src="/images/qr.png">
@@ -384,10 +361,6 @@
 
         
   <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/07/30/using-supervisor-to-control-process/"
-           data-title="一个进程管理工具-supervisor" data-url="http://blog.lzuer.net/2016/07/30/using-supervisor-to-control-process/">
-      </div>
     
   </div>
 
@@ -563,28 +536,11 @@
 
   
     
+    
 
   
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"lichunqiang"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-    
-     
 
 
-    
   
 
   

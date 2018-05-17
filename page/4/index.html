@@ -52,10 +52,11 @@
 
 
 
+<link rel="canonical" href="https://blog.lzuer.net/page/4/"/>
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Light&#39;s Blog">
-<meta property="og:url" content="http://blog.lzuer.net/page/4/index.html">
+<meta property="og:url" content="https://blog.lzuer.net/page/4/index.html">
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
@@ -219,8 +220,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/09/18/call-private-method-in-php/" itemprop="url">
-                  在类之外调用私有方法
+                <a class="post-title-link" href="/2015/09/18/composer-repositories-path/" itemprop="url">
+                  Composer之path
                 </a>
               
             
@@ -252,8 +253,8 @@
 
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/代码段/" itemprop="url" rel="index">
-                    <span itemprop="name">代码段</span>
+                  <a href="/categories/PHP/Composer/" itemprop="url" rel="index">
+                    <span itemprop="name">Composer</span>
                   </a>
                 </span>
 
@@ -266,13 +267,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/09/18/call-private-method-in-php/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/18/call-private-method-in-php/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -283,7 +277,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -291,11 +285,25 @@
         
           <span itemprop="articleBody">
             
-              <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> $prefix = <span class="string">'Hello '</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">($name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;prefix, $name, PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第一种方式：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">$method-&gt;setAccessible(<span class="keyword">true</span>);</span><br><span class="line">$method-&gt;invoke(<span class="keyword">new</span> Test(), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
-<p>第二种方式:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">call_user_func($method-&gt;getClosure(<span class="keyword">new</span> Test()), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
+              <blockquote>
+<p>本文讲讲用composer来进行本地开发包,和本地公用包的使用.</p>
+</blockquote>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>当我们构建一个本地的类库时, 当并不想推送到<a href="https://packagist.org/" target="_blank" rel="noopener">packagist</a>, 我们可以使用<code>repositories &gt; path</code></p>
+<p>来处理。</p>
+<p>以下目录结构为例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- apps</span><br><span class="line">\_ my-app   		-- 当前项目开发目录</span><br><span class="line">  \_ composer.json</span><br><span class="line">- packages			-- 本地共有库, 存放正在和已经开发好的类库</span><br><span class="line">\_ my-package       -- 一个叫 my-package 的类库 </span><br><span class="line">  \_ composer.json</span><br></pre></td></tr></table></figure>
+<p>现在我们要在 <code>my-app</code> 中依赖 <code>my-package</code>, 那么现在我们可以：</p>
+<ol>
+<li>配置 <code>my-app/composer.json</code></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	//引入依赖</span><br><span class="line">	&quot;require&quot;: &#123;</span><br><span class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	//配置 repositories</span><br><span class="line">	&quot;repositories&quot;: [</span><br><span class="line"></span><br><span class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</span><br><span class="line">	]	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>composer update</li>
+</ol>
+<p>接下来就是在 <code>my-app</code> 目录下执行 <code>composer update</code>, 来使之前的配置生效!</p>
+<p>执行成功后, 我们可以到<code>my-app/vendor</code> 目录下查看, 我们可以看到该类库已经加入到 <code>my-app/vendor</code> 了！</p>
+<p>之后在 <code>my-package</code> 任何改动后我们需要在 <code>my-app</code> 中执行 <code>composer remove myrepositry/package1</code> 来移除,</p>
+<p>然后在require进来.</p>
 
             
           </span>
@@ -373,13 +381,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/22/hashids-for-yii2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/22/hashids-for-yii2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -390,7 +391,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -479,13 +480,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/07/08/reg-the-at-user/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/08/reg-the-at-user/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -496,7 +490,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -588,13 +582,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/26/upgrade-php-version/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/26/upgrade-php-version/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -605,7 +592,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -704,13 +691,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/15/the-difference-between-on-and-where/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/15/the-difference-between-on-and-where/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -721,7 +701,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -834,13 +814,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/06/04/how-to-control-user-auto-logout-auto-in-yii2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -851,7 +824,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -942,13 +915,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/24/hi-basketball/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/24/hi-basketball/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -959,7 +925,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -1061,13 +1027,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/19/one-using-of-yii2-container/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/19/one-using-of-yii2-container/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -1078,7 +1037,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -1191,13 +1150,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/13/how-to-track-js-errors/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/13/how-to-track-js-errors/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -1208,7 +1160,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -1312,13 +1264,6 @@
 
           
             
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/05/08/yii2-ar-update-note/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/08/yii2-ar-update-note/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -1329,7 +1274,7 @@
 
 
     <div class="post-body">
-
+	  
       
       
 
@@ -1528,28 +1473,11 @@
 
   
     
+    
 
   
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"lichunqiang"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-    
-     
 
 
-    
   
 
   
