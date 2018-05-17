@@ -219,6 +219,279 @@
             
               
                 
+                <a class="post-title-link" href="/2018/03/27/use-frp-as-a-bridge/" itemprop="url">
+                  frp使用之联通外界
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2018-03-27T22:00:19+00:00" content="2018-03-27">
+              2018-03-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/frp/" itemprop="url" rel="index">
+                    <span itemprop="name">frp</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/frp/socks5/" itemprop="url" rel="index">
+                    <span itemprop="name">socks5</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/frp/socks5/http-proxy/" itemprop="url" rel="index">
+                    <span itemprop="name">http_proxy</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/03/27/use-frp-as-a-bridge/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/27/use-frp-as-a-bridge/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>机器A：10.9.193.137 无法访问外网，但能与有外网访问权限的机器连接<br>机器B：10.9.197.104 可以外网联通，并和机器A联通</p>
+<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>使机器A可以访问外网(git, composer, etc…)</p>
+<h2 id="实施步骤"><a href="#实施步骤" class="headerlink" title="实施步骤"></a>实施步骤</h2><p>frp 部署宿主机器：机器B</p>
+<p>启动frps<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//frps.ini</span><br><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line"></span><br><span class="line">#dashboard</span><br><span class="line">dashboard_port = 7500</span><br><span class="line">dashboard_user = admin</span><br><span class="line">dashboard_pwd = admin</span><br></pre></td></tr></table></figure></p>
+<p>启动frp server<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini &gt;&gt; frps.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p>
+<p>启动client(frpc)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">//frpc.ini</span><br><span class="line">[common]</span><br><span class="line">server_addr = 127.0.0.1</span><br><span class="line">server_port = 7000</span><br><span class="line"></span><br><span class="line">[test_static_file]</span><br><span class="line">type = tcp</span><br><span class="line">remote_port = 6001</span><br><span class="line">plugin = static_file</span><br><span class="line"># 要对外暴露的文件目录</span><br><span class="line">plugin_local_path = /home/work/light/files</span><br><span class="line"># 访问 url 中会被去除的前缀，保留的内容即为要访问的文件路径</span><br><span class="line">plugin_strip_prefix = static</span><br><span class="line">plugin_http_user = abc</span><br><span class="line">plugin_http_passwd = abc</span><br><span class="line"></span><br><span class="line">[socks5]</span><br><span class="line">type = tcp</span><br><span class="line">remote_port = 6002</span><br><span class="line">plugin = socks5</span><br><span class="line"></span><br><span class="line">[http_proxy]</span><br><span class="line">type = tcp</span><br><span class="line">remote_port = 6000</span><br><span class="line">plugin = http_proxy</span><br></pre></td></tr></table></figure></p>
+<p>启动frp client<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frpc -c ./frpc.ini &gt;&gt; frpc.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p>
+<p>这样就在机器B上分别部署了三个服务：</p>
+<ul>
+<li>静态文件服务器</li>
+<li>socks5</li>
+<li>http_proxy</li>
+</ul>
+<p>机器A上使用http_proxy或者socks5联通外网</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=<span class="string">"http://username:password@10.9.197.104:6000"</span></span><br><span class="line">composer:</span><br><span class="line"><span class="built_in">export</span> HTTP_PROXY=<span class="string">"http://10.9.197.104:6000"</span></span><br><span class="line">composer install</span><br><span class="line">curl:</span><br><span class="line">curl --socks5 socks5://10.9.197.104:6002 https://www.baidu.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yum:</span><br><span class="line"></span><br><span class="line">vim /etc/yum.conf</span><br><span class="line"></span><br><span class="line">proxy=http://10.9.197.104:6000</span><br><span class="line">proxy_username=username</span><br><span class="line">proxy_password=password</span><br></pre></td></tr></table></figure>
+<p><img src="/images/frp-as-bridge.png"></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/02/17/use-frp-dev-wechat-locally/" itemprop="url">
+                  frp使用之本地服务提供外网访问
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2018-02-17T21:42:08+00:00" content="2018-02-17">
+              2018-02-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/frp/" itemprop="url" rel="index">
+                    <span itemprop="name">frp</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/frp/wechat/" itemprop="url" rel="index">
+                    <span itemprop="name">wechat</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2018/02/17/use-frp-dev-wechat-locally/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/02/17/use-frp-dev-wechat-locally/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="使用场景："><a href="#使用场景：" class="headerlink" title="使用场景："></a>使用场景：</h2><p>本地开发，需要提供外网访问(微信、微信小程序调试)</p>
+<h3 id="物料："><a href="#物料：" class="headerlink" title="物料："></a>物料：</h3><pre><code>* 一台可以外网访问的机器Server
+* 可用域名 Host
+</code></pre><h3 id="实施："><a href="#实施：" class="headerlink" title="实施："></a>实施：</h3><p>将 Host DNS解析到Server，如果希望使用通配符则可以添加解析为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*.demo.lzuer.net -&gt; ServerIP</span><br></pre></td></tr></table></figure>
+<p>frps部署到宿主机器：Server, 配置如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br><span class="line">token = &amp;UJM8ik,</span><br><span class="line"></span><br><span class="line">#log</span><br><span class="line">log_file = ./logs/frps.log</span><br><span class="line">log_level = info</span><br><span class="line">log_max_days = 1</span><br><span class="line"></span><br><span class="line">#dashboard</span><br><span class="line">dashboard_port = 7500</span><br><span class="line">dashboard_user = admin</span><br><span class="line">dashboard_pwd = admin</span><br><span class="line">#虚拟端口, 用于nginx代理</span><br><span class="line">vhost_http_port = 60000</span><br><span class="line">#子域名，配置后，客户端可以随便指定二级域名使用(方便多人)</span><br><span class="line">subdomain_host = demo.lzuer.net</span><br></pre></td></tr></table></figure>
+<p>启动frps:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini &amp;</span><br></pre></td></tr></table></figure></p>
+<p>配置nginx代理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">	listen 80;</span><br><span class="line">	server_name *.demo.lzuer.net;</span><br><span class="line">	location / &#123;</span><br><span class="line">		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">		proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">		proxy_set_header Host $host;</span><br><span class="line">		proxy_pass http://127.0.0.1:60000;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>部署frpc到本地开发环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = 123.56.177.147</span><br><span class="line">server_port = 7000</span><br><span class="line">token = &amp;UJM8ik,</span><br><span class="line"></span><br><span class="line">[web_qx]</span><br><span class="line">type = http</span><br><span class="line">subdomain = qxmugen</span><br><span class="line">host_header_rewrite = qxmugen.io</span><br><span class="line">local_ip = qxmugen.io</span><br><span class="line">local_port = 80</span><br><span class="line">remote_port = 60000</span><br><span class="line"></span><br><span class="line">[web_lab]</span><br><span class="line">type = http</span><br><span class="line">subdomain = lab</span><br><span class="line">host_header_rewrite = f.start.lab.io</span><br><span class="line">local_ip = f.start.lab.io</span><br><span class="line">local_port = 80</span><br><span class="line">remote_port = 60000</span><br><span class="line">subdomain 即为配置的子域名, 例如设置为 qxmugen, 则实际外网地址为 qxmugen.demo.lzuer.net</span><br><span class="line">local_ip 配置为对应的本地 host_name, 因为本地开发环境使用vagrant并通过配置hosts的形式访问</span><br></pre></td></tr></table></figure>
+<p>如果不配置此项frp默认会解析到 127.0.0.1</p>
+<p>启动frpc之后看到frps打印如下日志表示部署成功：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2018/05/04 10:29:28 [I] [service.go:262] client login info: ip [123.125.250.166:27629] version [0.17.0] hostname [] os [windows] arch [amd64]</span><br><span class="line">2018/05/04 10:29:28 [I] [proxy.go:270] [805811e4fd83dce4] [web_qx] http proxy listen for host [qxmugen.demo.lzuer.net] location []</span><br><span class="line">2018/05/04 10:29:28 [I] [control.go:327] [805811e4fd83dce4] new proxy [web_qx] success</span><br><span class="line">2018/05/04 10:29:28 [I] [proxy.go:270] [805811e4fd83dce4] [web_lab] http proxy listen for host [lab.demo.lzuer.net] location []</span><br><span class="line">2018/05/04 10:29:28 [I] [control.go:327] [805811e4fd83dce4] new proxy [web_lab] success</span><br></pre></td></tr></table></figure>
+<h3 id="设计示意图"><a href="#设计示意图" class="headerlink" title="设计示意图"></a>设计示意图</h3><p><img src="/images/frp-dev-wechat.png"></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2018/01/03/http-expect-header/" itemprop="url">
                   解决PHP执行cURL返回头中包含100 continue
                 </a>
@@ -899,7 +1172,7 @@
 <p>The first line tells Nginx to use HTTP/1.1 when communicating to the Node backend, which is required for WebSockets.</p>
 </blockquote>
 <p>告诉nginx使用 <code>HTTP/1.1</code> 协议和后端的websocket服务通信</p>
-<ol>
+<ol start="2">
 <li><code>proxy_set_header Upgrade $http_upgrade</code> &amp; <code>proxy_set_header Connection &quot;upgrade&quot;</code></li>
 </ol>
 <blockquote>
@@ -1177,15 +1450,17 @@
 <li>检出一个单独的分支来查看代码更改</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -b pull-100</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="2">
 <li>拉取提交用户改动分支代码</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ git pull git://github.com/somebody/project.git master</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意, 上面是在用户提交代码分支为 <code>master</code> 的情况, 如果用户提交的改动分支非 <code>master</code></p>
+</blockquote>
+<blockquote>
 <p>那么需要改成对应的分支名</p>
 </blockquote>
-<ol>
+<ol start="3">
 <li>在本地查看代码运行情况, 是否解决了问题</li>
 </ol>
 <p>最后, 对于合并可以在本地进行:</p>
@@ -1363,260 +1638,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/12/count-words-in-textarea/" itemprop="url">
-                  修复在对textarea进行字数统计时的一个bug
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-08-12T20:50:22+00:00" content="2016-08-12">
-              2016-08-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/08/12/count-words-in-textarea/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/12/count-words-in-textarea/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>一天一位<a href="https://github.com/airyland/vux" target="_blank" rel="noopener">vux</a>使用提交了这么一个bug: <a href="https://github.com/airyland/vux/issues/420" target="_blank" rel="noopener">x-textarea字数统计异常</a>.</p>
-<p>具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了<code>maxlength</code>属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了.</p>
-<p>首先我们来看一下字数统计功能是怎么做的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">count() &#123;</span><br><span class="line">	return this.value.length</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码中使用了字符串 <code>length</code> 来做字数统计, 但是为什么当有回车时, 这样会导致数字统计异常呢? 是不是只有在textarea中的表现是这样的呢?</p>
-<h2 id="验证问题"><a href="#验证问题" class="headerlink" title="验证问题"></a>验证问题</h2><p>首先, 我验证了在input中的表现, 结果是统计表现正常.</p>
-<h2 id="发现问题原因"><a href="#发现问题原因" class="headerlink" title="发现问题原因"></a>发现问题原因</h2><p>为什么会这样? 在遨游了「全世界」之后找到了答案：</p>
-<p><a href="http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm" target="_blank" rel="noopener">http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm</a></p>
-<blockquote>
-<p>Textarea values might have the character combos “\n\r” in the text box, but once they are pulled into Javascript, “\n\r” becomes JUST “\n”.</p>
-</blockquote>
-<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>导致问题的原因已经找出来了，那么接下来就是解决问题.</p>
-<p>上面我们知道, 在输入一个回车后都会导致少统计一个数字, 那么我们可以在进行统计的时候做下处理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">count () &#123;</span><br><span class="line">	let len = this.value.replace(&apos;\n&apos;, &apos;aa&apos;).length</span><br><span class="line">	return len &gt; this.max ? this.max : len</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>是不是很tricky? 但是却是能解决问题的!</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/30/using-supervisor-to-control-process/" itemprop="url">
-                  一个进程管理工具-supervisor
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-07-30T20:50:22+00:00" content="2016-07-30">
-              2016-07-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/supervisor/" itemprop="url" rel="index">
-                    <span itemprop="name">supervisor</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/supervisor/进程管理/" itemprop="url" rel="index">
-                    <span itemprop="name">进程管理</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/07/30/using-supervisor-to-control-process/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/30/using-supervisor-to-control-process/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$nohup php beanstalkd-consumer.php &amp;</span><br></pre></td></tr></table></figure>
-<p>使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，<br>这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。</p>
-<p><a href="http://supervisord.org" target="_blank" rel="noopener">supervisor</a>就是这样一个工具，可以让我们很轻松愉快的对它们进行统一管理，而且省去了我们担心的某个任务会因为特殊的原因自己偷偷的挂掉。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>这里我直接使用 <code>yum</code> 进行安装：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install -y supervisor</span><br></pre></td></tr></table></figure>
-<p>安装成功后，会有两个可执行程序：</p>
-<ul>
-<li><strong>supervisord</strong>    – supervisor 服务守护进程</li>
-<li><strong>supervisorctl</strong> – supervisor 服务控制程序.例如: <code>status/start/stop/restart program</code></li>
-</ul>
-<p><strong>supervisord</strong>启动时可以通过 <code>-c /some/path/supervisor.conf</code> 来指定加载的配置文件。当然如果没有指定配置文件的位置 <code>supervisord</code> 会按照内部的寻找方式来加载配置文件</p>
-<p>因为我是用<code>yum</code>来安装的，所以在 <code>/etc/supervisor.conf</code> 已经存在了默认的配置文件，<code>supervisord</code> 会默认加载。</p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>最重要的就是对<code>supervisor</code>的行为方式进行配置，通过修改<code>/etc/supervisord.conf</code>来管理.</p>
-<p>例如，我们加入上面提到的消费进程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[program:beanstalkd_comsumer]</span><br><span class="line">command=/usr/local/php/bin/php /path/to/beanstalkd-consumer.php //此项指定要执行的命令</span><br></pre></td></tr></table></figure>
-<p>默认的，<code>supervisor</code>就自动管理进程挂掉自动重启等，我们来看下比较全的配置信息：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">;[program:theprogramname]</span><br><span class="line">;command=/bin/cat              ; the program (relative uses PATH, can take args)</span><br><span class="line">;process_name=%(program_name)s ; process_name expr (default %(program_name)s)</span><br><span class="line">;numprocs=1                    ; number of processes copies to start (def 1)</span><br><span class="line">;directory=/tmp                ; directory to cwd to before exec (def no cwd)</span><br><span class="line">;umask=022                     ; umask for process (default None)</span><br><span class="line">;priority=999                  ; the relative start priority (default 999)</span><br><span class="line">;autostart=true                ; start at supervisord start (default: true)</span><br><span class="line">;autorestart=true              ; retstart at unexpected quit (default: true)</span><br><span class="line">;startsecs=10                  ; number of secs prog must stay running (def. 1)</span><br><span class="line">;startretries=3                ; max # of serial start failures (default 3)</span><br><span class="line">;exitcodes=0,2                 ; &apos;expected&apos; exit codes for process (default 0,2)</span><br><span class="line">;stopsignal=QUIT               ; signal used to kill process (default TERM)</span><br><span class="line">;stopwaitsecs=10               ; max num secs to wait b4 SIGKILL (default 10)</span><br><span class="line">;user=chrism                   ; setuid to this UNIX account to run the program</span><br><span class="line">;redirect_stderr=true          ; redirect proc stderr to stdout (default false)</span><br><span class="line">;stdout_logfile=/a/path        ; stdout log path, NONE for none; default AUTO</span><br><span class="line">;stdout_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</span><br><span class="line">;stdout_logfile_backups=10     ; # of stdout logfile backups (default 10)</span><br><span class="line">;stdout_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</span><br><span class="line">;stdout_events_enabled=false   ; emit events on stdout writes (default false)</span><br><span class="line">;stderr_logfile=/a/path        ; stderr log path, NONE for none; default AUTO</span><br><span class="line">;stderr_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</span><br><span class="line">;stderr_logfile_backups=10     ; # of stderr logfile backups (default 10)</span><br><span class="line">;stderr_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</span><br><span class="line">;stderr_events_enabled=false   ; emit events on stderr writes (default false)</span><br><span class="line">;environment=A=1,B=2           ; process environment additions (def no adds)</span><br><span class="line">;serverurl=AUTO                ; override serverurl computation (childutils)</span><br></pre></td></tr></table></figure>
-<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>启动<code>supervisord</code>来启动和管理所有的进程：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/bin/supervisord</span><br></pre></td></tr></table></figure>
-<p>启动之后我们可以通过<code>supervisor</code>的另外一个工具来查看所有配置的进程状态:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$supervisorctl status</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beanstalkd_comsumer           RUNNING   pid 26995, uptime 4:09:54</span><br></pre></td></tr></table></figure>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1663,21 +1684,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

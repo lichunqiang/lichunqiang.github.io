@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="创建一个文件夹test，并创建一个新文件uppercaseme.js 1234567891011// uppercaseme.js&quot;use strict&quot;var fs = require(&apos;fs&apos;);var myfile = &quot;myfile.txt&quot;;if(fs.existsSync(myfile)) &amp;#123;    var content = fs.readFileSync(myfile,">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-03T05:33:56.888Z">
+<meta property="og:updated_time" content="2018-05-17T14:19:17.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="创建一个简单的NodeJS程序">
 <meta name="twitter:description" content="创建一个文件夹test，并创建一个新文件uppercaseme.js 1234567891011// uppercaseme.js&quot;use strict&quot;var fs = require(&apos;fs&apos;);var myfile = &quot;myfile.txt&quot;;if(fs.existsSync(myfile)) &amp;#123;    var content = fs.readFileSync(myfile,">
@@ -319,14 +319,14 @@
 <p><em>(命令行仍然在test文件夹)</em></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./src/lib/uppercaseme ./myfile.txt</span><br></pre></td></tr></table></figure>
 <p>和之前的运行效果相同。</p>
-<ol>
+<ol start="2">
 <li>接下来创建 src/bin/uppercaseme</li>
 </ol>
 <blockquote>
 <p>请注意这个文件没有扩展名</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="string">"use strict"</span>;</span><br><span class="line">var path = require(<span class="string">'path'</span>);</span><br><span class="line">var fs = require(<span class="string">'fs'</span>);</span><br><span class="line">var lib = path.join(path.dirname(fs.realpathSync(__filename)), <span class="string">'../lib'</span>);</span><br><span class="line"></span><br><span class="line">require(lib + <span class="string">'/uppercaseme.js'</span>).convert();</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="3">
 <li>改造文件为Node模块</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertThis</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</span><br><span class="line">            <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</span><br><span class="line">            fs.writeFileSync(myfile, content.toUpperCase());</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Pass on a file name/path"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">exports.convert = convertThis;</span><br></pre></td></tr></table></figure>
@@ -341,10 +341,14 @@
 <p>package.json:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"author"</span>: <span class="string">"authoer"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"uppercaseme"</span>,</span><br><span class="line">  <span class="string">"description"</span>: <span class="string">"Converts files to uppercase"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="string">"repository"</span>: &#123;</span><br><span class="line">    <span class="string">"url"</span>: <span class="string">""</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"main"</span>: <span class="string">"./lib/uppercaseme"</span>,</span><br><span class="line">  <span class="string">"keywords"</span>: [</span><br><span class="line">    <span class="string">"upper"</span>,</span><br><span class="line">    <span class="string">"case"</span>,</span><br><span class="line">    <span class="string">"file"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="string">"bin"</span>: &#123;</span><br><span class="line">    <span class="string">"uppercaseme"</span>: <span class="string">"./bin/uppercaseme"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">"engines"</span>: &#123;</span><br><span class="line">    <span class="string">"node"</span>: <span class="string">"*"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>main是一个模块的ID，也是程序的主要入口。在例子中我们的package被命名为 uppercaseme 。当用户安装之后，并 require(‘uppercaseme’)之后我们的主模块的export object会被返回。</p>
+</blockquote>
+<blockquote>
 <p>bin 我们会通过命令行在任何地方运行，安装之后，npm全局安装后会创建 bin/uppercaseme的符号链接，或者 ./node_modules/.bin/ 本地安装</p>
+</blockquote>
+<blockquote>
 <p>dependencies 我们package的所需的依赖列表</p>
 </blockquote>
-<ol>
+<ol start="2">
 <li>发布</li>
 </ol>
 <p>在发布之前，必须有一个user。如果没有:</p>
@@ -498,21 +502,21 @@ OR
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

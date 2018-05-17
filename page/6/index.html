@@ -219,6 +219,295 @@
             
               
                 
+                <a class="post-title-link" href="/2015/04/22/work-with-github/" itemprop="url">
+                  如何在Github上贡献开源项目代码
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:13:54+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/work-with-github/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/work-with-github/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h5 id="首先Fork项目"><a href="#首先Fork项目" class="headerlink" title="首先Fork项目"></a>首先Fork项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> xxxx</span><br><span class="line">$ git branch fix-error</span><br><span class="line">$ git checkout branch</span><br></pre></td></tr></table></figure>
+<p>将项目代码clone到本地，<strong>(然后创建修改分支，修改分支在本branch进行)</strong></p>
+<h5 id="添加上游远程仓库"><a href="#添加上游远程仓库" class="headerlink" title="添加上游远程仓库"></a>添加上游远程仓库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add  upstream git@github.com:xx.git</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>更新原作者代码</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch upstream</span><br><span class="line">$ git merge upstream/master</span><br></pre></td></tr></table></figure>
+<h5 id="将本地修改branch提交"><a href="#将本地修改branch提交" class="headerlink" title="将本地修改branch提交"></a>将本地修改branch提交</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add --all</span><br><span class="line">$ git commit -m <span class="string">'some text'</span></span><br><span class="line">$ git push origin fix-error</span><br></pre></td></tr></table></figure>
+<p>删除分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d fix-error</span><br></pre></td></tr></table></figure>
+<h2 id="GIT-操作集锦"><a href="#GIT-操作集锦" class="headerlink" title="GIT 操作集锦"></a>GIT 操作集锦</h2><h4 id="git删除远程分支"><a href="#git删除远程分支" class="headerlink" title="git删除远程分支"></a>git删除远程分支</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin :branch-name</span><br></pre></td></tr></table></figure>
+<p>冒号前面的空格不能少，原理是把一个空分支push到server上，相当于删除该分支。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/04/22/good-repos-on-github/" itemprop="url">
+                  Github 上不错的项目以及博客
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-04-22T00:12:36+00:00" content="2015-04-22">
+              2015-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/22/good-repos-on-github/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/good-repos-on-github/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <blockquote>
+<p>将在这里收集一些在Github上发现的比较不错并且值得学习的项目</p>
+</blockquote>
+<p><strong>PHP</strong></p>
+<ul>
+<li><a href="https://github.com/justjavac/PHP-Best-Practices-zh_CN" target="_blank" rel="noopener">PHP-Best-Practices-zh_CN</a></li>
+<li><a href="https://github.com/domnikl/DesignPatternsPHP" target="_blank" rel="noopener">DesignPatternsPHP</a></li>
+<li><a href="https://github.com/5-say/laravel-4.1-quick-start-cn" target="_blank" rel="noopener"> laravel-4.1 的完整包，常用的源码已经补充中文注释</a></li>
+<li><a href="https://github.com/laruence/phpbook" target="_blank" rel="noopener">PHP扩展开发及内核应用</a></li>
+<li><a href="https://github.com/wulijun/php-the-right-way" target="_blank" rel="noopener">收集PHP最佳实践、编码规范和权威学习指南</a></li>
+<li><a href="http://wulijun.github.io/php-the-right-way/" target="_blank" rel="noopener">PHP之道</a></li>
+<li><a href="https://github.com/reeze/tipi" target="_blank" rel="noopener">Thinking In PHP Internals</a></li>
+<li><a href="http://weizhifeng.net/manage-php-dependency-with-composer.html" target="_blank" rel="noopener">Composer chinese</a></li>
+</ul>
+<p><strong>javascript</strong></p>
+<ul>
+<li><a href="https://github.com/nanjixiong218/javascriptPattern" target="_blank" rel="noopener">javascriptPattern</a></li>
+<li><a href="https://github.com/JacksonTian/fks" target="_blank" rel="noopener">前端技能总汇</a></li>
+<li><a href="https://github.com/AlloyTeam/Mars" target="_blank" rel="noopener">腾讯移动Web前端知识库</a></li>
+<li><a href="https://github.com/sanshi/JavaScript-Garden" target="_blank" rel="noopener">JavaScript 语言古怪用法的文档集合</a></li>
+<li><a href="https://github.com/zensh/AngularjsTutorial_cn" target="_blank" rel="noopener">AngularJS入门教程</a></li>
+<li><a href="https://github.com/totorojs/javascript-exception-archives" target="_blank" rel="noopener">JavaScript 异常档案，沉淀、交流与分享</a></li>
+<li><a href="https://github.com/justjavac/12-javascript-quirks" target="_blank" rel="noopener">javascript 的 12 个怪癖</a></li>
+<li><a href="https://github.com/airbnb/javascript" target="_blank" rel="noopener">JavaScript Style Guide</a></li>
+<li><a href="https://github.com/RobinQu/Programing-In-Javascript" target="_blank" rel="noopener">Programing-In-Javascript</a></li>
+<li><a href="http://javascript.ruanyifeng.com/" target="_blank" rel="noopener">ruanyifeng Javascript Tutorial</a></li>
+<li><a href="http://bonsaiden.github.io/JavaScript-Garden/zh/" target="_blank" rel="noopener">JavaScript-Garden</a></li>
+</ul>
+<p><strong>Seajs</strong></p>
+<ul>
+<li><a href="https://github.com/island205/HelloSea.js" target="_blank" rel="noopener">专注Sea.js，深入浅出分析Sea.js模块机制</a></li>
+</ul>
+<p><strong>Git</strong></p>
+<ul>
+<li><a href="https://github.com/numbbbbb/Git-Tutorial-By-liaoxuefeng" target="_blank" rel="noopener">Git-Tutorial</a></li>
+<li><a href="https://github.com/gotgit/gotgithub" target="_blank" rel="noopener">一本关于GitHub的书</a></li>
+<li><a href="https://github.com/blynn/gitmagic" target="_blank" rel="noopener">A guide to using Git</a></li>
+</ul>
+<p><strong>Markdown</strong></p>
+<ul>
+<li><a href="http://dillinger.io/" target="_blank" rel="noopener">Online Markdown editor</a> 可在线查看Markdown的效果</li>
+</ul>
+<p><strong>NodeJS</strong></p>
+<ul>
+<li><a href="http://nqdeng.github.io/7-days-nodejs" target="_blank" rel="noopener">七天学会NodeJS</a></li>
+<li><a href="https://github.com/dead-horse/node-style-guide" target="_blank" rel="noopener">Node.js Style Guide</a></li>
+<li><a href="https://github.com/FredKSchott/NodeJS-Handbook" target="_blank" rel="noopener">NodeJS-Handbook</a></li>
+<li><a href="http://www.nodebeginner.org/index-zh-cn.html" target="_blank" rel="noopener">Node入门</a></li>
+</ul>
+<p><strong>不错的博客</strong></p>
+<ul>
+<li><a href="https://github.com/markyun/My-blog" target="_blank" rel="noopener">markyun</a>  设计前端知识</li>
+<li><a href="https://github.com/fool2fish/blog/issues?state=open" target="_blank" rel="noopener">fool2fish</a></li>
+<li><a href="https://github.com/fouber/blog" target="_blank" rel="noopener">fouber</a> 主要涉及前端知识</li>
+<li><a href="https://github.com/lifesinger/lifesinger.github.com/issues?labels=blog" target="_blank" rel="noopener">玉伯在Github上写博</a></li>
+<li><a href="https://github.com/cssmagic/blog" target="_blank" rel="noopener">CSS魔法 - 博客</a></li>
+</ul>
+<p><strong>other</strong></p>
+<ul>
+<li><a href="https://github.com/interagent/http-api-design" target="_blank" rel="noopener">http-api-design</a></li>
+<li><a href="https://github.com/justjavac/free-programming-books-zh_CN" target="_blank" rel="noopener">免费的计算机编程类中文书籍</a></li>
+<li><a href="https://github.com/justjavac/stackoverflow-cn" target="_blank" rel="noopener">翻译 stackoverflow.com 上的热门问题</a></li>
+<li><a href="http://icomoon.io/app/#/select" target="_blank" rel="noopener">IcoMoon App</a></li>
+<li><a href="https://github.com/julycoding/The-Art-Of-Programming-By-July" target="_blank" rel="noopener">The-Art-Of-Programming-By-July</a></li>
+<li><a href="https://github.com/foru17/front-end-collect" target="_blank" rel="noopener">front-end-collect</a></li>
+</ul>
+<blockquote>
+<p>有推荐欢迎留言</p>
+</blockquote>
+<blockquote>
+<p>以上有涉及到个人隐私请及时联系我！</p>
+</blockquote>
+<p><em>(未完待续…)</em></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/22/hello-git/" itemprop="url">
                   Markdown的语法集锦
                 </a>
@@ -744,7 +1033,7 @@ equivalent of &lt;code&gt;&amp;amp;mdash;&lt;/code&gt;.&lt;/p&gt;
 &amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;&amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;
 &amp;#109;&quot;&gt;&amp;#x61;&amp;#x64;&amp;#x64;&amp;#x72;&amp;#x65;&amp;#115;&amp;#115;&amp;#64;&amp;#101;&amp;#120;&amp;#x61;
 &amp;#109;&amp;#x70;&amp;#x6C;e&amp;#x2E;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;
-</code></pre><p>在浏览器里面，这段字串（其实是 <code>&lt;a href=&quot;mailto:address@example.com&quot;&gt;address@example.com&lt;/a&gt;</code>）会变成一个可以点击的「address@example.com」链接。</p>
+</code></pre><p>在浏览器里面，这段字串（其实是 <code>&lt;a href=&quot;mailto:address@example.com&quot;&gt;address@example.com&lt;/a&gt;</code>）会变成一个可以点击的「<a href="mailto:address@example.com" target="_blank" rel="noopener">address@example.com</a>」链接。</p>
 <p>（这种作法虽然可以糊弄不少的机器人，但并不能全部挡下来，不过总比什么都不做好些。不管怎样，公开你的信箱终究会引来广告信件的。）</p>
 <h3 id="backslash">反斜杠</h3>
 
@@ -1191,17 +1480,19 @@ _   底线
 <blockquote>
 <p>名称中不包含命名空间分隔符的标识符，例如 Foo</p>
 </blockquote>
-<ol>
+<ol start="2">
 <li>限定名称，或包含前缀的名称。</li>
 </ol>
 <blockquote>
 <p>名称中含有命名空间分隔符的标识符，例如 Foo\Bar</p>
 </blockquote>
-<ol>
+<ol start="3">
 <li>完全限定名称，或包含了全局前缀操作符的名称。</li>
 </ol>
 <blockquote>
 <p>名称中包含命名空间分隔符，并以命名空间分隔符开始的标识符，例如 \Foo\Bar。 namespace\Foo 也是一个完全限定名称.</p>
+</blockquote>
+<blockquote>
 <p>注意访问任意全局类、函数或常量，都可以使用完全限定名称，例如 \strlen() 或 \Exception 或 \INI_ALL。</p>
 </blockquote>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Foo</span> \ <span class="title">Bar</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">strlen</span><span class="params">($str)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> strlen(<span class="string">'test'</span>); <span class="comment">//print test</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> \strlen(<span class="string">'test'</span>); <span class="comment">//print 4</span></span><br></pre></td></tr></table></figure>
@@ -1755,14 +2046,14 @@ app.controller(&apos;ctrl&apos;, function(movie) {
 <p><em>(命令行仍然在test文件夹)</em></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node ./src/lib/uppercaseme ./myfile.txt</span><br></pre></td></tr></table></figure>
 <p>和之前的运行效果相同。</p>
-<ol>
+<ol start="2">
 <li>接下来创建 src/bin/uppercaseme</li>
 </ol>
 <blockquote>
 <p>请注意这个文件没有扩展名</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="string">"use strict"</span>;</span><br><span class="line">var path = require(<span class="string">'path'</span>);</span><br><span class="line">var fs = require(<span class="string">'fs'</span>);</span><br><span class="line">var lib = path.join(path.dirname(fs.realpathSync(__filename)), <span class="string">'../lib'</span>);</span><br><span class="line"></span><br><span class="line">require(lib + <span class="string">'/uppercaseme.js'</span>).convert();</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="3">
 <li>改造文件为Node模块</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">"use strict"</span></span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">convertThis</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(process.argv.length &gt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> myfile = process.argv[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(fs.existsSync(myfile)) &#123;</span><br><span class="line">            <span class="keyword">var</span> content = fs.readFileSync(myfile, <span class="string">'utf8'</span>);</span><br><span class="line">            fs.writeFileSync(myfile, content.toUpperCase());</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"File does not exist - "</span> + myfile);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">"Pass on a file name/path"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">exports.convert = convertThis;</span><br></pre></td></tr></table></figure>
@@ -1777,10 +2068,14 @@ app.controller(&apos;ctrl&apos;, function(movie) {
 <p>package.json:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"author"</span>: <span class="string">"authoer"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"uppercaseme"</span>,</span><br><span class="line">  <span class="string">"description"</span>: <span class="string">"Converts files to uppercase"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="string">"repository"</span>: &#123;</span><br><span class="line">    <span class="string">"url"</span>: <span class="string">""</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"main"</span>: <span class="string">"./lib/uppercaseme"</span>,</span><br><span class="line">  <span class="string">"keywords"</span>: [</span><br><span class="line">    <span class="string">"upper"</span>,</span><br><span class="line">    <span class="string">"case"</span>,</span><br><span class="line">    <span class="string">"file"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="string">"bin"</span>: &#123;</span><br><span class="line">    <span class="string">"uppercaseme"</span>: <span class="string">"./bin/uppercaseme"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123;&#125;,</span><br><span class="line">  <span class="string">"engines"</span>: &#123;</span><br><span class="line">    <span class="string">"node"</span>: <span class="string">"*"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>main是一个模块的ID，也是程序的主要入口。在例子中我们的package被命名为 uppercaseme 。当用户安装之后，并 require(‘uppercaseme’)之后我们的主模块的export object会被返回。</p>
+</blockquote>
+<blockquote>
 <p>bin 我们会通过命令行在任何地方运行，安装之后，npm全局安装后会创建 bin/uppercaseme的符号链接，或者 ./node_modules/.bin/ 本地安装</p>
+</blockquote>
+<blockquote>
 <p>dependencies 我们package的所需的依赖列表</p>
 </blockquote>
-<ol>
+<ol start="2">
 <li>发布</li>
 </ol>
 <p>在发布之前，必须有一个user。如果没有:</p>
@@ -1988,255 +2283,6 @@ OR
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/04/22/seajs-note/" itemprop="url">
-                  seasj-note
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2014-04-22T00:28:29+00:00" content="2014-04-22">
-              2014-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/seajs/" itemprop="url" rel="index">
-                    <span itemprop="name">seajs</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/seajs/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/04/22/seajs-note/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/22/seajs-note/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p><a href="https://speakerdeck.com/lifesinger/seajs" target="_blank" rel="noopener">玉伯的一份ppt</a></p>
-<p><strong>在这份Seajs的PPT中，玉伯介绍到了Seajs的实现</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*a.js*/</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b'</span>);</span><br><span class="line">    <span class="keyword">var</span> c = <span class="built_in">require</span>(<span class="string">'./c'</span>);</span><br><span class="line">    <span class="comment">//other code</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*main.js*/</span></span><br><span class="line">seajs.use(./a);</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>Step1:      解析 ‘./a’</li>
-<li>Step2.1:  下载a</li>
-<li>Step2.2:    执行define,保存a的factory</li>
-<li>Step2.3:     得到依赖b和c</li>
-<li>Step2.4：    加载b和c</li>
-<li>Step3:    执行a的factory，得到a的module.exports</li>
-</ul>
-<p><strong>Step1: 路径解析</strong></p>
-<p>在进行路径解析的时候<code>require(&#39;jquery&#39;)</code>,首先判断在<code>seajs.config</code>是否定义了该<code>alias</code>,</p>
-<p>如果存在替换.(<em>parseAlias</em>)</p>
-<p>这之后在根据<code>base</code>,将id值解析为uri.(<em>id2uri</em>)</p>
-<p>在接下来进行(<em>parseMap</em>), 即对<code>seajs.config</code>中的map进行解析。</p>
-<p>最终得到完整的路径！</p>
-<p><strong>Step2: 模块加载_</strong></p>
-<ul>
-<li>将上一步得到的路径通过 insert script 、xhr、web workder…等方式插入</li>
-</ul>
-<p><strong><a href="https://speakerdeck.com/lifesinger/seajs" target="_blank" rel="noopener">More See PPT</a></strong></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2014/04/22/how-to-know-nginx-compiled-config/" itemprop="url">
-                  添加nginx模块
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2014-04-22T00:21:08+00:00" content="2014-04-22">
-              2014-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2014/04/22/how-to-know-nginx-compiled-config/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/04/22/how-to-know-nginx-compiled-config/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h4 id="首先查看之前编译安装nginx的配置"><a href="#首先查看之前编译安装nginx的配置" class="headerlink" title="首先查看之前编译安装nginx的配置"></a>首先查看之前编译安装nginx的配置</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nginx -V</span><br></pre></td></tr></table></figure>
-<p>会列出配置的参数：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configure arguments: --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module</span><br></pre></td></tr></table></figure>
-<h4 id="重新编译增加模块"><a href="#重新编译增加模块" class="headerlink" title="重新编译增加模块"></a>重新编译增加模块</h4><blockquote>
-<p>这个过程不会替换现有的nginx的东西，既可以在不停止服务的前提下进行替换</p>
-</blockquote>
-<p>首先找到原来安装nginx的目录(如果已经删除，则重新现在nginx源程序)</p>
-<p>进入该目录，然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line"></span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
-<p>保险做法：</p>
-<p>不执行make install, 将执行make之后objs目录下的nginx替换现有的。(不要忘记对之前的进行备份)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr/<span class="built_in">local</span>/webserver/nginx --user=nginx --group=nginx --with-http_stub_status_module --with-http_ssl_module --with-http_flv_module --add-module path/module/</span><br><span class="line"></span><br><span class="line">$ make</span><br><span class="line"></span><br><span class="line">$ service nginx stop</span><br><span class="line"></span><br><span class="line">$ cp /etc/nginx/sbin/nginx /etc/nginx/sbin/nginx.bak</span><br><span class="line"></span><br><span class="line">$ cp objs/nginx /etc/nginx/sbin/</span><br><span class="line"></span><br><span class="line">$ service nginx start</span><br></pre></td></tr></table></figure>
-<h4 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h4>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -2283,21 +2329,21 @@ OR
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

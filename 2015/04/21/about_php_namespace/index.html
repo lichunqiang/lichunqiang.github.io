@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="PHP命名空间提供了一种将相关的类、函数和常量组合到一起的途径。PHP 在 5.3.0 以后的版本开始支持命名空间。  定义命名空间命名空间通过关键字namespace来声明。如果一个文件中包含命名空间，它必须在其它所有代码之前声明命名空间。 将全局的非命名空间中的代码和命名空间的代码组合在一起，只能使用大括号的形式。全局代码必须用一个不带名称的namespace语句加上大括号括起来： 1234">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-03T05:33:56.888Z">
+<meta property="og:updated_time" content="2018-05-17T14:19:17.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于php的命名空间">
 <meta name="twitter:description" content="PHP命名空间提供了一种将相关的类、函数和常量组合到一起的途径。PHP 在 5.3.0 以后的版本开始支持命名空间。  定义命名空间命名空间通过关键字namespace来声明。如果一个文件中包含命名空间，它必须在其它所有代码之前声明命名空间。 将全局的非命名空间中的代码和命名空间的代码组合在一起，只能使用大括号的形式。全局代码必须用一个不带名称的namespace语句加上大括号括起来： 1234">
@@ -282,17 +282,19 @@
 <blockquote>
 <p>名称中不包含命名空间分隔符的标识符，例如 Foo</p>
 </blockquote>
-<ol>
+<ol start="2">
 <li>限定名称，或包含前缀的名称。</li>
 </ol>
 <blockquote>
 <p>名称中含有命名空间分隔符的标识符，例如 Foo\Bar</p>
 </blockquote>
-<ol>
+<ol start="3">
 <li>完全限定名称，或包含了全局前缀操作符的名称。</li>
 </ol>
 <blockquote>
 <p>名称中包含命名空间分隔符，并以命名空间分隔符开始的标识符，例如 \Foo\Bar。 namespace\Foo 也是一个完全限定名称.</p>
+</blockquote>
+<blockquote>
 <p>注意访问任意全局类、函数或常量，都可以使用完全限定名称，例如 \strlen() 或 \Exception 或 \INI_ALL。</p>
 </blockquote>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Foo</span> \ <span class="title">Bar</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">strlen</span><span class="params">($str)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> strlen(<span class="string">'test'</span>); <span class="comment">//print test</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> \strlen(<span class="string">'test'</span>); <span class="comment">//print 4</span></span><br></pre></td></tr></table></figure>
@@ -468,21 +470,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

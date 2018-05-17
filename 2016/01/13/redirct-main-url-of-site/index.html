@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="www.site.com site.com 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置， 因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。 配置nginx如下：   server_name site.com www.site.com   if ($host = ‘site.com’) {    rewrite ^/(.*)$ http:/">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-03T05:33:56.888Z">
+<meta property="og:updated_time" content="2018-05-17T14:19:17.801Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx重定向小例">
 <meta name="twitter:description" content="www.site.com site.com 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置， 因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。 配置nginx如下：   server_name site.com www.site.com   if ($host = ‘site.com’) {    rewrite ^/(.*)$ http:/">
@@ -285,7 +285,7 @@
         <span itemprop="articleBody"><p><code>www.site.com</code> <code>site.com</code> 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，</p>
 <p>因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。</p>
 <p>配置nginx如下：</p>
-<p>  server_name site.com www.site.com</p>
+<p>  server_name site.com <a href="http://www.site.com" target="_blank" rel="noopener">www.site.com</a></p>
 <p>  if ($host = ‘site.com’) {<br>    rewrite ^/(.*)$ <a href="http://www.site.com/$1" target="_blank" rel="noopener">http://www.site.com/$1</a> permanent;<br>  }</p>
 </span>
       
@@ -412,21 +412,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

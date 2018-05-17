@@ -219,6 +219,260 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/12/count-words-in-textarea/" itemprop="url">
+                  修复在对textarea进行字数统计时的一个bug
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-08-12T20:50:22+00:00" content="2016-08-12">
+              2016-08-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/12/count-words-in-textarea/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/12/count-words-in-textarea/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>一天一位<a href="https://github.com/airyland/vux" target="_blank" rel="noopener">vux</a>使用提交了这么一个bug: <a href="https://github.com/airyland/vux/issues/420" target="_blank" rel="noopener">x-textarea字数统计异常</a>.</p>
+<p>具体就是在当在textarea中输入回车之后，就会导致字数统计异常, 而对textarea设置了<code>maxlength</code>属性, 这样就会导致如果在textarea中输入过回车，就会导致统计字数还未达上限，但是已经不能输入了.</p>
+<p>首先我们来看一下字数统计功能是怎么做的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">count() &#123;</span><br><span class="line">	return this.value.length</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码中使用了字符串 <code>length</code> 来做字数统计, 但是为什么当有回车时, 这样会导致数字统计异常呢? 是不是只有在textarea中的表现是这样的呢?</p>
+<h2 id="验证问题"><a href="#验证问题" class="headerlink" title="验证问题"></a>验证问题</h2><p>首先, 我验证了在input中的表现, 结果是统计表现正常.</p>
+<h2 id="发现问题原因"><a href="#发现问题原因" class="headerlink" title="发现问题原因"></a>发现问题原因</h2><p>为什么会这样? 在遨游了「全世界」之后找到了答案：</p>
+<p><a href="http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm" target="_blank" rel="noopener">http://www.bennadel.com/blog/161-ask-ben-javascript-replace-and-multiple-lines-line-breaks.htm</a></p>
+<blockquote>
+<p>Textarea values might have the character combos “\n\r” in the text box, but once they are pulled into Javascript, “\n\r” becomes JUST “\n”.</p>
+</blockquote>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><p>导致问题的原因已经找出来了，那么接下来就是解决问题.</p>
+<p>上面我们知道, 在输入一个回车后都会导致少统计一个数字, 那么我们可以在进行统计的时候做下处理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">count () &#123;</span><br><span class="line">	let len = this.value.replace(&apos;\n&apos;, &apos;aa&apos;).length</span><br><span class="line">	return len &gt; this.max ? this.max : len</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是不是很tricky? 但是却是能解决问题的!</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/07/30/using-supervisor-to-control-process/" itemprop="url">
+                  一个进程管理工具-supervisor
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-07-30T20:50:22+00:00" content="2016-07-30">
+              2016-07-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/supervisor/" itemprop="url" rel="index">
+                    <span itemprop="name">supervisor</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/supervisor/进程管理/" itemprop="url" rel="index">
+                    <span itemprop="name">进程管理</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/30/using-supervisor-to-control-process/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/30/using-supervisor-to-control-process/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>在实际的开发过程中，经常会用到守护进程来执行相应的代码。例如起一个消费beanstalkd的进程:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$nohup php beanstalkd-consumer.php &amp;</span><br></pre></td></tr></table></figure>
+<p>使用这种方式，我们会发现这个进程会不明不白的「死掉」，导致消费工作无法正常进行。另外，如果一个项目中会涉及到多个守护进程来做相关工作的话，<br>这会导致样管理起来十分的麻烦，而且常常会担心它们会自己偷偷的「死掉」。</p>
+<p><a href="http://supervisord.org" target="_blank" rel="noopener">supervisor</a>就是这样一个工具，可以让我们很轻松愉快的对它们进行统一管理，而且省去了我们担心的某个任务会因为特殊的原因自己偷偷的挂掉。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>这里我直接使用 <code>yum</code> 进行安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install -y supervisor</span><br></pre></td></tr></table></figure>
+<p>安装成功后，会有两个可执行程序：</p>
+<ul>
+<li><strong>supervisord</strong>    – supervisor 服务守护进程</li>
+<li><strong>supervisorctl</strong> – supervisor 服务控制程序.例如: <code>status/start/stop/restart program</code></li>
+</ul>
+<p><strong>supervisord</strong>启动时可以通过 <code>-c /some/path/supervisor.conf</code> 来指定加载的配置文件。当然如果没有指定配置文件的位置 <code>supervisord</code> 会按照内部的寻找方式来加载配置文件</p>
+<p>因为我是用<code>yum</code>来安装的，所以在 <code>/etc/supervisor.conf</code> 已经存在了默认的配置文件，<code>supervisord</code> 会默认加载。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>最重要的就是对<code>supervisor</code>的行为方式进行配置，通过修改<code>/etc/supervisord.conf</code>来管理.</p>
+<p>例如，我们加入上面提到的消费进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[program:beanstalkd_comsumer]</span><br><span class="line">command=/usr/local/php/bin/php /path/to/beanstalkd-consumer.php //此项指定要执行的命令</span><br></pre></td></tr></table></figure>
+<p>默认的，<code>supervisor</code>就自动管理进程挂掉自动重启等，我们来看下比较全的配置信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">;[program:theprogramname]</span><br><span class="line">;command=/bin/cat              ; the program (relative uses PATH, can take args)</span><br><span class="line">;process_name=%(program_name)s ; process_name expr (default %(program_name)s)</span><br><span class="line">;numprocs=1                    ; number of processes copies to start (def 1)</span><br><span class="line">;directory=/tmp                ; directory to cwd to before exec (def no cwd)</span><br><span class="line">;umask=022                     ; umask for process (default None)</span><br><span class="line">;priority=999                  ; the relative start priority (default 999)</span><br><span class="line">;autostart=true                ; start at supervisord start (default: true)</span><br><span class="line">;autorestart=true              ; retstart at unexpected quit (default: true)</span><br><span class="line">;startsecs=10                  ; number of secs prog must stay running (def. 1)</span><br><span class="line">;startretries=3                ; max # of serial start failures (default 3)</span><br><span class="line">;exitcodes=0,2                 ; &apos;expected&apos; exit codes for process (default 0,2)</span><br><span class="line">;stopsignal=QUIT               ; signal used to kill process (default TERM)</span><br><span class="line">;stopwaitsecs=10               ; max num secs to wait b4 SIGKILL (default 10)</span><br><span class="line">;user=chrism                   ; setuid to this UNIX account to run the program</span><br><span class="line">;redirect_stderr=true          ; redirect proc stderr to stdout (default false)</span><br><span class="line">;stdout_logfile=/a/path        ; stdout log path, NONE for none; default AUTO</span><br><span class="line">;stdout_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</span><br><span class="line">;stdout_logfile_backups=10     ; # of stdout logfile backups (default 10)</span><br><span class="line">;stdout_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</span><br><span class="line">;stdout_events_enabled=false   ; emit events on stdout writes (default false)</span><br><span class="line">;stderr_logfile=/a/path        ; stderr log path, NONE for none; default AUTO</span><br><span class="line">;stderr_logfile_maxbytes=1MB   ; max # logfile bytes b4 rotation (default 50MB)</span><br><span class="line">;stderr_logfile_backups=10     ; # of stderr logfile backups (default 10)</span><br><span class="line">;stderr_capture_maxbytes=1MB   ; number of bytes in &apos;capturemode&apos; (default 0)</span><br><span class="line">;stderr_events_enabled=false   ; emit events on stderr writes (default false)</span><br><span class="line">;environment=A=1,B=2           ; process environment additions (def no adds)</span><br><span class="line">;serverurl=AUTO                ; override serverurl computation (childutils)</span><br></pre></td></tr></table></figure>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>启动<code>supervisord</code>来启动和管理所有的进程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /usr/bin/supervisord</span><br></pre></td></tr></table></figure>
+<p>启动之后我们可以通过<code>supervisor</code>的另外一个工具来查看所有配置的进程状态:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$supervisorctl status</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beanstalkd_comsumer           RUNNING   pid 26995, uptime 4:09:54</span><br></pre></td></tr></table></figure>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/14/deploy-beanstalkd-on-centos7/" itemprop="url">
                   beanstalkd在centos7下部署小记
                 </a>
@@ -295,15 +549,15 @@
 <li>下载源代码到本地</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://github.com/kr/beanstalkd/archive/v1.10.tar.gz</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="2">
 <li>解压安装</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf v1.10.tar.gz &amp;&amp; rm -rf v1.10.tar.gz</span><br><span class="line">$ mv beanstalkd-1.10/ /usr/local/beanstalkd</span><br><span class="line">$ cd /usr/local/beanstalkd</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="3">
 <li>加入服务以及开机启动</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cp /usr/local/beanstalkd/adm/systemd/beanstalkd.service /usr/lib/systemd/system</span><br><span class="line">$ systemctl enable beanstalkd.service</span><br><span class="line">$ systemctl start beanstalkd.service</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="4">
 <li>手动启动并开启binlog</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /data/beanstalkd</span><br><span class="line">$ /usr/bin/beanstalkd -b /data/beanstalkd -u root &amp;</span><br></pre></td></tr></table></figure>
@@ -1204,263 +1458,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/03/git-tips-one/" itemprop="url">
-                  git tips - 1
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-03-03T16:53:42+00:00" content="2016-03-03">
-              2016-03-03
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/03/git-tips-one/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/03/git-tips-one/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p>
-<p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p>
-<p>所以在本地某个仓库可以设置用户名和邮箱：</p>
-<p>  git config user.name “light”<br>  git config user.email “light@qq.com”</p>
-<p><strong>为常用命令设置快捷别名</strong></p>
-<p>  git config alias.st status<br>  git config alias.ci commit</p>
-<blockquote>
-<p>同样可以使用<code>-g</code> 来进行全局配置</p>
-</blockquote>
-<p>使用：</p>
-<p>  $ git st<br>  $ git ci</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/01/26/xdebug-phpstorm/" itemprop="url">
-                  在phpstorm中使用xdebug
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-01-26T11:17:39+00:00" content="2016-01-26">
-              2016-01-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/xdebug/" itemprop="url" rel="index">
-                    <span itemprop="name">xdebug</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/xdebug/phpstorm/" itemprop="url" rel="index">
-                    <span itemprop="name">phpstorm</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/01/26/xdebug-phpstorm/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/xdebug-phpstorm/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="开启xdebug"><a href="#开启xdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p>
-<p>  [xdebug]<br>  xdebug.remote_enable = On<br>  xdebug.remote_handler = dbgp<br>  xdebug.remote_host= localhost<br>  xdebug.remote_port = 9000<br>  xdebug.idekey = PHPSTORM<br>  xdebug.profiler_enable = 1</p>
-<p>重启服务之后在<code>phpinfo</code>中查看是否已经开启<code>xdebug</code>.</p>
-<h2 id="配置phpstorm"><a href="#配置phpstorm" class="headerlink" title="配置phpstorm"></a>配置phpstorm</h2><ol>
-<li><p>配置xdebug端口号</p>
-<p>在 File &gt; Settings &gt; Langauges&amp;Frameworks 中找到 <code>PHP</code> 选择<code>Debug</code>选项卡,找到<code>xdebug</code>配置项，确认端口号是上面设置的<code>9000</code></p>
-</li>
-<li><p>配置DBGp Proxy</p>
-<p> 点击<code>DBGp Proxy</code>选项卡，在里面设置:</p>
-<p>   IDE Key: PHPSTORM<br>   Host:   localhost<br>   Port:   9000</p>
-</li>
-<li><p>添加 servers</p>
-<p>找到 <code>Servers</code>选项卡,点击添加按钮添加一个配置信息。例如想调试部署好的虚拟地址：<code>www.app.local</code>,那么你需要在<code>Host</code>中填上该地址。<br>注意<code>Port</code>需要和你实际配置的端口要一直。另外保证<code>Debugger</code>为<code>Xdebug</code></p>
-</li>
-</ol>
-<p>  这里主要记录下如何配合浏览器插件<code>Xdebug helper</code>来进行调试</p>
-<h2 id="安装浏览器插件Xdebug-helper"><a href="#安装浏览器插件Xdebug-helper" class="headerlink" title="安装浏览器插件Xdebug helper"></a>安装浏览器插件<code>Xdebug helper</code></h2><p>  安装成功之后，在选线卡将你配置的domain进行添加。</p>
-<h2 id="在postman中使用xdebug"><a href="#在postman中使用xdebug" class="headerlink" title="在postman中使用xdebug"></a>在postman中使用xdebug</h2><ol>
-<li><p>Configure your xdebug (by editing php.ini) to attempt to debug every php script (xdebug.remote_autostart = 1)</p>
-</li>
-<li><p>Add xdebug session start parameter to the actual URL (XDEBUG_SESSION_START= – <a href="http://xdebug.org/docs/remote" target="_blank" rel="noopener">http://xdebug.org/docs/remote</a> ), for example: ?XDEBUG_SESSION_START=PHPSTORM</p>
-</li>
-<li><p>Pass xdebug cookie as one of the headers (the one which is set by bookmarklet or browser extension, for example)</p>
-<p>参考文章:</p>
-<ul>
-<li><a href="http://my.oschina.net/u/248080/blog/351455" target="_blank" rel="noopener">http://my.oschina.net/u/248080/blog/351455</a></li>
-<li><a href="http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman" target="_blank" rel="noopener">http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman</a></li>
-</ul>
-</li>
-</ol>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1507,21 +1504,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

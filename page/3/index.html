@@ -219,6 +219,263 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/03/git-tips-one/" itemprop="url">
+                  git tips - 1
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-03-03T16:53:42+00:00" content="2016-03-03">
+              2016-03-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/03/git-tips-one/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/03/03/git-tips-one/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="git-tip-one"><a href="#git-tip-one" class="headerlink" title="git tip one"></a>git tip one</h1><p><strong>git config</strong></p>
+<p><code>git config</code> 配置项由本地 &gt; 用户 &gt; 系统层级覆盖。</p>
+<p>所以在本地某个仓库可以设置用户名和邮箱：</p>
+<p>  git config user.name “light”<br>  git config user.email “<a href="mailto:light@qq.com" target="_blank" rel="noopener">light@qq.com</a>“</p>
+<p><strong>为常用命令设置快捷别名</strong></p>
+<p>  git config alias.st status<br>  git config alias.ci commit</p>
+<blockquote>
+<p>同样可以使用<code>-g</code> 来进行全局配置</p>
+</blockquote>
+<p>使用：</p>
+<p>  $ git st<br>  $ git ci</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/01/26/xdebug-phpstorm/" itemprop="url">
+                  在phpstorm中使用xdebug
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-01-26T11:17:39+00:00" content="2016-01-26">
+              2016-01-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/xdebug/" itemprop="url" rel="index">
+                    <span itemprop="name">xdebug</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/xdebug/phpstorm/" itemprop="url" rel="index">
+                    <span itemprop="name">phpstorm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/26/xdebug-phpstorm/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/01/26/xdebug-phpstorm/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h2 id="开启xdebug"><a href="#开启xdebug" class="headerlink" title="开启xdebug"></a>开启xdebug</h2><p>在<code>php.ini</code>中配置<code>xdebug</code>如下：</p>
+<p>  [xdebug]<br>  xdebug.remote_enable = On<br>  xdebug.remote_handler = dbgp<br>  xdebug.remote_host= localhost<br>  xdebug.remote_port = 9000<br>  xdebug.idekey = PHPSTORM<br>  xdebug.profiler_enable = 1</p>
+<p>重启服务之后在<code>phpinfo</code>中查看是否已经开启<code>xdebug</code>.</p>
+<h2 id="配置phpstorm"><a href="#配置phpstorm" class="headerlink" title="配置phpstorm"></a>配置phpstorm</h2><ol>
+<li><p>配置xdebug端口号</p>
+<p>在 File &gt; Settings &gt; Langauges&amp;Frameworks 中找到 <code>PHP</code> 选择<code>Debug</code>选项卡,找到<code>xdebug</code>配置项，确认端口号是上面设置的<code>9000</code></p>
+</li>
+<li><p>配置DBGp Proxy</p>
+<p> 点击<code>DBGp Proxy</code>选项卡，在里面设置:</p>
+<p>   IDE Key: PHPSTORM<br>   Host:   localhost<br>   Port:   9000</p>
+</li>
+<li><p>添加 servers</p>
+<p>找到 <code>Servers</code>选项卡,点击添加按钮添加一个配置信息。例如想调试部署好的虚拟地址：<code>www.app.local</code>,那么你需要在<code>Host</code>中填上该地址。<br>注意<code>Port</code>需要和你实际配置的端口要一直。另外保证<code>Debugger</code>为<code>Xdebug</code></p>
+</li>
+</ol>
+<p>  这里主要记录下如何配合浏览器插件<code>Xdebug helper</code>来进行调试</p>
+<h2 id="安装浏览器插件Xdebug-helper"><a href="#安装浏览器插件Xdebug-helper" class="headerlink" title="安装浏览器插件Xdebug helper"></a>安装浏览器插件<code>Xdebug helper</code></h2><p>  安装成功之后，在选线卡将你配置的domain进行添加。</p>
+<h2 id="在postman中使用xdebug"><a href="#在postman中使用xdebug" class="headerlink" title="在postman中使用xdebug"></a>在postman中使用xdebug</h2><ol>
+<li><p>Configure your xdebug (by editing php.ini) to attempt to debug every php script (xdebug.remote_autostart = 1)</p>
+</li>
+<li><p>Add xdebug session start parameter to the actual URL (XDEBUG_SESSION_START= – <a href="http://xdebug.org/docs/remote" target="_blank" rel="noopener">http://xdebug.org/docs/remote</a> ), for example: ?XDEBUG_SESSION_START=PHPSTORM</p>
+</li>
+<li><p>Pass xdebug cookie as one of the headers (the one which is set by bookmarklet or browser extension, for example)</p>
+<p>参考文章:</p>
+<ul>
+<li><a href="http://my.oschina.net/u/248080/blog/351455" target="_blank" rel="noopener">http://my.oschina.net/u/248080/blog/351455</a></li>
+<li><a href="http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman" target="_blank" rel="noopener">http://stackoverflow.com/questions/19139803/xdebug-a-restful-server-using-phpstorm-or-postman</a></li>
+</ul>
+</li>
+</ol>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/01/18/auto-deploy-hexo-blog-using-travis/" itemprop="url">
                   配置travis来自动发布hexo博客
                 </a>
@@ -559,7 +816,7 @@ script:
               <p><code>www.site.com</code> <code>site.com</code> 在配置nginx的时候都会指向我们的主站，但是需要注意的是在这里要进行一下跳转设置，</p>
 <p>因为在不设置的话，在百度等收录的话就会当做成两个站点，就行重复收录。</p>
 <p>配置nginx如下：</p>
-<p>  server_name site.com www.site.com</p>
+<p>  server_name site.com <a href="http://www.site.com" target="_blank" rel="noopener">www.site.com</a></p>
 <p>  if ($host = ‘site.com’) {<br>    rewrite ^/(.*)$ <a href="http://www.site.com/$1" target="_blank" rel="noopener">http://www.site.com/$1</a> permanent;<br>  }</p>
 
             
@@ -954,7 +1211,7 @@ $ssh -T git@github.com
 <li>设定 <code>minimum-stability</code> 为 <code>dev</code></li>
 </ol>
 <p>显然这是简单粗暴的, 但是这种方法所面临的问题也很严重. 那就是我们去依赖某些开发版中的包, 这显然是我们所不想看到的.</p>
-<ol>
+<ol start="2">
 <li>指定依赖包的版本, 这也是最佳的解决方案</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require vendor/library=dev-master</span><br></pre></td></tr></table></figure>
@@ -1201,238 +1458,13 @@ $ssh -T git@github.com
 <li>配置 <code>my-app/composer.json</code></li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	//引入依赖</span><br><span class="line">	&quot;require&quot;: &#123;</span><br><span class="line">		&quot;myrepositry/package1&quot;: &quot;*@dev&quot;</span><br><span class="line">	&#125;,</span><br><span class="line">	//配置 repositories</span><br><span class="line">	&quot;repositories&quot;: [</span><br><span class="line"></span><br><span class="line">		&#123;&quot;type&quot;: &quot;path&quot;, &quot;url&quot;: &quot;../../packages/my-package&quot;&#125;</span><br><span class="line">	]	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="2">
 <li>composer update</li>
 </ol>
 <p>接下来就是在 <code>my-app</code> 目录下执行 <code>composer update</code>, 来使之前的配置生效!</p>
 <p>执行成功后, 我们可以到<code>my-app/vendor</code> 目录下查看, 我们可以看到该类库已经加入到 <code>my-app/vendor</code> 了！</p>
 <p>之后在 <code>my-package</code> 任何改动后我们需要在 <code>my-app</code> 中执行 <code>composer remove myrepositry/package1</code> 来移除,</p>
 <p>然后在require进来.</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/09/18/call-private-method-in-php/" itemprop="url">
-                  在类之外调用私有方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-09-18T00:17:39+00:00" content="2015-09-18">
-              2015-09-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/代码段/" itemprop="url" rel="index">
-                    <span itemprop="name">代码段</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/09/18/call-private-method-in-php/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/18/call-private-method-in-php/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> $prefix = <span class="string">'Hello '</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">($name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;prefix, $name, PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第一种方式：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">$method-&gt;setAccessible(<span class="keyword">true</span>);</span><br><span class="line">$method-&gt;invoke(<span class="keyword">new</span> Test(), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
-<p>第二种方式:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">call_user_func($method-&gt;getClosure(<span class="keyword">new</span> Test()), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/22/hashids-for-yii2/" itemprop="url">
-                  Hashids的yii2封装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-08-22T00:17:39+00:00" content="2015-08-22">
-              2015-08-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/08/22/hashids-for-yii2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/22/hashids-for-yii2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h3 id="关于Hashids"><a href="#关于Hashids" class="headerlink" title="关于Hashids"></a>关于Hashids</h3><p>Hashids 是一个将数字生成唯一且不连续的短码的库, 被封装了好多语言版本的库。</p>
-<p>详细： <a href="http://hashids.org/php/" target="_blank" rel="noopener">http://hashids.org/php/</a></p>
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$hashids = Yii::createObject([</span><br><span class="line">    <span class="string">'class'</span> =&gt; <span class="string">'light\hashids\Hashids'</span></span><br><span class="line">]);</span><br><span class="line"></span><br><span class="line">$id = $hashids-&gt;encode(<span class="number">100123123</span>);</span><br><span class="line">$origin = $hashids-&gt;decode($id);</span><br><span class="line">var_dump($id, $origin);</span><br></pre></td></tr></table></figure>
-<p><a href="https://packagist.org/packages/light/hashids" target="_blank" rel="noopener">详细</a></p>
 
             
           </span>
@@ -1500,21 +1532,21 @@ $ssh -T git@github.com
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

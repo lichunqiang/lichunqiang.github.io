@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Light&#39;s Blog">
 <meta property="og:description" content="下载源代码到本地  1$ wget https://github.com/kr/beanstalkd/archive/v1.10.tar.gz  解压安装  1234$ tar zxvf v1.10.tar.gz &amp;amp;&amp;amp; rm -rf v1.10.tar.gz$ mv beanstalkd-1.10/ /usr/local/beanstalkd$ cd /usr/local/bea">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-03T05:33:56.888Z">
+<meta property="og:updated_time" content="2018-05-17T14:19:17.797Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="beanstalkd在centos7下部署小记">
 <meta name="twitter:description" content="下载源代码到本地  1$ wget https://github.com/kr/beanstalkd/archive/v1.10.tar.gz  解压安装  1234$ tar zxvf v1.10.tar.gz &amp;amp;&amp;amp; rm -rf v1.10.tar.gz$ mv beanstalkd-1.10/ /usr/local/beanstalkd$ cd /usr/local/bea">
@@ -286,15 +286,15 @@
 <li>下载源代码到本地</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://github.com/kr/beanstalkd/archive/v1.10.tar.gz</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="2">
 <li>解压安装</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf v1.10.tar.gz &amp;&amp; rm -rf v1.10.tar.gz</span><br><span class="line">$ mv beanstalkd-1.10/ /usr/local/beanstalkd</span><br><span class="line">$ cd /usr/local/beanstalkd</span><br><span class="line">$ make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="3">
 <li>加入服务以及开机启动</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cp /usr/local/beanstalkd/adm/systemd/beanstalkd.service /usr/lib/systemd/system</span><br><span class="line">$ systemctl enable beanstalkd.service</span><br><span class="line">$ systemctl start beanstalkd.service</span><br></pre></td></tr></table></figure>
-<ol>
+<ol start="4">
 <li>手动启动并开启binlog</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /data/beanstalkd</span><br><span class="line">$ /usr/bin/beanstalkd -b /data/beanstalkd -u root &amp;</span><br></pre></td></tr></table></figure>
@@ -427,21 +427,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

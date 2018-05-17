@@ -219,6 +219,253 @@
             
               
                 
+                <a class="post-title-link" href="/2015/05/07/yii2-validators-boolean/" itemprop="url">
+                  Yii2中的Validators之BooleanValidator
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-05-07T23:01:16+00:00" content="2015-05-07">
+              2015-05-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Yii2/Yii2-validator/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2-validator</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/07/yii2-validators-boolean/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/07/yii2-validators-boolean/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>顾名思义，从命名上来看，给人的感觉是进行布尔类型判断的。</p>
+<p>但其实我们可以用它来做一些更有意思的比较。</p>
+<p>比较常规的用法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionSearch</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	$model = <span class="keyword">new</span> DynamicModel([<span class="string">'status'</span>]);</span><br><span class="line"></span><br><span class="line">	$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>);</span><br><span class="line">	$model-&gt;status = <span class="number">1</span>;</span><br><span class="line">	$model-&gt;validate(); <span class="comment">// true, status 设置为 0 也会验证为true</span></span><br><span class="line"></span><br><span class="line">	$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>, [<span class="string">'strict'</span> =&gt; <span class="keyword">true</span>]);</span><br><span class="line">	$model-&gt;status = <span class="number">1</span>;</span><br><span class="line">	$model-&gt;validate(); <span class="comment">// false</span></span><br><span class="line">	$model-&gt;status = <span class="string">'1'</span>;</span><br><span class="line">	$model-&gt;validate(); <span class="comment">// true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里列举了两个验证场景：1是非严格比较， 2是严格比较。</p>
+<p>在 BooleanValidator 中有两个属性分别代表比较的值，其默认为 <code>trueValue = &#39;1&#39;</code> 和 <code>falseValue = &#39;0&#39;</code>,</p>
+<p>在验证的时候 BooleanValidator 分别对对相应的属性值进行比较，当有一个「trueValue或falseValue」分别在严格比较和非严格比较的情况下和属性值相等时则验证通过。</p>
+<p>由此，我们可以通过设置 trueValue 和 falseValue 来进行更多的比较，例如：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此场景我们需要验证用户的输入为 yes 或者 no</span></span><br><span class="line"></span><br><span class="line">$model = <span class="keyword">new</span> DynamicModel([<span class="string">'action'</span>]);</span><br><span class="line">$model-&gt;load(Yii::$app-&gt;getRequest()-&gt;post(), <span class="string">''</span>);</span><br><span class="line">$model-&gt;addRule(<span class="string">'status'</span>, <span class="string">'boolean'</span>, [<span class="string">'strict'</span> =&gt; <span class="keyword">true</span>, <span class="string">'trueValue'</span> =&gt; <span class="string">'yes'</span>, <span class="string">'falseValue'</span> =&gt; <span class="string">'no'</span>]);</span><br><span class="line"><span class="keyword">if</span> ($model-&gt;validate()) &#123;</span><br><span class="line">	<span class="comment">//validate pass</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="comment">//validate error</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/05/06/yii2-dynamicmodel/" itemprop="url">
+                  yii2之DynamicModel
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-05-06T21:53:42+00:00" content="2015-05-06">
+              2015-05-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/Yii2/" itemprop="url" rel="index">
+                    <span itemprop="name">Yii2</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/05/06/yii2-dynamicmodel/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/06/yii2-dynamicmodel/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h3 id="什么是DynamicModel"><a href="#什么是DynamicModel" class="headerlink" title="什么是DynamicModel"></a>什么是DynamicModel</h3><p>DynamicModel是用来进行临时的数据验证，有些情况，我们不希望为一次数据提交建立专门的Model来处理「例如：操作只是进行更改商品的状态」.</p>
+<h3 id="如何来用"><a href="#如何来用" class="headerlink" title="如何来用"></a>如何来用</h3><h4 id="DynamicModel-validateData"><a href="#DynamicModel-validateData" class="headerlink" title="DynamicModel::validateData"></a>DynamicModel::validateData</h4><p>DynamicModel提供了静态方法 <code>validateData</code> 来辅助我们实现动态验证，考虑一下代码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">actionUpdateStatus</span><span class="params">($id, $status)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	$model = DynamicModel::validateData(compact(<span class="string">'id'</span>, <span class="string">'status'</span>), [</span><br><span class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>],</span><br><span class="line">		[[<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>],</span><br><span class="line">		[<span class="string">'status'</span>, <span class="string">'in'</span>, <span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]],</span><br><span class="line">		...</span><br><span class="line">	]);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ($model-&gt;validate()) &#123;</span><br><span class="line">		<span class="comment">//validation success</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="comment">//validation error</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>validateData</code> 方法接受两个参数：model的属性值和对应的验证方法，它返回的是一个 DynamicModel的实例，拥有赋予的属性和对应的值，当然还有定义的验证方法。</p>
+<h4 id="面向对象的方法"><a href="#面向对象的方法" class="headerlink" title="面向对象的方法"></a>面向对象的方法</h4><p>调用 <code>validateData</code> 方法，并传入属性值和验证方法会为我们自动生成一个 DynamicModel 的实力，当然我们也可以：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$model = <span class="keyword">new</span> DynamicModel(compact(<span class="string">'id'</span>, <span class="string">'status'</span>));</span><br><span class="line">$model-&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'required'</span>)</span><br><span class="line">	  -&gt;addRule([<span class="string">'id'</span>, <span class="string">'status'</span>], <span class="string">'integer'</span>)</span><br><span class="line">	  -&gt;addRule(<span class="string">'status'</span>, <span class="string">'in'</span>, [<span class="string">'range'</span> =&gt; [<span class="number">1</span>, <span class="number">2</span>]]);</span><br><span class="line">	  ...</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ($model-&gt;validate()) &#123;</span><br><span class="line">	<span class="comment">//validate success</span></span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h3><p>通过以上两个方法得到动态model后，我们可以通过 <code>$model-&gt;id</code> 的方式来获取对应的值。</p>
+<p>当然也可以调用 <code>$model-&gt;attributes()</code> 来获取所有属性.</p>
+<p>当希望为创建好的model新增属性时，我们可以：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$model-&gt;defineAttribute(<span class="string">'user_id'</span>, <span class="number">1111</span>);</span><br><span class="line">$model-&gt;defineAttribute(<span class="string">'name'</span>);</span><br></pre></td></tr></table></figure>
+<p>需要删除某一属性时：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$model-&gt;undefineAttribute(<span class="string">'name'</span>);</span><br></pre></td></tr></table></figure></p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/04/25/yii2-layer-asset-plugin-published/" itemprop="url">
                   yii2-layer发布
                 </a>
@@ -666,7 +913,7 @@
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm link</span><br></pre></td></tr></table></figure>
 <p>This createsa symlink to the current folder in npm’s global installation directory.</p>
-<ol>
+<ol start="2">
 <li>Somewhere else, where you want to use the modules:</li>
 </ol>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$npm  link &lt;pkgname&gt;</span><br></pre></td></tr></table></figure>
@@ -1236,293 +1483,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/work-with-github/" itemprop="url">
-                  如何在Github上贡献开源项目代码
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:13:54+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/github/" itemprop="url" rel="index">
-                    <span itemprop="name">github</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/work-with-github/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/work-with-github/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h5 id="首先Fork项目"><a href="#首先Fork项目" class="headerlink" title="首先Fork项目"></a>首先Fork项目</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> xxxx</span><br><span class="line">$ git branch fix-error</span><br><span class="line">$ git checkout branch</span><br></pre></td></tr></table></figure>
-<p>将项目代码clone到本地，<strong>(然后创建修改分支，修改分支在本branch进行)</strong></p>
-<h5 id="添加上游远程仓库"><a href="#添加上游远程仓库" class="headerlink" title="添加上游远程仓库"></a>添加上游远程仓库</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add  upstream git@github.com:xx.git</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>更新原作者代码</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git fetch upstream</span><br><span class="line">$ git merge upstream/master</span><br></pre></td></tr></table></figure>
-<h5 id="将本地修改branch提交"><a href="#将本地修改branch提交" class="headerlink" title="将本地修改branch提交"></a>将本地修改branch提交</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git add --all</span><br><span class="line">$ git commit -m <span class="string">'some text'</span></span><br><span class="line">$ git push origin fix-error</span><br></pre></td></tr></table></figure>
-<p>删除分支</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d fix-error</span><br></pre></td></tr></table></figure>
-<h2 id="GIT-操作集锦"><a href="#GIT-操作集锦" class="headerlink" title="GIT 操作集锦"></a>GIT 操作集锦</h2><h4 id="git删除远程分支"><a href="#git删除远程分支" class="headerlink" title="git删除远程分支"></a>git删除远程分支</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push origin :branch-name</span><br></pre></td></tr></table></figure>
-<p>冒号前面的空格不能少，原理是把一个空分支push到server上，相当于删除该分支。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/04/22/good-repos-on-github/" itemprop="url">
-                  Github 上不错的项目以及博客
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-04-22T00:12:36+00:00" content="2015-04-22">
-              2015-04-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/github/" itemprop="url" rel="index">
-                    <span itemprop="name">github</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2015/04/22/good-repos-on-github/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/22/good-repos-on-github/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <blockquote>
-<p>将在这里收集一些在Github上发现的比较不错并且值得学习的项目</p>
-</blockquote>
-<p><strong>PHP</strong></p>
-<ul>
-<li><a href="https://github.com/justjavac/PHP-Best-Practices-zh_CN" target="_blank" rel="noopener">PHP-Best-Practices-zh_CN</a></li>
-<li><a href="https://github.com/domnikl/DesignPatternsPHP" target="_blank" rel="noopener">DesignPatternsPHP</a></li>
-<li><a href="https://github.com/5-say/laravel-4.1-quick-start-cn" target="_blank" rel="noopener"> laravel-4.1 的完整包，常用的源码已经补充中文注释</a></li>
-<li><a href="https://github.com/laruence/phpbook" target="_blank" rel="noopener">PHP扩展开发及内核应用</a></li>
-<li><a href="https://github.com/wulijun/php-the-right-way" target="_blank" rel="noopener">收集PHP最佳实践、编码规范和权威学习指南</a></li>
-<li><a href="http://wulijun.github.io/php-the-right-way/" target="_blank" rel="noopener">PHP之道</a></li>
-<li><a href="https://github.com/reeze/tipi" target="_blank" rel="noopener">Thinking In PHP Internals</a></li>
-<li><a href="http://weizhifeng.net/manage-php-dependency-with-composer.html" target="_blank" rel="noopener">Composer chinese</a></li>
-</ul>
-<p><strong>javascript</strong></p>
-<ul>
-<li><a href="https://github.com/nanjixiong218/javascriptPattern" target="_blank" rel="noopener">javascriptPattern</a></li>
-<li><a href="https://github.com/JacksonTian/fks" target="_blank" rel="noopener">前端技能总汇</a></li>
-<li><a href="https://github.com/AlloyTeam/Mars" target="_blank" rel="noopener">腾讯移动Web前端知识库</a></li>
-<li><a href="https://github.com/sanshi/JavaScript-Garden" target="_blank" rel="noopener">JavaScript 语言古怪用法的文档集合</a></li>
-<li><a href="https://github.com/zensh/AngularjsTutorial_cn" target="_blank" rel="noopener">AngularJS入门教程</a></li>
-<li><a href="https://github.com/totorojs/javascript-exception-archives" target="_blank" rel="noopener">JavaScript 异常档案，沉淀、交流与分享</a></li>
-<li><a href="https://github.com/justjavac/12-javascript-quirks" target="_blank" rel="noopener">javascript 的 12 个怪癖</a></li>
-<li><a href="https://github.com/airbnb/javascript" target="_blank" rel="noopener">JavaScript Style Guide</a></li>
-<li><a href="https://github.com/RobinQu/Programing-In-Javascript" target="_blank" rel="noopener">Programing-In-Javascript</a></li>
-<li><a href="http://javascript.ruanyifeng.com/" target="_blank" rel="noopener">ruanyifeng Javascript Tutorial</a></li>
-<li><a href="http://bonsaiden.github.io/JavaScript-Garden/zh/" target="_blank" rel="noopener">JavaScript-Garden</a></li>
-</ul>
-<p><strong>Seajs</strong></p>
-<ul>
-<li><a href="https://github.com/island205/HelloSea.js" target="_blank" rel="noopener">专注Sea.js，深入浅出分析Sea.js模块机制</a></li>
-</ul>
-<p><strong>Git</strong></p>
-<ul>
-<li><a href="https://github.com/numbbbbb/Git-Tutorial-By-liaoxuefeng" target="_blank" rel="noopener">Git-Tutorial</a></li>
-<li><a href="https://github.com/gotgit/gotgithub" target="_blank" rel="noopener">一本关于GitHub的书</a></li>
-<li><a href="https://github.com/blynn/gitmagic" target="_blank" rel="noopener">A guide to using Git</a></li>
-</ul>
-<p><strong>Markdown</strong></p>
-<ul>
-<li><a href="http://dillinger.io/" target="_blank" rel="noopener">Online Markdown editor</a> 可在线查看Markdown的效果</li>
-</ul>
-<p><strong>NodeJS</strong></p>
-<ul>
-<li><a href="http://nqdeng.github.io/7-days-nodejs" target="_blank" rel="noopener">七天学会NodeJS</a></li>
-<li><a href="https://github.com/dead-horse/node-style-guide" target="_blank" rel="noopener">Node.js Style Guide</a></li>
-<li><a href="https://github.com/FredKSchott/NodeJS-Handbook" target="_blank" rel="noopener">NodeJS-Handbook</a></li>
-<li><a href="http://www.nodebeginner.org/index-zh-cn.html" target="_blank" rel="noopener">Node入门</a></li>
-</ul>
-<p><strong>不错的博客</strong></p>
-<ul>
-<li><a href="https://github.com/markyun/My-blog" target="_blank" rel="noopener">markyun</a>  设计前端知识</li>
-<li><a href="https://github.com/fool2fish/blog/issues?state=open" target="_blank" rel="noopener">fool2fish</a></li>
-<li><a href="https://github.com/fouber/blog" target="_blank" rel="noopener">fouber</a> 主要涉及前端知识</li>
-<li><a href="https://github.com/lifesinger/lifesinger.github.com/issues?labels=blog" target="_blank" rel="noopener">玉伯在Github上写博</a></li>
-<li><a href="https://github.com/cssmagic/blog" target="_blank" rel="noopener">CSS魔法 - 博客</a></li>
-</ul>
-<p><strong>other</strong></p>
-<ul>
-<li><a href="https://github.com/interagent/http-api-design" target="_blank" rel="noopener">http-api-design</a></li>
-<li><a href="https://github.com/justjavac/free-programming-books-zh_CN" target="_blank" rel="noopener">免费的计算机编程类中文书籍</a></li>
-<li><a href="https://github.com/justjavac/stackoverflow-cn" target="_blank" rel="noopener">翻译 stackoverflow.com 上的热门问题</a></li>
-<li><a href="http://icomoon.io/app/#/select" target="_blank" rel="noopener">IcoMoon App</a></li>
-<li><a href="https://github.com/julycoding/The-Art-Of-Programming-By-July" target="_blank" rel="noopener">The-Art-Of-Programming-By-July</a></li>
-<li><a href="https://github.com/foru17/front-end-collect" target="_blank" rel="noopener">front-end-collect</a></li>
-</ul>
-<blockquote>
-<p>有推荐欢迎留言</p>
-<p>以上有涉及到个人隐私请及时联系我！</p>
-</blockquote>
-<p><em>(未完待续…)</em></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1569,21 +1529,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">64</span>
+              <span class="site-state-item-count">66</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">60</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
