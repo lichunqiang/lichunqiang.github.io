@@ -220,6 +220,240 @@
             
               
                 
+                <a class="post-title-link" href="/2014/09/22/differences-between-providers-in-angular/" itemprop="url">
+                  Angular之provider异同
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2014-09-22T00:08:27+00:00" content="2014-09-22">
+              2014-09-22
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/javascript/Angular/" itemprop="url" rel="index">
+                    <span itemprop="name">Angular</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+	  
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <blockquote>
+<p>原文<a href="http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/" target="_blank" rel="noopener">http://blog.xebia.com/2013/09/01/differences-between-providers-in-angularjs/</a></p>
+</blockquote>
+<h2 id="什么是Provider"><a href="#什么是Provider" class="headerlink" title="什么是Provider"></a>什么是Provider</h2><p>AngularJS官方文档定义：</p>
+<blockquote>
+<p>A provider is an object with a $get() method.<br>The injector calls the $get method to create a new instance of a service.<br>The Provider can have additional methods which would allow for configuration of the provider.</p>
+</blockquote>
+<p>AngularJS使用$provide 来注册新的provider. 每个Provider只进行一次实例的创建。</p>
+<p>$provide 有六个方法来创建定制化的Provider：</p>
+<ul>
+<li>constant</li>
+<li>value</li>
+<li>service</li>
+<li>factory</li>
+<li>decorator</li>
+<li>provider</li>
+</ul>
+<h3 id="constant"><a href="#constant" class="headerlink" title="constant"></a>constant</h3><p>constant能够被注入到任何地方。constant不能被装饰器拦截，这意味着contant的值将永远无法改变。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.config(function($provide){
+    $provide.constant(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+});
+
+app.controller(&apos;ctrl&apos;, function(movieTitle){
+    expect(movieTitle).toEqual(&apos;The Matrix&apos;);
+});
+</code></pre><p>AngularJs提供一种更加简便的方式创建constant:</p>
+<pre><code>app.constant(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+</code></pre><h3 id="value"><a href="#value" class="headerlink" title="value"></a>value</h3><p>value只是一个简单的可注入的值，这个值可以是字符串、数字和方法。和constant不同的是它不能够被注入到配置，但是能够被装饰器拦截。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.config(function($provide){
+     $provide.value(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+});
+
+app.controller(&apos;ctrl&apos;, function(movieTitle){
+    expect(movieTitle).toEqual(&apos;The Matrix&apos;);
+});
+</code></pre><p>AngularJs提供一种更加简便的方式创建value:</p>
+<pre><code>app.value(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+</code></pre><h3 id="service"><a href="#service" class="headerlink" title="service"></a>service</h3><p>service 是一个可注入的构造函数。你可以在函数中指定依赖。service是单例的，只被anguarJs创建一次。service是一个非常棒的方法来进行controller之间的通信，例如共享数据.</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.config(function($provide){
+    $provide.service(&apos;movie&apos;, function(){
+        this.title = &apos;The Matrix&apos;;
+    });
+});
+
+app.controller(&apos;ctrl&apos;, function(movie){
+    expect(movive.title).toEequal(&apos;The Matrix&apos;);
+});
+</code></pre><p>AngularJs提供一种更加简便的方式创建service:</p>
+<pre><code>app.service(&apos;movieTitle&apos;, function(){
+    this.title = &apos;The Matrix&apos;;
+});
+</code></pre><h3 id="Factory"><a href="#Factory" class="headerlink" title="Factory"></a>Factory</h3><p>factory是一个可注入的方法。从某种的意义而言factory非常像service，它也是单例的同样能够在函数中定义依赖。两者不同的是，factory注入是一个plain function，所以angularjs能够执行该方法，而service注入的是一个构造函数。当去new一个serivce的时候，构造函数创建一个新的对象。但是使用factory你可以让函数返回任何东西。</p>
+<p>稍后你会看见，factory仅仅是一个拥有 $get 方法的provider。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.config(function($provide){
+    $provide.factory(&apos;movie&apos;, function() {
+        return {
+            title: &apos;The Matrix&apos;
+        };
+    });
+});
+
+app.controlller(&apos;ctrl&apos;, function(movie){
+    expect(movive.title).toEequal(&apos;The Matrix&apos;);
+});
+</code></pre><p>AngularJS还提供一种更加简便的方法：</p>
+<pre><code>app.factory(&apos;movie&apos;, function() {
+    return {
+        title: &apos;The Matrix&apos;
+    };
+});
+</code></pre><h3 id="Decorator"><a href="#Decorator" class="headerlink" title="Decorator"></a>Decorator</h3><p>decorator能够修改和压缩其他provider，正如上面提到的constant是一个列外。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.value(&apos;movieTitle&apos;, &apos;The Matrix&apos;);
+
+app.config(function($provide){
+    $provide.decorator(&apos;movieTitle&apos;, function($delegate){
+        return $delegate + &apos; - starring Keanu Reeves&apos;
+    });
+});
+
+app.controller(&apos;myCtrl&apos;, function(movieTile){
+    expect(movieTitle).toEqual(&apos;The Matrix - starring Keanu Reeves&apos;);
+});
+</code></pre><h3 id="Provider"><a href="#Provider" class="headerlink" title="Provider"></a>Provider</h3><p>provide在所有的provider中是最复杂的方法，它允许你创建一个复杂的功能和配置选项.</p>
+<p>provide 实际上是一个配置的factory.它可以是一个对象或者构造函数。</p>
+<pre><code>var app = angular.module(&apos;app&apos;, []);
+
+app.provider(&apos;movie&apos;, function(){
+    var version;
+    return {
+        setVersion: function(value) {
+            version = value;
+        },
+        $get: function() {
+            return {
+                title: &apos;The Matrix&apos; + &apos; &apos; + version
+            }
+        }
+    };
+});
+
+app.config(function(movieProvider){
+    movieProvider.setVersion(&apos;Reloaded&apos;);
+});
+
+app.controller(&apos;ctrl&apos;, function(movie) {
+    expect(movie.title).toEqual(&apos;The Matrix Reloaded&apos;);
+});
+</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>所有的provider只被实例化一次，它们全是单例的。</li>
+<li>除了constant的所有provider都能够被装饰</li>
+<li>constant是一个能被注入到任何地方的值，而且不能被修改</li>
+<li>value只是一个简单能被注入的值</li>
+<li>service是一个能被注入的构造方法</li>
+<li>factory是一个能被注入的函数</li>
+<li>decoratory能够修改压缩除了constant的其他provider</li>
+<li>provider是一个可配置的facotry</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2014/07/22/how-to-create-a-npm-package/" itemprop="url">
                   创建一个简单的NodeJS程序
                 </a>
@@ -1296,21 +1530,21 @@ OR
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">69</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">67</span>
+              <span class="site-state-item-count">69</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

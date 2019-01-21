@@ -220,6 +220,147 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/25/https/" itemprop="url">
+                  开启Https之旅
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2016-10-25T12:17:39+00:00" content="2016-10-25">
+              2016-10-25
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/nignx/" itemprop="url" rel="index">
+                    <span itemprop="name">nignx</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/nignx/https/" itemprop="url" rel="index">
+                    <span itemprop="name">https</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+	  
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <blockquote>
+<p>本文记录了在centos7下使用<a href="https://certbot.eff.org/" target="_blank" rel="noopener">certbot</a>配置开启https 的过程</p>
+</blockquote>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo yum install epel-release -y</span><br><span class="line">$ sudo yum install certbot -y</span><br></pre></td></tr></table></figure>
+<p>安装成功之后，可以通过执行 <code>certbot -h</code> 来查看使用帮助.</p>
+<p>申请证书有两种验证方式，一种是<strong>standalone</strong>，这种验证方式虽然也可以部署，但是以后更新证书的时候需要重启 web 服务器。</p>
+<p>我们可以采用第二种<strong>webroot</strong>方式，就是在网站根目录下生成一个文件，通过访问该文件来验证，不需要重启 web 服务器。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ certbot certonly --webroot -w /home/wwwroot/yoursite/web -d www.lzuer.net -d lzuer.net</span><br></pre></td></tr></table></figure>
+<p>如果希望为多个域名生成共同的证书，可以继续在面输入：<code>-w /home/wwwroot/othersite/web -d admin.lzuer.net</code></p>
+<p>按照提示操作，当看到下面输出后，表示证书已成功生成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">IMPORTANT NOTES:</span><br><span class="line"> - Congratulations! Your certificate and chain have been saved at</span><br><span class="line">   /etc/letsencrypt/live/your.domain.com/fullchain.pem. Your cert</span><br><span class="line">   will expire on 20XX-09-23. To obtain a new or tweaked version of</span><br><span class="line">   this certificate in the future, simply run certbot again. To</span><br><span class="line">   non-interactively renew *all* of your certificates, run &quot;certbot</span><br><span class="line">   renew&quot;</span><br><span class="line"> - If you like Certbot, please consider supporting our work by:</span><br><span class="line"></span><br><span class="line">   Donating to ISRG / Let&apos;s Encrypt:   https://letsencrypt.org/donate</span><br><span class="line">   Donating to EFF:                    https://eff.org/donate-le</span><br></pre></td></tr></table></figure>
+<h2 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h2><p>nginx支持在同一个<strong>server</strong>配置支持80和443端口，这样可以实现你的网站同时兼容<strong>http</strong>和<strong>https</strong>两种模式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">listen  80;</span><br><span class="line">listen 443 ssl;</span><br><span class="line">server_name  lzuer.net www.lzuer.net;</span><br><span class="line">root  /home/wwwroot/yoursite/web;</span><br><span class="line">index index.php;</span><br><span class="line">charset utf-8;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ssl on;</span><br><span class="line">ssl_certificate /etc/letsencrypt/live/b.w.lzuer.net/fullchain.pem;</span><br><span class="line">ssl_certificate_key /etc/letsencrypt/live/b.w.lzuer.net/privkey.pem;</span><br><span class="line">ssl_trusted_certificate /etc/letsencrypt/live/b.w.lzuer.net/chain.pem;</span><br><span class="line">ssl_session_timeout 5m;</span><br><span class="line">ssl_protocols TLSv1;</span><br><span class="line">ssl_ciphers  HIGH:!aNULL:!MD5;</span><br><span class="line">ssl_prefer_server_ciphers   on;</span><br><span class="line">//...</span><br></pre></td></tr></table></figure>
+<p>保存后重启<strong>nginx</strong>.</p>
+<blockquote>
+<p>注意, 启用https需要在安装<strong>nginx</strong>的时候开启<strong>ssl module</strong>，可以通过 <code>nginx -V</code> 来查看，如果没有开启需要重新编译并开启</p>
+</blockquote>
+<p>测试下，访问<strong>https</strong>开头的网址是否能正常访问，如果能正常访问，表示配置已经生效。</p>
+<blockquote>
+<p>注意, 如果发现无法访问, 可以检查下<strong>443</strong>这个端口是否开启，如果没有则需要开启 <code>iptables -I INPUT -p tcp --dport 443 -j ACCEPT</code></p>
+</blockquote>
+<p>如果希望你的网站仅支持<strong>https</strong>访问，那么可以如下配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">  listen 80;</span><br><span class="line">  server_name b.w.lzuer.net;</span><br><span class="line">  return 301 https://b.w.lzuer.net$request_uri;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">  listen 443 ssl;</span><br><span class="line">  server_name  b.w.lzuer.net;</span><br><span class="line">  root  /home/wwwroot/yoursite/web;</span><br><span class="line">  index index.php;</span><br><span class="line">  charset utf-8;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  ssl on;</span><br><span class="line">  ssl_certificate /etc/letsencrypt/live/b.w.lzuer.net/fullchain.pem;</span><br><span class="line">  ssl_certificate_key /etc/letsencrypt/live/b.w.lzuer.net/privkey.pem;</span><br><span class="line">  ssl_trusted_certificate /etc/letsencrypt/live/b.w.lzuer.net/chain.pem;</span><br><span class="line">  ssl_session_timeout 5m;</span><br><span class="line">  ssl_protocols TLSv1;</span><br><span class="line">  ssl_ciphers  HIGH:!aNULL:!MD5;</span><br><span class="line">  ssl_prefer_server_ciphers   on;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="定时更新"><a href="#定时更新" class="headerlink" title="定时更新"></a>定时更新</h2><p>Let’s Encrypt 只有3个月的有效期，所以我们需要定时去更新证书。</p>
+<p>可以通过运行：<code>certbot renew --dry-run</code> 来测试自动生成是否能够正常运行。</p>
+<p>如果通过，可以正常运行，可以加入<strong>cron</strong>来定时执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 0 1 * * certbot renew --quiet</span><br></pre></td></tr></table></figure>
+<p><a href="https://certbot.eff.org" target="_blank" rel="noopener">https://certbot.eff.org</a> 上建议是每天不定时执行两次，来保证网站能够正常访问。</p>
+<p>具体由于证书在没有过期之前是不会进行更新的，所以每天不定时更新两次亦可以。</p>
+<p>参考：</p>
+<ul>
+<li><a href="http://nginx.org/en/docs/http/configuring_https_servers.html" target="_blank" rel="noopener">http://nginx.org/en/docs/http/configuring_https_servers.html</a></li>
+<li><a href="https://hersface.com/page/https.html" target="_blank" rel="noopener">https://hersface.com/page/https.html</a></li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/10/github-pr/" itemprop="url">
                   如何处理一个pull request
                 </a>
@@ -1336,128 +1477,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/27/install-golang-on-centos/" itemprop="url">
-                  Install Golang on Centos
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2016-05-27T18:57:23+00:00" content="2016-05-27">
-              2016-05-27
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/Golang/" itemprop="url" rel="index">
-                    <span itemprop="name">Golang</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-	  
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="Download"><a href="#Download" class="headerlink" title="Download"></a>Download</h2><p>首先确定操作系统位数, 可执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ uname -m</span><br></pre></td></tr></table></figure>
-<p>如果输出为 <code>x86_64</code> 的话代表64位操作系统，如果为 <code>i386</code> 则为32为系统。</p>
-<p>根据确定的系统位数下载对应版本的安装包，我的是系统是64，所以</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz</span><br></pre></td></tr></table></figure>
-<p>解压到安装目录, 我把go安装到 <code>/usr/local/go</code> 中，执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tar zxvf go1.6.2.linux-amd64.tar.gz</span><br><span class="line">$ mv go /usr/local</span><br></pre></td></tr></table></figure>
-<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>添加 <code>GOROOT</code> 环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export GOROOT=&quot;/usr/local/go&quot;</span><br></pre></td></tr></table></figure>
-<p>可以通过执行 <code>env</code> 或者 <code>echo $GOROOT</code> 来确认环境变量是否正常设置.</p>
-<p>设置PATH</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export PATH=$PATH:/usr/local/go/bin</span><br></pre></td></tr></table></figure>
-<h2 id="测试是否安装成功"><a href="#测试是否安装成功" class="headerlink" title="测试是否安装成功"></a>测试是否安装成功</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ go version</span><br></pre></td></tr></table></figure>
-<p>输出 <code>go version go1.6.2 linux/amd64</code> 表示golang已经成功安装！</p>
-<h2 id="GOPATH"><a href="#GOPATH" class="headerlink" title="GOPATH"></a>GOPATH</h2><p>剩下一步比较重要的就是设置 <code>GOPATH</code>, 详情可查看<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="noopener">资料</a></p>
-<p>例如我将GOPATH设置为 <code>/home/go</code>  为我的工作空间：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ export GOPATH=&quot;/home/go&quot;</span><br></pre></td></tr></table></figure>
-<p><code>/home/go</code>的目录结构为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- go</span><br><span class="line">  --bin</span><br><span class="line">  --pkg</span><br><span class="line">  --src</span><br></pre></td></tr></table></figure>
-<p>有关目录结构的介绍可以参考：<a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md" target="_blank" rel="noopener">https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/01.2.md</a></p>
-<p>至此Golang已经成功安装！</p>
-<h2 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h2><p>直接在命令行运行 <code>$ export PATH=$PATH:/usr/local/go</code>， 只会在当前会话有效，登出或者注销系统后，PATH的设置就会失效。</p>
-<p>如果想永久保存设置，则需要修改<code>/etc/profile</code>，在末尾加上(如果之前没有添加过的话):</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PATH=$PATH:/usr/local/go</span><br><span class="line">export PATH</span><br><span class="line">GOPATH=/home/go</span><br><span class="line">export GOPATH</span><br></pre></td></tr></table></figure>
-<p>然后执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$source /etc/profile</span><br></pre></td></tr></table></figure>
-<p>之后可以通过 <code>echo $PATH</code> 来查看设置是否生效。</p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1504,21 +1523,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">69</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">67</span>
+              <span class="site-state-item-count">69</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

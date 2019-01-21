@@ -220,6 +220,124 @@
             
               
                 
+                <a class="post-title-link" href="/2015/12/29/talk-about-composer-minimum-stability/" itemprop="url">
+                  讲讲Composer配置项minimumn-stability
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-12-29T23:57:23+00:00" content="2015-12-29">
+              2015-12-29
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+	  
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>Composer 对于每个包的版本都会进行稳定性检查，而低于设置的 <code>minimum-stability</code> 最低稳定性版本的包将不会被安装。</p>
+<p>例如，当我们在项目中想要依赖一个尚未发布稳定版本的包时候通常会：<code>&quot;vendor/library&quot;: &quot;*&quot;</code>, 乍看上去并没有什么不妥, 但是当我们执行 <code>composer install</code> 或者 <code>composer update</code> 去下载包的时候通常会报错。</p>
+<p>这是为什么呢？</p>
+<p>通常我们的 <code>composer.json</code> 都不会显式的去设定 <code>minimum-stability</code>, 那么 <code>composer</code> 就会把他默认为 <code>stable</code>.</p>
+<p>那么对于一个尚未发布版本的包来说, 明显是不符合的. 所以安装就不会成功.</p>
+<p>所以有两个途径来解决：</p>
+<ol>
+<li>设定 <code>minimum-stability</code> 为 <code>dev</code></li>
+</ol>
+<p>显然这是简单粗暴的, 但是这种方法所面临的问题也很严重. 那就是我们去依赖某些开发版中的包, 这显然是我们所不想看到的.</p>
+<ol start="2">
+<li>指定依赖包的版本, 这也是最佳的解决方案</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">composer require vendor/library=dev-master</span><br></pre></td></tr></table></figure>
+<p>所以, 当我们尝试去依赖一个开发中的包时, 推荐使用第二种方法！</p>
+<p>另外我们还需要知道 <code>minimum-stability</code> 所支持的有：</p>
+<ul>
+<li>dev</li>
+<li>alpha</li>
+<li>beta</li>
+<li>RC</li>
+<li>stable</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/12/20/how-to-delete-one-commit-of-git/" itemprop="url">
                   删除一次错误的提交
                 </a>
@@ -280,118 +398,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard &lt;sha1-commit-id&gt;</span><br></pre></td></tr></table></figure>
 <p>如果你已经提交到了远程仓库, 可以通过以下命令来抹掉提交：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin HEAD --force</span><br></pre></td></tr></table></figure>
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/09/18/call-private-method-in-php/" itemprop="url">
-                  在类之外调用私有方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-09-18T00:17:39+00:00" content="2015-09-18">
-              2015-09-18
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/代码段/" itemprop="url" rel="index">
-                    <span itemprop="name">代码段</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-	  
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> $prefix = <span class="string">'Hello '</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">($name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;prefix, $name, PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第一种方式：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">$method-&gt;setAccessible(<span class="keyword">true</span>);</span><br><span class="line">$method-&gt;invoke(<span class="keyword">new</span> Test(), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
-<p>第二种方式:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">call_user_func($method-&gt;getClosure(<span class="keyword">new</span> Test()), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
-
             
           </span>
         
@@ -517,6 +523,118 @@
 <p>执行成功后, 我们可以到<code>my-app/vendor</code> 目录下查看, 我们可以看到该类库已经加入到 <code>my-app/vendor</code> 了！</p>
 <p>之后在 <code>my-package</code> 任何改动后我们需要在 <code>my-app</code> 中执行 <code>composer remove myrepositry/package1</code> 来移除,</p>
 <p>然后在require进来.</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/09/18/call-private-method-in-php/" itemprop="url">
+                  在类之外调用私有方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-09-18T00:17:39+00:00" content="2015-09-18">
+              2015-09-18
+            </time>
+          </span>
+
+          
+            <span class="post-category">
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/代码段/" itemprop="url" rel="index">
+                    <span itemprop="name">代码段</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+	  
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> $prefix = <span class="string">'Hello '</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">hello</span><span class="params">($name)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="keyword">$this</span>-&gt;prefix, $name, PHP_EOL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一种方式：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">$method-&gt;setAccessible(<span class="keyword">true</span>);</span><br><span class="line">$method-&gt;invoke(<span class="keyword">new</span> Test(), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
+<p>第二种方式:</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$class = <span class="keyword">new</span> \ReflectionClass(Test::class);</span><br><span class="line">$method = $class-&gt;getMethod(<span class="string">'hello'</span>);</span><br><span class="line">call_user_func($method-&gt;getClosure(<span class="keyword">new</span> Test()), <span class="string">'Light'</span>);</span><br></pre></td></tr></table></figure>
 
             
           </span>
@@ -1184,117 +1302,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/05/19/one-using-of-yii2-container/" itemprop="url">
-                  Yii2 container的一个应用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-05-19T22:26:28+00:00" content="2015-05-19">
-              2015-05-19
-            </time>
-          </span>
-
-          
-            <span class="post-category">
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                  <a href="/categories/Yii2/" itemprop="url" rel="index">
-                    <span itemprop="name">Yii2</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-	  
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>我们们知道,Yii内部的一些有用的类都设有默认的参数,比如 <code>[[yii\data\Pagination]]</code> 的默认每页个数是 20 个.</p>
-<p>对于项目中的列表来说,有点多. 那么怎么才能一劳永逸的配置让所有的地方都使用我们的设定值呢? </p>
-<p>这时候,我们可以使用 [[Yii::$contianer]] 的来实现：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里我们设置默认个数为10, 将此置于 bootstrap.php 中</span></span><br><span class="line">\Yii::$container-&gt;set(<span class="string">'yii\data\Pagination'</span>, [</span><br><span class="line">    <span class="string">'pageSize'</span> =&gt; <span class="number">10</span>,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
-<p>这样, 我们在使用诸如 <code>ActiveDataProvider</code> 等方法时，默认每页个数就为 10 了。</p>
-<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><blockquote>
-<p>理论上，通过 <code>Yii::createObject</code> 来实例化的对用都会起作用。</p>
-</blockquote>
-<p>所以，说用通过 <code>Yii::createObject</code> 创建的实例都会使用我们通过以上方法设定的默认值。因为 <code>ActiveDataProvider</code> 等中的 <code>pagination</code> 在内部是通过 <code>Yii::createObject</code> 创建的，所以设置是生效的。</p>
-<p>因此，考虑一下两种实现方式：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. pageSize 还是默认的20</span></span><br><span class="line">$paging = <span class="keyword">new</span> \yii\data\Pagination;</span><br><span class="line"><span class="comment">//2. pageSize 就是设置的 10 了</span></span><br><span class="line">$paging = Yii::createObject(<span class="string">'yii\data\Pagination'</span>);</span><br></pre></td></tr></table></figure>
-<p>所以Yii提倡使用 <code>Yii::createObject</code> 来实例化对象，因为它能够自动解决依赖和默认值配置等好处。</p>
-<h2 id="Yii-container-是什么"><a href="#Yii-container-是什么" class="headerlink" title="Yii::$container 是什么"></a>Yii::$container 是什么</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Yii::$container = <span class="keyword">new</span> yii\di\Container();</span><br></pre></td></tr></table></figure>
-<p>所以 <code>Yii::$container</code> 就是整个生命周期的一个依赖容器。</p>
-<p>考虑开始的时候的代码，我们可以理解: 通过 <code>Yii::$container-&gt;set()</code> 其实就是向这个容器注入了一个类和其配置. 当调用 <code>Yii::createObject</code> 的时候会去这个容器里面找，如果存在则根据 set 的配置进行实例化。</p>
-<h2 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h2><p>关于依赖注入和依赖注入容器可以查看博文：<a href="http://www.digpage.com/di.html" target="_blank" rel="noopener">http://www.digpage.com/di.html</a></p>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
 
   </section>
 
@@ -1341,21 +1348,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">69</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             
-              <span class="site-state-item-count">67</span>
+              <span class="site-state-item-count">69</span>
               <span class="site-state-item-name">分类</span>
               
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
